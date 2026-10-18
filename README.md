@@ -8,7 +8,7 @@
 </p>
 
 <p align="center"><strong>Cuatro tutores de IA para 1º y 2º de la ESO que no hacen los deberes: ayudan a entenderlos.</strong><br>
-Historia, Matemáticas, Ciencias y Lengua. Gratis, en Google Gemini.</p>
+Historia, Matemáticas, Ciencias y Lengua, como conector de Claude.</p>
 
 <p align="center"><a href="https://icalvete.github.io/beakman-gems/">Web</a> · <a href="https://icalvete.github.io/beakman-gems/guia/usarlo.html">Cómo se usa</a> · <a href="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">Monta el tuyo</a></p>
 
@@ -28,40 +28,43 @@ Es un homenaje a Beakman, el científico apasionado de *El mundo de Beakman* (19
 
 ## Cómo se usa
 
-No hay que montar nada. Abre el enlace de la asignatura en la [web](https://icalvete.github.io/beakman-gems/#asignaturas), entra con tu cuenta de Google y dile tu curso y qué necesitas. Si no sabes por dónde empezar, escribe «Ayuda».
+En [claude.ai → Ajustes → Conectores](https://claude.ai/settings/connectors), añade un conector personalizado:
 
-La [guía de uso](https://icalvete.github.io/beakman-gems/guia/usarlo.html) tiene ideas para estudiantes, familias y profesorado.
+- Nombre: `Beakman`
+- URL: `https://beakman.kademy.net/mcp`
+
+En un chat nuevo, escribe «Quiero estudiar Historia de 2º con Beakman», o pulsa **+** y elige el arranque de la asignatura. La cuenta gratuita de Claude basta (admite un conector propio). Claude exige ser mayor de 18 años.
+
+La [guía de uso](https://icalvete.github.io/beakman-gems/guia/usarlo.html) tiene ideas para cada situación.
 
 ## Cómo funciona
 
-Todo el contenido vive en este repositorio, y nadie copia nada a mano en Gemini:
+```
+GitHub (este repo) ──cada 5 min──> servidor MCP (beakman.kademy.net) ──conector──> Claude
+```
 
-1. Editas un tema o las instrucciones y haces push a `main`.
-2. El Action [sync-drive.yml](.github/workflows/sync-drive.yml) ejecuta [scripts/build.py](scripts/build.py), que junta las piezas en tres ficheros por asignatura.
-3. El Action los sobrescribe en Google Drive con rclone. Cada fichero conserva su ID.
-4. Cada Gem tiene esos tres ficheros enlazados desde Drive y recibe los cambios sin tocarlo.
-
-Lo único manual es crear cada Gem la primera vez, porque Gemini no tiene API para eso.
+- El **servidor MCP** ([mcp/](mcp/)) no ejecuta ningún modelo: entrega a Claude las instrucciones de Beakman y el temario, con cuatro herramientas (`empezar_clase`, `mapa_del_curso`, `leer_tema`, `buscar_en_temario`) y un arranque por asignatura. La IA corre en la cuenta de quien estudia.
+- Lee el contenido de este repositorio y comprueba cada cinco minutos si hay commits nuevos. **Un push basta**: nadie copia nada a mano y no hay que redesplegar.
+- No ve las conversaciones ni guarda datos de nadie.
+- La imagen la publica [mcp-image.yml](.github/workflows/mcp-image.yml) en `ghcr.io/icalvete/beakman-gems/mcp`. Se despliega en alala, el servidor de kademy, desde el repo de kademy.
 
 ```
 beakman/base.md              personalidad y método, comunes a las cuatro asignaturas
-beakman/gem_stub.txt         texto fijo de la caja de instrucciones del Gem
-<asignatura>/asignatura.md   lo propio de cada asignatura (cabecera con nombre y descripción del Gem)
+<asignatura>/asignatura.md   lo propio de cada asignatura
 <asignatura>/1eso/*.txt      temas de 1º, en orden por nombre
 <asignatura>/2eso/*.txt      temas de 2º (en borrador; Ciencias tiene dos partes:
                              fisica_y_quimica/ y biologia_y_geologia/)
 <asignatura>/logo.*          la imagen de Beakman de esa asignatura
-scripts/build.py             genera dist/<Asignatura>/ con los ficheros de cada Gem
+mcp/                         el servidor MCP (Python)
+scripts/build.py             genera ficheros por asignatura para Drive (opcional)
 docs/                        la web (GitHub Pages)
 ```
 
-Cada Gem recibe siempre los mismos tres ficheros: `Beakman_<Asignatura>_00_Instrucciones.txt`, `..._01_Curso_1ESO.txt` y `..._02_Curso_2ESO.txt`. Un tema nuevo va dentro del fichero de su curso, porque un fichero nuevo habría que enlazarlo a mano en el Gem.
-
-Para probar en local: `python3 scripts/build.py`. En `dist/<Asignatura>/gem.txt` queda lo que va en el formulario del Gem.
+Para probar el servidor en local: `BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.server:app --app-dir mcp`.
 
 ## Monta el tuyo
 
-Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html) explica cada paso: fork, GitHub Pages, tu app de Google, rclone, el secreto `RCLONE_CONF` y la creación de los Gems. Unos 30 minutos.
+Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html) explica cada paso: fork, el contenedor del servidor, HTTPS y la conexión con Claude. Unos 20 minutos.
 
 ## Contribuir
 
@@ -73,9 +76,9 @@ Beakman es gratis y lo seguirá siendo. Si te resulta útil, puedes ayudar a man
 
 ## Aviso
 
-Beakman es una herramienta de apoyo y no sustituye al profesorado. Es una IA y puede equivocarse. Recomendamos supervisión adulta con menores. Se ofrece tal cual, sin garantías.
+Beakman es una herramienta de apoyo y no sustituye al profesorado. Es una IA y puede equivocarse. Se ofrece tal cual, sin garantías.
 
-No tiene ninguna relación con los autores de *El mundo de Beakman* ni con Google. Las imágenes pertenecen a sus dueños y se usan solo como homenaje.
+No tiene ninguna relación con los autores de *El mundo de Beakman*, con Anthropic ni con Google. Las imágenes pertenecen a sus dueños y se usan solo como homenaje.
 
 ## Licencia
 

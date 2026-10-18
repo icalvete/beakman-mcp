@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monta tu propio Beakman · Mi mundo de Beakman</title>
-<meta name="description" content="Guía paso a paso para montar tus propios Gems de Beakman con tu temario: fork del repositorio, GitHub Pages, credenciales de Google, rclone, el GitHub Action y la creación de cada Gem.">
+<meta name="description" content="Guía para montar tu propio servidor MCP de Beakman con tu temario: fork, contenedor, HTTPS y conexión con Claude.">
 <link rel="canonical" href="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">
 <meta name="theme-color" content="#A6D41E">
 <meta name="color-scheme" content="light">
@@ -29,142 +29,86 @@
 <main id="main" class="wrap doc prose">
   <p class="kicker">Para gente técnica</p>
   <h1>Monta tu propio Beakman</h1>
-  <p class="lead">Tus propios Gems, con tu temario, que se actualizan solos cada vez que cambias el repositorio.</p>
+  <p class="lead">Tu propio servidor de Beakman, con tu temario, que se actualiza solo cada vez que cambias el repositorio.</p>
 
   <div class="warn">
-    <p><strong>¿Solo quieres usarlo?</strong> No necesitas nada de esto. Abre los enlaces de la <a href="../#asignaturas">portada</a>. Esta guía es para quien quiere su propia copia: un profe con su programación, un centro o alguien que quiere cambiar el temario.</p>
+    <p><strong>¿Solo quieres usarlo?</strong> No necesitas nada de esto: sigue la <a href="usarlo.html">guía de uso</a>. Esta guía es para quien quiere su propia copia, por ejemplo un profe con su programación.</p>
   </div>
 
   <h2 id="resumen">Qué vas a montar</h2>
-  <p>El contenido vive en tu fork del repositorio. Cada vez que haces push, un GitHub Action genera tres ficheros por asignatura y los sobrescribe en tu Google Drive. Tus Gems tienen esos ficheros enlazados, así que reciben los cambios sin que copies nada a mano.</p>
-  <p><strong>Necesitas:</strong> una cuenta de GitHub, una cuenta personal de Google (la misma para Drive y para los Gems), Python 3, <a href="https://rclone.org/install/">rclone</a> y <a href="https://cli.github.com/">gh</a>. <strong>Tiempo:</strong> unos 30 minutos la primera vez.</p>
+  <p>Un servidor <a href="https://modelcontextprotocol.io/">MCP</a> pequeño, en un contenedor, detrás de HTTPS. No ejecuta ningún modelo de IA: entrega a Claude las instrucciones de Beakman y el temario, y la IA corre en la cuenta de quien estudia. Lee el contenido de tu fork en GitHub y comprueba cada cinco minutos si hay cambios, así que editar el repositorio basta.</p>
+  <p><strong>Necesitas:</strong> una cuenta de GitHub, un servidor con Docker y un dominio con HTTPS. <strong>Tiempo:</strong> unos 20 minutos.</p>
 
   <nav class="toc" aria-label="En esta página">
     <strong>En esta página</strong>
     <ol>
-      <li><a href="#fork">Haz un fork y activa Pages</a></li>
-      <li><a href="#google">Crea tu app de Google</a></li>
-      <li><a href="#rclone">Conecta rclone a tu Drive</a></li>
-      <li><a href="#secreto">Guarda el secreto en GitHub</a></li>
-      <li><a href="#action">Lanza el Action</a></li>
-      <li><a href="#gems">Crea cada Gem</a></li>
+      <li><a href="#fork">Haz un fork</a></li>
+      <li><a href="#servidor">Arranca el servidor</a></li>
+      <li><a href="#https">Ponlo detrás de HTTPS</a></li>
+      <li><a href="#claude">Conéctalo a Claude</a></li>
       <li><a href="#editar">Edita y listo</a></li>
+      <li><a href="#drive">Opcional: ficheros para Drive</a></li>
       <li><a href="#problemas">Si algo falla</a></li>
     </ol>
   </nav>
 
-  <h2 id="fork">1. Haz un fork y activa Pages</h2>
-  <ol class="big">
-    <li>Haz un fork de <a href="https://github.com/icalvete/beakman-gems">icalvete/beakman-gems</a> y clónalo.</li>
-    <li>En tu fork, pestaña <strong>Actions</strong>, actívalos. GitHub los desactiva en los forks.</li>
-    <li>En <strong>Settings → Pages</strong>, elige la rama <code>main</code> y la carpeta <code>/docs</code>. En un par de minutos tendrás la web en <code>https://TU_USUARIO.github.io/beakman-gems/</code>.</li>
-  </ol>
-  <p>La web no es decorativa: Google te pedirá una página de inicio y una de privacidad para publicar tu app en el paso 2. Tu fork ya trae las dos (<code>index.html</code> y <code>privacidad.html</code>). Revisa la de privacidad y pon tus datos.</p>
-  <p>Lo que hay en el repositorio:</p>
+  <h2 id="fork">1. Haz un fork</h2>
+  <p>Haz un fork de <a href="https://github.com/icalvete/beakman-gems">icalvete/beakman-gems</a>. Tiene que ser público, porque el servidor lee el contenido sin credenciales.</p>
   <ul>
     <li><code>beakman/base.md</code>: la personalidad y el método, comunes a todas las asignaturas.</li>
-    <li><code>beakman/gem_stub.txt</code>: el texto corto y fijo que va en la caja de instrucciones de cada Gem.</li>
-    <li><code>&lt;asignatura&gt;/asignatura.md</code>: lo propio de cada asignatura. Su cabecera lleva el nombre del Gem y su descripción.</li>
-    <li><code>&lt;asignatura&gt;/1eso/</code> y <code>2eso/</code>: los temas, un fichero por tema.</li>
-    <li><code>scripts/build.py</code>: genera los ficheros de cada Gem en <code>dist/</code>. Pruébalo con <code>python3 scripts/build.py</code>.</li>
-    <li><code>.github/workflows/sync-drive.yml</code>: el Action que genera y sube a Drive.</li>
+    <li><code>&lt;asignatura&gt;/asignatura.md</code>: lo propio de cada asignatura.</li>
+    <li><code>&lt;asignatura&gt;/1eso/</code> y <code>2eso/</code>: los temas, un fichero por tema. Un curso con varias asignaturas, como Ciencias de 2º, lleva una subcarpeta por asignatura con un <code>_titulo.txt</code>.</li>
+    <li><code>mcp/</code>: el servidor, en Python.</li>
   </ul>
 
-  <h2 id="google">2. Crea tu app de Google</h2>
-  <p>rclone necesita permiso para escribir en tu Drive, y para eso pide un <em>client_id</em>: el identificador de una app registrada en Google. rclone trae uno compartido, pero rclone avisa de que deja de funcionar en 2026. Crea el tuyo; es gratis.</p>
-  <ol class="big">
-    <li><strong>Proyecto.</strong> En <a href="https://console.cloud.google.com/">Google Cloud Console</a>, crea un proyecto nuevo, por ejemplo <code>beakman</code>. En <em>Ubicación</em> deja «Sin organización». Asegúrate de que arriba pone tu proyecto nuevo antes de seguir.</li>
-    <li><strong>Drive API.</strong> Busca <strong>Google Drive API</strong> en el buscador de arriba y pulsa <strong>Enable</strong>.</li>
-    <li><strong>Identidad de la app.</strong> Abre <strong>Google Auth Platform</strong> y pulsa <strong>Get started</strong>. Nombre de la app, tu correo, tipo de público <strong>External</strong> y tu correo de contacto.</li>
-    <li><strong>Branding.</strong> En el menú <strong>Branding</strong>, rellena:
-      <ul>
-        <li><em>Application home page</em>: <code>https://TU_USUARIO.github.io/beakman-gems/</code></li>
-        <li><em>Application privacy policy link</em>: <code>https://TU_USUARIO.github.io/beakman-gems/privacidad.html</code></li>
-        <li><em>Authorized domains</em>: pulsa <strong>Add domain</strong> y escribe <code>TU_USUARIO.github.io</code>, sin <code>https://</code>. Si no lo añades, <strong>Save</strong> no se activa.</li>
-      </ul>
-      <strong>No subas logo:</strong> con logo, Google obliga a pasar una verificación.</li>
-    <li><strong>Publícala.</strong> En <strong>Audience</strong>, pulsa <strong>Publish app</strong>. Tiene que quedar <em>In production</em>. En <em>Testing</em>, el permiso caduca a los 7 días y el Action deja de funcionar.</li>
-    <li><strong>Cliente.</strong> En <strong>Clients → Create client</strong>, tipo <strong>Desktop app</strong>, nombre <code>rclone</code>. Deja sin marcar «Use this client for an AI-powered agent». Pulsa <strong>Create</strong> y descarga el JSON.</li>
-  </ol>
-  <div class="warn">
-    <p><strong>El secreto del cliente es tuyo.</strong> No lo pegues en chats, issues ni capturas. Guárdalo en tu gestor de contraseñas.</p>
-  </div>
-
-  <h2 id="rclone">3. Conecta rclone a tu Drive</h2>
-  <p>Crea un remote que se llame <code>beakman</code>; el Action usa ese nombre. Hazlo con el asistente interactivo, que pide el secreto sin dejarlo en el historial de la terminal:</p>
-<pre><code>rclone config</code></pre>
+  <h2 id="servidor">2. Arranca el servidor</h2>
+  <p>La imagen está publicada y es pública. Dile qué repositorio leer y con qué dominio la vas a servir:</p>
+<pre><code>docker run -d --name beakman --restart unless-stopped -p 127.0.0.1:8000:8000 \
+  -e BEAKMAN_GITHUB_REPO=TU_USUARIO/beakman-gems \
+  -e BEAKMAN_ALLOWED_HOSTS=beakman.tudominio.com \
+  ghcr.io/icalvete/beakman-gems/mcp:latest</code></pre>
+  <p>Comprueba que ha cargado tu temario:</p>
+<pre><code>curl -s -H "Host: beakman.tudominio.com" localhost:8000/up</code></pre>
+  <p>Debe responder con <code>"ok": true</code>, el commit que ha leído y las cuatro asignaturas.</p>
   <table>
-    <tr><th>Pregunta</th><th>Respuesta</th></tr>
-    <tr><td>New remote</td><td><code>n</code></td></tr>
-    <tr><td>name</td><td><code>beakman</code></td></tr>
-    <tr><td>Storage</td><td><code>drive</code></td></tr>
-    <tr><td>client_id / client_secret</td><td>los de tu cliente</td></tr>
-    <tr><td>scope</td><td>el número de <code>drive.file</code></td></tr>
-    <tr><td>Advanced config</td><td><code>n</code></td></tr>
-    <tr><td>Use web browser</td><td><code>y</code></td></tr>
-    <tr><td>Shared Drive</td><td><code>n</code></td></tr>
+    <tr><th>Variable</th><th>Para qué</th></tr>
+    <tr><td><code>BEAKMAN_GITHUB_REPO</code></td><td>El repositorio del que lee el temario. Por defecto, <code>icalvete/beakman-gems</code>.</td></tr>
+    <tr><td><code>BEAKMAN_GITHUB_BRANCH</code></td><td>La rama. Por defecto, <code>main</code>.</td></tr>
+    <tr><td><code>BEAKMAN_ALLOWED_HOSTS</code></td><td>Los dominios con los que se puede llamar al servidor, separados por comas. Protege contra ataques de <em>DNS rebinding</em>.</td></tr>
+    <tr><td><code>BEAKMAN_REFRESH_SECONDS</code></td><td>Cada cuánto mira si hay cambios. Por defecto, 300.</td></tr>
   </table>
-  <p>Se abre el navegador. Entra con tu cuenta y acepta. Google avisará de que la app no está verificada: es tu propia app, pulsa <strong>Configuración avanzada → Ir a…</strong> y <strong>Permitir</strong>.</p>
-  <p>Comprueba que funciona:</p>
-<pre><code>rclone about beakman:</code></pre>
-  <p><strong>Por qué <code>drive.file</code>.</strong> Con ese permiso, rclone solo ve los ficheros que crea él. No puede leer ni tocar el resto de tu Drive. Si el permiso se filtrara, el daño se queda en la carpeta de Beakman.</p>
-  <p>Dos consecuencias:</p>
-  <ul>
-    <li>Si subes ficheros a mano por la web de Drive, rclone no los ve y crea otros. Deja que los cree él.</li>
-    <li>El permiso va ligado a tu client_id. Si un día cambias de client_id, rclone dejará de ver los ficheros viejos, creará otros nuevos y tendrás que volver a enlazarlos en los Gems.</li>
-  </ul>
+  <p>Para probar en local con una copia del repositorio, sin GitHub: <code>BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.server:app --app-dir mcp</code>.</p>
 
-  <h2 id="secreto">4. Guarda el secreto en GitHub</h2>
-  <p>El Action necesita la configuración de rclone. Desde la carpeta de tu fork:</p>
-<pre><code>gh secret set RCLONE_CONF &lt; ~/.config/rclone/rclone.conf</code></pre>
-  <p>El fichero va directo de tu disco a GitHub, sin pasar por la pantalla. Si tu <code>rclone.conf</code> tiene otros remotes, sube uno que solo tenga el de <code>beakman</code>.</p>
+  <h2 id="https">3. Ponlo detrás de HTTPS</h2>
+  <p>Claude se conecta desde la nube de Anthropic, así que el servidor necesita una dirección pública con HTTPS. Con <a href="https://caddyserver.com/">Caddy</a> basta con esto, y el certificado lo saca él solo:</p>
+<pre><code>beakman.tudominio.com {
+    reverse_proxy 127.0.0.1:8000
+}</code></pre>
+  <p>Crea en tu DNS un registro <code>A</code> para <code>beakman.tudominio.com</code> con la IP del servidor.</p>
 
-  <h2 id="action">5. Lanza el Action</h2>
-  <p>En la pestaña <strong>Actions</strong>, elige <strong>Sincronizar con Drive</strong> y pulsa <strong>Run workflow</strong>. O desde la terminal:</p>
-<pre><code>gh workflow run sync-drive.yml</code></pre>
-  <p>A partir de ahora se lanza solo en cada push a <code>main</code> que toque el contenido. Al acabar, en tu Drive hay una carpeta <code>Beakman</code> con una subcarpeta por asignatura y tres ficheros en cada una:</p>
-  <ul>
-    <li><code>Beakman_&lt;Asignatura&gt;_00_Instrucciones.txt</code></li>
-    <li><code>Beakman_&lt;Asignatura&gt;_01_Curso_1ESO.txt</code></li>
-    <li><code>Beakman_&lt;Asignatura&gt;_02_Curso_2ESO.txt</code></li>
-  </ul>
-  <p>En cada ejecución se sobrescriben y conservan su identificador de Drive. Por eso los Gems no hay que tocarlos.</p>
+  <h2 id="claude">4. Conéctalo a Claude</h2>
+  <p>En <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>, pulsa <strong>Añadir conector personalizado</strong> con la URL <code>https://beakman.tudominio.com/mcp</code>. En un chat nuevo, escribe «Quiero estudiar Historia de 2º con Beakman».</p>
+  <p>Sirve cualquier cliente MCP que admita servidores remotos por HTTP. Hoy, desde España, el que lo permite en cuentas personales es Claude.</p>
 
-  <h2 id="gems">6. Crea cada Gem</h2>
-  <p>Este es el único paso manual, porque Gemini no tiene una API para crear Gems. Se hace una vez por asignatura.</p>
-  <p>Ejecuta <code>python3 scripts/build.py</code>. En <code>dist/&lt;Asignatura&gt;/gem.txt</code> tienes todo lo que va en el formulario.</p>
-  <ol class="big">
-    <li>Abre <a href="https://gemini.google.com/">Gemini</a> con la misma cuenta que autorizó rclone. En el menú, entra en <strong>Gems → Nuevo Gem</strong>.</li>
-    <li>Pega el <strong>nombre</strong>, la <strong>descripción</strong> y las <strong>instrucciones</strong> de <code>gem.txt</code>. Las instrucciones son un texto corto y fijo: solo dicen que siga el fichero de instrucciones de Drive. No hay que volver a tocarlas.</li>
-    <li>En <strong>Conocimiento</strong>, pulsa <strong>+ → Drive</strong> y elige los tres ficheros de <code>Beakman/&lt;Asignatura&gt;</code>. Enlázalos desde Drive, no los subas desde el ordenador: una copia subida no se actualiza.</li>
-    <li>Guarda y pruébalo: escribe «Hola». Tiene que presentarse como Beakman y preguntarte el curso.</li>
-    <li>Compártelo con el botón <strong>Compartir</strong> y copia el enlace. Ese enlace es el que das a tus estudiantes.</li>
-  </ol>
-  <div class="warn">
-    <p><strong>Gem no es lo mismo que cuaderno.</strong> Gemini tiene también <em>Cuadernos</em> (Notebooks), que aparecen cerca de los Gems en el menú. No sirven aquí: no tienen instrucciones fijas. Si el formulario no tiene <em>Instrucciones</em> y <em>Conocimiento</em>, estás creando un cuaderno.</p>
-  </div>
-  <p>Para tu propia web, cambia los <code>href="#"</code> de <code>docs/index.html</code> por tus enlaces. Cada botón tiene encima un comentario <code>GEM_URL_…</code> que dice qué cambiar.</p>
-
-  <h2 id="editar">7. Edita y listo</h2>
-  <p>A partir de aquí, todo se cambia en el repositorio:</p>
+  <h2 id="editar">5. Edita y listo</h2>
   <ul>
     <li>Cómo es Beakman o cómo explica: <code>beakman/base.md</code>.</li>
     <li>Algo de una asignatura: su <code>asignatura.md</code>.</li>
-    <li>Un tema nuevo: un fichero en <code>1eso/</code> o <code>2eso/</code>. Se ordenan por nombre, así que empieza por el número.</li>
-    <li>Un curso con varias asignaturas, como Ciencias en 2º: una subcarpeta por asignatura dentro de <code>2eso/</code>, cada una con un <code>_titulo.txt</code>. El build las junta en el mismo fichero, cada una como una parte.</li>
+    <li>Un tema nuevo: un fichero en <code>1eso/</code> o <code>2eso/</code>, empezando por su número.</li>
   </ul>
-  <p>Haces push y el Action hace el resto.</p>
-  <p><strong>No cambies los nombres de los ficheros de Drive ni los borres.</strong> El Gem los enlaza por su identificador. Por eso un tema nuevo no crea un fichero nuevo: va dentro del de su curso.</p>
+  <p>Haces push y, en cinco minutos como mucho, el servidor tiene el contenido nuevo. El código del servidor no lee nada ejecutable del repositorio: solo textos.</p>
 
-  <h2 id="problemas">8. Si algo falla</h2>
+  <h2 id="drive">6. Opcional: ficheros para Drive</h2>
+  <p>El repositorio trae también un Action, <strong>Sincronizar con Drive</strong>, que genera tres ficheros por asignatura y los sube a Google Drive con rclone. Sirve para darle el temario a otras herramientas que leen de Drive. Necesita el secreto <code>RCLONE_CONF</code> con un remote de rclone llamado <code>beakman</code> y el permiso <code>drive.file</code>, con tu propia app de Google en producción. Si no lo usas, desactívalo en la pestaña Actions de tu fork, o fallará en cada push.</p>
+
+  <h2 id="problemas">7. Si algo falla</h2>
   <table>
     <tr><th>Qué pasa</th><th>Por qué y qué hacer</th></tr>
-    <tr><td>El Action dice «Falta el secreto RCLONE_CONF»</td><td>No has hecho el paso 4, o lo hiciste en otro repositorio.</td></tr>
-    <tr><td>El Action funcionaba y a la semana falla al autenticar</td><td>La app sigue en <em>Testing</em>. Publícala (paso 2) y repite los pasos 3 y 4.</td></tr>
-    <tr><td><em>Publish app</em> o <em>Save</em> no se dejan pulsar</td><td>Falta algo en <em>Branding</em>: casi siempre el dominio autorizado. Mira el aviso en rojo.</td></tr>
-    <tr><td>En Drive salen ficheros duplicados</td><td>Subiste alguno a mano o cambiaste de client_id. Borra los que no creó rclone y vuelve a enlazar en el Gem los buenos.</td></tr>
-    <tr><td>El Gem no se entera de un cambio</td><td>Abre un chat nuevo. Comprueba que los ficheros están enlazados desde Drive y no subidos.</td></tr>
-    <tr><td>El Gem no sigue sus instrucciones</td><td>Comprueba que <code>00_Instrucciones</code> está enlazado y que la caja de instrucciones tiene el texto de <code>gem_stub.txt</code>.</td></tr>
+    <tr><td><code>/up</code> da error al arrancar</td><td>No ha podido leer el repositorio. Comprueba que el fork es público y el nombre de <code>BEAKMAN_GITHUB_REPO</code>.</td></tr>
+    <tr><td>El servidor responde 400</td><td>El dominio no está en <code>BEAKMAN_ALLOWED_HOSTS</code>.</td></tr>
+    <tr><td>Claude no consigue conectar</td><td>La URL tiene que ser pública, con HTTPS y acabar en <code>/mcp</code>.</td></tr>
+    <tr><td>Claude no habla como Beakman</td><td>Pídele que empiece la clase con Beakman, o usa el arranque de la asignatura desde el botón <strong>+</strong>.</td></tr>
+    <tr><td>Un cambio no aparece</td><td>Espera cinco minutos y abre un chat nuevo. <code>/up</code> dice qué commit está usando.</td></tr>
   </table>
 </main>
 

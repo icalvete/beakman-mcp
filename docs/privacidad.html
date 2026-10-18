@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacidad · Mi mundo de Beakman</title>
-<meta name="description" content="Qué datos toca Mi mundo de Beakman: la app de sincronización con Google Drive, los Gems de Gemini y esta web.">
+<meta name="description" content="Qué datos toca Mi mundo de Beakman: el servidor MCP, Claude, la app de sincronización con Drive y esta web.">
 <link rel="canonical" href="https://icalvete.github.io/beakman-gems/privacidad.html">
 <meta name="theme-color" content="#A6D41E">
 <meta name="color-scheme" content="light">
@@ -29,18 +29,25 @@
   <h1>Privacidad</h1>
   <p class="lead">Mi mundo de Beakman no recoge datos de nadie. Esta página explica qué toca cada pieza.</p>
 
-  <h2>La app «Beakman sync»</h2>
-  <p>Es la app de Google que usa el repositorio para subir el temario a Google Drive. Solo la usa quien mantiene el proyecto, desde su propia cuenta.</p>
+  <h2>El servidor de Beakman</h2>
+  <p>Es el conector que se añade a Claude, en <code>beakman.kademy.net</code>. Solo entrega textos: las instrucciones de Beakman y el temario.</p>
   <ul>
-    <li>Pide un único permiso: <code>drive.file</code>. Con él solo ve los ficheros que ella misma crea, los de la carpeta <code>Beakman</code>. No puede leer ni tocar el resto del Drive.</li>
-    <li>Solo sube y actualiza esos ficheros. No lee nada más, no guarda copias en ningún otro sitio y no comparte nada con nadie.</li>
-    <li>Las credenciales viven en el ordenador de quien la autorizó y en un secreto cifrado del repositorio de GitHub.</li>
-    <li>Para quitarle el acceso, entra en <a href="https://myaccount.google.com/permissions">los permisos de tu cuenta de Google</a> y elimina «Beakman sync».</li>
+    <li><strong>No ve las conversaciones.</strong> Claude solo le pide cosas como «el tema 7 de Historia de 2º» o «busca fotosíntesis».</li>
+    <li><strong>No pide cuenta ni guarda nada</strong> de quien lo usa: ni nombre, ni correo, ni historial.</li>
+    <li>Como cualquier servidor web, deja un registro técnico de cada petición (fecha, dirección IP y ruta) para detectar errores y abusos. No se cruza con nada ni se comparte.</li>
   </ul>
 
-  <h2>Los Gems de Gemini</h2>
-  <p>Las conversaciones con Beakman ocurren dentro de Google Gemini. Este proyecto no las recibe ni las guarda. Las trata Google según su <a href="https://policies.google.com/privacy">política de privacidad</a> y la <a href="https://support.google.com/gemini/answer/13594961">información de privacidad de Gemini</a>.</p>
-  <p>Con menores, recomendamos una cuenta gestionada con Family Link y no escribir datos personales en el chat.</p>
+  <h2>Claude</h2>
+  <p>Las conversaciones ocurren en Claude, con la cuenta de quien estudia. Las trata Anthropic según su <a href="https://www.anthropic.com/legal/privacy">política de privacidad</a>. Claude exige ser mayor de 18 años.</p>
+  <p>Un consejo: no escribir nombres, direcciones ni datos personales. Para estudiar no hacen falta.</p>
+
+  <h2>La app «Beakman sync»</h2>
+  <p>Es la app de Google que usa el repositorio para copiar el temario a Google Drive. Solo la usa quien mantiene el proyecto, desde su propia cuenta.</p>
+  <ul>
+    <li>Pide un único permiso: <code>drive.file</code>. Con él solo ve los ficheros que ella misma crea, los de la carpeta <code>Beakman</code>. No puede leer ni tocar el resto del Drive.</li>
+    <li>Solo sube y actualiza esos ficheros. No lee nada más y no comparte nada con nadie.</li>
+    <li>Para quitarle el acceso, entra en <a href="https://myaccount.google.com/permissions">los permisos de tu cuenta de Google</a> y elimina «Beakman sync».</li>
+  </ul>
 
   <h2>Esta web</h2>
   <p>No usa cookies ni analítica. La sirve GitHub Pages y carga las fuentes desde Google Fonts, que pueden registrar la visita como cualquier servidor web.</p>
