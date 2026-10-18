@@ -67,6 +67,10 @@ Si eres profe o quieres tu propio temario, la [guía para montarlo](https://ical
 
 ¿Un error en un tema o una mejora? Abre una [incidencia](https://github.com/icalvete/beakman-gems/issues) o un pull request. Antes, lee [CLAUDE.md](CLAUDE.md): tiene las reglas del contenido.
 
+## Apoya el proyecto
+
+Beakman es gratis y lo seguirá siendo. Si te resulta útil, puedes ayudar a mantenerlo con [GitHub Sponsors](https://github.com/sponsors/icalvete). Avisar de un error en un tema también ayuda mucho.
+
 ## Aviso
 
 Beakman es una herramienta de apoyo y no sustituye al profesorado. Es una IA y puede equivocarse. Recomendamos supervisión adulta con menores. Se ofrece tal cual, sin garantías.
