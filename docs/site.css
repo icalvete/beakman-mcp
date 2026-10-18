@@ -215,3 +215,7 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 @media (max-width: 760px) {
   .reasons, .contrast { grid-template-columns: 1fr; }
 }
+
+/* enlace a Sponsors en el menú */
+.top nav a.nav-sponsor { color: var(--ink); background: var(--lime-soft); border: 1px solid var(--lime); border-radius: 999px; padding: 0 10px; }
+.top nav a.nav-sponsor:hover { background: var(--lime); }
