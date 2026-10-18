@@ -187,50 +187,43 @@
         <p class="me"><span class="who">Estudiante</span>No… habría que cortarlos igual.</p>
         <p class="bk"><span class="who">Beakman</span>¡Exacto! Eso es buscar un denominador común. Si cortas la segunda pizza en 4, ¿cuántos trozos es 1/2?</p>
       </div>
-      <p class="caption">Ejemplo ilustrativo del estilo de Beakman. Las respuestas reales cambian en cada conversación. <button type="button" class="replay" hidden>↻ Volver a verla</button></p>
+      <p class="caption">Ejemplo ilustrativo del estilo de Beakman. Las respuestas reales cambian en cada conversación.</p>
       <script>
-      // Conversación animada: los mensajes aparecen uno a uno cuando entra en pantalla,
-      // con «escribiendo…» antes de cada respuesta de Beakman. Sin JS o con movimiento
-      // reducido se ve entera desde el principio.
+      // Conversación animada en bucle. Cada mensaje ocupa su sitio desde el principio
+      // (invisible), así que nada se mueve: solo cambian opacidades. Antes de cada
+      // respuesta de Beakman salen los puntos de «escribiendo» en ese mismo sitio.
+      // Solo corre mientras se ve. Sin JS o con movimiento reducido, se ve entera.
       (function () {
         var chat = document.querySelector(".chat");
-        var replay = document.querySelector(".replay");
         if (!chat || !("IntersectionObserver" in window)) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         var msgs = Array.prototype.slice.call(chat.querySelectorAll("p"));
-        var typing = document.createElement("p");
-        typing.className = "bk typing";
-        typing.setAttribute("aria-hidden", "true");
-        typing.innerHTML = "<span></span><span></span><span></span>";
-        var timers = [];
-        function reset() {
-          timers.forEach(clearTimeout); timers = [];
-          msgs.forEach(function (m) { m.classList.add("pending"); m.classList.remove("shown"); });
-          if (typing.parentNode) typing.remove();
-          replay.hidden = true;
-        }
+        var timers = [], visible = false;
+        function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+        function stop() { timers.forEach(clearTimeout); timers = []; }
+        function clear() { msgs.forEach(function (m) { m.classList.remove("shown", "typing"); }); }
         function play() {
-          reset();
-          var t = 300;
-          msgs.forEach(function (m, i) {
-            var isBeakman = m.classList.contains("bk");
-            if (isBeakman) {
-              timers.push(setTimeout(function () { m.before(typing); }, t));
-              t += 1400;
+          stop(); clear();
+          var t = 500;
+          msgs.forEach(function (m) {
+            if (m.classList.contains("bk")) {
+              later(function () { m.classList.add("typing"); }, t);
+              t += 1300;
+              later(function () { m.classList.remove("typing"); m.classList.add("shown"); }, t);
+              t += 2200;
+            } else {
+              later(function () { m.classList.add("shown"); }, t);
+              t += 1500;
             }
-            timers.push(setTimeout(function () {
-              if (typing.parentNode) typing.remove();
-              m.classList.remove("pending"); m.classList.add("shown");
-            }, t));
-            t += isBeakman ? 1600 : 1200;
           });
-          timers.push(setTimeout(function () { replay.hidden = false; }, t));
+          later(function () { chat.classList.add("fading"); }, t + 3500);
+          later(function () { chat.classList.remove("fading"); if (visible) play(); }, t + 4200);
         }
-        reset();
-        new IntersectionObserver(function (entries, obs) {
-          if (entries[0].isIntersecting) { obs.disconnect(); play(); }
-        }, { threshold: 0.4 }).observe(chat);
-        replay.addEventListener("click", play);
+        chat.classList.add("anim");
+        new IntersectionObserver(function (entries) {
+          visible = entries[0].isIntersecting;
+          if (visible) play(); else { stop(); clear(); chat.classList.remove("fading"); }
+        }, { threshold: 0.3 }).observe(chat);
       })();
       </script>
 
