@@ -45,7 +45,7 @@ mcp = MCPServer(
     title="Mi mundo de Beakman",
     description="Tutores de Historia, Matemáticas, Ciencias y Lengua para 1º y 2º de la ESO.",
     instructions=INSTRUCTIONS,
-    website_url="https://icalvete.github.io/beakman-gems/",
+    website_url="https://icalvete.github.io/beakman-mcp/",
 )
 
 

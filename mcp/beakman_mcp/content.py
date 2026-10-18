@@ -34,7 +34,7 @@ SUBJECT_ALIASES = {
     "lengua y literatura": "lengua", "lengua castellana": "lengua", "literatura": "lengua",
     "geografia e historia": "historia",
 }
-REPO = os.environ.get("BEAKMAN_GITHUB_REPO", "icalvete/beakman-gems")
+REPO = os.environ.get("BEAKMAN_GITHUB_REPO", "icalvete/beakman-mcp")
 BRANCH = os.environ.get("BEAKMAN_GITHUB_BRANCH", "main")
 REFRESH_SECONDS = int(os.environ.get("BEAKMAN_REFRESH_SECONDS", "300"))
 

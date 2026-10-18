@@ -10,7 +10,7 @@
 <p align="center"><strong>Cuatro tutores de IA para 1º y 2º de la ESO que no hacen los deberes: ayudan a entenderlos.</strong><br>
 Historia, Matemáticas, Ciencias y Lengua, como conector de Claude.</p>
 
-<p align="center"><a href="https://icalvete.github.io/beakman-gems/">Web</a> · <a href="https://icalvete.github.io/beakman-gems/guia/usarlo.html">Cómo se usa</a> · <a href="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">Monta el tuyo</a></p>
+<p align="center"><a href="https://icalvete.github.io/beakman-mcp/">Web</a> · <a href="https://icalvete.github.io/beakman-mcp/guia/usarlo.html">Cómo se usa</a> · <a href="https://icalvete.github.io/beakman-mcp/guia/montar-el-tuyo.html">Monta el tuyo</a></p>
 
 ## Por qué
 
@@ -35,7 +35,7 @@ En [claude.ai → Ajustes → Conectores](https://claude.ai/settings/connectors)
 
 En un chat nuevo, escribe «Quiero estudiar Historia de 2º con Beakman», o pulsa **+** y elige el arranque de la asignatura. La cuenta gratuita de Claude basta (admite un conector propio). Claude exige ser mayor de 18 años.
 
-La [guía de uso](https://icalvete.github.io/beakman-gems/guia/usarlo.html) tiene ideas para cada situación.
+La [guía de uso](https://icalvete.github.io/beakman-mcp/guia/usarlo.html) tiene ideas para cada situación.
 
 ## Cómo funciona
 
@@ -46,7 +46,7 @@ GitHub (este repo) ──cada 5 min──> servidor MCP (beakman.kademy.net) ─
 - El **servidor MCP** ([mcp/](mcp/)) no ejecuta ningún modelo: entrega a Claude las instrucciones de Beakman y el temario, con cuatro herramientas (`empezar_clase`, `mapa_del_curso`, `leer_tema`, `buscar_en_temario`) y un arranque por asignatura. La IA corre en la cuenta de quien estudia.
 - Lee el contenido de este repositorio y comprueba cada cinco minutos si hay commits nuevos. **Un push basta**: nadie copia nada a mano y no hay que redesplegar.
 - No ve las conversaciones ni guarda datos de nadie.
-- La imagen la publica [mcp-image.yml](.github/workflows/mcp-image.yml) en `ghcr.io/icalvete/beakman-gems/mcp`. Se despliega en alala, el servidor de kademy, desde el repo de kademy.
+- La imagen la publica [mcp-image.yml](.github/workflows/mcp-image.yml) en `ghcr.io/icalvete/beakman-mcp`. Se despliega en alala, el servidor de kademy, desde el repo de kademy.
 
 ```
 beakman/base.md              personalidad y método, comunes a las cuatro asignaturas
@@ -64,11 +64,11 @@ Para probar el servidor en local: `BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.ser
 
 ## Monta el tuyo
 
-Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html) explica cada paso: fork, el contenedor del servidor, HTTPS y la conexión con Claude. Unos 20 minutos.
+Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-mcp/guia/montar-el-tuyo.html) explica cada paso: fork, el contenedor del servidor, HTTPS y la conexión con Claude. Unos 20 minutos.
 
 ## Contribuir
 
-¿Un error en un tema o una mejora? Abre una [incidencia](https://github.com/icalvete/beakman-gems/issues) o un pull request. Antes, lee [CLAUDE.md](CLAUDE.md): tiene las reglas del contenido.
+¿Un error en un tema o una mejora? Abre una [incidencia](https://github.com/icalvete/beakman-mcp/issues) o un pull request. Antes, lee [CLAUDE.md](CLAUDE.md): tiene las reglas del contenido.
 
 ## Apoya el proyecto
 

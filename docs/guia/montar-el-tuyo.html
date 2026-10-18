@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monta tu propio Beakman · Mi mundo de Beakman</title>
 <meta name="description" content="Guía para montar tu propio servidor MCP de Beakman con tu temario: fork, contenedor, HTTPS y conexión con Claude.">
-<link rel="canonical" href="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">
+<link rel="canonical" href="https://icalvete.github.io/beakman-mcp/guia/montar-el-tuyo.html">
 <meta name="theme-color" content="#A6D41E">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
@@ -22,7 +22,7 @@
   <nav aria-label="Principal">
     <a href="../">Portada</a>
     <a href="usarlo.html">Cómo se usa</a>
-    <a href="https://github.com/icalvete/beakman-gems">GitHub</a>
+    <a href="https://github.com/icalvete/beakman-mcp">GitHub</a>
     <a class="nav-sponsor" href="https://github.com/sponsors/icalvete">♥ Apoya</a>
   </nav>
 </header>
@@ -54,7 +54,7 @@
   </nav>
 
   <h2 id="fork">1. Haz un fork</h2>
-  <p>Haz un fork de <a href="https://github.com/icalvete/beakman-gems">icalvete/beakman-gems</a>. Tiene que ser público, porque el servidor lee el contenido sin credenciales.</p>
+  <p>Haz un fork de <a href="https://github.com/icalvete/beakman-mcp">icalvete/beakman-mcp</a>. Tiene que ser público, porque el servidor lee el contenido sin credenciales.</p>
   <ul>
     <li><code>beakman/base.md</code>: la personalidad y el método, comunes a todas las asignaturas.</li>
     <li><code>&lt;asignatura&gt;/asignatura.md</code>: lo propio de cada asignatura.</li>
@@ -65,15 +65,15 @@
   <h2 id="servidor">2. Arranca el servidor</h2>
   <p>La imagen está publicada y es pública. Dile qué repositorio leer y con qué dominio la vas a servir:</p>
 <pre><code>docker run -d --name beakman --restart unless-stopped -p 127.0.0.1:8000:8000 \
-  -e BEAKMAN_GITHUB_REPO=TU_USUARIO/beakman-gems \
+  -e BEAKMAN_GITHUB_REPO=TU_USUARIO/beakman-mcp \
   -e BEAKMAN_ALLOWED_HOSTS=beakman.tudominio.com \
-  ghcr.io/icalvete/beakman-gems/mcp:latest</code></pre>
+  ghcr.io/icalvete/beakman-mcp:latest</code></pre>
   <p>Comprueba que ha cargado tu temario:</p>
 <pre><code>curl -s -H "Host: beakman.tudominio.com" localhost:8000/up</code></pre>
   <p>Debe responder con <code>"ok": true</code>, el commit que ha leído y las cuatro asignaturas.</p>
   <table>
     <tr><th>Variable</th><th>Para qué</th></tr>
-    <tr><td><code>BEAKMAN_GITHUB_REPO</code></td><td>El repositorio del que lee el temario. Por defecto, <code>icalvete/beakman-gems</code>.</td></tr>
+    <tr><td><code>BEAKMAN_GITHUB_REPO</code></td><td>El repositorio del que lee el temario. Por defecto, <code>icalvete/beakman-mcp</code>.</td></tr>
     <tr><td><code>BEAKMAN_GITHUB_BRANCH</code></td><td>La rama. Por defecto, <code>main</code>.</td></tr>
     <tr><td><code>BEAKMAN_ALLOWED_HOSTS</code></td><td>Los dominios con los que se puede llamar al servidor, separados por comas. Protege contra ataques de <em>DNS rebinding</em>.</td></tr>
     <tr><td><code>BEAKMAN_REFRESH_SECONDS</code></td><td>Cada cuánto mira si hay cambios. Por defecto, 300.</td></tr>
@@ -125,7 +125,7 @@
       <a href="usarlo.html">Cómo se usa</a>
       <a href="../privacidad.html">Privacidad</a>
       <a href="https://github.com/sponsors/icalvete">Apoya el proyecto</a>
-      <a href="https://github.com/icalvete/beakman-gems">Código en GitHub</a>
+      <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a>
     </nav>
   </div>
 </footer>

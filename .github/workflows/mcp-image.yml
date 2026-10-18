@@ -29,5 +29,5 @@ jobs:
           push: true
           labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
           tags: |
-            ghcr.io/icalvete/beakman-gems/mcp:latest
-            ghcr.io/icalvete/beakman-gems/mcp:${{ github.sha }}
+            ghcr.io/icalvete/beakman-mcp:latest
+            ghcr.io/icalvete/beakman-mcp:${{ github.sha }}
