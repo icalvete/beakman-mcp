@@ -5,6 +5,7 @@ Cuatro tutores Beakman (Historia, Matemáticas, Ciencias, Lengua) para 1º y 2º
 ## Comandos
 - `python3 scripts/build.py`: genera `dist/<Asignatura>/` (tres ficheros por Gem más `gem.txt`).
 - `python3 scripts/build.py --check`: valida sin escribir.
+- Servidor MCP: `mcp/` (Python, `mcp` 2.x `MCPServer`). En local: `BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.server:app --app-dir mcp`. En producción lee el temario de GitHub (`main`) y lo refresca cada 5 min, así que un cambio de contenido no necesita imagen nueva. La imagen la publica `.github/workflows/mcp-image.yml` en `ghcr.io/icalvete/beakman-gems/mcp`; se despliega en alala (`beakman.kademy.net`) desde el repo de kademy (`iac/roles/kademy_stack`).
 - Web: `docs/` (GitHub Pages desde `main`, carpeta `/docs`). Vista previa: `python3 -m http.server -d docs`.
 
 ## Reglas que no se rompen
