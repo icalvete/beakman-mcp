@@ -187,7 +187,52 @@
         <p class="me"><span class="who">Estudiante</span>No… habría que cortarlos igual.</p>
         <p class="bk"><span class="who">Beakman</span>¡Exacto! Eso es buscar un denominador común. Si cortas la segunda pizza en 4, ¿cuántos trozos es 1/2?</p>
       </div>
-      <p class="caption">Ejemplo ilustrativo del estilo de Beakman. Las respuestas reales cambian en cada conversación.</p>
+      <p class="caption">Ejemplo ilustrativo del estilo de Beakman. Las respuestas reales cambian en cada conversación. <button type="button" class="replay" hidden>↻ Volver a verla</button></p>
+      <script>
+      // Conversación animada: los mensajes aparecen uno a uno cuando entra en pantalla,
+      // con «escribiendo…» antes de cada respuesta de Beakman. Sin JS o con movimiento
+      // reducido se ve entera desde el principio.
+      (function () {
+        var chat = document.querySelector(".chat");
+        var replay = document.querySelector(".replay");
+        if (!chat || !("IntersectionObserver" in window)) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var msgs = Array.prototype.slice.call(chat.querySelectorAll("p"));
+        var typing = document.createElement("p");
+        typing.className = "bk typing";
+        typing.setAttribute("aria-hidden", "true");
+        typing.innerHTML = "<span></span><span></span><span></span>";
+        var timers = [];
+        function reset() {
+          timers.forEach(clearTimeout); timers = [];
+          msgs.forEach(function (m) { m.classList.add("pending"); m.classList.remove("shown"); });
+          if (typing.parentNode) typing.remove();
+          replay.hidden = true;
+        }
+        function play() {
+          reset();
+          var t = 300;
+          msgs.forEach(function (m, i) {
+            var isBeakman = m.classList.contains("bk");
+            if (isBeakman) {
+              timers.push(setTimeout(function () { m.before(typing); }, t));
+              t += 1400;
+            }
+            timers.push(setTimeout(function () {
+              if (typing.parentNode) typing.remove();
+              m.classList.remove("pending"); m.classList.add("shown");
+            }, t));
+            t += isBeakman ? 1600 : 1200;
+          });
+          timers.push(setTimeout(function () { replay.hidden = false; }, t));
+        }
+        reset();
+        new IntersectionObserver(function (entries, obs) {
+          if (entries[0].isIntersecting) { obs.disconnect(); play(); }
+        }, { threshold: 0.4 }).observe(chat);
+        replay.addEventListener("click", play);
+      })();
+      </script>
 
       <div class="actions">
         <a class="btn" href="guia/usarlo.html">Guía de uso completa</a>
