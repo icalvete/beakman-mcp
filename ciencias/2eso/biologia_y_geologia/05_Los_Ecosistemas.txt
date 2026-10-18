@@ -1,0 +1,53 @@
+TEMA 5 – LOS ECOSISTEMAS: COMPONENTES, RELACIONES Y FLUJO DE ENERGÍA
+
+Un ecosistema es un lugar con sus condiciones físicas y todos los seres vivos que lo habitan, relacionándose entre sí.
+Puede ser tan grande como un océano o tan pequeño como una charca.
+
+EXPLICACIÓN VISUAL
+Imagina un teatro. El escenario, con su luz, su temperatura y sus decorados, es el biotopo. Los actores que se mueven en él son la biocenosis. Y la obra solo funciona porque los actores se relacionan: unos se comen a otros, otros se ayudan, otros compiten por el mismo papel. Teatro y actores, juntos, forman el ecosistema.
+
+IDEAS CLAVE
+- Ecosistema = biotopo + biocenosis + las relaciones entre ellos.
+  - Biotopo: el medio físico y sus factores abióticos (luz, temperatura, agua, humedad, tipo de suelo, salinidad).
+  - Biocenosis o comunidad: el conjunto de poblaciones que viven allí.
+  - Población: los individuos de una misma especie que viven en un lugar.
+- Relaciones intraespecíficas (dentro de una especie): familiares, gregarias (manadas, bancos de peces), coloniales (corales), sociales (abejas, hormigas) y también la competencia por pareja o territorio.
+- Relaciones interespecíficas (entre especies distintas):
+  - Depredación: uno caza y se come al otro (lince y conejo).
+  - Parasitismo: uno vive a costa del otro sin matarlo enseguida (garrapata y perro).
+  - Mutualismo: los dos salen ganando (abeja y flor; el alga y el hongo que forman un liquen).
+  - Comensalismo: uno se beneficia y al otro le da igual (aves que anidan en un árbol).
+  - Competencia: dos especies necesitan el mismo recurso.
+- Niveles tróficos (quién come a quién):
+  - Productores: autótrofos que fabrican materia orgánica (plantas, algas).
+  - Consumidores primarios (herbívoros), secundarios (carnívoros que comen herbívoros) y terciarios.
+  - Descomponedores: hongos y bacterias que transforman los restos en sales minerales.
+- Cadena trófica: una fila de "quién se come a quién" (hierba → conejo → zorro). Red trófica: muchas cadenas cruzadas, que es lo que ocurre en la realidad.
+- La materia se recicla: circula en ciclo, de los productores a los consumidores y, con los descomponedores, vuelve al suelo y al aire.
+- La energía fluye en un solo sentido: entra como luz, pasa de nivel en nivel y en cada paso gran parte se pierde como calor. De forma aproximada, solo un 10 % pasa al nivel siguiente. Por eso hay muchos menos depredadores que plantas.
+
+ERRORES TÍPICOS
+- Pensar que las flechas de una cadena significan "se come a" (significan "es comido por": señalan hacia dónde va la materia y la energía).
+- Creer que la energía se recicla igual que la materia (la materia sí; la energía hay que reponerla continuamente con la luz del Sol).
+- Pensar que los depredadores son "malos" para el ecosistema (controlan las poblaciones de sus presas).
+- Olvidar a los descomponedores (sin ellos, los restos se acumularían y el suelo se quedaría sin nutrientes).
+
+EJEMPLOS COTIDIANOS
+- Los líquenes de las piedras y los troncos son la unión de un hongo y un alga (o una cianobacteria).
+- La hojarasca de un parque desaparece poco a poco gracias a hongos, bacterias y pequeños animales.
+- Las pulgas y los piojos son parásitos.
+- El lince ibérico depende tanto del conejo que, cuando enfermedades como la mixomatosis redujeron los conejos, el lince estuvo cerca de desaparecer.
+
+EXPERIMENTO CASERO
+Elige un trocito de jardín, parque o huerto (un cuadrado de un metro de lado). Observa durante 15 minutos y apunta los factores abióticos que notes (luz o sombra, humedad, tipo de suelo) y todos los seres vivos que veas. Puedes levantar con cuidado una piedra, mirar debajo y volver a dejarla igual. No toques animales que no conozcas y lávate las manos al terminar. Después, intenta dibujar una pequeña red trófica con lo que encontraste.
+
+PREGUNTAS PARA PENSAR
+- ¿Qué pasaría en un ecosistema si desaparecieran todos los descomponedores?
+- ¿Por qué no hay ecosistemas con diez niveles de depredadores, uno encima del otro?
+- ¿Eres tú productor, consumidor o descomponedor? ¿De qué nivel?
+
+RELACIÓN CON OTROS TEMAS
+Los productores hacen la fotosíntesis del tema 1.
+En 1º viste la biodiversidad: aquí ves cómo se relacionan esas especies.
+En el tema 6 verás cómo el ser humano altera los ecosistemas; en el tema 7, el suelo, donde trabajan los descomponedores.
+En Geografía estudiarás los grandes paisajes del mundo, que son ecosistemas a gran escala.
