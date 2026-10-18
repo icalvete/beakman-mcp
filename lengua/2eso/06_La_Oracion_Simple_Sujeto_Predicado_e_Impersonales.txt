@@ -1,0 +1,101 @@
+TEMA 6 – LA ORACIÓN SIMPLE: SUJETO, PREDICADO E IMPERSONALES
+
+En 1º aprendiste que la oración tiene sujeto y predicado. En 2º vas a aprender a encontrar el sujeto sin fallar (aunque esté escondido o al final) y a reconocer las oraciones que no tienen sujeto.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Haz el "truco del plural": cambia el verbo de número y mira qué otra palabra tiene que cambiar.
+
+"Me gusta **el chocolate**." → "Me gust**an** **los** bombones."
+Al poner el verbo en plural, lo que cambia es "el chocolate" → ESE es el sujeto, no "me".
+
+El sujeto es la pieza que va "atada" al verbo con una cuerda invisible: la **concordancia** en número y persona.
+
+---
+
+IDEAS CLAVE
+
+**1. La oración simple**: tiene un solo verbo en forma personal (o una perífrasis, Tema 9). Se divide en **sujeto** (SN) y **predicado** (SV).
+
+**2. Cómo encontrar el sujeto**
+1. Localiza el verbo.
+2. Cambia el verbo de número (singular ↔ plural).
+3. El sintagma que también tiene que cambiar es el sujeto.
+- "En mi clase hay treinta alumnos" → "hay" no cambia aunque cambies "alumnos" → no hay sujeto (ver impersonales).
+- "Te queda bien esa sudadera" → "Te quedan bien esas sudaderas" → sujeto: esa sudadera.
+
+**Pistas**:
+- El sujeto casi nunca lleva preposición (excepciones raras: "Entre tú y yo lo arreglaremos").
+- Puede ir delante, detrás o en medio del predicado.
+- Puede estar **omitido** (elíptico): "(Nosotros) Llegamos tarde". Se sabe por la desinencia del verbo.
+- "Me", "te", "le", "nos" nunca son sujeto.
+
+**3. El predicado**
+- **Nominal**: verbo copulativo (ser, estar, parecer) + atributo. "Mi gato es muy dormilón."
+- **Verbal**: cualquier otro verbo, con o sin complementos. "Mi gato duerme en el sofá."
+
+**4. Oraciones impersonales**: no tienen sujeto, ni expreso ni omitido. No hay "quién" que haga la acción.
+- **De fenómenos meteorológicos**: llover, nevar, granizar, amanecer… "Llueve mucho."
+- **Con "haber"** (existencia): "Hay pizza." "Hubo problemas." Va siempre en singular.
+- **Con "hacer"** (tiempo atmosférico o transcurrido): "Hace calor." "Hace dos años."
+- **Con "ser" o "estar"** (hora, tiempo): "Es tarde." "Está nublado."
+- **Con "se"** (impersonal refleja): "Se vive bien aquí." "Se busca a los culpables."
+- **Eventuales**: verbo en 3.ª persona del plural sin sujeto concreto: "Llaman a la puerta." "Dicen que va a nevar."
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- "Me encantan tus stories" → sujeto: tus stories (prueba: "Me encanta tu story").
+- "Hace un frío horrible" → impersonal con hacer.
+- "Se come genial en casa de la abuela" → impersonal con se.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: "Me gusta el chocolate" → sujeto: "me".
+✅ **Realidad**: "Me" es complemento indirecto. El sujeto es "el chocolate".
+
+❌ **Error**: "Hubieron muchos problemas", "Habían veinte personas".
+✅ **Correcto**: "Hubo muchos problemas", "Había veinte personas". "Haber" impersonal va en singular: lo que va detrás es complemento directo, no sujeto.
+
+❌ **Error**: Confundir sujeto omitido con oración impersonal.
+✅ **Truco**: en "Comimos pronto" puedo añadir "nosotros" → sujeto omitido. En "Nieva" no puedo añadir ningún sujeto → impersonal.
+
+❌ **Error**: "Hacen dos años que no le veo".
+✅ **Correcto**: "Hace dos años". Impersonal, en singular.
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que la gente dice "hubieron" si es incorrecto? (Pista: ¿qué parece el sujeto?)
+2. En "Llaman a la puerta", ¿quién llama? ¿Importa saberlo?
+3. ¿Puede haber una oración formada solo por un verbo? Pon un ejemplo.
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 5 (Sintagmas)**: sujeto = SN; predicado = SV.
+- **Tema 7 (Complementos)**: lo que hay dentro del predicado.
+- **Tema 8 (Clases de oraciones)**: personales e impersonales, copulativas y predicativas.
+- **Tema 9 (El verbo)**: la desinencia revela el sujeto omitido.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+Señala el sujeto (o di si es impersonal):
+1. "A Pablo le duelen las muelas."
+2. "Ayer granizó en Soria."
+3. "Por la tarde llegaron mis primos."
+4. "Había mucha gente en el concierto."
+5. "Estudiamos juntas."
+6. Corrige: "Habrán sorpresas en la fiesta."
+
+Soluciones:
+1. "las muelas" (prueba: le duele la muela). 2. Impersonal (fenómeno meteorológico). 3. "mis primos". 4. Impersonal con haber. 5. Sujeto omitido: nosotras. 6. "Habrá sorpresas en la fiesta."

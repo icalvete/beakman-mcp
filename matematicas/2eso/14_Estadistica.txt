@@ -1,0 +1,80 @@
+TEMA 14 – ESTADÍSTICA
+
+La estadística recoge, organiza y resume datos para poder sacar conclusiones.
+En 2º aprendemos a hacer tablas completas, a elegir el gráfico adecuado y a interpretar media, mediana, moda y rango.
+
+EXPLICACIÓN VISUAL
+Imagina que tienes las notas de un examen de 20 alumnos apuntadas en un papel, desordenadas.
+Así no ves nada. Pero si las cuentas en una tabla y haces un gráfico de barras, de repente "ves" la clase:
+dónde se concentran las notas, si hay muchos suspensos, cuál es la más habitual.
+
+IDEAS CLAVE
+
+POBLACIÓN, MUESTRA Y VARIABLES
+- Población: todo el grupo que se estudia. Muestra: la parte que se pregunta de verdad.
+- Variable cualitativa: palabras (color, deporte).
+- Cuantitativa discreta: valores sueltos que se cuentan (número de hermanos).
+- Cuantitativa continua: cualquier valor en un intervalo (altura, peso).
+
+FRECUENCIAS
+- Absoluta (f): cuántas veces aparece un valor.
+- Relativa (fr): f ÷ total. Multiplicada por 100 da el porcentaje.
+- Acumulada (F): la suma de las absolutas hasta ese valor.
+
+GRÁFICOS
+- Barras: variables cualitativas o discretas.
+- Histograma: variables continuas agrupadas en intervalos (barras pegadas).
+- Polígono de frecuencias: une los extremos de las barras.
+- Sectores: para ver partes de un todo. Ángulo = fr × 360°.
+
+MEDIDAS DE CENTRALIZACIÓN
+- Media: suma de todos los datos ÷ número de datos.
+- Mediana: el valor central con los datos ordenados.
+- Moda: el valor más repetido.
+
+MEDIDA DE DISPERSIÓN
+- Rango (o recorrido): dato mayor - dato menor. Dice si los datos están juntos o muy repartidos.
+
+EJEMPLOS RESUELTOS
+Notas de 20 alumnos:
+
+| Nota | f | fr   | %   | F  |
+|------|---|------|-----|----|
+| 4    | 2 | 0,10 | 10% | 2  |
+| 5    | 5 | 0,25 | 25% | 7  |
+| 6    | 6 | 0,30 | 30% | 13 |
+| 7    | 4 | 0,20 | 20% | 17 |
+| 8    | 3 | 0,15 | 15% | 20 |
+| Total| 20| 1    | 100%|    |
+
+1) Media: (4·2 + 5·5 + 6·6 + 7·4 + 8·3) ÷ 20 = (8 + 25 + 36 + 28 + 24) ÷ 20 = 121 ÷ 20 = 6,05
+2) Moda: 6 (la que más se repite, 6 veces).
+3) Mediana: con 20 datos, los centrales son el 10.º y el 11.º. Por la columna F, los dos son un 6 → mediana = 6.
+4) Rango: 8 - 4 = 4.
+5) Sector del 6 en un gráfico de sectores: 0,30 × 360° = 108°.
+6) Media engañosa: sueldos de 1000, 1100, 1200, 1300 y 10 000 €.
+   Media = 14 600 ÷ 5 = 2920 €, pero la mediana es 1200 €. Aquí la mediana representa mejor al grupo.
+
+ERRORES TÍPICOS
+- Calcular la mediana sin ordenar los datos.
+- En la media de una tabla, sumar los valores sin multiplicar por su frecuencia.
+- Que las frecuencias relativas no sumen 1 (o los porcentajes, 100%).
+- Usar un gráfico de sectores para datos que no son partes de un todo.
+- Fiarse de una gráfica sin mirar dónde empieza el eje vertical.
+
+EJEMPLOS COTIDIANOS
+- La nota media del trimestre.
+- Encuestas y sondeos en las noticias.
+- Estadísticas de un jugador: puntos por partido, porcentaje de tiros.
+- Datos de población en Geografía.
+
+PREGUNTAS PARA PENSAR
+- ¿Puede la media ser un valor que no ha sacado nadie?
+- ¿Por qué las noticias a veces dan el sueldo "mediano" y no el "medio"?
+- Si preguntas solo a tus amigos, ¿la muestra representa a todo el instituto?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía la estadística del tema 10 de 1º.
+- Usa fracciones, decimales y porcentajes (temas 2 y 5).
+- Los gráficos se leen como las funciones (tema 10).
+- La frecuencia relativa lleva a la probabilidad (tema 15).

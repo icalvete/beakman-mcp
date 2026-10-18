@@ -1,0 +1,63 @@
+TEMA 5 – PORCENTAJES
+
+Repasamos los porcentajes de 1º y aprendemos el truco que lo simplifica todo: multiplicar por un solo número (el índice de variación).
+
+EXPLICACIÓN VISUAL
+Imagina una barra de 100 casillas que representa el precio de una camiseta.
+- Un descuento del 20% tacha 20 casillas: pagas 80 de cada 100 → × 0,80.
+- Una subida del 15% añade 15 casillas: pagas 115 de cada 100 → × 1,15.
+Así, en vez de calcular el descuento y restarlo, multiplicas una sola vez.
+
+IDEAS CLAVE
+
+CALCULAR UN PORCENTAJE
+- El 30% de 80: 0,30 × 80 = 24
+- ¿Qué porcentaje es 12 de 30? 12 ÷ 30 = 0,4 → 40%
+
+ÍNDICE DE VARIACIÓN
+- Aumento del a%: multiplicar por (1 + a/100). Subir un 21% → × 1,21
+- Disminución del a%: multiplicar por (1 - a/100). Bajar un 25% → × 0,75
+
+PORCENTAJES ENCADENADOS
+Se multiplican los índices uno detrás de otro. NO se suman los porcentajes.
+
+CALCULAR LA CANTIDAD INICIAL
+Si conoces el precio final, divides entre el índice.
+Precio original = precio final ÷ índice
+
+PORCENTAJE DE VARIACIÓN
+(Valor final - valor inicial) ÷ valor inicial × 100
+
+EJEMPLOS RESUELTOS
+1) Una chaqueta de 80 € tiene un 25% de descuento.
+   Índice: 1 - 0,25 = 0,75. Precio: 80 × 0,75 = 60 €.
+2) Un videojuego cuesta 50 € sin IVA (21%).
+   Índice: 1,21. Precio final: 50 × 1,21 = 60,50 €.
+3) Encadenados: un abrigo de 200 € sube un 10% y luego tiene un 20% de descuento.
+   200 × 1,10 × 0,80 = 220 × 0,80 = 176 €. (No es lo mismo que bajar un 10%: eso daría 180 €.)
+4) Al revés: pagaste 42 € con un 30% de descuento. ¿Cuánto costaba?
+   Índice: 0,70. Original: 42 ÷ 0,70 = 60 €. (Comprueba: 60 × 0,70 = 42.)
+5) Variación: tu paga pasa de 40 € a 50 €.
+   (50 - 40) ÷ 40 = 10 ÷ 40 = 0,25 → ha subido un 25%.
+
+ERRORES TÍPICOS
+- Sumar porcentajes encadenados: subir un 10% y luego otro 10% es × 1,10 × 1,10 = × 1,21 (un 21%, no un 20%).
+- Pensar que subir un 10% y bajar un 10% deja el precio igual: 100 → 110 → 99.
+- Para hallar el precio original, aplicar el porcentaje al precio final (42 + 30% de 42 NO da 60).
+- Confundir el índice: un 5% de descuento es × 0,95, no × 0,5 ni × 0,05.
+
+EJEMPLOS COTIDIANOS
+- Rebajas y "segundas rebajas" (porcentajes encadenados).
+- El IVA de los tickets de compra.
+- Subidas de precios y del sueldo.
+- Las noticias: "el paro baja un 3%", "las ventas suben un 12%".
+
+PREGUNTAS PARA PENSAR
+- ¿Es lo mismo un 20% de descuento y luego un 10% que un 30% de golpe?
+- Si algo baja un 50%, ¿cuánto tiene que subir para volver al precio original?
+- ¿Puede algo subir más de un 100%? ¿Y bajar más de un 100%?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía el tema 6 de 1º (porcentajes).
+- Un porcentaje es una proporcionalidad directa (tema 4).
+- Se usa en estadística para las frecuencias relativas (tema 14).

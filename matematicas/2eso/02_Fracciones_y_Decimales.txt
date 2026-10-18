@@ -1,0 +1,67 @@
+TEMA 2 – FRACCIONES Y DECIMALES
+
+Repasamos las fracciones y los decimales de 1º y aprendemos a combinarlos en operaciones más largas, también con números negativos.
+
+EXPLICACIÓN VISUAL
+Imagina tu paga de 18 €.
+- Gastas 1/3 en el cine: 18 ÷ 3 = 6 €. Te quedan 12 €.
+- Gastas la mitad de lo que queda en una merienda: 12 ÷ 2 = 6 €. Te quedan 6 €.
+¿Qué fracción de la paga te queda? 6 de 18 = 6/18 = 1/3.
+Ojo: "la mitad de lo que queda" no es "la mitad de la paga".
+
+IDEAS CLAVE
+
+REPASO RÁPIDO
+- Sumar y restar: denominador común (mcm). 1/2 + 1/3 = 3/6 + 2/6 = 5/6
+- Multiplicar: en línea. 2/3 × 3/4 = 6/12 = 1/2
+- Dividir: multiplicar por la inversa. 3/5 ÷ 2/5 = 3/5 × 5/2 = 15/10 = 3/2
+- Fracción de una cantidad: 3/4 de 20 = 20 ÷ 4 × 3 = 15
+
+FRACCIONES CON SIGNO
+El signo puede ir delante, arriba o abajo: -2/3 = (-2)/3 = 2/(-3).
+Se aplica la regla de los signos del tema 1.
+
+OPERACIONES COMBINADAS
+Misma jerarquía que con enteros: paréntesis, después × y ÷, y por último + y -.
+Simplifica siempre que puedas: los números pequeños dan menos guerra.
+
+DECIMALES
+- Multiplicar: 2,5 × 0,4 = 1,00 = 1 (25 × 4 = 100, y 2 decimales).
+- Dividir: se quita la coma del divisor moviendo las dos comas. 3,6 ÷ 0,12 = 360 ÷ 12 = 30
+- Decimal exacto a fracción: 0,35 = 35/100 = 7/20
+- Periódico puro sencillo: 0,333... = 3/9 = 1/3 y 0,777... = 7/9 (la cifra que se repite, entre 9).
+
+EJEMPLOS RESUELTOS
+1) 1/2 + 2/3 × 3/4
+   Primero la multiplicación: 2/3 × 3/4 = 6/12 = 1/2
+   Después la suma: 1/2 + 1/2 = 1
+2) (2/3 - 1/4) × 6/5
+   Paréntesis: 8/12 - 3/12 = 5/12
+   Multiplicación: 5/12 × 6/5 = 30/60 = 1/2
+3) -2/3 + 1/2 = -4/6 + 3/6 = -1/6
+4) 1 - 3/4 ÷ 3/2
+   División: 3/4 × 2/3 = 6/12 = 1/2
+   Resta: 1 - 1/2 = 1/2
+
+ERRORES TÍPICOS
+- Sumar antes de multiplicar: en 1/2 + 2/3 × 3/4 no se empieza por la suma.
+- Sumar numeradores y denominadores: 1/2 + 1/3 NO es 2/5.
+- Calcular la fracción "del total" cuando el problema dice "de lo que queda".
+- Mover la coma solo en uno de los dos números al dividir decimales.
+- Pensar que 1/3 es exactamente 0,33.
+
+EJEMPLOS COTIDIANOS
+- Recetas: usar 3/4 de una receta para menos personas.
+- Repartos: "un tercio para ti y la mitad de lo que sobra para mí".
+- Precios: 1,5 kg de fruta a 2,40 €/kg = 3,60 €.
+- Tiempo: 3/4 de hora = 45 minutos.
+
+PREGUNTAS PARA PENSAR
+- Si multiplicas un número por una fracción menor que 1, ¿el resultado crece o decrece?
+- ¿Por qué dividir entre 1/2 es lo mismo que multiplicar por 2?
+- ¿Es lo mismo gastar 1/3 y luego 1/3 de lo que queda que gastar 2/3?
+
+RELACIÓN CON OTROS TEMAS
+- Repasa los temas 3, 4 y 5 de 1º (fracciones, decimales y su relación).
+- Usa la jerarquía y los signos del tema 1.
+- Imprescindible para las ecuaciones con denominadores (tema 7) y para la probabilidad (tema 15).

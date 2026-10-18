@@ -1,0 +1,23 @@
+BORRADOR: temario general de 2º ESO (LOMLOE). Se ajustará al libro de clase.
+
+MAPA DEL CURSO – MATEMÁTICAS 2º ESO
+
+1. Números Enteros
+2. Fracciones y Decimales
+3. Potencias y Raíz Cuadrada
+4. Proporcionalidad
+5. Porcentajes
+6. Expresiones Algebraicas y Polinomios
+7. Ecuaciones de Primer Grado
+8. Ecuaciones de Segundo Grado
+9. Sistemas de Ecuaciones
+10. Funciones y Gráficas
+11. Teorema de Pitágoras
+12. Semejanza y Teorema de Tales
+13. Cuerpos Geométricos: Áreas y Volúmenes
+14. Estadística
+15. Probabilidad
+
+El curso sigue este orden de forma progresiva.
+Empieza repasando y ampliando los números de 1º, pasa al álgebra (el gran salto de este curso), luego a la geometría y termina con estadística y probabilidad.
+Cada bloque se apoya en el anterior y prepara el siguiente.

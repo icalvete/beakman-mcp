@@ -1,0 +1,56 @@
+TEMA 1 – LA CIENCIA Y LA MEDIDA: MAGNITUDES, UNIDADES Y LABORATORIO
+
+La Física y la Química estudian la materia y la energía, y cómo cambian.
+Para estudiarlas hace falta medir, y para medir hacen falta unidades que todo el mundo entienda igual.
+
+EXPLICACIÓN VISUAL
+Imagina que le dices a un amigo: "la mesa mide 6 palmos". Él la mide con sus palmos y le salen 7. ¿Quién tiene razón? Los dos, pero cada uno usa una "regla" distinta. Por eso los científicos se pusieron de acuerdo en usar las mismas unidades en todo el mundo: así una medida significa lo mismo en Madrid que en Tokio.
+
+IDEAS CLAVE
+- El método científico: observación → pregunta → hipótesis → experimento → análisis de resultados → conclusión. Ya lo viste en 1º; en Física y Química casi siempre incluye medir.
+- Una magnitud es todo lo que se puede medir y expresar con un número y una unidad: longitud, masa, tiempo, temperatura, volumen...
+- Lo que no se puede medir (la belleza, el miedo) no es una magnitud.
+- Una medida siempre lleva número Y unidad: "5" no dice nada; "5 m" sí.
+- El Sistema Internacional (SI) fija las unidades comunes. Tiene 7 magnitudes básicas; las que más usarás son:
+  - Longitud: metro (m).
+  - Masa: kilogramo (kg).
+  - Tiempo: segundo (s).
+  - Temperatura: kelvin (K).
+- Otras magnitudes se obtienen a partir de las básicas (magnitudes derivadas): superficie (m²), volumen (m³), velocidad (m/s), densidad (kg/m³).
+- Los prefijos indican múltiplos y submúltiplos: kilo (k) = 1000; centi (c) = 0,01; mili (m) = 0,001.
+
+CAMBIO DE UNIDADES (factores de conversión)
+Se multiplica por una fracción que vale 1, con la unidad que quieres quitar abajo:
+- 2,5 km · (1000 m / 1 km) = 2500 m
+- 350 g · (1 kg / 1000 g) = 0,35 kg
+- 3 min · (60 s / 1 min) = 180 s
+- 1 L = 1 dm³ = 1000 cm³, y 1 mL = 1 cm³
+
+EL LABORATORIO Y LA SEGURIDAD
+- Instrumentos: regla y cinta métrica (longitud), balanza (masa), probeta (volumen de líquidos), cronómetro (tiempo), termómetro (temperatura).
+- Normas: bata y gafas, pelo recogido, no comer ni beber, no oler ni tocar productos sin permiso, avisar al profesor de cualquier accidente.
+- Los pictogramas de las etiquetas (rombos con borde rojo y un dibujo) avisan del peligro de cada producto: inflamable, corrosivo, tóxico...
+
+ERRORES TÍPICOS
+- Dar el resultado sin unidad.
+- Confundir el símbolo "m" de metro con el prefijo "m" de mili (mm es milímetro).
+- Dividir cuando hay que multiplicar al cambiar de unidades (pregúntate: ¿el número debe salir más grande o más pequeño?).
+- Leer la probeta desde arriba (hay que poner los ojos a la altura del líquido).
+
+EJEMPLOS COTIDIANOS
+- Las recetas usan gramos y mililitros para que el bizcocho salga igual en cualquier casa.
+- Las señales de tráfico indican la velocidad en km/h.
+- Los botes de limpieza llevan pictogramas de peligro: por eso nunca se mezclan productos en casa.
+
+EXPERIMENTO CASERO
+Mide el largo de una mesa en palmos tuyos y pide a un adulto que la mida en sus palmos. Después medidla con una cinta métrica. Compara: ¿por qué los palmos no sirven como unidad para todo el mundo? 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- ¿Qué pasaría si cada país usara su propio "metro"?
+- ¿La felicidad es una magnitud? ¿Por qué?
+- Si cambias 5 km a metros, ¿el número debe salir mayor o menor? ¿Por qué?
+
+RELACIÓN CON OTROS TEMAS
+Este tema es la caja de herramientas del curso: en todos los temas siguientes mediremos y cambiaremos unidades.
+En el tema 2 usaremos masa y volumen para calcular la densidad.
+En Matemáticas trabajas las fracciones y la proporcionalidad que usamos en los factores de conversión.

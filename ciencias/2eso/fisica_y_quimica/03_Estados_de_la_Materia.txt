@@ -1,0 +1,49 @@
+TEMA 3 – LOS ESTADOS DE LA MATERIA Y LA TEORÍA CINÉTICO-MOLECULAR
+
+La materia puede estar en tres estados: sólido, líquido y gaseoso.
+La teoría cinético-molecular explica por qué cada estado se comporta como lo hace, imaginando la materia formada por partículas diminutas en movimiento.
+
+EXPLICACIÓN VISUAL
+Imagina el patio del instituto. En una fila para la foto de clase, todos estáis quietos y muy juntos, solo os movéis un poco en el sitio: eso es un sólido. En el pasillo al cambiar de clase, estáis juntos pero os movéis y os cruzáis: eso es un líquido. En el recreo, cada uno corre por donde quiere, separados y chocando de vez en cuando: eso es un gas.
+
+IDEAS CLAVE
+- Sólido: forma y volumen fijos. Partículas muy juntas, ordenadas, que solo vibran.
+- Líquido: volumen fijo, pero adopta la forma del recipiente. Partículas juntas que se deslizan unas sobre otras.
+- Gas: ni forma ni volumen fijos; ocupa todo el recipiente y se puede comprimir. Partículas muy separadas, moviéndose rápido en todas direcciones.
+- Teoría cinético-molecular (TCM):
+  - La materia está formada por partículas muy pequeñas.
+  - Las partículas están en movimiento continuo.
+  - Entre las partículas hay espacio vacío.
+  - Cuanta más temperatura, más rápido se mueven.
+- La presión de un gas se debe a los choques de sus partículas contra las paredes del recipiente.
+- Cambios de estado:
+  - Fusión (sólido → líquido) y solidificación (líquido → sólido).
+  - Vaporización (líquido → gas) y condensación (gas → líquido).
+  - Sublimación (sólido → gas) y sublimación inversa o deposición (gas → sólido).
+- La vaporización puede ser evaporación (lenta, solo en la superficie, a cualquier temperatura) o ebullición (en todo el líquido, a una temperatura fija).
+- El agua pura funde a 0 °C y hierve a 100 °C (a nivel del mar). Mientras cambia de estado, su temperatura no cambia.
+
+ERRORES TÍPICOS
+- Pensar que las partículas de un sólido están quietas (vibran).
+- Creer que las partículas se hacen más grandes al calentarse (lo que aumenta es su movimiento y la separación entre ellas).
+- Confundir evaporación con ebullición (la ropa tendida se seca sin hervir).
+- Pensar que el "humo" blanco de la olla es vapor (el vapor de agua es invisible; lo blanco son gotitas que ya se han condensado).
+
+EJEMPLOS COTIDIANOS
+- El olor de una colonia llega a toda la habitación porque las partículas del gas se mueven y se mezclan con el aire.
+- El vaso con agua fría "suda": el vapor del aire se condensa al tocar el cristal frío.
+- En días muy fríos y secos, la nieve puede ir desapareciendo sin llegar a derretirse: pasa directamente a vapor (sublimación).
+- Las ruedas de la bici se inflan: metemos más partículas de aire y aumentan los choques (más presión).
+
+EXPERIMENTO CASERO
+Llena un vaso con agua fría y otro con agua caliente del grifo (que la sirva un adulto; no hace falta que esté muy caliente). Deja caer a la vez una gota de colorante alimentario en cada uno, sin remover. ¿En cuál se reparte antes el color? Relaciónalo con la velocidad de las partículas.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué se puede comprimir el aire de una jeringuilla y el agua casi nada?
+- ¿Por qué se seca antes la ropa en un día de viento?
+- Si el agua hierve a 100 °C, ¿por qué se evapora un charco en un día de 20 °C?
+
+RELACIÓN CON OTROS TEMAS
+Explica con partículas lo que viste del ciclo del agua en 1º (hidrosfera).
+La idea de partícula prepara el tema 5 (el átomo).
+En el tema 10 (calor y temperatura) veremos que la temperatura mide justo esa agitación de las partículas.

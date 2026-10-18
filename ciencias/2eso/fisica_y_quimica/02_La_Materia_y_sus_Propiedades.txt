@@ -1,0 +1,47 @@
+TEMA 2 – LA MATERIA Y SUS PROPIEDADES: MASA, VOLUMEN Y DENSIDAD
+
+Materia es todo lo que tiene masa y ocupa un lugar en el espacio: el aire, el agua, tu cuerpo, una piedra.
+Sus propiedades nos permiten describirla y distinguir unas sustancias de otras.
+
+EXPLICACIÓN VISUAL
+Imagina dos cajas del mismo tamaño: una llena de plumas y otra llena de canicas. Ocupan lo mismo (mismo volumen), pero la de canicas cuesta mucho más levantarla (más masa). En las canicas la materia está "más apretada". Esa idea de "cuánta masa hay en cada trozo de espacio" se llama densidad.
+
+IDEAS CLAVE
+- Propiedades generales: las tiene toda la materia, pero no sirven para distinguir sustancias. Son la masa y el volumen.
+- Propiedades específicas (o características): sirven para identificar una sustancia. Por ejemplo: densidad, color, olor, temperatura de fusión y de ebullición, dureza.
+- Masa: cantidad de materia. Se mide con la balanza. Unidad SI: kilogramo (kg).
+- Volumen: espacio que ocupa. Unidad SI: metro cúbico (m³). En el día a día: litros (L) y mililitros (mL). 1 mL = 1 cm³.
+- El volumen de un sólido irregular se mide sumergiéndolo en una probeta con agua: el agua sube justo el volumen del objeto.
+- Densidad = masa / volumen (d = m / V). Unidades: g/cm³ o kg/m³.
+- Algunas densidades aproximadas: agua 1 g/cm³ (= 1000 kg/m³), aceite 0,92 g/cm³, hielo 0,92 g/cm³, hierro 7,9 g/cm³, oro 19,3 g/cm³.
+- Un objeto flota en un líquido si es menos denso que ese líquido.
+
+EJEMPLO RESUELTO
+Una piedra tiene 150 g de masa. En una probeta con 100 mL de agua, el nivel sube a 160 mL.
+Volumen de la piedra: 160 mL − 100 mL = 60 mL = 60 cm³.
+Densidad: 150 g / 60 cm³ = 2,5 g/cm³. Es más densa que el agua: se hunde.
+
+ERRORES TÍPICOS
+- Confundir masa y volumen (un globo grande puede tener muy poca masa).
+- Pensar que "un kilo de hierro pesa más que un kilo de paja" (los dos tienen 1 kg; el hierro ocupa mucho menos).
+- Creer que los objetos grandes siempre se hunden (un barco enorme flota; una moneda pequeña se hunde).
+- Pensar que la densidad cambia si partes el objeto por la mitad (la mitad tiene la mitad de masa y la mitad de volumen: misma densidad).
+
+EJEMPLOS COTIDIANOS
+- El aceite flota sobre el vinagre de la ensalada porque es menos denso.
+- El hielo flota en el vaso: es menos denso que el agua líquida.
+- Los globos de helio suben porque el helio es menos denso que el aire.
+- Se flota mejor en el mar que en la piscina: el agua salada es más densa.
+
+EXPERIMENTO CASERO
+Llena un vaso de agua y mete un huevo crudo con cuidado: se hunde. Sácalo, disuelve varias cucharadas de sal en el agua, removiendo bien, y vuelve a meterlo. ¿Qué pasa? Pista: la sal hace el agua más densa. 100% seguro (lávate las manos después de tocar el huevo crudo).
+
+PREGUNTAS PARA PENSAR
+- ¿Cómo puede flotar un barco de acero si el acero es más denso que el agua?
+- Si aplastas una bola de plastilina, ¿cambia su masa? ¿Y su volumen? ¿Y su densidad?
+- ¿Qué tiene más densidad, un litro de aceite o una gota de aceite?
+
+RELACIÓN CON OTROS TEMAS
+Usa las unidades y los cambios de unidades del tema 1.
+En el tema 3 veremos, mirando las partículas, por qué la densidad cambia con el estado (el hielo flota).
+La densidad sirve en el tema 4 para separar mezclas (decantación).

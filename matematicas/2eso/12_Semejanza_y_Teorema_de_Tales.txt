@@ -1,0 +1,76 @@
+TEMA 12 – SEMEJANZA Y TEOREMA DE TALES
+
+Dos figuras son semejantes cuando tienen la misma forma aunque distinto tamaño, como una foto y su ampliación.
+El teorema de Tales nos dice cómo se reparten los segmentos cuando cortamos con rectas paralelas.
+
+EXPLICACIÓN VISUAL
+Imagina que haces zoom a una foto en el móvil.
+Todo se hace más grande, pero nada se deforma: los ángulos siguen iguales y todas las medidas se multiplican por el mismo número.
+Si estiras la foto solo a lo ancho, las caras salen "gordas": ya NO es semejante.
+
+IDEAS CLAVE
+
+FIGURAS SEMEJANTES
+- Ángulos iguales.
+- Lados proporcionales: todos se multiplican por el mismo número k (razón de semejanza).
+- k > 1: ampliación. k < 1: reducción.
+
+ÁREAS Y VOLÚMENES
+Si las longitudes se multiplican por k:
+- las áreas se multiplican por k²
+- los volúmenes se multiplican por k³
+Dobla el lado de un cuadrado: el área se multiplica por 4, no por 2.
+
+TRIÁNGULOS SEMEJANTES
+Basta con que tengan dos ángulos iguales (el tercero también lo será, porque suman 180°).
+
+TEOREMA DE TALES
+Si varias rectas paralelas cortan a dos rectas, los segmentos que quedan son proporcionales.
+Dibujo: dos rectas r y s cortadas por tres rectas paralelas (las que unen A con A', B con B' y C con C').
+  r:  A ---- B -------- C
+  s:  A' ------ B' -------------- C'
+Escrito con medidas: AB / BC = A'B' / B'C'
+
+TRIÁNGULOS EN POSICIÓN DE TALES
+Si dentro de un triángulo trazas una recta paralela a un lado, se forma un triángulo pequeño semejante al grande.
+
+ESCALAS
+Una escala 1:100 es una semejanza con k = 1/100: 1 cm en el plano son 100 cm (1 m) en la realidad.
+
+EJEMPLOS RESUELTOS
+1) Un rectángulo de 3 cm × 5 cm se amplía con k = 2.
+   Lados: 6 cm × 10 cm. Área: de 15 cm² pasa a 60 cm² (15 × 2² = 60).
+2) Tales: AB = 3, BC = 5, A'B' = 6. ¿B'C'?
+   3/5 = 6/x → 3x = 30 → x = 10
+3) La sombra de un palo de 2 m mide 1,5 m. A la misma hora, la sombra de un árbol mide 6 m.
+   Los triángulos palo-sombra y árbol-sombra son semejantes.
+   altura / 6 = 2 / 1,5 → altura = 2 × 6 ÷ 1,5 = 8 m
+4) Plano a escala 1:100. Una habitación mide 4 cm × 3,5 cm en el plano.
+   Real: 4 m × 3,5 m. Área real: 4 × 3,5 = 14 m².
+   En el plano son 14 cm²: el área real es 100² = 10 000 veces mayor (140 000 cm² = 14 m²).
+
+ERRORES TÍPICOS
+- Pensar que si el lado se duplica, el área también se duplica (se multiplica por 4).
+- Sumar en vez de multiplicar: ampliar 3 cm "con razón 2" NO es 3 + 2.
+- Colocar mal los lados en la proporción (hay que emparejar lados correspondientes).
+- Usar Tales cuando las rectas no son paralelas.
+
+EJEMPLOS COTIDIANOS
+- Ampliar o reducir fotos y fotocopias.
+- Maquetas, mapas y planos de casas.
+- Medir la altura de un edificio o un árbol con su sombra.
+- Las tallas de una misma prenda.
+
+PREGUNTAS PARA PENSAR
+- ¿Son semejantes todos los cuadrados? ¿Y todos los rectángulos?
+- Si una pizza tiene el doble de diámetro que otra, ¿tiene el doble de pizza?
+- ¿Por qué la sombra sirve para medir alturas?
+
+ANÉCDOTA
+Se cuenta que Tales de Mileto, un sabio griego, calculó la altura de una pirámide de Egipto midiendo su sombra y comparándola con la de un bastón.
+
+RELACIÓN CON OTROS TEMAS
+- Se basa en la proporcionalidad (tema 4) y las escalas.
+- Los cuadrados y cubos de k vienen de las potencias (tema 3).
+- Áreas y volúmenes de cuerpos semejantes (tema 13).
+- En Geografía, las escalas de los mapas son semejanzas.

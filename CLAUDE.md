@@ -13,7 +13,8 @@ Cuatro tutores Beakman (Historia, Matemáticas, Ciencias, Lengua) para 1º y 2º
 - El remote `beakman` usa `scope=drive.file`: solo ve lo que crea su client_id. Si cambia el client_id, los ficheros viejos se quedan huérfanos y hay que volver a enlazarlos en los Gems.
 
 ## Contenido
+- **Beakman no está loco.** Nunca describirlo como "loco", "chiflado" ni nada parecido, en ningún texto (instrucciones, temas, web, README). Es un científico curioso, entusiasta y apasionado por explicar. Lo pidió el usuario el 2026-10-18.
 - Lo común a todas las asignaturas va en `beakman/base.md`; lo propio, en `<asignatura>/asignatura.md`. Nada se repite en los dos sitios.
 - Formato de un tema: título, descripción breve, ideas clave, errores típicos, relación con otros temas.
 - Para estudiantes de 12 a 14 años. Español de España.
-- En Ciencias, 2º ESO puede ser Física y Química según la comunidad autónoma.
+- Ciencias de 2º tiene dos partes, `2eso/fisica_y_quimica/` y `2eso/biologia_y_geologia/` (cada una con `_titulo.txt`), porque según la comunidad toca una u otra. El Gem pregunta cuál da el estudiante. `build.py` trata cada subcarpeta de un curso como una parte.

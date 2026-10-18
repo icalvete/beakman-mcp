@@ -1,0 +1,106 @@
+TEMA 5 – LOS SINTAGMAS
+
+Entre la palabra y la oración hay un escalón intermedio: el sintagma. Es un grupo de palabras que funciona como un bloque alrededor de una palabra principal, el núcleo. La gramática de la RAE los llama también **grupos** (grupo nominal, grupo verbal…). Son lo mismo.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Piensa en un equipo de fútbol: hay una estrella (el núcleo) y compañeros que juegan para ella.
+
+"**Las zapatillas** **muy** **caras** **de mi hermano**"
+- Estrella: zapatillas (sustantivo) → el equipo entero es un SINTAGMA NOMINAL.
+- Las → determinante que acompaña.
+- muy caras → adjetivo (con su propio "ayudante", muy).
+- de mi hermano → complemento con preposición.
+
+Si quitas la estrella, el equipo se deshace: "las muy caras de mi hermano" ya no funciona igual.
+
+---
+
+IDEAS CLAVE
+
+**Sintagma**: palabra o grupo de palabras organizado en torno a un **núcleo**. El tipo de sintagma lo decide la categoría del núcleo.
+
+**1. Sintagma nominal (SN)** → núcleo: sustantivo o pronombre.
+- Estructura: (determinante) + NÚCLEO + (complementos del nombre).
+- Complementos del nombre:
+  - Adjetivo (adyacente): "camiseta **azul**".
+  - Sintagma preposicional: "camiseta **de rayas**".
+  - Aposición (otro SN sin preposición): "mi primo **Álex**", "Madrid, **capital de España**".
+- Ejemplos: "Ella", "Lucía", "los tres perros del vecino".
+
+**2. Sintagma adjetival (SAdj)** → núcleo: adjetivo.
+- Estructura: (modificador, normalmente un adverbio) + NÚCLEO + (complemento con preposición).
+- "**muy** orgulloso **de su hija**", "bastante cansada", "lleno **de agua**".
+
+**3. Sintagma adverbial (SAdv)** → núcleo: adverbio.
+- Estructura: (modificador) + NÚCLEO + (complemento con preposición).
+- "**muy** lejos **de casa**", "demasiado tarde", "aquí".
+
+**4. Sintagma preposicional (SPrep)** → preposición (enlace) + término (normalmente un SN).
+- "**en** la mochila", "**de** chocolate", "**con** mis amigos", "**desde** allí".
+- La preposición no es un núcleo como los demás: hace de enlace. Lo que va detrás se llama **término**.
+
+**5. Sintagma verbal (SV)** → núcleo: verbo. Es el **predicado** de la oración.
+- "**compró** un libro a su padre ayer".
+- Los complementos del verbo (CD, CI, CC…) los verás en el Tema 7.
+
+**Sintagmas dentro de sintagmas**: un SPrep puede ir dentro de un SN ("la casa **de mi abuela**"), y un SAdj dentro de un SN ("un día **muy largo**"). Por eso se dibujan como cajas dentro de cajas.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+Título de una serie: "La casa de papel"
+- SN: núcleo "casa", determinante "La", complemento "de papel" (SPrep: preposición "de" + término "papel").
+
+Mensaje: "Llego muy tarde"
+- SV: núcleo "llego" + SAdv "muy tarde" (núcleo "tarde", modificador "muy").
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Decir que el núcleo de "de mi hermano" es "hermano" y llamarlo SN.
+✅ **Realidad**: Todo el bloque es un SPrep (empieza por preposición). Dentro, "mi hermano" es un SN que hace de término.
+
+❌ **Error**: Confundir adjetivo y adverbio en "muy rápido" / "corre rápido".
+✅ **Truco**: si acompaña a un sustantivo y concuerda (coche rápido, motos rápidas) es adjetivo; si acompaña al verbo y no cambia (corren rápido) funciona como adverbio.
+
+❌ **Error**: Pensar que un sintagma tiene que tener varias palabras.
+✅ **Realidad**: "Ella" sola es un SN; "aquí" solo es un SAdv.
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que la gramática necesita el escalón del sintagma y no pasa directamente de la palabra a la oración?
+2. En "un vaso de agua", ¿qué palabra no puedes quitar sin que deje de ser lo mismo?
+3. ¿Puede un sintagma estar dentro de otro del mismo tipo? Busca un ejemplo.
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 4 (La palabra)**: la categoría del núcleo decide el tipo de sintagma (repasa en 1º las categorías gramaticales).
+- **Tema 6 (Oración simple)**: el sujeto es un SN y el predicado, un SV.
+- **Tema 7 (Complementos)**: cada complemento del verbo es un sintagma.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+Di qué tipo de sintagma es y cuál es su núcleo:
+1. "las gafas de sol"
+2. "muy contento con el resultado"
+3. "bastante cerca"
+4. "sin azúcar"
+5. "Marta, mi vecina"
+
+Soluciones:
+1. SN, núcleo "gafas" ("de sol" es SPrep complemento del nombre).
+2. SAdj, núcleo "contento" ("muy" modificador; "con el resultado" complemento).
+3. SAdv, núcleo "cerca".
+4. SPrep: preposición "sin" + término "azúcar".
+5. SN, núcleo "Marta"; "mi vecina" es una aposición.

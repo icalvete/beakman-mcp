@@ -1,0 +1,52 @@
+TEMA 7 – EL MOVIMIENTO
+
+Un cuerpo se mueve cuando cambia de posición con el tiempo.
+Pero para decir si algo se mueve, primero hay que elegir desde dónde lo miramos.
+
+EXPLICACIÓN VISUAL
+Imagina que vas sentada en un tren. Para tu amiga del asiento de al lado, estás quieta. Para alguien que espera en el andén, te mueves a toda velocidad. ¿Quién tiene razón? Los dos: depende del punto desde el que se mire. Ese punto se llama sistema de referencia.
+
+IDEAS CLAVE
+- Sistema de referencia: el punto (y los ejes) desde el que observamos el movimiento.
+- Posición: dónde está el cuerpo respecto al sistema de referencia. Se mide en metros (m).
+- Trayectoria: la línea que dibuja el cuerpo al moverse. Puede ser rectilínea o curvilínea.
+- Distancia recorrida: lo que mide el camino seguido. Desplazamiento: distancia en línea recta entre el punto de salida y el de llegada.
+- Velocidad media = distancia recorrida / tiempo (v = d / t). Unidad SI: m/s. En la calle se usa km/h.
+- Para pasar de km/h a m/s se divide entre 3,6; de m/s a km/h se multiplica por 3,6.
+  Ejemplo: 72 km/h = 72 · 1000 m / 3600 s = 20 m/s.
+- Movimiento rectilíneo uniforme (MRU): trayectoria recta y velocidad constante. Recorre distancias iguales en tiempos iguales.
+- Gráficas del MRU:
+  - Posición-tiempo (x-t): una línea recta inclinada. Cuanto más inclinada, más rápido.
+  - Velocidad-tiempo (v-t): una línea horizontal (la velocidad no cambia).
+- Si la velocidad cambia, hay aceleración (lo verás con más detalle en cursos siguientes).
+
+EJEMPLO RESUELTO
+Un ciclista recorre 300 m en 60 s a velocidad constante.
+v = 300 m / 60 s = 5 m/s. En km/h: 5 · 3,6 = 18 km/h.
+Tabla de su MRU: t = 0, 1, 2, 3 s → x = 0, 5, 10, 15 m.
+Un coche a 90 km/h (25 m/s) recorre en 2 h: 90 km/h · 2 h = 180 km.
+
+ERRORES TÍPICOS
+- Mezclar unidades (km con s, o m con h) en la misma cuenta.
+- Confundir distancia recorrida con desplazamiento (si das una vuelta completa a la pista, has recorrido 400 m pero tu desplazamiento es 0).
+- Pensar que en la gráfica x-t la línea es el camino que sigue el cuerpo (es cómo cambia su posición con el tiempo).
+- Creer que el velocímetro del coche marca la velocidad media (marca la de cada instante).
+
+EJEMPLOS COTIDIANOS
+- Los radares de tráfico miden la velocidad de los coches; en algunos tramos calculan la velocidad media entre dos puntos.
+- Las apps de correr te dicen tu velocidad media y la distancia recorrida.
+- Un ascensor que sube sin parar a ritmo constante es casi un MRU.
+
+EXPERIMENTO CASERO
+Mide 10 m en un pasillo o en el parque con una cinta métrica. Cronometra con el móvil cuánto tardas en recorrerlos andando y luego corriendo. Calcula tu velocidad: por ejemplo, 10 m en 8 s son 1,25 m/s = 4,5 km/h. Hazlo en un sitio sin obstáculos ni tráfico: 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- Si estás sentada en tu silla, ¿te estás moviendo? (Pista: la Tierra gira).
+- ¿Por qué en una gráfica x-t una línea más inclinada significa más velocidad?
+- ¿Puede la velocidad media de un viaje ser 60 km/h aunque el coche haya estado parado un rato?
+
+RELACIÓN CON OTROS TEMAS
+Usa los cambios de unidades del tema 1.
+En el tema 8 veremos que para cambiar el movimiento de un cuerpo hace falta una fuerza.
+En Matemáticas, las gráficas x-t son funciones lineales y la velocidad es la pendiente.
+En 1º viste la rotación y la traslación de la Tierra: son movimientos que vemos desde un sistema de referencia.

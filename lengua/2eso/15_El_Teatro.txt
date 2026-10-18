@@ -1,0 +1,100 @@
+TEMA 15 – EL TEATRO
+
+El teatro es literatura para **ver y escuchar**. No hay narrador que te cuente lo que pasa: lo ves pasar. En el Siglo de Oro, la gente iba al teatro como hoy va al cine, y algunas de aquellas obras se siguen representando 400 años después.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina un guion de una serie:
+
+LUCÍA: (entrando con prisa) ¿Alguien ha visto mi móvil?
+PABLO: (escondiéndolo detrás de la espalda) Ni idea.
+
+- Los nombres en mayúscula dicen **quién habla**.
+- Lo que dicen es el **diálogo**.
+- Lo que va entre paréntesis son las **acotaciones**: lo que hacen o cómo lo dicen.
+
+Un texto teatral es exactamente eso: un guion para que unos actores lo conviertan en espectáculo.
+
+---
+
+IDEAS CLAVE
+
+**1. El texto teatral**
+- **Diálogo**: conversación entre personajes. También hay **monólogo** (un personaje habla solo) y **aparte** (dice algo que el público oye pero los demás personajes no).
+- **Acotaciones**: indicaciones del autor sobre decorado, gestos, tono, entradas y salidas.
+- **Estructura externa**: **actos** (las grandes partes; suele bajar el telón) y **escenas** (cambian al entrar o salir un personaje).
+- **Estructura interna**: planteamiento, nudo y desenlace.
+
+**2. La representación**
+- Intervienen actores, director, escenografía, vestuario, iluminación, música y público.
+- El texto se escribe para representarse, aunque también se lee.
+
+**3. Subgéneros teatrales**
+- **Tragedia**: conflicto grave, personajes enfrentados al destino, final desgraciado.
+- **Comedia**: situaciones cotidianas y divertidas, final feliz, a menudo critica costumbres.
+- **Drama**: mezcla de lo trágico y lo cómico, más cercano a la vida real.
+- **Subgéneros breves**: **entremés** (pieza cómica corta, como los de Cervantes), **sainete**, **paso** (Lope de Rueda).
+
+**4. Obras y autores clave (dominio público)**
+- **Lope de Vega** (Siglo de Oro): crea la **comedia nueva**: tres actos, mezcla de lo trágico y lo cómico, escrita en verso de distintos tipos, y la figura del **gracioso** (el criado divertido). Obra: ***Fuenteovejuna***, un pueblo entero se rebela contra un comendador injusto: "—¿Quién mató al Comendador? —Fuenteovejuna, señor."
+- **Pedro Calderón de la Barca** (Barroco): ***La vida es sueño***, sobre la libertad y el destino. Segismundo se pregunta: "¿Qué es la vida? Un frenesí. / ¿Qué es la vida? Una ilusión, / una sombra, una ficción".
+- **Leandro Fernández de Moratín** (s. XVIII): ***El sí de las niñas***, comedia que critica los matrimonios concertados entre chicas jóvenes y hombres mayores.
+- **José Zorrilla** (s. XIX, Romanticismo): ***Don Juan Tenorio***, que todavía se representa en noviembre en muchos teatros.
+- **Federico García Lorca** (s. XX): ***La casa de Bernarda Alba***, drama sobre la falta de libertad de unas hermanas encerradas por su madre.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- Los guiones de series y películas usan diálogos y acotaciones.
+- Los monólogos de humor son teatro breve.
+- El gracioso de Lope es el antepasado del "personaje cómico" de cualquier serie.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que en el teatro hay narrador.
+✅ **Realidad**: No lo hay. Todo se sabe por lo que dicen y hacen los personajes (y por las acotaciones).
+
+❌ **Error**: Confundir acto y escena.
+✅ **Truco**: el acto es como un capítulo; la escena, como una parte del capítulo que cambia cuando entra o sale alguien.
+
+❌ **Error**: Creer que "comedia" en el Siglo de Oro significa siempre obra de risa.
+✅ **Realidad**: En esa época "comedia" era cualquier obra de teatro; *Fuenteovejuna* es una comedia con escenas muy serias.
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué en *Fuenteovejuna* todo el pueblo responde con la misma frase? ¿Qué mensaje transmite?
+2. Segismundo duda de si la vida es un sueño. ¿Te has preguntado alguna vez algo parecido?
+3. ¿Qué tiene el teatro en directo que no tiene una película?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 2 (Tipos de textos)**: el texto dialogado y el estilo directo.
+- **Tema 12 (Métrica)**: el teatro del Siglo de Oro está en verso; puedes medir los octosílabos de Calderón.
+- **Tema 14 (Lírica)**: Lorca fue poeta y dramaturgo.
+- **Conexión con Historia**: el Siglo de Oro y los corrales de comedias.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+1. En el guion de la explicación visual, ¿qué es "(escondiéndolo detrás de la espalda)"?
+2. ¿Cuántos actos tiene la comedia nueva de Lope?
+3. ¿Qué subgénero es una obra con final desgraciado y personajes que luchan contra su destino?
+4. Mide: "¿Qué es la vida? Un frenesí."
+5. ¿Qué critica *El sí de las niñas*?
+
+Soluciones:
+1. Una acotación.
+2. Tres.
+3. Tragedia.
+4. ¿Qué_es-la-vi-da_un-fre-ne-sí = 7 + 1 (aguda) = 8: octosílabo.
+5. Los matrimonios concertados entre chicas muy jóvenes y hombres mayores, sin contar con lo que ellas quieren.

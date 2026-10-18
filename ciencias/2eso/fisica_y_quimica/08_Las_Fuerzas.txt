@@ -1,0 +1,49 @@
+TEMA 8 – LAS FUERZAS Y SUS EFECTOS
+
+Una fuerza es cualquier acción capaz de deformar un cuerpo o de cambiar su movimiento.
+Las fuerzas están en todas partes: al empujar, al tirar, al caer, al frenar.
+
+EXPLICACIÓN VISUAL
+Imagina un balón de fútbol quieto. Si le das una patada, sale disparado (cambia su movimiento). Si lo pisas fuerte, se aplasta un poco (se deforma). Si va rodando por el césped, poco a poco se para aunque nadie lo toque: algo lo está frenando. En los tres casos hay una fuerza actuando.
+
+IDEAS CLAVE
+- Efectos de las fuerzas:
+  - Deformar (estirar, aplastar, doblar).
+  - Cambiar el movimiento: ponerlo en marcha, pararlo, acelerarlo, frenarlo o cambiar su dirección.
+- La fuerza se mide en newtons (N) con un dinamómetro (un muelle con una escala).
+- Una fuerza tiene intensidad (cuánto), dirección y sentido (hacia dónde). Se dibuja con una flecha.
+- Hay fuerzas por contacto (empujar, tirar) y fuerzas a distancia (la gravedad, los imanes, la electricidad estática).
+- Peso: la fuerza con la que la Tierra atrae a un cuerpo. P = m · g, con g = 9,8 N/kg en la Tierra.
+  Ejemplo: una mochila de 5 kg pesa 5 · 9,8 = 49 N. En la Luna (g = 1,6 N/kg) pesaría 8 N, pero su masa seguiría siendo 5 kg.
+- Rozamiento: fuerza que aparece entre dos superficies en contacto y se opone al movimiento. Es mayor en superficies rugosas.
+- Si todas las fuerzas sobre un cuerpo se compensan, su movimiento no cambia (si está quieto, sigue quieto).
+- Máquinas simples: permiten hacer un trabajo con menos fuerza.
+  - Palanca: una barra que gira sobre un punto de apoyo. Ley de la palanca: F · d = R · r.
+    Ejemplo: para levantar una carga de 100 N a 0,5 m del apoyo, empujando a 2 m del apoyo, basta con 25 N (25 · 2 = 100 · 0,5 = 50).
+  - Polea: una rueda con una cuerda que cambia la dirección de la fuerza.
+  - Plano inclinado: una rampa; subir por ella cuesta menos fuerza, pero el recorrido es más largo.
+
+ERRORES TÍPICOS
+- Confundir masa (kg) con peso (N). En la calle decimos "peso 50 kilos", pero en Física eso es la masa.
+- Pensar que un cuerpo en movimiento necesita una fuerza para seguir moviéndose (lo que hace falta es una fuerza para frenarlo o cambiarlo; en la Tierra lo frena el rozamiento).
+- Creer que el rozamiento siempre es malo (sin él no podríamos andar ni frenar).
+- Pensar que en el espacio no hay gravedad (la Luna gira alrededor de la Tierra gracias a ella).
+
+EJEMPLOS COTIDIANOS
+- Las tijeras, el balancín del parque y el abridor de botellas son palancas.
+- Las rampas para sillas de ruedas son planos inclinados.
+- Los neumáticos tienen dibujo para aumentar el rozamiento con el suelo, sobre todo si llueve.
+- En la báscula del baño, lo que "empuja" es tu peso; luego la báscula lo convierte en kilos.
+
+EXPERIMENTO CASERO
+Ata una goma elástica a un libro y arrástralo tirando de la goma, primero sobre una mesa lisa y luego sobre una toalla. Mira cuánto se estira la goma en cada caso: cuanto más se estira, más fuerza haces. ¿Dónde hay más rozamiento? Luego pon otro libro encima y repite. Tira suave para que la goma no salte: 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué cuesta más empujar un carro del súper lleno que vacío?
+- ¿Pesarías lo mismo en la Luna? ¿Y tendrías la misma masa?
+- ¿Por qué es más fácil abrir una puerta empujando lejos de las bisagras?
+
+RELACIÓN CON OTROS TEMAS
+Las fuerzas son la causa de los cambios de movimiento del tema 7.
+Hacer fuerza y mover algo requiere energía (tema 9).
+En Tecnología estudias las máquinas simples y los mecanismos; en Educación Física, cómo usamos el rozamiento al correr y saltar.

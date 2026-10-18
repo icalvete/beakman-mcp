@@ -1,0 +1,19 @@
+BORRADOR: temario general de Física y Química de 2º ESO (LOMLOE). Se ajustará al libro de clase.
+Esta es una de las dos asignaturas de ciencias que puede tocar en 2º ESO. La otra, Biología y Geología, va en su propia parte.
+
+MAPA DEL CURSO – FÍSICA Y QUÍMICA 2º ESO
+
+1. La ciencia y la medida: magnitudes, unidades y laboratorio
+2. La materia y sus propiedades: masa, volumen y densidad
+3. Los estados de la materia y la teoría cinético-molecular
+4. Sustancias puras y mezclas
+5. El átomo y los elementos químicos
+6. Cambios físicos y cambios químicos
+7. El movimiento
+8. Las fuerzas y sus efectos
+9. La energía
+10. Calor y temperatura
+11. La luz y el sonido
+
+El curso va de lo pequeño a lo grande: primero la materia (temas 2 a 6), después el movimiento, las fuerzas y la energía (temas 7 a 11).
+Se combinan observación, medida, experimentación y razonamiento científico.

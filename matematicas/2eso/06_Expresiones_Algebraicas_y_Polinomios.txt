@@ -1,0 +1,71 @@
+TEMA 6 – EXPRESIONES ALGEBRAICAS Y POLINOMIOS
+
+Una expresión algebraica mezcla números y letras. Los polinomios son sumas de "piezas" llamadas monomios.
+Aprender a operar con ellos es como aprender la gramática del lenguaje algebraico.
+
+EXPLICACIÓN VISUAL
+Imagina una caja de piezas: barras largas (x²), barras cortas (x) y cubitos sueltos (números).
+- 3x + 5x: 3 barras cortas y 5 barras cortas = 8 barras cortas → 8x.
+- 3x + 2: barras y cubitos no se pueden juntar en una sola pieza → se queda 3x + 2.
+Solo se suman piezas del mismo tipo.
+
+IDEAS CLAVE
+
+MONOMIOS
+Un número por letras: 5x², -3xy, 7.
+- Coeficiente: el número (5 en 5x²).
+- Parte literal: las letras con sus exponentes (x²).
+- Grado: la suma de los exponentes de las letras (5x² es de grado 2).
+- Semejantes: misma parte literal (3x² y -x² sí; 3x² y 3x no).
+
+OPERACIONES CON MONOMIOS
+- Sumar y restar: solo semejantes. 7x² - 2x² = 5x²
+- Multiplicar: números por números, letras por letras. 2x · 3x² = 6x³
+
+POLINOMIOS
+Suma de monomios no semejantes. P(x) = 2x² - 3x + 1 (grado 2).
+Valor numérico: sustituir la letra. P(2) = 2 · 4 - 3 · 2 + 1 = 8 - 6 + 1 = 3
+
+SACAR FACTOR COMÚN
+Lo contrario de multiplicar: 6x² + 9x = 3x(2x + 3)
+
+IDENTIDADES NOTABLES
+- Cuadrado de una suma: (a + b)² = a² + 2ab + b²
+- Cuadrado de una diferencia: (a - b)² = a² - 2ab + b²
+- Suma por diferencia: (a + b)(a - b) = a² - b²
+Dibujo: un cuadrado de lado (a + b) se parte en un cuadrado a², otro b² y DOS rectángulos ab.
+Por eso sale el "2ab" del medio.
+
+EJEMPLOS RESUELTOS
+Con P(x) = 2x² - 3x + 1 y Q(x) = x² + 5x - 4:
+1) P + Q = (2x² + x²) + (-3x + 5x) + (1 - 4) = 3x² + 2x - 3
+2) P - Q = 2x² - 3x + 1 - x² - 5x + 4 = x² - 8x + 5 (el menos cambia TODOS los signos de Q)
+3) 3x · (x² - 2x + 4) = 3x³ - 6x² + 12x
+4) (x + 2)(x - 3) = x² - 3x + 2x - 6 = x² - x - 6
+5) (x + 3)² = x² + 2 · x · 3 + 3² = x² + 6x + 9
+   Comprobación con x = 2: (2 + 3)² = 25 y 4 + 12 + 9 = 25.
+6) (2x - 1)² = 4x² - 4x + 1
+7) (x + 5)(x - 5) = x² - 25
+
+ERRORES TÍPICOS
+- Juntar lo que no es semejante: 3x + 2 NO es 5x.
+- (x + 3)² = x² + 9 (¡falta el término 2ab = 6x!).
+- Al restar un polinomio, cambiar solo el signo del primer término.
+- Sumar exponentes al sumar: x² + x² = 2x², NO x⁴.
+- Confundir 2x con x²: 2x = x + x, x² = x · x.
+
+EJEMPLOS COTIDIANOS
+- Fórmulas: el perímetro de un rectángulo es 2b + 2h.
+- Hojas de cálculo: una fórmula como "=2*A1+3" es una expresión algebraica.
+- Un móvil cobra 5 € al mes más 0,10 € por minuto: 5 + 0,10x.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué no se pueden sumar 3x y 3x²? (Pista: piensa en las piezas.)
+- ¿Cuánto vale 101 × 99 sin calculadora? (Pista: (100 + 1)(100 - 1).)
+- ¿Puede un polinomio dar siempre el mismo valor, sea cual sea x?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía el tema 7 de 1º (álgebra inicial).
+- Usa las potencias (tema 3) y los signos (tema 1).
+- Es la base para resolver ecuaciones (temas 7, 8 y 9).
+- Las áreas y volúmenes se escriben como expresiones algebraicas (tema 13).

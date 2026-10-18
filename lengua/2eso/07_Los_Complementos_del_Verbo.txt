@@ -1,0 +1,107 @@
+TEMA 7 – LOS COMPLEMENTOS DEL VERBO
+
+El verbo es el director del predicado. A su alrededor se colocan los complementos, cada uno con su papel. En 1º viste el CD, el CI, el CC y el atributo. Ahora aprenderás pruebas más fiables y dos complementos nuevos: el de régimen y el agente.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina el verbo **regalar** como una escena de teatro:
+"Lucía regaló **un libro** **a su hermano** **el sábado**."
+- ¿Qué regaló? → un libro → el objeto que recibe la acción (CD).
+- ¿A quién? → a su hermano → quien se beneficia (CI).
+- ¿Cuándo? → el sábado → la circunstancia (CC de tiempo).
+
+Cada complemento responde a una pregunta y, sobre todo, se puede **sustituir** por un pronombre distinto. Esa es la prueba de oro.
+
+---
+
+IDEAS CLAVE
+
+**1. Complemento directo (CD)**
+- Lo que recibe directamente la acción del verbo.
+- **Prueba 1**: se sustituye por **lo, la, los, las**. "Leo el cómic" → "Lo leo".
+- **Prueba 2**: al pasar a pasiva, se convierte en sujeto. "El cómic es leído por mí."
+- Si es una persona, lleva "a": "Vi **a tu hermana**" → "La vi".
+
+**2. Complemento indirecto (CI)**
+- Quien recibe el beneficio o el daño de la acción.
+- **Prueba**: se sustituye por **le, les** (o **se** si va junto a lo/la). "Di el móvil a mi padre" → "Le di el móvil" → "Se lo di".
+- Lleva la preposición "a" (a veces "para" se analiza como CI en algunos libros; sigue el criterio de tu profe).
+
+**3. Complemento circunstancial (CC)**
+- Añade circunstancias: lugar, tiempo, modo, cantidad, causa, finalidad, compañía, instrumento…
+- Suele poder quitarse o moverse sin que la oración se rompa.
+- "Estudio **con Laura** (compañía) **en la biblioteca** (lugar) **por las tardes** (tiempo)."
+
+**4. Atributo (Atrib.)**
+- Solo con verbos copulativos: ser, estar, parecer.
+- Dice una cualidad o estado del sujeto y concuerda con él.
+- **Prueba**: se sustituye por **lo**, que no cambia nunca. "Las pruebas son difíciles" → "Lo son".
+
+**5. Complemento de régimen (o suplemento) (CRég.)**
+- Algunos verbos exigen una preposición fija: hablar **de**, confiar **en**, acordarse **de**, pensar **en**, depender **de**, insistir **en**.
+- No se puede quitar sin que la oración quede coja: "Me acuerdo de ti" / "Me acuerdo" (falta algo).
+- **Prueba**: se sustituye por **preposición + pronombre** (eso, él, ella…), nunca por lo/la/le. "Confío en mis amigos" → "Confío en ellos".
+
+**6. Complemento agente (CAg.)**
+- Solo en oraciones **pasivas**: indica quién hace realmente la acción.
+- Va con "por". "El cuadro fue pintado **por Velázquez**."
+- Si pasas a activa, el CAg se convierte en sujeto: "Velázquez pintó el cuadro."
+
+**Uno más**: el complemento predicativo ("Llegó **cansada**") dice algo del sujeto o del CD a través de un verbo que no es copulativo. Unos libros lo dan en 2º y otros en 3º: si te aparece, lo vemos juntos con tu libro delante.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- "Mándame la ubicación" → me (CI) + la ubicación (CD) → "Mándamela".
+- "Esa canción es muy pegadiza" → muy pegadiza (atributo) → "Lo es".
+- "No te rías de mí" → de mí (complemento de régimen: reírse de).
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir CC de lugar con complemento de régimen.
+✅ **Truco**: "Pienso en la playa" → ¿dónde piensas? No tiene sentido: es "pensar en algo" → CRég. "Vivo en la playa" → ¿dónde vives? → CC de lugar.
+
+❌ **Error**: Usar "le" para el CD femenino: "A María le vi ayer".
+✅ **Correcto**: "A María la vi ayer". (La RAE solo acepta "le" como CD para un hombre en singular: "A Juan le vi". Por eso, para analizar, es más segura la prueba de la pasiva.)
+
+❌ **Error**: Usar "la" para el CI femenino: "La dije la verdad" (laísmo).
+✅ **Correcto**: "Le dije la verdad".
+
+❌ **Error**: Pensar que todo lo que lleva "a" es CI.
+✅ **Realidad**: "Vi a Lucía" → "La vi" → es CD de persona.
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que "hablar de" o "confiar en" necesitan su preposición y "comer" no?
+2. En "Me lo dijo", ¿cuál es el CD y cuál el CI?
+3. ¿Qué cambia si dices "Velázquez pintó Las Meninas" o "Las Meninas fueron pintadas por Velázquez"? ¿Dónde se pone el foco?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 5 (Sintagmas)**: cada complemento es un sintagma (SN, SPrep, SAdv…).
+- **Tema 6 (Oración simple)**: el predicado nominal lleva atributo.
+- **Tema 8 (Clases de oraciones)**: los complementos deciden si la oración es transitiva, copulativa o pasiva.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+Di qué complemento es la parte en mayúsculas:
+1. "Envié UNA FOTO a mi abuela."
+2. "Envié una foto A MI ABUELA."
+3. "Mi hermano parece CANSADO."
+4. "Siempre se queja DE TODO."
+5. "La carta fue escrita POR LA DIRECTORA."
+6. "Quedamos EN EL PARQUE."
+
+Soluciones:
+1. CD ("La envié"). 2. CI ("Le envié una foto"). 3. Atributo ("Lo parece"). 4. Complemento de régimen (quejarse de; "se queja de eso"). 5. Complemento agente (oración pasiva). 6. CC de lugar.

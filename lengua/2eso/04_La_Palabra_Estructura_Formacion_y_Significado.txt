@@ -1,0 +1,103 @@
+TEMA 4 – LA PALABRA: ESTRUCTURA, FORMACIÓN Y SIGNIFICADO
+
+Las palabras son como piezas de Lego: tienen una pieza base y piezas que se enganchan para crear otras nuevas. Y además se relacionan entre sí por su significado, como una gran red.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Toma la palabra **mar**:
+- marinero, marítimo, marea → la misma raíz con piezas añadidas (familia léxica).
+- submarino → pieza delante.
+- maremoto → dos palabras unidas.
+
+Y ahora piensa en **playa, arena, ola, sombrilla, toalla**: no comparten raíz, pero todas "viven" en el mismo sitio. Eso es un campo semántico.
+
+---
+
+IDEAS CLAVE
+
+**1. Estructura (repaso de 1º)**
+- **Lexema (raíz)**: la parte que lleva el significado. "pan-ader-o" → pan.
+- **Morfemas**: piezas que se añaden.
+  - **Flexivos**: indican género, número, persona, tiempo… No crean palabra nueva. "niñ-a-s".
+  - **Derivativos**: crean palabras nuevas. **Prefijos** (delante: re-hacer), **sufijos** (detrás: pan-ero) e **interfijos** (en medio, sin significado: pan-ec-illo).
+
+**2. Formación de palabras**
+- **Derivación**: lexema + prefijo o sufijo. Feliz → infeliz, felicidad.
+- **Composición**: dos o más lexemas. Sacapuntas, girasol, agridulce, coche cama.
+- **Parasíntesis**: prefijo + lexema + sufijo a la vez, y no existe la palabra sin uno de ellos. En-roj-ecer (no existe "enrojo" ni "rojecer"). También se llama parasintética a la que une composición y derivación: quinceañero (quince + año + -ero).
+- **Acortamiento**: bici, cole, profe, tele.
+- **Siglas y acrónimos**: ONU, ESO, DGT (siglas); ovni, radar (acrónimos que ya se leen como palabras).
+- **Préstamos**: palabras de otras lenguas: fútbol (inglés), almohada (árabe), chocolate (náhuatl).
+
+**3. Relaciones de significado**
+- **Sinonimia**: significado igual o muy parecido. Empezar / comenzar. Ojo: depende del contexto.
+- **Antonimia**: significado opuesto.
+  - Graduales (hay grados intermedios): frío / caliente (templado).
+  - Complementarios (uno excluye al otro): vivo / muerto.
+  - Recíprocos (uno implica al otro): comprar / vender.
+- **Polisemia**: una palabra con varios significados relacionados. "Banco" (de sentarse / de dinero), "ratón" (animal / del ordenador).
+- **Homonimia**: palabras distintas que suenan o se escriben igual por casualidad. Homófonas: vaca / baca, hola / ola. Homógrafas: "vino" (bebida) / "vino" (de venir).
+- **Hiperonimia e hiponimia**: palabra general y palabras incluidas. Fruta (hiperónimo) → pera, kiwi, mango (hipónimos).
+- **Campo semántico**: palabras de la misma categoría gramatical que comparten un rasgo de significado. Días de la semana; verbos de movimiento (andar, correr, saltar).
+- **Familia léxica**: palabras con el mismo lexema. Flor, florero, florista, floración.
+
+**4. Denotación y connotación**
+- **Denotación**: significado objetivo (perro = animal).
+- **Connotación**: significados añadidos por la cultura o la emoción ("¡Qué perro eres!" = vago).
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- "Hacer scroll", "stalkear": préstamos del inglés adaptados.
+- "Tienes un virus": polisemia (enfermedad / ordenador).
+- Un chiste de "¿Qué le dice una iguana a su hermana gemela? Somos iguanitas": juega con el sonido de las palabras.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir campo semántico con familia léxica.
+✅ **Truco**: familia = misma raíz (pan, panadero); campo = mismo tema (pan, leche, huevos).
+
+❌ **Error**: Pensar que dos sinónimos valen siempre.
+✅ **Realidad**: "Viejo amigo" no es lo mismo que "amigo anciano".
+
+❌ **Error**: Confundir polisemia y homonimia.
+✅ **Truco**: en la polisemia los significados están emparentados (pata de animal, pata de mesa); en la homonimia no (vaca / baca).
+
+❌ **Error**: Llamar parasintética a cualquier palabra con prefijo y sufijo.
+✅ **Realidad**: "Deshonesto" no lo es: existe "honesto". "Entristecer" sí: no existen "entriste" ni "tristecer".
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué el español tiene tantas palabras árabes que empiezan por "al-"?
+2. "Ratón" (del ordenador) ¿es polisemia o homonimia? ¿Por qué crees que se llamó así?
+3. Inventa una palabra por derivación que no exista pero que se entienda.
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 5 (Sintagmas)**: la categoría de la palabra decide qué sintagma forma.
+- **Tema 11 (Lenguas de España)**: préstamos y variedades del léxico.
+- **Tema 12 (Figuras)**: la metáfora juega con los significados.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+1. Separa lexema y morfemas: "zapateras".
+2. ¿Cómo se forman? (a) abrelatas, (b) deshacer, (c) aterrizar, (d) cole.
+3. Di un antónimo y clasifícalo: comprar; alto; aprobado.
+4. ¿Familia léxica o campo semántico? (a) mar, marinero, marea; (b) rojo, verde, azul.
+
+Soluciones:
+1. zapat- (lexema) + -er- (sufijo derivativo) + -a (género) + -s (número).
+2. (a) composición, (b) derivación (prefijo des-), (c) parasíntesis (a- + tierra + -izar), (d) acortamiento.
+3. Comprar / vender (recíprocos); alto / bajo (graduales); aprobado / suspenso (complementarios).
+4. (a) familia léxica, (b) campo semántico.

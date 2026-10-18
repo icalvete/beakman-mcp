@@ -42,18 +42,39 @@ def read_subject(name):
     return meta, body.strip()
 
 
+def part_title(folder):
+    """El título de una parte: la primera línea de su _titulo.txt, o el nombre de la carpeta."""
+    title_file = folder / "_titulo.txt"
+    if title_file.exists():
+        return title_file.read_text(encoding="utf-8").strip().splitlines()[0]
+    return folder.name.replace("_", " ").upper()
+
+
+def topic_files(folder):
+    return sorted(p for p in folder.glob("*.txt") if not p.name.startswith("_"))
+
+
 def course_text(name, folder, label, title):
-    topics = sorted((ROOT / name / folder).glob("*.txt"))
+    """Los temas de un curso, en orden. Cada subcarpeta es una parte (p. ej. dos asignaturas)."""
+    base = ROOT / name / folder
+    loose = topic_files(base)
+    subparts = sorted(p for p in base.iterdir() if p.is_dir() and topic_files(p)) if base.exists() else []
     head = f"TEMARIO DE {title.upper()} – {label}\n"
-    if not topics:
+    if not loose and not subparts:
         return head + (
             "\nEN PREPARACIÓN. Este temario todavía no está cargado.\n"
             "Si el estudiante pregunta por este curso, díselo con naturalidad y ayúdale "
             "con conocimientos generales del curso, avisando de que no vienen de tu temario.\n"
         )
+    if subparts:
+        head += "Este curso tiene varias partes: " + "; ".join(part_title(p) for p in subparts) + ".\n"
     parts = [head]
-    for topic in topics:
+    for topic in loose:
         parts.append(f"[Fichero de origen: {topic.name}]\n\n" + topic.read_text(encoding="utf-8").strip())
+    for sub in subparts:
+        parts.append(f"PARTE: {part_title(sub)}")
+        for topic in topic_files(sub):
+            parts.append(f"[Fichero de origen: {sub.name}/{topic.name}]\n\n" + topic.read_text(encoding="utf-8").strip())
     return SEPARATOR.join(parts) + "\n"
 
 

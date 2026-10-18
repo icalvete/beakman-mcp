@@ -1,0 +1,123 @@
+TEMA 12 – LOS GÉNEROS LITERARIOS Y LA MÉTRICA
+
+En 1º viste los tres géneros: narrativa, lírica y teatro. Ahora abrimos la caja de herramientas de la poesía: cómo se cuentan las sílabas de un verso, qué tipos de rima hay, cómo se llaman las estrofas y qué trucos (figuras retóricas) usan los escritores.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Da palmadas mientras lees:
+"Ca-mi-nan-te, no_hay ca-mi-no" (Antonio Machado)
+1-2-3-4-5-6-7-8 → ocho palmadas = **octosílabo**.
+
+Fíjate en "no_hay": dos palabras, una sola palmada. La vocal final de "no" se junta con la de "hay". Eso es una **sinalefa**, y es la clave para medir versos.
+
+Las canciones de rap y de pop hacen lo mismo: encajan sílabas en un ritmo.
+
+---
+
+IDEAS CLAVE
+
+**1. Repaso de géneros**
+- **Narrativa**: un narrador cuenta una historia (Tema 13).
+- **Lírica**: se expresan sentimientos, normalmente en verso (Tema 14).
+- **Teatro (dramático)**: los personajes hablan y actúan para ser representados (Tema 15).
+- **Verso** (líneas con medida y ritmo) frente a **prosa** (texto seguido). Hay novelas en verso y poemas en prosa.
+
+**2. Cómo se cuentan las sílabas de un verso (métrica)**
+1. Cuenta las sílabas como siempre.
+2. **Sinalefa**: si una palabra acaba en vocal y la siguiente empieza por vocal (o h + vocal), se unen en una sílaba: "se_hace", "mi_alma".
+3. **Mira la última palabra del verso**:
+   - **Aguda** → suma 1. "en mi pupila tu pupila azul" = 10 + 1 = 11.
+   - **Llana** → se queda igual.
+   - **Esdrújula** → resta 1.
+- **Arte menor**: versos de hasta 8 sílabas (se escriben con letra minúscula: a, b…).
+- **Arte mayor**: versos de 9 o más sílabas (con mayúscula: A, B…).
+- Los más usados: **octosílabo** (8) en la poesía popular y el **endecasílabo** (11) en la culta.
+
+**3. La rima** (desde la última vocal acentuada del verso)
+- **Consonante**: coinciden vocales y consonantes. "can-CIÓN / cora-ZÓN".
+- **Asonante**: coinciden solo las vocales. "l-U-n-A / c-U-r-A" (u-a).
+- **Verso libre**: sin rima ni medida fija. **Verso suelto**: uno sin rima entre otros que riman.
+- Se marca con letras: los versos que riman entre sí llevan la misma letra.
+
+**4. Estrofas principales**
+- **Pareado**: 2 versos que riman (aa, AA).
+- **Terceto**: 3 versos de arte mayor (ABA).
+- **Cuarteto**: 4 de arte mayor, ABBA. **Redondilla**: 4 de arte menor, abba.
+- **Serventesio**: 4 de arte mayor, ABAB. **Cuarteta**: 4 de arte menor, abab.
+- **Lira**: 5 versos de 7 y 11 sílabas (7a 11B 7a 7b 11B). La usó Garcilaso.
+- **Décima (espinela)**: 10 octosílabos, abbaaccddc.
+- **Soneto**: 14 endecasílabos: dos cuartetos y dos tercetos (ABBA ABBA CDC DCD, los tercetos pueden variar).
+- **Romance**: serie de octosílabos con rima asonante en los versos pares; los impares quedan sueltos.
+
+**5. Figuras retóricas (recursos literarios)**
+- **Comparación (o símil)**: relaciona dos cosas con "como", "igual que". "Tus ojos son como dos luceros."
+- **Metáfora**: identifica dos cosas sin "como". "Tus ojos son dos luceros." / "Las perlas de tu boca" (los dientes).
+- **Personificación**: da rasgos humanos a lo que no lo es. "El viento susurraba."
+- **Hipérbole**: exageración. "Te lo he dicho un millón de veces."
+- **Anáfora**: repetir una o más palabras al principio de varios versos o frases.
+- **Aliteración**: repetir un sonido. "bajo el ala aleve del leve abanico" (Rubén Darío).
+- **Antítesis**: enfrentar ideas opuestas. "Es hielo abrasador, es fuego helado" (Quevedo).
+- **Hipérbaton**: alterar el orden normal de la oración. "Del salón en el ángulo oscuro" (Bécquer) = "En el ángulo oscuro del salón".
+- **Epíteto**: adjetivo que dice una cualidad que ya se sabe. "Blanca nieve", "verde prado".
+- **Enumeración**: lista de elementos. **Paralelismo**: repetir la misma estructura sintáctica.
+- **Onomatopeya**: imitar sonidos. "El tictac del reloj."
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- Los eslóganes usan rima y aliteración para que se te queden.
+- "Estoy muerta de cansancio" es una hipérbole del día a día.
+- Muchas canciones repiten el estribillo: anáfora y paralelismo.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Olvidar la sinalefa y contar de más.
+✅ **Truco**: lee el verso en voz alta y natural; las vocales que se juntan al hablar se juntan al contar.
+
+❌ **Error**: Olvidar sumar 1 cuando el verso acaba en palabra aguda.
+✅ **Truco**: mira siempre la última palabra antes de dar el número.
+
+❌ **Error**: Confundir comparación y metáfora.
+✅ **Truco**: si hay "como" (o similar), es comparación.
+
+❌ **Error**: Buscar rima desde la última sílaba.
+✅ **Realidad**: Se mira desde la última vocal tónica: "ca-MI-no / des-TI-no" → rima consonante en "-ino".
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que la poesía popular usa sobre todo el octosílabo? (Pista: cuenta las sílabas de un refrán.)
+2. ¿Las canciones que escuchas tienen rima consonante o asonante?
+3. Inventa una metáfora para describir el lunes por la mañana.
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 4 (La palabra)**: la metáfora juega con los significados.
+- **Tema 14 (La lírica)**: aplicarás todo esto a poemas reales.
+- **Tema 15 (El teatro)**: el teatro del Siglo de Oro está escrito en verso.
+- **Conexión con Música**: ritmo, acentos y rima.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+1. Mide: "Verde que te quiero verde" (Lorca).
+2. Mide: "se hace camino al andar" (Machado).
+3. ¿Qué rima tienen "luna" y "duda"? ¿Y "camino" y "destino"?
+4. ¿Qué figura es? (a) "La ciudad dormía." (b) "Tus dientes, perlas." (c) "Érase un hombre a una nariz pegado" (Quevedo).
+5. ¿Cuántos versos tiene un soneto y de qué medida?
+
+Soluciones:
+1. Ver-de-que-te-quie-ro-ver-de = 8 (llana): octosílabo.
+2. se_ha-ce-ca-mi-no_al-an-dar = 7 + 1 (aguda) = 8: octosílabo.
+3. Luna/duda: asonante (u-a). Camino/destino: consonante (-ino).
+4. (a) Personificación. (b) Metáfora. (c) Hipérbaton (y, en todo el poema, hipérbole).
+5. 14 versos endecasílabos.

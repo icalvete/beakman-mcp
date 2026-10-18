@@ -1,0 +1,57 @@
+TEMA 11 – LA LUZ Y EL SONIDO
+
+La luz y el sonido son dos formas de llevar energía de un sitio a otro sin llevar materia: viajan como ondas.
+Gracias a ellas vemos y oímos el mundo, pero se comportan de forma muy distinta.
+
+EXPLICACIÓN VISUAL
+Imagina que tiras una piedra a un estanque: se forman ondas que se alejan en círculos. Una hoja que flota sube y baja, pero no se va con la onda. El sonido es parecido: el aire vibra y pasa la vibración de unas partículas a otras hasta tu oído. La luz también es una onda, pero no necesita agua ni aire: puede viajar por el espacio vacío, por eso nos llega la luz del Sol.
+
+IDEAS CLAVE
+SONIDO
+- Se produce cuando algo vibra (una cuerda de guitarra, tus cuerdas vocales).
+- Necesita un medio para propagarse (sólido, líquido o gas). En el vacío no hay sonido.
+- Velocidad en el aire: unos 340 m/s. Es más rápido en el agua (unos 1500 m/s) y aún más en los sólidos.
+- Cualidades:
+  - Intensidad (fuerte o débil): se mide en decibelios (dB).
+  - Tono (agudo o grave): depende de la frecuencia de la vibración, en hercios (Hz). Los humanos oímos más o menos entre 20 y 20 000 Hz.
+  - Timbre: lo que distingue un piano de una flauta aunque toquen la misma nota.
+- Eco: el sonido rebota en un obstáculo y vuelve. Para oírlo separado, el obstáculo debe estar a unos 17 m o más.
+- Contaminación acústica: el ruido fuerte y continuo (más de 85 dB durante mucho tiempo) puede dañar el oído.
+
+LUZ
+- La emiten los cuerpos luminosos (el Sol, una bombilla) y la reflejan los iluminados (la Luna, este papel).
+- Se propaga en línea recta: por eso se forman sombras.
+- Velocidad en el vacío: unos 300 000 km/s. La luz del Sol tarda unos 8 minutos y 20 segundos en llegar a la Tierra.
+- Reflexión: la luz rebota en una superficie (los espejos).
+- Refracción: la luz se desvía al pasar de un medio a otro (del aire al agua).
+- La luz blanca es una mezcla de colores; un prisma o las gotas de lluvia la separan (arcoíris). Vemos un objeto rojo porque refleja la luz roja y absorbe el resto.
+
+EJEMPLO RESUELTO
+En una tormenta ves el rayo y oyes el trueno 3 s después. La luz llega casi al instante; el sonido tarda.
+Distancia ≈ 340 m/s · 3 s = 1020 m: la tormenta está a un kilómetro, más o menos.
+
+ERRORES TÍPICOS
+- Pensar que en el espacio se oyen las explosiones (no hay aire que transmita el sonido).
+- Creer que vemos porque sale algo de nuestros ojos (vemos porque la luz llega a ellos).
+- Confundir tono con intensidad (un sonido agudo no tiene por qué ser fuerte).
+- Pensar que los objetos "tienen" color propio aunque no haya luz (a oscuras, nada tiene color).
+
+EJEMPLOS COTIDIANOS
+- Los murciélagos y los delfines se orientan con el eco.
+- La cuchara en un vaso de agua parece rota: es la refracción.
+- Las gafas y las lupas desvían la luz para ver mejor.
+- Las bibliotecas tienen paredes y techos que absorben el sonido para que no haya eco.
+
+EXPERIMENTO CASERO
+Teléfono de vasos: une dos vasos de yogur limpios con un hilo largo de unos 5 m (pide a un adulto que les haga un agujerito en el fondo). Con el hilo tenso, habla por un vaso mientras otra persona escucha en el otro. Prueba con el hilo flojo: ¿qué cambia? Otro: mete un lápiz en un vaso de agua y míralo de lado para ver la refracción. 100% seguro (el agujero lo hace el adulto).
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué vemos el rayo antes de oír el trueno?
+- Si la luz del Sol tarda 8 minutos en llegar, ¿cómo vemos el Sol en realidad?
+- ¿Por qué tu voz te suena distinta cuando la oyes grabada?
+
+RELACIÓN CON OTROS TEMAS
+La luz y el sonido son formas de energía (tema 9) que se transmiten como ondas.
+El sonido necesita materia y partículas que vibren (tema 3).
+En 1º viste por qué el cielo es azul y por qué la Luna brilla: ahora sabes que es luz reflejada.
+En Arte y en Música se trabaja con el color de la luz y con el tono y el timbre del sonido.

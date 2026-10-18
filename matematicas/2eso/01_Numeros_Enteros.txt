@@ -1,0 +1,68 @@
+TEMA 1 – NÚMEROS ENTEROS
+
+Los números enteros son los naturales, el cero y los negativos: ... -3, -2, -1, 0, 1, 2, 3...
+Sirven para expresar cantidades que pueden estar "por debajo de cero".
+
+EXPLICACIÓN VISUAL
+Imagina un ascensor en un edificio con garaje.
+- La planta baja es el 0.
+- Hacia arriba: plantas 1, 2, 3... (positivos).
+- Hacia abajo: sótanos -1, -2, -3... (negativos).
+Subir es sumar, bajar es restar. Si estás en el -2 y subes 5 plantas, llegas a la 3.
+
+IDEAS CLAVE
+
+LA RECTA NUMÉRICA
+... -4  -3  -2  -1   0   1   2   3   4 ...
+Cuanto más a la derecha, mayor es el número.
+Por eso -2 > -5: el -2 está más cerca del cero (hace menos frío a -2 °C que a -5 °C).
+
+VALOR ABSOLUTO Y OPUESTO
+- Valor absoluto: la distancia al cero, sin signo. |-7| = 7, |+7| = 7.
+- Opuesto: el mismo número con el signo cambiado. El opuesto de 4 es -4.
+
+SUMA Y RESTA
+- Mismo signo: se suman los valores absolutos y se deja el signo. (-3) + (-4) = -7
+- Distinto signo: se restan y se pone el signo del de mayor valor absoluto. (-7) + 3 = -4
+- Restar es sumar el opuesto: 5 - (-2) = 5 + 2 = 7
+
+MULTIPLICACIÓN Y DIVISIÓN (regla de los signos)
++ por + = +    - por - = +
++ por - = -    - por + = -
+(-4) × (-3) = 12      (-20) ÷ 5 = -4
+
+JERARQUÍA DE OPERACIONES
+1. Paréntesis. 2. Multiplicaciones y divisiones. 3. Sumas y restas (de izquierda a derecha).
+
+EJEMPLOS RESUELTOS
+1) 3 - 2 × (-4) + (-6) ÷ 2
+   Primero multiplicaciones y divisiones: 2 × (-4) = -8 y (-6) ÷ 2 = -3
+   Queda: 3 - (-8) + (-3) = 3 + 8 - 3 = 8
+2) -5 - [4 - (2 - 7)]
+   Paréntesis de dentro: 2 - 7 = -5
+   Corchete: 4 - (-5) = 4 + 5 = 9
+   Queda: -5 - 9 = -14
+3) A las 7 h hay -3 °C y a mediodía la temperatura ha subido 8 grados: -3 + 8 = 5 °C.
+
+ERRORES TÍPICOS
+- Pensar que -8 es mayor que -2 porque "8 es más que 2".
+- Usar la regla de los signos en las sumas: -3 - 4 NO es +7, es -7 (bajas 3 y luego 4 más).
+- Olvidar la jerarquía: en 3 - 2 × (-4) no se empieza restando 3 - 2.
+- Perder el signo menos delante de un paréntesis: -(2 - 7) = -2 + 7.
+
+EJEMPLOS COTIDIANOS
+- Temperaturas bajo cero en invierno.
+- Plantas del garaje (-1, -2).
+- El saldo de una cuenta: si gastas más de lo que tienes, queda en negativo.
+- La altitud: la orilla del mar Muerto está a más de 400 m bajo el nivel del mar.
+- La diferencia de goles de un equipo en la liga.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué "menos por menos" da "más"? (Pista: quitar una deuda es como ganar dinero.)
+- ¿Hay un número entero más pequeño que todos los demás?
+- Si multiplicas tres números negativos, ¿de qué signo sale el resultado? ¿Y si son cuatro?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía los números naturales de 1º (tema 1 de 1º).
+- Los signos aparecen en todo el álgebra: ecuaciones, polinomios y funciones.
+- Las coordenadas de las gráficas (tema 10) usan valores negativos.

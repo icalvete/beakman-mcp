@@ -1,0 +1,51 @@
+TEMA 5 – EL ÁTOMO Y LOS ELEMENTOS QUÍMICOS
+
+Toda la materia está formada por átomos, unas partículas tan pequeñas que no se pueden ver ni con el mejor microscopio óptico.
+Hay poco más de cien tipos de átomos distintos: son los elementos químicos, ordenados en la tabla periódica.
+
+EXPLICACIÓN VISUAL
+Imagina un juego de piezas de construcción. Con solo unos pocos tipos de piezas puedes montar castillos, coches o naves. Los átomos son esas piezas: con unos cien tipos se construye todo lo que existe, desde el agua hasta tu cuerpo. Y si pudieras agrandar un átomo hasta el tamaño de un estadio de fútbol, el núcleo sería como una canica en el centro: casi todo el átomo es espacio vacío.
+
+IDEAS CLAVE
+- El átomo tiene dos zonas:
+  - Núcleo (en el centro): protones (carga positiva) y neutrones (sin carga). Casi toda la masa está aquí.
+  - Corteza (alrededor): electrones (carga negativa), muy ligeros y en movimiento.
+- Un átomo normal es neutro: tiene tantos protones como electrones.
+- El número atómico (Z) es el número de protones. Es lo que identifica a cada elemento.
+  Ejemplo: el carbono tiene Z = 6 → 6 protones y, si es neutro, 6 electrones.
+- Los modelos atómicos han ido cambiando con los experimentos:
+  - Dalton (1808): el átomo es una esfera maciza e indivisible.
+  - Thomson (1897): una esfera positiva con electrones incrustados, como pasas en un bizcocho.
+  - Rutherford (1911): un núcleo diminuto y positivo, y los electrones girando alrededor; casi todo es vacío.
+- Elemento químico: sustancia formada por átomos con el mismo número atómico. Cada uno tiene un símbolo: H (hidrógeno), C (carbono), O (oxígeno), Na (sodio), Fe (hierro), Au (oro).
+- La tabla periódica (Mendeléiev, 1869) ordena los elementos por su número atómico:
+  - Filas = periodos (7). Columnas = grupos (18).
+  - Los elementos de un mismo grupo se parecen en sus propiedades.
+  - Metales a la izquierda y en el centro; no metales a la derecha; gases nobles en la última columna.
+- Los átomos se unen formando moléculas (O₂, H₂O, CO₂) o redes enormes (la sal, los metales).
+
+ERRORES TÍPICOS
+- Confundir átomo con molécula (una molécula de agua tiene 3 átomos: 2 de hidrógeno y 1 de oxígeno).
+- Pensar que los electrones están dentro del núcleo (están en la corteza).
+- Creer que un modelo antiguo era "tonto" (cada modelo explicaba lo que se sabía entonces; la ciencia avanza corrigiéndose).
+- Confundir el símbolo del elemento con su nombre en español (Fe viene del latín "ferrum", hierro; Na de "natrium", sodio).
+
+EJEMPLOS COTIDIANOS
+- El oxígeno que respiras son moléculas de O₂.
+- La mina del lápiz es grafito, hecho solo de átomos de carbono, igual que el diamante: mismos átomos, distinta forma de unirse.
+- El aluminio (Al) del papel de cocina es un metal de la tabla periódica.
+- El helio (He) de los globos es un gas noble: no reacciona con casi nada.
+
+EXPERIMENTO CASERO
+Construye un modelo del átomo de carbono con plastilina de tres colores: 6 bolitas de un color (protones) y 6 de otro (neutrones) juntas en el centro, y 6 bolitas de un tercer color (electrones) alrededor. Luego piensa: ¿a qué distancia debería estar de verdad la corteza si el núcleo midiera 1 cm? (Respuesta aproximada: a cientos de metros). 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- Si casi todo el átomo es vacío, ¿por qué no atravesamos las paredes?
+- ¿Por qué crees que los científicos cambiaron de modelo atómico varias veces?
+- ¿Qué tienen en común un diamante y la mina de un lápiz?
+
+RELACIÓN CON OTROS TEMAS
+Las partículas de la teoría cinético-molecular (tema 3) son átomos o moléculas.
+Elementos y compuestos (tema 4) se explican ahora con átomos.
+En el tema 6 veremos que en una reacción química los átomos se reorganizan, pero no se crean ni se destruyen.
+En Historia puedes conectar los modelos atómicos con cómo cambia el conocimiento a lo largo del tiempo.

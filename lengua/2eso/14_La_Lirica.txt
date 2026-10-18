@@ -1,0 +1,109 @@
+TEMA 14 – LA LÍRICA
+
+La lírica es el género de los sentimientos. Un poema puede hablar del amor, de la muerte, de la naturaleza, del paso del tiempo o de la rabia. Cuando una canción te pone la piel de gallina, estás sintiendo lo mismo que buscaban los poetas hace siglos.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Piensa en una canción que escuches cuando estás triste. No cuenta una historia completa: te habla de **cómo se siente alguien**. Usa imágenes ("tengo el corazón roto"), repite frases (el estribillo) y suena con ritmo.
+
+Eso es lírica: **un "yo" que expresa lo que siente**, con un lenguaje cuidado para que suene bien y te llegue.
+
+---
+
+IDEAS CLAVE
+
+**1. Rasgos de la lírica**
+- Hay un **yo poético** (o yo lírico): la voz que habla en el poema. No siempre es el autor.
+- Predomina la **función poética** y la **expresiva**.
+- Suele escribirse en **verso**, con ritmo, rima y figuras retóricas (Tema 12).
+- Es **subjetiva**: importa lo que se siente más que lo que pasa.
+
+**2. Temas frecuentes**
+- **El amor** (correspondido o no).
+- **La muerte y el paso del tiempo**.
+- **La naturaleza**.
+- **El *carpe diem***: "aprovecha el momento", disfruta de la juventud.
+- **La propia poesía**.
+
+**3. Lírica popular y lírica culta**
+- **Popular**: anónima, transmitida de boca en boca, versos cortos, repeticiones. Ejemplos: villancicos, romances, canciones de cuna. Del *Romance del prisionero*: "Que por mayo era, por mayo, / cuando hace la calor".
+- **Culta**: con autor conocido, más elaborada.
+
+**4. Subgéneros líricos**
+- **Oda**: exalta algo o a alguien.
+- **Elegía**: lamenta una pérdida o una muerte.
+- **Égloga**: pastores que hablan de amor en la naturaleza.
+- **Canción**: tema amoroso.
+- **Sátira**: critica o se burla de algo.
+
+**5. Poetas clave (dominio público) y lo que debes saber de ellos**
+- **Jorge Manrique** (s. XV): *Coplas por la muerte de su padre*, una elegía sobre la muerte y lo poco que duran las cosas. "Recuerde el alma dormida, / avive el seso y despierte". Usa la **copla de pie quebrado** (octosílabos y versos de cuatro sílabas).
+- **Garcilaso de la Vega** (s. XVI): trae del italiano el **soneto** y el endecasílabo. Temas: el amor y la naturaleza idealizada.
+- **Luis de Góngora** y **Francisco de Quevedo** (s. XVII, Barroco): juegos de palabras, ingenio, contrastes. Quevedo: "Érase un hombre a una nariz pegado".
+- **Gustavo Adolfo Bécquer** (s. XIX, Romanticismo): *Rimas*, poemas breves sobre el amor y la poesía. "¿Qué es poesía?, dices mientras clavas / en mi pupila tu pupila azul. / ¿Qué es poesía? ¿Y tú me lo preguntas? / Poesía… eres tú." (Rima XXI)
+- **Rubén Darío** (Modernismo): musicalidad, colores, mundos exóticos.
+- **Antonio Machado** (s. XX): el paso del tiempo, el paisaje de Castilla. "Caminante, no hay camino, / se hace camino al andar."
+- **Federico García Lorca** (s. XX, Generación del 27): lo popular andaluz y la muerte. *Romancero gitano*: "Verde que te quiero verde. / Verde viento. Verdes ramas."
+
+**6. Cómo comentar un poema (pasos sencillos)**
+1. Léelo dos veces, una en voz alta.
+2. ¿De qué habla? Resume el **tema** en una frase.
+3. ¿Quién habla y a quién? (yo poético, tú)
+4. Mide un par de versos y mira la rima. ¿Qué estrofa es?
+5. Busca 2 o 3 figuras y explica qué efecto hacen.
+6. ¿Qué te transmite a ti?
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- Las letras de canciones son lírica con música.
+- Un mensaje de cumpleaños con rima es lírica sencilla.
+- Los villancicos son lírica popular que todavía cantamos.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que el yo poético es siempre el autor.
+✅ **Realidad**: Un poeta puede hablar con la voz de otro (un soldado, una madre, un árbol).
+
+❌ **Error**: Creer que un poema tiene que rimar.
+✅ **Realidad**: Hay poesía en verso libre.
+
+❌ **Error**: En un comentario, solo listar figuras.
+✅ **Realidad**: Lo importante es explicar qué consiguen: "la anáfora insiste en…", "la metáfora hace ver…".
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que Bécquer responde "Poesía… eres tú"? ¿Qué quiere decir?
+2. Machado dice que "se hace camino al andar". ¿Qué camino crees que es?
+3. ¿Qué canción actual te parece un buen poema? ¿Por qué?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 12 (Métrica)**: la herramienta para analizar los poemas.
+- **Tema 1 (Funciones)**: funciones poética y expresiva.
+- **Tema 15 (El teatro)**: el teatro del Siglo de Oro está escrito en verso, y Lorca fue poeta y dramaturgo.
+- **Conexión con Música** e **Historia** (cada poeta, su época).
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+1. ¿Qué tema tienen las *Coplas* de Manrique?
+2. Mide: "Que por mayo era, por mayo".
+3. En "Verde que te quiero verde. / Verde viento. Verdes ramas.", ¿qué figura destaca?
+4. ¿Qué poeta introdujo el soneto en la poesía castellana del Renacimiento?
+
+Soluciones:
+1. La muerte (y la fugacidad de la vida): es una elegía por la muerte de su padre.
+2. Que-por-ma-yo_e-ra-por-ma-yo = 8, llana: octosílabo.
+3. La repetición de "verde" (anáfora, aliteración en "v"); también hay enumeración.
+4. Garcilaso de la Vega (junto con Boscán).

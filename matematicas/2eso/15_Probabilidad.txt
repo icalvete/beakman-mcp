@@ -1,0 +1,77 @@
+TEMA 15 – PROBABILIDAD
+
+La probabilidad mide lo posible que es que ocurra algo cuando interviene el azar.
+Es un número entre 0 (imposible) y 1 (seguro).
+
+EXPLICACIÓN VISUAL
+Imagina una bolsa opaca con 10 bolas: 3 rojas, 5 azules y 2 verdes.
+Metes la mano sin mirar. ¿Qué color es más fácil que salga? El azul, porque hay más.
+La probabilidad pone número a esa intuición: azul = 5 de 10 = 1/2.
+
+     0 ---------- 0,5 ---------- 1
+ imposible     tan posible      seguro
+               como no
+
+IDEAS CLAVE
+
+EXPERIMENTOS
+- Aleatorio: no se sabe el resultado aunque se repita igual (lanzar un dado).
+- Determinista: se sabe el resultado de antemano (soltar una piedra: cae).
+
+ESPACIO MUESTRAL Y SUCESOS
+- Espacio muestral (E): todos los resultados posibles. Dado: E = {1, 2, 3, 4, 5, 6}.
+- Suceso: un resultado o grupo de resultados. "Sacar par" = {2, 4, 6}.
+- Suceso contrario: lo que ocurre cuando NO ocurre el suceso. Contrario de "par": "impar".
+
+REGLA DE LAPLACE
+P(suceso) = casos favorables ÷ casos posibles
+Solo vale si todos los resultados son igual de probables (dado no trucado, moneda normal).
+
+SUCESO CONTRARIO
+P(no A) = 1 - P(A)
+
+FRECUENCIA Y PROBABILIDAD
+Si repites un experimento muchísimas veces, la frecuencia relativa se acerca a la probabilidad.
+Con pocas tiradas puede salir cualquier cosa; con miles, se nota la tendencia (ley de los grandes números).
+Así se calcula la probabilidad cuando no vale Laplace (por ejemplo, cómo cae una chincheta).
+
+DIAGRAMAS DE ÁRBOL Y TABLAS
+Sirven para no olvidar ningún caso cuando hay dos pasos (dos monedas, dos dados).
+
+EJEMPLOS RESUELTOS
+1) Bolsa con 3 rojas, 5 azules y 2 verdes.
+   P(azul) = 5/10 = 1/2
+   P(no roja) = 1 - 3/10 = 7/10
+2) Lanzar dos monedas. Árbol: CC, CX, XC, XX (4 casos).
+   P(exactamente una cara) = 2/4 = 1/2
+   (¡No son 3 casos! "Una cara y una cruz" puede salir de dos maneras.)
+3) Lanzar dos dados. Hay 6 × 6 = 36 casos.
+   Suma 7: (1,6) (2,5) (3,4) (4,3) (5,2) (6,1) → P = 6/36 = 1/6
+   Suma 2: solo (1,1) → P = 1/36
+4) Baraja española de 40 cartas (4 palos de 10).
+   P(oros) = 10/40 = 1/4
+   P(as) = 4/40 = 1/10
+   P(as u oros) = (10 + 4 - 1)/40 = 13/40 (el as de oros no se cuenta dos veces).
+
+ERRORES TÍPICOS
+- Usar Laplace cuando los casos no son igual de probables.
+- Contar mal los casos de dos monedas o dos dados (CX y XC son distintos).
+- Pensar que "toca" un resultado porque hace mucho que no sale (la moneda no tiene memoria).
+- Contar dos veces los casos que cumplen dos condiciones a la vez.
+- Dar probabilidades mayores que 1 o negativas.
+
+EJEMPLOS COTIDIANOS
+- La previsión del tiempo: "70% de probabilidad de lluvia".
+- Juegos de mesa con dados y cartas.
+- Sorteos en clase.
+- En los juegos de dos dados, la suma 7 sale mucho más que la 12.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué con dos dados sale más la suma 7 que la suma 2?
+- Si una moneda sale cara 5 veces seguidas, ¿es más probable cruz en la siguiente?
+- ¿Cómo calcularías la probabilidad de que una chincheta caiga de punta?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía la probabilidad del tema 10 de 1º.
+- Usa fracciones, decimales y porcentajes (temas 2 y 5).
+- La frecuencia relativa viene de la estadística (tema 14).

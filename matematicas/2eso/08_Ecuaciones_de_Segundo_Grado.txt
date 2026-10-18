@@ -1,0 +1,68 @@
+TEMA 8 – ECUACIONES DE SEGUNDO GRADO (INTRODUCCIÓN)
+
+Son ecuaciones en las que la incógnita aparece al cuadrado (x²).
+Su forma general es ax² + bx + c = 0, con a distinto de 0. Pueden tener dos soluciones, una o ninguna.
+
+EXPLICACIÓN VISUAL
+Imagina que tienes 49 baldosas y formas un cuadrado. ¿Cuánto mide el lado?
+x² = 49 → x = 7 (porque 7 × 7 = 49).
+Pero (-7) × (-7) también da 49: la ecuación tiene dos soluciones, 7 y -7.
+En un problema de longitudes, el -7 no tiene sentido y se descarta.
+
+IDEAS CLAVE
+
+INCOMPLETAS (falta b o falta c)
+- Sin b (ax² + c = 0): se despeja x² y se hace la raíz.
+  x² - 16 = 0 → x² = 16 → x = 4 o x = -4
+- Sin c (ax² + bx = 0): se saca factor común x.
+  3x² - 12x = 0 → 3x(x - 4) = 0 → x = 0 o x = 4
+  (Si un producto da 0, alguno de los factores es 0.)
+
+COMPLETAS: LA FÓRMULA
+x = (-b ± √(b² - 4ac)) / 2a
+El "±" significa que se hace dos veces: una sumando y otra restando.
+
+EL DISCRIMINANTE (lo que hay dentro de la raíz)
+Δ = b² - 4ac
+- Δ > 0 → dos soluciones.
+- Δ = 0 → una solución (doble).
+- Δ < 0 → ninguna solución (no hay raíz de un negativo).
+
+EJEMPLOS RESUELTOS
+1) x² - 5x + 6 = 0   (a = 1, b = -5, c = 6)
+   Δ = (-5)² - 4 · 1 · 6 = 25 - 24 = 1
+   x = (5 ± 1) / 2 → x = 3 o x = 2
+   Comprobación con x = 3: 9 - 15 + 6 = 0. ✔
+2) x² - 6x + 9 = 0
+   Δ = 36 - 36 = 0 → una solución: x = 6/2 = 3
+   (Es la identidad notable (x - 3)² = 0.)
+3) x² + x + 1 = 0
+   Δ = 1 - 4 = -3 < 0 → no tiene solución.
+4) Problema: un rectángulo tiene la base 3 m más larga que la altura y su área es 40 m².
+   Altura: x. Base: x + 3. Área: x(x + 3) = 40 → x² + 3x - 40 = 0
+   Δ = 9 + 160 = 169, √169 = 13
+   x = (-3 ± 13) / 2 → x = 5 o x = -8
+   Una longitud no puede ser negativa: altura 5 m y base 8 m. (5 · 8 = 40 ✔)
+
+ERRORES TÍPICOS
+- Quedarse solo con la solución positiva de x² = 25 (también vale -5).
+- Dividir entre x en 3x² = 12x: se pierde la solución x = 0.
+- Olvidar el signo de "-b" en la fórmula cuando b es negativo.
+- Calcular mal b² cuando b es negativo: (-5)² = 25, no -25.
+- No igualar a cero antes de usar la fórmula.
+
+EJEMPLOS COTIDIANOS
+- Calcular el lado de un terreno cuadrado conociendo su área.
+- La trayectoria de un balón lanzado hacia arriba es una curva de segundo grado (parábola).
+- Calcular las medidas de una pantalla conociendo su área y su forma.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué una ecuación de segundo grado puede tener dos soluciones y una de primero no?
+- ¿Por qué x² = -4 no tiene solución? (Pista: ¿puede un cuadrado tener área negativa?)
+- Inventa una ecuación cuyas soluciones sean 1 y 2. (Pista: (x - 1)(x - 2) = 0.)
+
+RELACIÓN CON OTROS TEMAS
+- Usa potencias y raíces (tema 3) e identidades notables (tema 6).
+- Se resuelve con las mismas reglas que las de primer grado (tema 7).
+- Aparece en problemas de áreas (tema 13) y con Pitágoras (tema 11).
+- En 3º y 4º se estudia más a fondo.

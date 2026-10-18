@@ -1,0 +1,70 @@
+TEMA 11 – TEOREMA DE PITÁGORAS
+
+En un triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos.
+Sirve para calcular un lado si conoces los otros dos.
+
+EXPLICACIÓN VISUAL
+Dibuja un triángulo rectángulo con lados 3, 4 y 5 cm.
+Sobre cada lado, dibuja un cuadrado:
+- sobre el lado 3: 9 cuadraditos
+- sobre el lado 4: 16 cuadraditos
+- sobre el lado 5: 25 cuadraditos
+9 + 16 = 25: ¡los dos cuadrados pequeños juntos llenan exactamente el grande!
+
+IDEAS CLAVE
+
+PARTES DEL TRIÁNGULO RECTÁNGULO
+- Catetos (b y c): los dos lados que forman el ángulo recto.
+- Hipotenusa (a): el lado más largo, enfrente del ángulo recto.
+
+EL TEOREMA
+a² = b² + c²
+- Para la hipotenusa: a = √(b² + c²)
+- Para un cateto: b = √(a² - c²) (se RESTA)
+
+¿ES RECTÁNGULO?
+Si con los tres lados se cumple a² = b² + c² (a, el mayor), el triángulo es rectángulo.
+Si a² es mayor, es obtusángulo; si es menor, acutángulo.
+
+TERNAS PITAGÓRICAS (números enteros que lo cumplen)
+3, 4, 5 · 5, 12, 13 · 6, 8, 10 · 7, 24, 25 · 8, 15, 17
+
+EJEMPLOS RESUELTOS
+1) Catetos de 6 cm y 8 cm. ¿Hipotenusa?
+   a² = 6² + 8² = 36 + 64 = 100 → a = √100 = 10 cm
+2) Hipotenusa de 13 m y un cateto de 5 m. ¿El otro cateto?
+   b² = 13² - 5² = 169 - 25 = 144 → b = 12 m
+3) Una escalera de 5 m se apoya en la pared con el pie a 3 m de la pared. ¿A qué altura llega?
+   h² = 5² - 3² = 25 - 9 = 16 → h = 4 m
+4) Diagonal de una mesa de 2 m × 1,5 m:
+   d² = 2² + 1,5² = 4 + 2,25 = 6,25 → d = 2,5 m
+5) Altura de un triángulo equilátero de lado 6 cm: la altura lo parte en dos triángulos rectángulos con hipotenusa 6 y cateto 3.
+   h² = 36 - 9 = 27 → h = √27 ≈ 5,20 cm
+6) ¿Es rectángulo un triángulo de lados 5, 6 y 8?
+   8² = 64 y 5² + 6² = 25 + 36 = 61. No es rectángulo (64 > 61: es obtusángulo).
+
+ERRORES TÍPICOS
+- Usarlo en triángulos que no son rectángulos.
+- Sumar los cuadrados cuando buscas un cateto (hay que restar).
+- Olvidar hacer la raíz al final (quedarse con a² = 100).
+- Pensar que √(6² + 8²) = 6 + 8.
+- Mezclar unidades (metros y centímetros).
+
+EJEMPLOS COTIDIANOS
+- El tamaño de las pantallas (pulgadas) se mide en diagonal.
+- Albañiles y carpinteros comprueban esquinas rectas con 3, 4 y 5 (o 60, 80 y 100 cm).
+- La distancia más corta cruzando un campo en diagonal.
+- La longitud de una rampa o de un tobogán.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué la hipotenusa es siempre el lado más largo?
+- Si duplicas los catetos, ¿qué le pasa a la hipotenusa?
+- ¿Cómo comprobarías con una cuerda si una esquina es recta?
+
+ANÉCDOTA
+Se cuenta que en el antiguo Egipto usaban una cuerda con 12 nudos a la misma distancia para formar un triángulo 3-4-5 y trazar ángulos rectos. El teorema lleva el nombre de Pitágoras, un griego del siglo VI a. C., aunque otras culturas ya conocían la relación.
+
+RELACIÓN CON OTROS TEMAS
+- Usa potencias y raíz cuadrada (tema 3).
+- Los triángulos rectángulos se vieron en geometría plana (tema 9 de 1º).
+- Se usa para calcular apotemas y alturas en cuerpos geométricos (tema 13).

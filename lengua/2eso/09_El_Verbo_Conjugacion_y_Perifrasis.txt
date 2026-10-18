@@ -1,0 +1,118 @@
+TEMA 9 – EL VERBO: CONJUGACIÓN Y PERÍFRASIS
+
+El verbo es la palabra que más información guarda: en "cantábamos" hay una acción (cantar), unas personas (nosotros), un momento (pasado) y una forma de verlo (algo que se repetía). En este tema vas a aprender a "desmontar" el verbo y a reconocer las perífrasis: verbos que trabajan en equipo.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Piensa en el verbo como en una mochila con bolsillos:
+"cant-ába-mos"
+- **cant-** → bolsillo principal: el significado (lexema).
+- **-ába-** → bolsillo de tiempo, modo y aspecto: pretérito imperfecto de indicativo.
+- **-mos** → bolsillo de persona y número: 1.ª persona del plural.
+
+Todo eso en una sola palabra. Por eso en español podemos omitir el sujeto: el verbo ya dice quién es.
+
+---
+
+IDEAS CLAVE
+
+**1. Los accidentes del verbo** (la información de las desinencias)
+- **Persona**: 1.ª (yo, nosotros), 2.ª (tú, vosotros), 3.ª (él, ellos; también usted, ustedes).
+- **Número**: singular o plural.
+- **Tiempo**: presente, pasado (pretérito) o futuro.
+- **Modo**: la actitud del hablante.
+  - **Indicativo**: hechos reales. "Viene."
+  - **Subjuntivo**: deseos, dudas, posibilidades. "Ojalá venga."
+  - **Imperativo**: órdenes. "Ven."
+- **Aspecto**: si la acción se ve acabada (**perfectivo**: "he comido", "comí") o en desarrollo (**imperfectivo**: "comía", "como").
+
+**2. Las tres conjugaciones**: 1.ª en -ar (amar), 2.ª en -er (temer), 3.ª en -ir (partir).
+
+**3. Formas personales y no personales**
+- **No personales** (no indican persona): infinitivo (cantar), gerundio (cantando), participio (cantado).
+- **Simples**: una palabra (canto). **Compuestas**: haber + participio (he cantado). Las compuestas indican acción terminada.
+
+**4. Tiempos de indicativo** (ejemplo con "cantar", 1.ª persona)
+- Presente: canto. Pretérito perfecto compuesto: he cantado.
+- Pretérito imperfecto: cantaba. Pretérito pluscuamperfecto: había cantado.
+- Pretérito perfecto simple: canté. Pretérito anterior: hube cantado (casi no se usa).
+- Futuro simple: cantaré. Futuro compuesto: habré cantado.
+- Condicional simple: cantaría. Condicional compuesto: habría cantado.
+
+**Subjuntivo**: presente (cante), pretérito imperfecto (cantara o cantase), pretérito perfecto (haya cantado), pluscuamperfecto (hubiera o hubiese cantado). El futuro de subjuntivo (cantare) solo aparece en leyes y refranes.
+
+**5. Verbos regulares e irregulares**
+- **Regulares**: mantienen el lexema y siguen el modelo (amar → amo, amé, amaré).
+- **Irregulares**: cambian el lexema o las desinencias: pensar → pienso; tener → tuve; ir → fui; hacer → hice.
+
+**6. Perífrasis verbales**: dos o más verbos que funcionan como **un solo núcleo**.
+- Estructura: **verbo auxiliar** (conjugado, ha perdido parte de su significado) + (preposición o "que") + **infinitivo, gerundio o participio**.
+- **Modales** (actitud del hablante):
+  - Obligación: tener que / haber de / deber + infinitivo → "Tengo que estudiar."
+  - Posibilidad o suposición: poder + infinitivo, deber de + infinitivo → "Debe de estar en casa."
+- **Aspectuales** (cómo se ve la acción):
+  - Ingresiva (a punto de empezar): ir a + infinitivo → "Voy a salir."
+  - Incoativa (empieza): empezar a, ponerse a + infinitivo → "Se puso a llover."
+  - Durativa (en desarrollo): estar + gerundio, seguir + gerundio → "Estoy leyendo."
+  - Reiterativa (se repite): volver a + infinitivo → "Volvió a llamar."
+  - Habitual: soler + infinitivo → "Suelo madrugar."
+  - Terminativa (acaba): acabar de, dejar de + infinitivo → "Acabo de llegar."
+
+**Prueba de la perífrasis**: el auxiliar no tiene su significado de siempre. En "Voy a comer" no te mueves a ningún sitio → perífrasis. En "Voy a Madrid" sí → no lo es.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- "Estoy jugando, ahora no puedo" → estar + gerundio (durativa) + poder + infinitivo (modal, posibilidad).
+- "Acabo de ver tu mensaje" → terminativa: hace un momento.
+- "Vuelve a intentarlo" → reiterativa.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: "Debe de estudiar más" para decir que tiene la obligación.
+✅ **Correcto**: "Debe estudiar más" (obligación). "Deber de" expresa suposición: "Deben de ser las cinco".
+
+❌ **Error**: "Cantastes", "dijistes".
+✅ **Correcto**: "Cantaste", "dijiste". La 2.ª persona del singular del pretérito perfecto simple no lleva -s final.
+
+❌ **Error**: Usar el infinitivo como imperativo: "¡Callar!", "Sentaros".
+✅ **Correcto**: "¡Callad!", "Sentaos". (Para dar órdenes generales por escrito sí vale: "No fumar".)
+
+❌ **Error**: "Andé", "conducí", "satisfació".
+✅ **Correcto**: "Anduve", "conduje", "satisfizo". Son irregulares.
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Qué diferencia hay entre "comía pizza los viernes" y "comí pizza el viernes"? ¿Qué te dice el aspecto?
+2. ¿Por qué crees que los niños pequeños dicen "andé" o "rompido"? ¿Qué regla están aplicando?
+3. "Tengo que ir" y "tengo un perro": ¿en cuál "tener" significa poseer?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 6 (Oración simple)**: el verbo es el núcleo del predicado; la perífrasis entera también.
+- **Tema 8 (Clases de oraciones)**: subjuntivo en desiderativas y dubitativas; imperativo en imperativas.
+- **Tema 2 (Tipos de textos)**: el pasado narra, el presente expone, el imperativo instruye.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+1. Analiza "temieron": persona, número, tiempo, modo.
+2. ¿Hay perífrasis? (a) "Voy a contártelo." (b) "Voy a la piscina." (c) "Sigue lloviendo."
+3. Clasifica: "Suelo leer antes de dormir."
+4. Corrige: "¿Por qué no vinistes ayer?"
+
+Soluciones:
+1. 3.ª persona del plural, pretérito perfecto simple, indicativo (2.ª conjugación).
+2. (a) Sí, ir a + infinitivo (ingresiva). (b) No, "ir" significa desplazarse. (c) Sí, seguir + gerundio (durativa).
+3. Perífrasis aspectual habitual (soler + infinitivo).
+4. "¿Por qué no viniste ayer?"

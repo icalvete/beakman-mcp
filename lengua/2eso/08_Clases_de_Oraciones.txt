@@ -1,0 +1,108 @@
+TEMA 8 – CLASES DE ORACIONES
+
+Las oraciones se pueden clasificar de dos maneras: por **la intención de quien habla** (¿afirma, pregunta, ordena, desea…?) y por **cómo es su predicado** (¿lleva atributo, CD, está en pasiva…?). Es como clasificar a tus amigos por su carácter o por su altura: dos criterios distintos.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Una misma idea, cinco actitudes:
+- "Mañana vas al dentista." → AFIRMAS.
+- "¿Mañana vas al dentista?" → PREGUNTAS.
+- "¡Mañana vas al dentista!" → TE SORPRENDES.
+- "Ve mañana al dentista." → ORDENAS.
+- "Ojalá vayas mañana al dentista." → DESEAS.
+- "Quizá vayas mañana al dentista." → DUDAS.
+
+Las palabras son casi las mismas; lo que cambia es la **actitud del hablante** (la gramática lo llama **modalidad**).
+
+---
+
+IDEAS CLAVE
+
+**A. SEGÚN LA ACTITUD DEL HABLANTE (modalidad)**
+
+1. **Enunciativas**: informan de algo. Pueden ser **afirmativas** ("Hace sol") o **negativas** ("No hace sol").
+2. **Interrogativas**: preguntan.
+   - **Directas**: con signos ¿? → "¿Vienes?"
+   - **Indirectas**: sin signos, dentro de otra oración → "Me pregunto si vienes." (Esta ya es compuesta: lo verás más adelante.)
+   - **Totales** (respuesta sí/no): "¿Has comido?" / **Parciales** (piden un dato): "¿Qué has comido?"
+3. **Exclamativas**: expresan emoción, con signos ¡! → "¡Qué partidazo!"
+4. **Imperativas (o exhortativas)**: ordenan, piden, prohíben o aconsejan → "Siéntate." "No grites."
+5. **Desiderativas**: expresan un deseo, suelen llevar "ojalá", "que" y subjuntivo → "¡Ojalá apruebe!" "Que te mejores."
+6. **Dubitativas**: expresan duda o posibilidad, con "quizá(s)", "tal vez", "a lo mejor", "probablemente" → "Tal vez llueva."
+
+**B. SEGÚN EL PREDICADO**
+
+1. **Copulativas**: verbo ser, estar o parecer + atributo. → "La sopa está fría."
+2. **Predicativas**: cualquier otro verbo. Se subdividen:
+   - **Transitivas**: llevan CD. → "Lucía toca la guitarra."
+   - **Intransitivas**: no llevan CD. → "Lucía canta muy bien." "El bebé duerme."
+   - **Reflexivas**: el sujeto hace la acción sobre sí mismo (me, te, se…) → "Marta se peina." (= se peina a sí misma)
+   - **Recíprocas**: dos o más sujetos se hacen la acción mutuamente → "Ana y Leo se escriben." (= el uno al otro)
+3. **Activas y pasivas**:
+   - **Activa**: el sujeto hace la acción. → "La policía detuvo al ladrón."
+   - **Pasiva perifrástica**: ser + participio (+ complemento agente). → "El ladrón fue detenido por la policía."
+   - **Pasiva refleja**: se + verbo en 3.ª persona que concuerda con el sujeto. → "Se venden pisos." (sujeto: pisos; prueba: "Se vende piso")
+4. **Personales e impersonales** (Tema 6): con sujeto o sin él.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+- Cartel de tienda: "Se alquilan bicis" → pasiva refleja.
+- WhatsApp: "¿Quedamos?" → interrogativa directa total.
+- Felicitación: "¡Que cumplas muchos más!" → desiderativa.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que toda oración con signos ¡! es exclamativa.
+✅ **Realidad**: "¡Cállate!" es imperativa (ordena) aunque lleve exclamación. Mira la intención.
+
+❌ **Error**: Confundir pasiva refleja con impersonal con "se".
+✅ **Truco**: cambia el número. "Se venden pisos" → "Se vende piso": el verbo cambia → hay sujeto → pasiva refleja. "Se vive bien" → no hay nada que concuerde → impersonal.
+
+❌ **Error**: "Se vende pisos".
+✅ **Correcto**: "Se venden pisos" (el verbo concuerda con "pisos", que es el sujeto).
+
+❌ **Error**: Pensar que "se" siempre significa reflexivo.
+✅ **Realidad**: "Se lo di" (se = CI), "Se venden pisos" (pasiva refleja), "Se vive bien" (impersonal). Hay muchos "se".
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué decimos "¿Me pasas la sal?" en vez de "Pásame la sal"? ¿Qué modalidad tiene y qué intención?
+2. ¿Una oración puede ser a la vez enunciativa y transitiva? ¿Por qué?
+3. ¿Por qué crees que los titulares de prensa usan tanto la pasiva ("Detenido un ladrón…")?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 1 (Funciones del lenguaje)**: exclamativas → expresiva; imperativas → apelativa.
+- **Tema 6 (Oración simple)**: personales e impersonales.
+- **Tema 7 (Complementos)**: el CD decide si es transitiva; el atributo, si es copulativa; el agente aparece en la pasiva.
+- **Tema 9 (El verbo)**: el modo subjuntivo en desiderativas y dubitativas.
+
+---
+
+MINI EJERCICIOS (CON SOLUCIÓN)
+
+Clasifica cada oración según la actitud del hablante y según el predicado:
+1. "Mi primo es muy simpático."
+2. "¿Has visto mis llaves?"
+3. "Ojalá nieve en Navidad."
+4. "Los novios se abrazaron."
+5. "La final fue ganada por el equipo visitante."
+6. "Se necesitan voluntarios."
+
+Soluciones:
+1. Enunciativa afirmativa; copulativa.
+2. Interrogativa directa total; predicativa transitiva (CD: mis llaves).
+3. Desiderativa; impersonal (fenómeno meteorológico).
+4. Enunciativa afirmativa; predicativa recíproca.
+5. Enunciativa afirmativa; pasiva perifrástica (CAg: por el equipo visitante).
+6. Enunciativa afirmativa; pasiva refleja (sujeto: voluntarios).

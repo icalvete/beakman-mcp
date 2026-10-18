@@ -1,0 +1,72 @@
+TEMA 13 – CUERPOS GEOMÉTRICOS: ÁREAS Y VOLÚMENES
+
+Los cuerpos geométricos son figuras en tres dimensiones: tienen largo, ancho y alto.
+El área mide cuánto "papel" hace falta para forrarlos; el volumen, cuánto cabe dentro.
+
+EXPLICACIÓN VISUAL
+Imagina un tetrabrik de zumo.
+- Si lo desmontas y lo aplanas, ves su desarrollo plano: 6 rectángulos. Sumar sus áreas da el área total.
+- Si lo llenas de cubitos de 1 cm de lado, el número de cubitos es su volumen en cm³.
+
+IDEAS CLAVE
+
+TIPOS DE CUERPOS
+- Poliedros (caras planas): prismas (dos bases iguales, como una caja) y pirámides (una base y una punta).
+- Cuerpos redondos: cilindro (lata), cono (cucurucho) y esfera (pelota).
+Elementos de un poliedro: caras (C), vértices (V) y aristas (A). Fórmula de Euler: C + V = A + 2.
+Cubo: 6 + 8 = 12 + 2. ✔
+
+ÁREAS
+- Prisma: área lateral = perímetro de la base × altura. Total = lateral + 2 bases.
+- Cilindro: lateral = 2πr · h (un rectángulo enrollado). Total = lateral + 2πr².
+- Pirámide: lateral = suma de los triángulos de las caras. Total = lateral + base.
+- Esfera: 4πr².
+
+VOLÚMENES
+- Prisma y cilindro: V = área de la base × altura.
+- Pirámide y cono: V = (área de la base × altura) ÷ 3.
+- Esfera: V = (4/3) × π × r³.
+Un cono lleno de agua cabe 3 veces en el cilindro de la misma base y altura.
+
+UNIDADES
+- Volumen: cada salto de unidad es × 1000. 1 m³ = 1000 dm³; 1 dm³ = 1000 cm³.
+- Capacidad: 1 dm³ = 1 L; 1 cm³ = 1 mL; 1 m³ = 1000 L.
+
+EJEMPLOS RESUELTOS (π ≈ 3,14)
+1) Caja (ortoedro) de 5 × 3 × 2 cm
+   V = 5 × 3 × 2 = 30 cm³
+   A = 2 × (5·3 + 5·2 + 3·2) = 2 × (15 + 10 + 6) = 62 cm²
+2) Lata cilíndrica de radio 3 cm y altura 10 cm
+   V = 3,14 × 3² × 10 = 282,6 cm³ ≈ 0,28 L
+   A lateral = 2 × 3,14 × 3 × 10 = 188,4 cm²
+   A bases = 2 × 3,14 × 9 = 56,52 cm². Total = 244,92 cm²
+3) Pirámide de base cuadrada de 6 m de lado y 4 m de altura
+   V = 6² × 4 ÷ 3 = 144 ÷ 3 = 48 m³
+   Altura de cada cara (apotema), con Pitágoras: √(4² + 3²) = √25 = 5 m
+   A lateral = 4 × (6 × 5 ÷ 2) = 60 m². Total = 60 + 36 = 96 m²
+4) Cono de radio 3 cm y altura 4 cm: V = 3,14 × 9 × 4 ÷ 3 = 37,68 cm³
+5) Balón de radio 10 cm: V = 4/3 × 3,14 × 1000 ≈ 4186,67 cm³ ≈ 4,19 L
+
+ERRORES TÍPICOS
+- Olvidar dividir entre 3 en pirámides y conos.
+- Usar el diámetro en vez del radio.
+- Convertir unidades de volumen de 10 en 10 (son de 1000 en 1000).
+- Confundir área (cm²) con volumen (cm³).
+- Usar la altura de la pirámide en vez de la apotema para el área de las caras.
+
+EJEMPLOS COTIDIANOS
+- Cuánto papel de regalo hace falta para envolver una caja (área).
+- Cuántos litros caben en una piscina o una pecera (volumen).
+- Por qué los zumos vienen en ortoedros: se apilan sin huecos.
+- Cuánta pintura hace falta para un depósito cilíndrico.
+
+PREGUNTAS PARA PENSAR
+- Si duplicas el radio de una esfera, ¿cuántas veces más cabe dentro?
+- ¿Por qué las latas son cilíndricas y no cúbicas?
+- ¿Pueden dos cajas tener el mismo volumen y distinta área?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía la geometría plana y las medidas de 1º (temas 8 y 9 de 1º).
+- Usa Pitágoras (tema 11) para apotemas y alturas.
+- La semejanza (tema 12) explica por qué el volumen crece con k³.
+- En Ciencias: densidad = masa ÷ volumen.

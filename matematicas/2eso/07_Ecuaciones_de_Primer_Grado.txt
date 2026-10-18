@@ -1,0 +1,75 @@
+TEMA 7 – ECUACIONES DE PRIMER GRADO
+
+Una ecuación es una igualdad con un número desconocido (la incógnita).
+Es de primer grado cuando la x no está elevada a nada (no hay x², x³...).
+
+EXPLICACIÓN VISUAL
+Vuelve a la balanza de 1º, pero ahora con bolsas misteriosas en los dos platos.
+Plato izquierdo: 5 bolsas y 3 kg de menos (5x - 3). Plato derecho: 2 bolsas y 9 kg (2x + 9).
+Si quitas 2 bolsas de cada plato, sigue equilibrada: 3x - 3 = 9.
+Si añades 3 kg a cada plato: 3x = 12. Cada bolsa pesa 4 kg.
+
+IDEAS CLAVE
+
+LA REGLA DE ORO
+Lo que hagas en un lado, hazlo en el otro. El atajo "pasar al otro lado" es eso mismo:
+- Lo que suma pasa restando, y al revés.
+- Lo que multiplica pasa dividiendo, y al revés.
+
+PASOS PARA RESOLVER
+1. Quitar paréntesis.
+2. Quitar denominadores (multiplicar TODO por el mcm).
+3. Letras a un lado, números al otro.
+4. Agrupar.
+5. Despejar x.
+6. Comprobar sustituyendo en la ecuación original.
+
+TIPOS DE SOLUCIÓN
+- Una solución: 3x = 12 → x = 4.
+- Ninguna: si llegas a algo como 0x = 5 (imposible).
+- Infinitas: si llegas a 0x = 0 (vale cualquier número).
+
+EJEMPLOS RESUELTOS
+1) 5x - 3 = 2x + 9
+   5x - 2x = 9 + 3 → 3x = 12 → x = 4
+   Comprobación: 5 · 4 - 3 = 17 y 2 · 4 + 9 = 17. ✔
+2) 3(x - 2) = x + 4
+   3x - 6 = x + 4 → 2x = 10 → x = 5
+3) x/2 + x/3 = 10
+   mcm(2, 3) = 6. Multiplico todo por 6: 3x + 2x = 60 → 5x = 60 → x = 12
+   Comprobación: 12/2 + 12/3 = 6 + 4 = 10. ✔
+4) (x + 1)/4 - (x - 2)/3 = 1
+   Multiplico todo por 12: 3(x + 1) - 4(x - 2) = 12
+   ¡Ojo al menos! 3x + 3 - 4x + 8 = 12 → -x + 11 = 12 → -x = 1 → x = -1
+5) Problema: Ana tiene el triple de años que su hermano. Dentro de 5 años, entre los dos sumarán 34.
+   Hermano: x. Ana: 3x. Dentro de 5 años: (x + 5) + (3x + 5) = 34
+   4x + 10 = 34 → 4x = 24 → x = 6. El hermano tiene 6 años y Ana 18.
+   Comprobación: 11 + 23 = 34. ✔
+
+CÓMO PLANTEAR UN PROBLEMA
+1. Leer despacio y decidir qué es x.
+2. Escribir el resto de datos con x.
+3. Plantear la igualdad que dice el enunciado.
+4. Resolver y comprobar que la respuesta tiene sentido (¿edad negativa? algo falla).
+
+ERRORES TÍPICOS
+- Al pasar un número, cambiar mal la operación: en 3x = 12, el 3 pasa dividiendo, no restando.
+- Multiplicar por el mcm solo algunos términos (¡también el número suelto!).
+- Olvidar que el menos delante de una fracción afecta a todo el numerador.
+- No comprobar la solución.
+- Dejar el resultado como -x = 1 en lugar de x = -1.
+
+EJEMPLOS COTIDIANOS
+- "Pienso un número, le sumo 7 y lo multiplico por 2: me sale 30."
+- Repartir gastos: si entre 4 pagáis 36 € y uno pone 3 € más que los demás...
+- Calcular cuántos meses tienes que ahorrar para comprarte algo.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué hay que hacer lo mismo en los dos lados?
+- ¿Puede una ecuación no tener solución? Inventa una.
+- ¿Por qué es buena idea comprobar siempre la solución?
+
+RELACIÓN CON OTROS TEMAS
+- Amplía las ecuaciones sencillas del tema 7 de 1º.
+- Usa polinomios y paréntesis (tema 6) y fracciones (tema 2).
+- Es la base de las ecuaciones de segundo grado (tema 8) y de los sistemas (tema 9).

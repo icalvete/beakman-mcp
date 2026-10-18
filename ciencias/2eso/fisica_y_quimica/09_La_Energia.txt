@@ -1,0 +1,50 @@
+TEMA 9 – LA ENERGÍA
+
+La energía es la capacidad de un cuerpo o sistema para producir cambios: mover algo, calentarlo, iluminarlo, transformarlo.
+No se crea ni se destruye: solo se transforma de unas formas en otras.
+
+EXPLICACIÓN VISUAL
+Imagina el dinero de una hucha: puedes cambiarlo a otra moneda, gastarlo en cosas distintas o pasarlo a otra persona, pero el total no aparece de la nada ni se esfuma. La energía funciona parecido: pasa de la comida a tus músculos, de tus músculos a la pelota que lanzas, de la pelota al aire en forma de un poquito de calor... y la cuenta total siempre cuadra.
+
+IDEAS CLAVE
+- Unidad SI de energía: el julio (J). En las facturas de la luz se usa el kilovatio hora (kWh): 1 kWh = 3 600 000 J. En los alimentos, la kilocaloría (kcal).
+- Formas de energía:
+  - Cinética: la que tiene un cuerpo por moverse (más velocidad y más masa, más energía).
+  - Potencial gravitatoria: la que tiene por estar a cierta altura (más altura y más masa, más energía).
+  - Potencial elástica: la de un muelle o una goma estirados.
+  - Térmica: la de la agitación de las partículas.
+  - Química: la guardada en los alimentos, los combustibles y las pilas.
+  - Eléctrica, luminosa (o radiante), sonora y nuclear.
+- La energía se transforma: en una linterna, la química de la pila pasa a eléctrica y después a luminosa (y algo de térmica).
+- Principio de conservación: la energía total se mantiene. Pero en cada transformación una parte acaba como calor que ya no podemos aprovechar: se dice que la energía se degrada.
+- Fuentes de energía:
+  - Renovables (no se agotan o se renuevan rápido): solar, eólica, hidráulica, geotérmica, biomasa, mareomotriz.
+  - No renovables (se agotan): carbón, petróleo, gas natural (combustibles fósiles) y nuclear (uranio).
+- Los combustibles fósiles liberan CO₂ al quemarse y aumentan el efecto invernadero.
+- Ahorrar energía: apagar luces, usar bombillas LED, no dejar aparatos en espera, aislar bien las casas.
+
+ERRORES TÍPICOS
+- Decir que la energía "se gasta" o "se pierde" (se transforma; lo que perdemos es energía útil).
+- Pensar que las renovables no tienen ningún impacto (los embalses o los parques eólicos también afectan al paisaje y a los seres vivos).
+- Confundir fuente de energía con forma de energía (el viento es una fuente; la cinética del viento es la forma).
+- Creer que la energía es una "cosa" o un material (es una propiedad de los cuerpos y sistemas).
+
+EJEMPLOS COTIDIANOS
+- En una montaña rusa, el vagón arriba tiene mucha energía potencial; al bajar se convierte en cinética.
+- Un molino eólico transforma la energía cinética del viento en eléctrica.
+- Tu cuerpo transforma la energía química de los alimentos en movimiento y calor.
+- Los paneles solares del tejado transforman la luz en electricidad.
+
+EXPERIMENTO CASERO
+Haz una rampa con un trozo de cartón apoyado en unos libros. Suelta una canica desde lo alto y mide hasta dónde rueda por el suelo. Repite subiendo la rampa con más libros. ¿Qué pasa con la distancia? Relaciona la altura (energía potencial) con la velocidad al llegar abajo (energía cinética). ¿Por qué acaba parándose? (Pista: rozamiento y calor). Recoge las canicas al terminar para que nadie resbale: 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- Si la energía no se destruye, ¿por qué hay que ahorrarla?
+- ¿Qué transformaciones de energía hay cuando montas en bici?
+- ¿Por qué el sol es el origen de casi todas las fuentes de energía, incluso del petróleo?
+
+RELACIÓN CON OTROS TEMAS
+El movimiento (tema 7) y las fuerzas (tema 8) están ligados a la energía cinética y potencial.
+Las reacciones químicas (tema 6) liberan o absorben energía.
+En el tema 10 veremos el calor, que es energía que pasa de un cuerpo a otro.
+En 1º viste el efecto invernadero y el cambio climático: aquí está su relación con los combustibles fósiles. En Tecnología y Geografía también estudiarás las centrales y los recursos energéticos.

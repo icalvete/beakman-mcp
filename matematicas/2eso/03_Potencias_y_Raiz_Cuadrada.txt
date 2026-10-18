@@ -1,0 +1,72 @@
+TEMA 3 – POTENCIAS Y RAÍZ CUADRADA
+
+Una potencia es una forma corta de escribir una multiplicación repetida.
+La raíz cuadrada es la operación contraria al cuadrado.
+
+EXPLICACIÓN VISUAL
+Imagina una cadena de mensajes: tú se lo mandas a 2 amigos, cada uno a otros 2, y así.
+- Ronda 1: 2 personas
+- Ronda 2: 2 × 2 = 4
+- Ronda 5: 2 × 2 × 2 × 2 × 2 = 32
+Eso se escribe 2⁵ = 32. Crece muy deprisa.
+
+Y al revés: si tienes 49 baldosas cuadradas y quieres formar un cuadrado, ¿cuántas van por lado? 7, porque 7 × 7 = 49. Eso es √49 = 7.
+
+IDEAS CLAVE
+
+PARTES DE UNA POTENCIA
+En 2⁵: la base (2) es el número que se multiplica; el exponente (5), cuántas veces.
+- a¹ = a
+- a⁰ = 1 (cualquier número distinto de 0)
+
+POTENCIAS CON BASE NEGATIVA
+- Exponente par → resultado positivo: (-2)⁴ = 16
+- Exponente impar → resultado negativo: (-2)³ = -8
+- ¡Cuidado con el paréntesis! -2⁴ = -(2⁴) = -16, pero (-2)⁴ = 16
+
+PROPIEDADES (misma base)
+- Producto: se suman los exponentes. 2³ × 2⁴ = 2⁷ = 128
+- Cociente: se restan. 5⁶ ÷ 5⁴ = 5² = 25
+- Potencia de una potencia: se multiplican. (3²)³ = 3⁶ = 729
+Mismo exponente: 2³ × 5³ = (2 × 5)³ = 10³ = 1000
+
+POTENCIAS DE 10 Y NÚMEROS GRANDES
+10³ = 1000 (un 1 y tres ceros). 10⁶ = un millón.
+La luz recorre unos 300 000 km cada segundo = 3 × 10⁵ km/s.
+
+RAÍZ CUADRADA
+√a es el número que, multiplicado por sí mismo, da a.
+- Cuadrados perfectos: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100...
+- Todo positivo tiene dos raíces: 5 × 5 = 25 y (-5) × (-5) = 25. Con √ se escribe la positiva.
+- Los negativos no tienen raíz cuadrada: ningún número al cuadrado da negativo.
+- Raíz entera: √50 ≈ 7, porque 7² = 49 y 8² = 64 (resto 50 - 49 = 1).
+
+EJEMPLOS RESUELTOS
+1) 2³ + 3² × 2 = 8 + 9 × 2 = 8 + 18 = 26 (las potencias van antes que la multiplicación)
+2) (x³ · x⁵) ÷ x⁶ = x⁸ ÷ x⁶ = x²
+3) √(9 × 16) = √144 = 12, que es lo mismo que √9 × √16 = 3 × 4 = 12
+4) Un huerto cuadrado tiene 81 m². Lado = √81 = 9 m.
+
+ERRORES TÍPICOS
+- Multiplicar base por exponente: 2⁵ NO es 10, es 32.
+- Sumar exponentes con distinta base: 2³ × 3² no se puede juntar.
+- Olvidar el paréntesis con negativos: -3² = -9, pero (-3)² = 9.
+- Repartir la raíz en una suma: √(9 + 16) = √25 = 5, NO 3 + 4 = 7.
+- Pensar que a⁰ = 0 (es 1).
+
+EJEMPLOS COTIDIANOS
+- Informática: la memoria se cuenta en potencias de 2 (2¹⁰ = 1024).
+- Bacterias que se duplican cada hora.
+- Superficies cuadradas: un cuadrado de 5 m de lado tiene 5² = 25 m².
+- Distancias astronómicas con potencias de 10.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué a⁰ = 1? (Pista: piensa en 5³ ÷ 5³.)
+- ¿Qué crece más deprisa: 2 × n o 2ⁿ?
+- ¿Entre qué dos números enteros está √30?
+
+RELACIÓN CON OTROS TEMAS
+- Usa los signos de los números enteros (tema 1).
+- Los exponentes aparecen en los polinomios (tema 6) y en las ecuaciones de segundo grado (tema 8).
+- La raíz cuadrada es la herramienta del teorema de Pitágoras (tema 11).
+- Los cuadrados y cubos dan nombre a las unidades de área (m²) y volumen (m³).

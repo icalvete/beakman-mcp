@@ -1,0 +1,74 @@
+TEMA 9 – SISTEMAS DE ECUACIONES
+
+Un sistema son dos ecuaciones con dos incógnitas (x e y) que se cumplen a la vez.
+Resolverlo es encontrar la pareja de valores que hace verdad las dos.
+
+EXPLICACIÓN VISUAL
+Imagina dos tickets de la cafetería:
+- Ticket 1: 2 bocadillos y 1 zumo → 7 €
+- Ticket 2: 1 bocadillo y 1 zumo → 4,50 €
+Si comparas los tickets, la única diferencia es un bocadillo, y la diferencia de precio es 2,50 €.
+Así que un bocadillo cuesta 2,50 € y el zumo 4,50 - 2,50 = 2 €.
+¡Acabas de resolver un sistema por reducción sin darte cuenta!
+
+IDEAS CLAVE
+
+QUÉ ES UNA SOLUCIÓN
+Una pareja (x, y) que cumple las dos ecuaciones. Con una sola ecuación hay muchas parejas posibles;
+la segunda ecuación es la pista que deja solo una.
+
+TRES MÉTODOS
+- Sustitución: despejo una letra en una ecuación y la meto en la otra.
+- Igualación: despejo la misma letra en las dos e igualo.
+- Reducción: sumo o resto las ecuaciones para que desaparezca una letra.
+Todos dan lo mismo: elige el que menos cuentas te haga.
+
+INTERPRETACIÓN GRÁFICA
+Cada ecuación es una recta. La solución es el punto donde se cortan.
+- Se cortan en un punto → una solución (compatible determinado).
+- Son paralelas → ninguna solución (incompatible).
+- Son la misma recta → infinitas soluciones (compatible indeterminado).
+
+EJEMPLOS RESUELTOS
+1) Sustitución
+   y = 2x - 1
+   3x + y = 14
+   Meto la primera en la segunda: 3x + (2x - 1) = 14 → 5x = 15 → x = 3
+   y = 2 · 3 - 1 = 5. Solución: x = 3, y = 5.
+2) Igualación
+   y = x + 3
+   y = 2x - 1
+   x + 3 = 2x - 1 → 4 = x → x = 4, y = 7
+3) Reducción
+   x + y = 10
+   2x - y = 8
+   Sumo: 3x = 18 → x = 6. Entonces 6 + y = 10 → y = 4.
+   Comprobación: 2 · 6 - 4 = 8. ✔
+4) Problema: en una granja hay gallinas y conejos. Hay 20 cabezas y 56 patas.
+   Gallinas: x. Conejos: y.
+   x + y = 20 (cabezas)
+   2x + 4y = 56 (patas)
+   De la primera: x = 20 - y. Sustituyo: 2(20 - y) + 4y = 56 → 40 + 2y = 56 → y = 8
+   x = 12. Hay 12 gallinas y 8 conejos. (24 + 32 = 56 patas ✔)
+
+ERRORES TÍPICOS
+- Calcular x y olvidarse de calcular y.
+- En reducción, restar las ecuaciones y equivocarse con los signos.
+- Al sustituir, no poner paréntesis: 2(20 - y), no 2 · 20 - y.
+- Comprobar solo en una ecuación (hay que comprobar en las dos).
+
+EJEMPLOS COTIDIANOS
+- Averiguar precios a partir de dos compras distintas.
+- Entradas de cine de adulto y de niño.
+- Monedas de 1 € y 2 €: cuántas hay de cada si sabes el total de monedas y el dinero.
+- Comparar dos tarifas de móvil: ¿a partir de cuántos minutos sale mejor una que otra?
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué con una sola ecuación de dos incógnitas no basta?
+- ¿Qué pasa si los dos tickets dicen lo mismo multiplicado por 2?
+- Dos rectas paralelas, ¿qué significan en un problema real?
+
+RELACIÓN CON OTROS TEMAS
+- Se basa en las ecuaciones de primer grado (tema 7).
+- Cada ecuación es una función lineal (tema 10): resolver es buscar el punto de corte.
+- Se usa en problemas de mezclas, precios y edades.

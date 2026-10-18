@@ -1,0 +1,51 @@
+TEMA 4 – SUSTANCIAS PURAS Y MEZCLAS
+
+Casi nada de lo que nos rodea es una sustancia pura: el aire, el agua del grifo o la leche son mezclas.
+Saber distinguirlas y separarlas es una de las tareas básicas de la Química.
+
+EXPLICACIÓN VISUAL
+Imagina un bol de cereales con leche: ves los cereales y ves la leche, puedes sacarlos con la cuchara. Ahora imagina un vaso de agua con azúcar bien removido: ya no ves el azúcar, pero sigue ahí (sabe dulce). Las dos cosas son mezclas, pero en una se distinguen los componentes y en la otra no.
+
+IDEAS CLAVE
+- Sustancia pura: tiene siempre la misma composición y unas propiedades fijas (por ejemplo, el agua destilada hierve a 100 °C).
+  - Elementos: no se pueden descomponer en otras sustancias más simples (oxígeno, hierro, oro).
+  - Compuestos: formados por varios elementos unidos químicamente (agua, sal común, dióxido de carbono).
+- Mezcla: dos o más sustancias juntas que conservan sus propiedades y se pueden separar por métodos físicos.
+  - Heterogénea: se distinguen los componentes (arena con agua, ensalada, granito).
+  - Homogénea o disolución: no se distinguen ni con lupa (agua con sal, aire, bronce).
+- En una disolución hay soluto (lo que se disuelve, en menor cantidad) y disolvente (lo que disuelve, en mayor cantidad; muchas veces el agua).
+- Concentración en g/L = gramos de soluto / litros de disolución.
+  Ejemplo: 20 g de sal en 0,5 L de disolución → 20 / 0,5 = 40 g/L.
+- Una disolución saturada ya no admite más soluto: lo que añadas se queda en el fondo.
+- Métodos de separación:
+  - Tamizado: sólidos de distinto tamaño (arena y piedras).
+  - Filtración: un sólido que no se disuelve, de un líquido (arena y agua).
+  - Decantación: líquidos que no se mezclan y tienen distinta densidad (agua y aceite).
+  - Separación magnética: un sólido magnético de otro que no lo es (limaduras de hierro y arena).
+  - Evaporación y cristalización: recuperar un sólido disuelto (sal del agua del mar, en las salinas).
+  - Destilación: separar líquidos por su temperatura de ebullición (se hace en el laboratorio).
+
+ERRORES TÍPICOS
+- Pensar que "puro" significa "natural" o "sano" (el zumo natural es una mezcla).
+- Creer que el azúcar desaparece al disolverse (sigue ahí, repartido en partículas muy pequeñas).
+- Confundir elemento con compuesto (el agua no es un elemento: tiene hidrógeno y oxígeno).
+- Intentar filtrar agua con sal (la sal disuelta atraviesa el filtro; hay que evaporar).
+
+EJEMPLOS COTIDIANOS
+- La cafetera de filtro separa el café molido del líquido.
+- En las salinas se obtiene sal dejando que el sol evapore el agua del mar.
+- El aire es una disolución de gases: sobre todo nitrógeno y oxígeno.
+- Los refrescos son disoluciones con azúcar y gas disueltos en agua.
+
+EXPERIMENTO CASERO
+Mezcla en un vaso arena, una cucharada de sal y agua; remueve. Pasa la mezcla por un filtro de café colocado en otro vaso: la arena se queda en el filtro. Pon el líquido filtrado en un plato y déjalo junto a una ventana soleada unos días: cuando el agua se evapore, aparecerá la sal. Sin fuego ni calor: 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- ¿Cómo separarías una mezcla de sal, arena y clips de hierro?
+- ¿Por qué el azúcar se disuelve antes en leche caliente que en leche fría?
+- ¿El agua del grifo es una sustancia pura?
+
+RELACIÓN CON OTROS TEMAS
+Usa la densidad (tema 2) para la decantación y los cambios de estado (tema 3) para la evaporación y la destilación.
+Los elementos y compuestos se estudian a fondo en el tema 5.
+En 1º viste que el agua del mar es salada y el aire es una mezcla de gases: ahora sabes que son disoluciones.

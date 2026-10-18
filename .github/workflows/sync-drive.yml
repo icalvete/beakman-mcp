@@ -24,9 +24,10 @@ concurrency:
 permissions:
   contents: read
 
+# Sin el prefijo RCLONE_: rclone lee esas variables como si fueran sus opciones.
 env:
-  RCLONE_VERSION: v1.75.2
-  RCLONE_SHA256: 349ac8fba6ff65d6247043f1750cdcb518ec5d500ef91463a10d37c0ccdf3702
+  RC_VERSION: v1.75.2
+  RC_SHA256: 349ac8fba6ff65d6247043f1750cdcb518ec5d500ef91463a10d37c0ccdf3702
 
 jobs:
   sync:
@@ -39,11 +40,11 @@ jobs:
 
       - name: Instalar rclone
         run: |
-          zip="rclone-${RCLONE_VERSION}-linux-amd64.zip"
-          curl -fsSLO "https://downloads.rclone.org/${RCLONE_VERSION}/${zip}"
-          echo "${RCLONE_SHA256}  ${zip}" | sha256sum -c -
+          zip="rclone-${RC_VERSION}-linux-amd64.zip"
+          curl -fsSLO "https://downloads.rclone.org/${RC_VERSION}/${zip}"
+          echo "${RC_SHA256}  ${zip}" | sha256sum -c -
           unzip -q "$zip"
-          sudo install "rclone-${RCLONE_VERSION}-linux-amd64/rclone" /usr/local/bin/rclone
+          sudo install "rclone-${RC_VERSION}-linux-amd64/rclone" /usr/local/bin/rclone
           rclone version | head -1
 
       - name: Configurar rclone

@@ -1,0 +1,72 @@
+TEMA 4 – PROPORCIONALIDAD
+
+Dos magnitudes son proporcionales cuando, al cambiar una, la otra cambia "al mismo ritmo".
+Puede ser directa (las dos crecen a la vez) o inversa (una crece y la otra decrece).
+
+EXPLICACIÓN VISUAL
+DIRECTA: imagina que compras manzanas a 1,50 € el kilo.
+1 kg → 1,50 €    2 kg → 3,00 €    4 kg → 6,00 €
+Doble de kilos, doble de precio. El cociente precio ÷ kilos siempre es 1,50.
+
+INVERSA: imagina que hay que pintar una valla.
+1 pintor → 12 días    2 pintores → 6 días    4 pintores → 3 días
+Doble de pintores, mitad de días. El producto pintores × días siempre es 12.
+
+IDEAS CLAVE
+
+RAZÓN Y PROPORCIÓN
+- Razón: el cociente de dos cantidades. 3 chicas por cada 2 chicos → 3/2.
+- Proporción: igualdad de dos razones. 3/2 = 6/4.
+- En una proporción, los productos cruzados son iguales: 3 × 4 = 2 × 6.
+
+PROPORCIONALIDAD DIRECTA
+El cociente es constante (constante de proporcionalidad).
+Regla de tres directa:
+3 kg → 4,50 €
+5 kg → x
+x = 5 × 4,50 ÷ 3 = 7,50 €
+
+PROPORCIONALIDAD INVERSA
+El producto es constante.
+Regla de tres inversa:
+4 pintores → 6 días
+3 pintores → x
+x = 4 × 6 ÷ 3 = 8 días (menos pintores, más días)
+
+REPARTOS PROPORCIONALES
+Directo: se reparte en proporción a lo que pone cada uno.
+1. Se suman las partes. 2. Se divide el total entre esa suma. 3. Se multiplica por la parte de cada uno.
+Inverso: quien tiene más, recibe menos. Se reparte en proporción a las inversas (1/a, 1/b...).
+
+EJEMPLOS RESUELTOS
+1) Reparto directo. Tres amigos ponen 10 €, 20 € y 30 € para un puesto en el mercadillo del cole y sacan 120 €.
+   Suma: 10 + 20 + 30 = 60. Cada euro puesto recibe 120 ÷ 60 = 2 €.
+   Reciben: 10 × 2 = 20 €, 20 × 2 = 40 €, 30 × 2 = 60 €. (Comprueba: 20 + 40 + 60 = 120.)
+2) Reparto inverso. Un premio de 330 € se reparte en proporción inversa a las faltas: 1, 2 y 3.
+   Inversas: 1/1, 1/2, 1/3 → con denominador 6: 6/6, 3/6, 2/6 → se reparte como 6, 3 y 2.
+   Suma: 11. 330 ÷ 11 = 30. Reciben 180 €, 90 € y 60 €.
+3) Escala. En un mapa 1:50 000, dos pueblos están a 4 cm.
+   Real: 4 × 50 000 = 200 000 cm = 2 km.
+
+ERRORES TÍPICOS
+- Creer que todo es proporcional: tu altura no es el doble cuando tu edad se duplica.
+- Usar regla de tres directa en un problema inverso (más grifos no tardan más).
+- Repartir a partes iguales cuando el problema pide reparto proporcional.
+- En la escala, olvidar convertir las unidades al final.
+
+EJEMPLOS COTIDIANOS
+- Recetas: para el doble de personas, el doble de ingredientes (directa).
+- Velocidad y tiempo: cuanto más rápido vas, menos tardas en el mismo trayecto (inversa).
+- Escalas de mapas y planos.
+- Repartir el dinero de un bote según lo que puso cada uno.
+
+PREGUNTAS PARA PENSAR
+- Si 1 persona tarda 10 minutos en comerse un bocadillo, ¿tardan 10 personas 1 minuto?
+- ¿Cómo sabes, mirando una tabla, si es directa, inversa o ninguna?
+- En un reparto inverso, ¿por qué no se reparte simplemente al revés?
+
+RELACIÓN CON OTROS TEMAS
+- Usa fracciones y decimales (tema 2).
+- Los porcentajes (tema 5) son un caso de proporcionalidad directa.
+- La proporcionalidad directa es una función lineal (tema 10).
+- La semejanza (tema 12) se basa en lados proporcionales.

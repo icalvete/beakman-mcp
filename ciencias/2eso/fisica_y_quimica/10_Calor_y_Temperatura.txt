@@ -1,0 +1,48 @@
+TEMA 10 – CALOR Y TEMPERATURA
+
+En la calle usamos "calor" y "temperatura" como si fueran lo mismo, pero en Física son cosas distintas.
+La temperatura indica lo agitadas que están las partículas; el calor es la energía que pasa de un cuerpo caliente a uno frío.
+
+EXPLICACIÓN VISUAL
+Imagina dos habitaciones llenas de gente, una donde todos bailan sin parar y otra donde casi todos están sentados. Si abres la puerta entre ellas, poco a poco la agitación se reparte: los de la sala tranquila empiezan a moverse y los de la sala de baile se calman. La "agitación" de cada sala es la temperatura; lo que pasa por la puerta es el calor. Y siempre pasa de la sala más agitada a la más tranquila.
+
+IDEAS CLAVE
+- Temperatura: mide la agitación media de las partículas de un cuerpo. Se mide con el termómetro.
+- Escalas de temperatura:
+  - Celsius (°C): el agua se congela a 0 °C y hierve a 100 °C.
+  - Kelvin (K), la del SI: K = °C + 273. Ejemplo: 25 °C = 298 K. El 0 K (−273 °C) es el cero absoluto: no se puede bajar más.
+  - Fahrenheit (°F), usada en EE. UU.: 37 °C equivalen a 98,6 °F.
+- Calor: energía que pasa de un cuerpo a otro por estar a distinta temperatura. Siempre va del más caliente al más frío. Se mide en julios (J).
+- Equilibrio térmico: cuando dos cuerpos en contacto llegan a la misma temperatura, el calor deja de pasar.
+- Formas de transmitir el calor:
+  - Conducción: por contacto, de partícula en partícula (una cuchara en la sopa).
+  - Convección: el fluido caliente sube y el frío baja, formando corrientes (el aire de un radiador).
+  - Radiación: sin necesidad de materia, incluso en el vacío (el calor del Sol).
+- Conductores térmicos (metales) dejan pasar bien el calor; aislantes (madera, plástico, lana, aire) lo dejan pasar mal.
+- Efectos del calor: aumenta la temperatura, produce cambios de estado y dilata los cuerpos (casi todo ocupa más al calentarse).
+
+ERRORES TÍPICOS
+- Decir que un cuerpo "tiene calor" (tiene temperatura; el calor es energía en tránsito).
+- Pensar que el frío "entra" (lo que ocurre es que el calor sale del cuerpo caliente).
+- Creer que el abrigo da calor (es aislante: evita que el calor de tu cuerpo se escape).
+- Confundir sensación con temperatura (el metal y la madera de una misma habitación están a la misma temperatura, aunque el metal parezca más frío).
+
+EJEMPLOS COTIDIANOS
+- Las cazuelas son de metal (buen conductor) y sus asas de plástico o madera (aislantes).
+- Los termos tienen una doble pared con vacío entre ambas para que el calor casi no pase.
+- Las vías del tren y los puentes tienen pequeñas juntas para que puedan dilatarse en verano.
+- El aire caliente sube: por eso hace más calor cerca del techo.
+
+EXPERIMENTO CASERO
+En una habitación, toca a la vez con una mano algo de metal (la pata de una silla, una cuchara) y con la otra algo de madera o de plástico. ¿Cuál parece más frío? Ahora piensa: si llevan horas en la misma habitación, ¿no estarán a la misma temperatura? El metal parece más frío porque es buen conductor y se lleva el calor de tu mano más deprisa. 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué el suelo de baldosa parece más frío que la alfombra si están a la misma temperatura?
+- ¿Por qué los osos polares tienen una capa gruesa de grasa y pelo?
+- ¿Se puede hablar de "frío" en Física, o solo de calor?
+
+RELACIÓN CON OTROS TEMAS
+La temperatura se explica con la teoría cinético-molecular del tema 3.
+El calor es una forma de transferir energía (tema 9).
+En 1º viste cómo los océanos y la atmósfera reparten el calor del Sol: es convección a lo grande.
+En Educación Física, sudar sirve para que el cuerpo pierda calor al evaporarse el sudor.

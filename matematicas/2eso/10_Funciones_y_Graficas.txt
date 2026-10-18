@@ -1,0 +1,72 @@
+TEMA 10 – FUNCIONES Y GRÁFICAS
+
+Una función es una relación entre dos magnitudes en la que a cada valor de la primera (x) le corresponde UN SOLO valor de la segunda (y).
+Las gráficas son el "dibujo" de esa relación: se entienden de un vistazo.
+
+EXPLICACIÓN VISUAL
+Imagina un taxi: nada más subir pagas 3 € (bajada de bandera) y luego 1,20 € por kilómetro.
+km (x):     0     1      2      5
+precio (y): 3   4,20   5,40     9
+Si pintas estos puntos y los unes, sale una línea recta que empieza en 3 y sube 1,20 por cada km.
+
+IDEAS CLAVE
+
+EJES DE COORDENADAS
+- Eje horizontal: X (abscisas). Eje vertical: Y (ordenadas).
+- Un punto se escribe (x, y): primero se avanza en horizontal, luego en vertical.
+- Los ejes dividen el plano en 4 cuadrantes; los negativos van a la izquierda y abajo.
+- Si hay decimales, se separa con punto y coma para no confundirse: (2,5; 3).
+
+FORMAS DE DAR UNA FUNCIÓN
+Con un enunciado, con una tabla, con una gráfica o con una fórmula (expresión algebraica).
+
+FUNCIÓN DE PROPORCIONALIDAD DIRECTA: y = mx
+- Recta que pasa por el origen (0, 0).
+- m es la pendiente: lo que sube (o baja) y cuando x aumenta 1.
+Ejemplo: y = 2x pasa por (0, 0), (1, 2), (3, 6).
+
+FUNCIÓN AFÍN (O LINEAL): y = mx + n
+- Recta que corta el eje Y en n (ordenada en el origen).
+- m > 0: creciente (sube). m < 0: decreciente (baja). m = 0: horizontal (constante).
+Taxi: y = 1,2x + 3 (m = 1,2 y n = 3).
+
+LEER UNA GRÁFICA
+- ¿Dónde crece y dónde decrece?
+- ¿Dónde corta a los ejes?
+- ¿Cuál es el valor más alto (máximo) y el más bajo (mínimo)?
+
+EJEMPLOS RESUELTOS
+1) ¿Cuánto cuesta un trayecto de 8 km en el taxi?
+   y = 1,2 · 8 + 3 = 9,6 + 3 = 12,60 €
+2) y = -x + 4
+   Corte con el eje Y: x = 0 → y = 4 → punto (0, 4)
+   Corte con el eje X: y = 0 → 0 = -x + 4 → x = 4 → punto (4, 0)
+   Es decreciente (m = -1).
+3) Recta que pasa por (1, 3) y (3, 7)
+   Pendiente: m = (7 - 3) ÷ (3 - 1) = 4 ÷ 2 = 2
+   Con (1, 3): 3 = 2 · 1 + n → n = 1. La recta es y = 2x + 1.
+   Comprobación con (3, 7): 2 · 3 + 1 = 7. ✔
+
+ERRORES TÍPICOS
+- Cambiar el orden en un punto: (2, 5) no es lo mismo que (5, 2).
+- Pensar que toda recta es proporcional (solo si pasa por el origen).
+- Calcular la pendiente al revés: es (cambio en y) ÷ (cambio en x).
+- Leer una gráfica sin mirar las unidades ni la escala de los ejes.
+- Unir con una línea puntos que no se pueden unir (no existen "2,5 personas").
+
+EJEMPLOS COTIDIANOS
+- La factura de la luz o del móvil: cuota fija + precio por consumo.
+- La gráfica de temperatura de un día.
+- La distancia recorrida en una excursión a lo largo del tiempo.
+- Las gráficas de las noticias (precio de la gasolina, población...).
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué un círculo dibujado en los ejes no es una función?
+- ¿Qué significa en el taxi que la recta no empiece en 0?
+- Si dos tarifas son dos rectas, ¿qué significa el punto donde se cortan?
+
+RELACIÓN CON OTROS TEMAS
+- La proporcionalidad directa (tema 4) es la función y = mx.
+- Usa números enteros para las coordenadas (tema 1).
+- Los sistemas (tema 9) son el corte de dos rectas.
+- Las gráficas estadísticas (tema 14) se leen igual.
