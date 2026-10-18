@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://icalvete.github.io/beakman-gems/sitemap.xml

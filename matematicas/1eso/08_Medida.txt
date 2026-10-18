@@ -1,0 +1,92 @@
+TEMA 8 – MEDIDA
+
+Medir es comparar una cantidad con una unidad de referencia.
+Respondemos a preguntas como: ¿cuánto mide?, ¿cuánto pesa?, ¿cuánto cabe?
+
+EXPLICACIÓN VISUAL
+Imagina que quieres saber lo larga que es una mesa.
+Usas un metro (la unidad) y cuentas cuántas veces cabe: 2 metros.
+Sin una unidad común, cada uno mediría "a su manera" y no nos entenderíamos.
+
+IDEAS CLAVE
+
+MAGNITUDES
+Una magnitud es algo que se puede medir.
+- Longitud: cuánto mide algo de largo (metros)
+- Masa: cuánto pesa algo (gramos, kilogramos)
+- Capacidad: cuánto cabe dentro (litros)
+- Tiempo: cuánto dura algo (segundos, minutos, horas)
+- Superficie: cuánto espacio ocupa en un plano (metros cuadrados)
+
+SISTEMA MÉTRICO DECIMAL
+Sistema de unidades basado en el 10. Muy fácil de convertir.
+
+LONGITUD (unidad base: metro)
+km - hm - dam - m - dm - cm - mm
+×10 →   →   →   →   →   →
+← ÷10
+
+1 km = 1000 m
+1 m = 100 cm
+1 m = 1000 mm
+1 cm = 10 mm
+
+MASA (unidad base: gramo)
+kg - hg - dag - g - dg - cg - mg
+×10 →   →   →   →   →   →
+
+1 kg = 1000 g
+1 g = 1000 mg
+
+CAPACIDAD (unidad base: litro)
+kl - hl - dal - L - dl - cl - ml
+×10 →   →   →   →   →   →
+
+1 L = 1000 ml
+1 L = 100 cl
+
+CÓMO CONVERTIR UNIDADES
+Regla: cada "salto" a la derecha multiplica por 10, cada "salto" a la izquierda divide por 10.
+
+3 km a metros:
+km → hm → dam → m (3 saltos a la derecha)
+3 × 10 × 10 × 10 = 3000 m
+
+250 cm a metros:
+cm → dm → m (2 saltos a la izquierda)
+250 ÷ 10 ÷ 10 = 2,5 m
+
+TRUCO DE LA ESCALERA
+Dibuja: km - hm - dam - m - dm - cm - mm
+Coloca el número en su unidad y mueve la coma según los saltos.
+
+TIEMPO (sistema NO decimal)
+1 hora = 60 minutos
+1 minuto = 60 segundos
+1 día = 24 horas
+
+Para convertir tiempo hay que multiplicar/dividir por 60, no por 10.
+2,5 horas = 2 h + 0,5 × 60 min = 2 h 30 min
+
+ERRORES TÍPICOS
+- Mezclar unidades en operaciones: no puedes sumar 3 m + 50 cm directamente (convierte primero).
+- Confundir capacidad con volumen (en este nivel son casi lo mismo: 1 L = 1 dm³).
+- Mover la coma en dirección equivocada.
+- Olvidar que el tiempo no es decimal (60 minutos, no 100).
+
+EJEMPLOS COTIDIANOS
+- Tu altura: aproximadamente 1,60 m = 160 cm.
+- Una botella de agua: 1,5 L = 1500 ml.
+- Un paquete de arroz: 1 kg = 1000 g.
+- Un maratón: 42,195 km = 42195 m.
+- Media hora: 30 minutos = 0,5 horas.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué el tiempo no usa el sistema decimal?
+- ¿Qué es más largo, 150 cm o 1,4 m?
+- ¿Cuántos mililitros tiene una botella de 2 litros?
+
+RELACIÓN CON OTROS TEMAS
+- Los decimales son esenciales para expresar medidas (1,75 m).
+- La geometría usa medidas de longitud para calcular perímetros y áreas.
+- Las fracciones ayudan: "medio litro" = 1/2 L = 0,5 L = 500 ml.

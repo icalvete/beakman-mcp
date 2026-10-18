@@ -1,0 +1,233 @@
+TEMA 8 – LA NARRACIÓN: ELEMENTOS Y ESTRUCTURA
+
+Toda historia, ya sea un cuento, una novela, una película o una anécdota que cuentas a un amigo, tiene una estructura y unos elementos comunes. Entenderlos te ayudará a comprender mejor lo que lees y a crear tus propias historias.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina que estás contando una historia a un amigo:
+
+"**Ayer** (TIEMPO) **yo** (NARRADOR en 1ª persona) estaba **en el parque** (ESPACIO) cuando vi a **un perro enorme** (PERSONAJE). El perro **corrió hacia mí** (ACCIÓN), **me asusté** (ACCIÓN), pero luego **me lamió la cara** (ACCIÓN). **Al final** resultó que era muy cariñoso (DESENLACE)."
+
+Acabas de usar todos los elementos de la narración sin darte cuenta.
+
+---
+
+IDEAS CLAVE
+
+### 1. EL NARRADOR
+
+**Qué es**: La voz que cuenta la historia. No es el autor, sino un personaje creado por el autor para contar.
+
+**Tipos de narrador según la persona gramatical**:
+
+- **Narrador en 1ª persona (protagonista o testigo)**:
+  - Cuenta la historia desde dentro, como personaje
+  - Usa "yo", "nosotros"
+  - Solo sabe lo que él ve, oye y siente
+  - **Protagonista**: Es el personaje principal
+    → "**Yo** caminaba por la calle cuando vi algo extraño"
+  - **Testigo**: Es un personaje secundario que observa
+    → "Vi cómo **mi amigo** caminaba por la calle"
+
+- **Narrador en 2ª persona** (poco común):
+  - Se dirige al lector como "tú"
+  - Crea cercanía
+  → "**Caminas** por la calle y de repente **ves** algo extraño"
+
+- **Narrador en 3ª persona**:
+  - Cuenta la historia desde fuera
+  - Usa "él", "ella", "ellos"
+  - **Omnisciente** (sabe todo): conoce pensamientos, sentimientos y acciones de todos los personajes
+    → "Ana caminaba por la calle. **Estaba nerviosa** aunque intentaba disimularlo"
+  - **Observador externo**: Solo cuenta lo que se ve, no entra en la mente de los personajes
+    → "Ana caminaba por la calle. Miraba a todos lados"
+
+---
+
+### 2. LOS PERSONAJES
+
+**Qué son**: Los seres (personas, animales, objetos personificados) que participan en la historia.
+
+**Clasificación según su importancia**:
+
+- **Protagonista**: Personaje principal. La historia gira en torno a él.
+  → Harry Potter en "Harry Potter"
+
+- **Antagonista**: Personaje que se opone al protagonista. El "malo".
+  → Voldemort en "Harry Potter"
+
+- **Secundarios**: Acompañan al protagonista. Tienen menos peso en la historia.
+  → Ron y Hermione en "Harry Potter"
+
+**Clasificación según su evolución**:
+
+- **Redondos (o dinámicos)**: Evolucionan a lo largo de la historia. Cambian, aprenden, maduran.
+  → Al principio es cobarde, al final es valiente
+
+- **Planos (o estáticos)**: No cambian. Son siempre iguales.
+  → El "gracioso" que siempre cuenta chistes
+
+**Caracterización de personajes**:
+
+- **Directa**: El narrador o el propio personaje nos dice cómo es
+  → "Ana era una chica tímida y estudiosa"
+
+- **Indirecta**: Se deduce por sus acciones, palabras o lo que otros dicen de él
+  → "Ana bajó la mirada y no se atrevió a hablar"
+
+---
+
+### 3. EL TIEMPO
+
+**Tiempo externo**: La época en que transcurre la historia
+- Pasado: Edad Media, siglo XIX...
+- Presente: Actualidad
+- Futuro: Mundo futurista
+
+**Tiempo interno**: Duración de la historia
+- Minutos, horas, días, años...
+
+**Orden temporal**:
+
+- **Lineal**: Los hechos se cuentan en orden cronológico (pasado → presente → futuro)
+  → "Nací, crecí, estudié, trabajé..."
+
+- **In medias res**: Empieza en mitad de la acción, luego se retrocede
+  → "Corrí desesperado. Todo empezó tres días antes, cuando..."
+
+- **Flashback (o retrospección)**: Se retrocede al pasado para explicar algo
+  → "Ahora entendía por qué su madre siempre le decía... Recordó aquel día de su infancia cuando..."
+
+- **Flashforward (o anticipación)**: Se avanza al futuro
+  → "No sabía que esa decisión cambiaría su vida para siempre"
+
+---
+
+### 4. EL ESPACIO
+
+**Qué es**: El lugar o lugares donde se desarrolla la acción.
+
+**Tipos de espacio**:
+
+- **Físico**: El lugar concreto (ciudad, casa, bosque, escuela...)
+  → "En una casa del campo"
+
+- **Social**: El ambiente, la clase social, la época
+  → "En un barrio humilde de la ciudad"
+
+- **Psicológico**: El ambiente emocional (alegre, triste, tenso...)
+  → "Un ambiente opresivo y silencioso"
+
+**Importancia del espacio**:
+- Puede influir en la trama (una tormenta impide salir)
+- Refleja el estado de ánimo (un día gris para un momento triste)
+- Caracteriza a los personajes (vivir en un palacio vs vivir en una cueva)
+
+---
+
+### 5. LA ACCIÓN
+
+**Qué es**: Los acontecimientos que suceden en la historia.
+
+**Estructura clásica de la acción** (esquema del triángulo narrativo):
+
+1. **Planteamiento (o introducción)**:
+   - Presentación de personajes, tiempo y espacio
+   - Situación inicial tranquila
+   - Aparece el conflicto o problema que desencadena la acción
+
+2. **Nudo (o desarrollo)**:
+   - Los personajes intentan resolver el conflicto
+   - Surgen complicaciones
+   - Aumenta la tensión
+   - Es la parte más larga
+
+3. **Desenlace (o final)**:
+   - Se resuelve el conflicto (para bien o para mal)
+   - Se cierra la historia
+   - Puede ser:
+     - **Cerrado**: Todo queda resuelto
+     - **Abierto**: Quedan preguntas sin respuesta
+
+**Ejemplo con Caperucita Roja**:
+- **Planteamiento**: Caperucita va a casa de su abuela con una cesta
+- **Nudo**: Se encuentra con el lobo, el lobo se come a la abuela y se hace pasar por ella
+- **Desenlace**: El cazador salva a Caperucita y a la abuela
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir autor con narrador
+✅ **Realidad**:
+   - **Autor**: J.K. Rowling (persona real que escribe)
+   - **Narrador**: Voz que cuenta la historia de Harry Potter (invento del autor)
+
+❌ **Error**: Pensar que el protagonista es siempre "el bueno"
+✅ **Realidad**: El protagonista es el personaje principal, aunque sea "malo" (Joker, Hannibal Lecter...)
+
+❌ **Error**: Creer que toda historia es lineal
+✅ **Realidad**: Muchas historias empiezan por el final o saltan en el tiempo
+
+❌ **Error**: Pensar que el espacio es solo el lugar físico
+✅ **Realidad**: También es el ambiente, la atmósfera, el contexto social...
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **En las películas de Marvel**:
+   - **Narrador**: 3ª persona omnisciente (la cámara lo ve todo)
+   - **Protagonista**: Iron Man, Thor, Spider-Man...
+   - **Antagonista**: Thanos, Loki...
+   - **Estructura**: Planteamiento (presentación del héroe) → Nudo (batalla contra el villano) → Desenlace (victoria o derrota)
+
+2. **En una anécdota que cuentas**:
+   - "Ayer (TIEMPO) **yo** (NARRADOR 1ª persona) estaba en clase (ESPACIO) cuando el profesor (PERSONAJE) anunció un examen sorpresa (ACCIÓN - conflicto). Todos nos pusimos nerviosos (NUDO), pero al final lo aplazó (DESENLACE)"
+
+3. **En series de Netflix**:
+   - Muchas series empiezan "in medias res" (en mitad de la acción) y luego retroceden para explicar cómo se llegó ahí.
+   - Ejemplo: "Breaking Bad" a veces usa flashbacks
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. Si lees "Me llamo Ana y os voy a contar mi historia", ¿qué tipo de narrador es? ¿En qué persona? ¿Protagonista o testigo?
+
+2. En "Harry Potter", ¿quién es el protagonista? ¿Y el antagonista? ¿Hay personajes secundarios que evolucionan?
+
+3. ¿Por qué crees que muchas historias de terror ocurren de noche o en lugares oscuros? ¿Qué relación hay entre el espacio y la emoción que queremos transmitir?
+
+4. Piensa en tu película favorita. ¿Sigue la estructura de planteamiento-nudo-desenlace? ¿O empieza por el final?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 7 (Géneros literarios)**: La narración es uno de los tres grandes géneros literarios.
+- **Tema 9 (Descripción y diálogo)**: En una narración se combinan descripción (del espacio, personajes) y diálogo (lo que dicen los personajes).
+- **Tema 12 (Expresión escrita)**: Para escribir una buena narración necesitas dominar estos elementos.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Lee este fragmento y responde:
+
+"Corrí desesperado por las calles vacías de la ciudad. Miré atrás: allí estaba, siguiéndome. El corazón me latía con fuerza. No sabía qué hacer. De repente, recordé las palabras de mi abuelo: 'Cuando tengas miedo, respira hondo y piensa con claridad'."
+
+Identifica:
+1. ¿Qué tipo de narrador es? (persona y tipo)
+2. ¿Cuál es el tiempo externo? ¿Y el interno?
+3. ¿Cuál es el espacio?
+4. ¿Qué recurso temporal se usa? (lineal, flashback, flashforward...)
+5. ¿En qué parte de la estructura estamos? (planteamiento, nudo o desenlace)
+
+Ahora inventa una historia breve (5-10 líneas) con:
+- Narrador en 1ª persona
+- Espacio: tu colegio
+- Tiempo: presente
+- Estructura: planteamiento, nudo y desenlace

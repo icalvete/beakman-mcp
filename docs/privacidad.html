@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacidad · Mi mundo de Beakman</title>
+<meta name="description" content="Qué datos toca Mi mundo de Beakman: la app de sincronización con Google Drive, los Gems de Gemini y esta web.">
+<link rel="canonical" href="https://icalvete.github.io/beakman-gems/privacidad.html">
+<meta name="theme-color" content="#A6D41E">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Nunito:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="wrap top">
+  <a class="brand" href="./"><img src="img/favicon.svg" alt="" width="36" height="36"><span>Mi mundo de Beakman</span></a>
+  <nav aria-label="Principal">
+    <a href="./">Portada</a>
+    <a class="hide-sm" href="./#como-funciona">Cómo funciona</a>
+    <a href="https://github.com/icalvete/beakman-gems">GitHub</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap doc prose">
+  <h1>Privacidad</h1>
+  <p class="lead">Mi mundo de Beakman no recoge datos de nadie. Esta página explica qué toca cada pieza.</p>
+
+  <h2>La app «Beakman sync»</h2>
+  <p>Es la app de Google que usa el repositorio para subir el temario a Google Drive. Solo la usa quien mantiene el proyecto, desde su propia cuenta.</p>
+  <ul>
+    <li>Pide un único permiso: <code>drive.file</code>. Con él solo ve los ficheros que ella misma crea, los de la carpeta <code>Beakman</code>. No puede leer ni tocar el resto del Drive.</li>
+    <li>Solo sube y actualiza esos ficheros. No lee nada más, no guarda copias en ningún otro sitio y no comparte nada con nadie.</li>
+    <li>Las credenciales viven en el ordenador de quien la autorizó y en un secreto cifrado del repositorio de GitHub.</li>
+    <li>Para quitarle el acceso, entra en <a href="https://myaccount.google.com/permissions">los permisos de tu cuenta de Google</a> y elimina «Beakman sync».</li>
+  </ul>
+
+  <h2>Los Gems de Gemini</h2>
+  <p>Las conversaciones con Beakman ocurren dentro de Google Gemini. Este proyecto no las recibe ni las guarda. Las trata Google según su <a href="https://policies.google.com/privacy">política de privacidad</a> y la <a href="https://support.google.com/gemini/answer/13594961">información de privacidad de Gemini</a>.</p>
+  <p>Con menores, recomendamos una cuenta gestionada con Family Link y no escribir datos personales en el chat.</p>
+
+  <h2>Esta web</h2>
+  <p>No usa cookies ni analítica. La sirve GitHub Pages y carga las fuentes desde Google Fonts, que pueden registrar la visita como cualquier servidor web.</p>
+
+  <h2>Contacto</h2>
+  <p>Para cualquier duda, abre una incidencia en <a href="https://github.com/icalvete/beakman-gems/issues">el repositorio</a>.</p>
+
+  <p><small>Última actualización: 18 de octubre de 2026.</small></p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mi mundo de Beakman · homenaje sin afiliación</span>
+    <nav aria-label="Pie">
+      <a href="privacidad.html">Privacidad</a>
+      <a href="guia/montar-el-tuyo.html">Monta el tuyo</a>
+      <a href="https://github.com/icalvete/beakman-gems">Código en GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

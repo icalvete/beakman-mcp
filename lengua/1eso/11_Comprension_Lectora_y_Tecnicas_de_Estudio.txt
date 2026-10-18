@@ -1,0 +1,313 @@
+TEMA 11 – COMPRENSIÓN LECTORA Y TÉCNICAS DE ESTUDIO
+
+Leer no es solo pasar los ojos por las palabras. Leer es ENTENDER, RECORDAR y USAR la información. Aprender técnicas de lectura y estudio te hará más eficiente y te ayudará a aprovechar mejor tu tiempo.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina dos estudiantes leyendo el mismo texto:
+
+**Estudiante A**:
+- Lee rápido, sin parar
+- Llega al final y no recuerda nada
+- Tiene que volver a leer todo
+
+**Estudiante B**:
+- Lee despacio
+- Subraya las ideas importantes
+- Al terminar, hace un esquema
+- Recuerda el contenido sin releer
+
+Ambos leyeron el mismo texto, pero solo el Estudiante B COMPRENDIÓ y RETUVO la información. La diferencia: usa técnicas de estudio.
+
+---
+
+IDEAS CLAVE
+
+## PARTE 1: COMPRENSIÓN LECTORA
+
+**Qué es**: La capacidad de entender lo que se lee, extraer las ideas principales y relacionarlas con lo que ya sabes.
+
+### NIVELES DE COMPRENSIÓN LECTORA
+
+1. **Nivel literal**:
+   - Entender lo que dice el texto directamente
+   - Información explícita (está escrita)
+   - Pregunta: ¿Qué dice el texto?
+   → Ejemplo: "Ana fue al parque" → ¿Quién fue al parque? → Ana
+
+2. **Nivel inferencial**:
+   - Deducir información que no está escrita directamente
+   - Leer entre líneas
+   - Pregunta: ¿Qué sugiere el texto?
+   → Ejemplo: "Ana cerró la ventana y se puso el abrigo" → ¿Qué se puede deducir? → Hace frío
+
+3. **Nivel crítico**:
+   - Evaluar, opinar, juzgar lo que dice el texto
+   - Pregunta: ¿Qué opino sobre esto? ¿Estoy de acuerdo?
+   → Ejemplo: Después de leer un artículo sobre redes sociales, decides si estás de acuerdo con el autor
+
+---
+
+### ESTRATEGIAS PARA MEJORAR LA COMPRENSIÓN LECTORA
+
+**ANTES de leer**:
+
+1. **Ojear el texto (vista previa)**:
+   - Lee el título, subtítulos, negritas
+   - Observa imágenes, gráficos
+   - Hazte una idea general del tema
+
+2. **Activar conocimientos previos**:
+   - ¿Qué sé ya sobre este tema?
+   - Esto te ayuda a conectar la nueva información con lo que ya sabes
+
+3. **Hacerte preguntas**:
+   - ¿Qué quiero aprender de este texto?
+   - ¿Para qué lo estoy leyendo?
+
+**DURANTE la lectura**:
+
+1. **Lectura activa**:
+   - Subraya o marca lo importante
+   - Anota dudas en los márgenes
+   - Relaciona ideas
+
+2. **Parar y reflexionar**:
+   - Cada cierto tiempo, para y resume mentalmente lo que has leído
+   - Si no entiendes algo, relee
+
+3. **Identificar palabras clave**:
+   - Busca las palabras más importantes (nombres, conceptos, verbos de acción)
+
+4. **Buscar conectores**:
+   - Palabras como "pero", "por lo tanto", "sin embargo", "en resumen" indican relaciones entre ideas
+
+**DESPUÉS de leer**:
+
+1. **Resumir**:
+   - ¿Cuál es la idea principal?
+   - ¿Qué ideas secundarias la apoyan?
+
+2. **Hacer esquemas o mapas mentales**:
+   - Organiza visualmente la información
+
+3. **Autoevaluación**:
+   - ¿He entendido el texto?
+   - ¿Puedo explicarlo con mis palabras?
+
+---
+
+## PARTE 2: TÉCNICAS DE ESTUDIO
+
+### 1. SUBRAYADO
+
+**Qué es**: Marcar las ideas principales y palabras clave de un texto.
+
+**Cómo hacerlo**:
+- **Primera lectura**: Lee todo sin subrayar (comprensión general)
+- **Segunda lectura**: Subraya solo lo esencial
+- **Qué subrayar**:
+  - Ideas principales
+  - Palabras clave (conceptos, nombres, fechas)
+  - Definiciones
+- **Qué NO subrayar**:
+  - Ejemplos largos (anota "ej." al margen)
+  - Palabras de relleno ("sin embargo", "por lo tanto")
+  - Frases completas (subraya solo lo importante)
+
+**Tipos de subrayado**:
+- **Lineal**: Una línea bajo las palabras importantes
+- **De colores**: Diferentes colores para diferentes tipos de información
+  - Rojo: conceptos clave
+  - Azul: definiciones
+  - Verde: ejemplos
+
+**Regla de oro**: Si subrayas todo, no subrayas nada. Subraya máximo el 20-30% del texto.
+
+---
+
+### 2. RESUMEN
+
+**Qué es**: Reducir un texto a sus ideas esenciales, con tus propias palabras.
+
+**Cómo hacerlo**:
+1. Lee y subraya el texto
+2. Identifica las ideas principales (una por párrafo o sección)
+3. Escribe esas ideas con tus palabras, de forma breve y clara
+4. Usa conectores para unir las ideas
+
+**Características de un buen resumen**:
+- Más corto que el texto original (aproximadamente 1/3 o 1/4)
+- Incluye solo lo esencial
+- Se entiende sin leer el texto original
+- Está escrito con tus propias palabras (no copias frases enteras)
+
+---
+
+### 3. ESQUEMA
+
+**Qué es**: Organización visual de las ideas principales y secundarias, usando números, letras, sangrías o llaves.
+
+**Tipos de esquemas**:
+
+**Esquema numérico**:
+```
+1. Idea principal A
+   1.1. Idea secundaria
+   1.2. Idea secundaria
+2. Idea principal B
+   2.1. Idea secundaria
+   2.2. Idea secundaria
+```
+
+**Esquema de llaves**:
+```
+TEMA ──┬── Idea principal A ──┬── Idea secundaria 1
+       │                      └── Idea secundaria 2
+       └── Idea principal B ──┬── Idea secundaria 1
+                              └── Idea secundaria 2
+```
+
+**Ventajas del esquema**:
+- Muy visual
+- Rápido de repasar
+- Muestra la jerarquía de ideas (principales vs secundarias)
+
+---
+
+### 4. MAPA MENTAL (o conceptual)
+
+**Qué es**: Representación gráfica de ideas que se ramifican desde un concepto central.
+
+**Cómo hacerlo**:
+1. Escribe el tema principal en el centro
+2. Dibuja ramas con las ideas principales
+3. De cada rama principal salen ramas secundarias con detalles
+4. Usa colores, dibujos, flechas para conectar ideas
+
+**Ventajas**:
+- Muy visual y creativo
+- Fácil de recordar
+- Muestra relaciones entre conceptos
+
+---
+
+### 5. FICHAS DE ESTUDIO
+
+**Qué son**: Tarjetas pequeñas con preguntas en un lado y respuestas en el otro.
+
+**Cómo usarlas**:
+- Anverso: "¿Qué es la fotosíntesis?"
+- Reverso: "Proceso por el cual las plantas transforman luz en energía"
+- Te autoexaminas: lees la pregunta e intentas responder antes de darle la vuelta
+
+**Ventajas**:
+- Perfectas para memorizar (fechas, definiciones, vocabulario)
+- Portables (puedes estudiar en cualquier sitio)
+
+---
+
+### 6. MÉTODO DE ESTUDIO SQ3R
+
+Es un método completo para estudiar textos:
+
+1. **Survey (Explorar)**: Ojea el texto (títulos, subtítulos, gráficos)
+2. **Question (Preguntar)**: Convierte los títulos en preguntas
+   → Título: "La fotosíntesis" → Pregunta: "¿Qué es la fotosíntesis?"
+3. **Read (Leer)**: Lee activamente buscando respuestas a tus preguntas
+4. **Recite (Recitar)**: Al terminar cada sección, recita lo que has aprendido (sin mirar)
+5. **Review (Repasar)**: Repasa todo al final
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Leer muchas veces sin usar técnicas de estudio
+✅ **Realidad**: Es más eficaz leer una vez bien (subrayando, haciendo esquemas) que leer 10 veces sin más.
+
+❌ **Error**: Subrayar casi todo el texto
+✅ **Realidad**: Subraya solo lo esencial. Si todo es importante, nada lo es.
+
+❌ **Error**: Copiar frases enteras en el resumen
+✅ **Realidad**: Un resumen debe estar escrito con TUS palabras. Si copias, no estás procesando la información.
+
+❌ **Error**: Estudiar sin descansos
+✅ **Realidad**: Descansa cada 25-45 minutos. Tu cerebro necesita pausas para consolidar la información.
+
+❌ **Error**: Estudiar solo el día antes del examen
+✅ **Realidad**: Es mejor estudiar un poco cada día que atracarse el último día.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Comprensión lectora en redes sociales**:
+   - Lees un tuit: nivel literal (qué dice)
+   - Captas la ironía: nivel inferencial (lees entre líneas)
+   - Decides si estás de acuerdo: nivel crítico
+
+2. **Técnicas de estudio en YouTube**:
+   - Ver un vídeo educativo = lectura
+   - Tomar apuntes = subrayado
+   - Hacer un esquema de lo visto = esquema
+   - Explicárselo a un amigo = recitar
+
+3. **Fichas de estudio en apps**:
+   - Apps como Quizlet usan el concepto de fichas de estudio para vocabulario, fechas, fórmulas...
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Cuál es tu técnica de estudio habitual? ¿Funciona? ¿Qué podrías mejorar?
+
+2. Lee esta frase: "Juan salió corriendo de casa sin desayunar"
+   - Nivel literal: ¿Qué hizo Juan?
+   - Nivel inferencial: ¿Por qué crees que salió corriendo? ¿Iba tarde?
+
+3. ¿Qué es más útil para ti: un esquema o un mapa mental? ¿Por qué?
+
+4. Si tienes que estudiar para un examen dentro de una semana, ¿cómo organizarías tu tiempo?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 10 (Textos expositivos)**: Muchos textos de estudio son expositivos. Saber su estructura ayuda a comprenderlos.
+- **Tema 12 (Expresión escrita)**: Los resúmenes son un tipo de texto escrito. Dominar la escritura mejora tus resúmenes.
+- **Todos los temas**: Las técnicas de estudio se aplican a cualquier materia (lengua, ciencias, matemáticas...).
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+**Ejercicio 1: Niveles de comprensión**
+Lee este texto y responde:
+
+"María observó el cielo oscuro y las nubes grises. Cogió su paraguas amarillo antes de salir de casa. Al llegar al parque, vio que los columpios estaban mojados."
+
+- Nivel literal: ¿De qué color era el paraguas?
+- Nivel inferencial: ¿Qué tiempo hacía? ¿Había llovido?
+- Nivel crítico: ¿Crees que María fue prudente al coger el paraguas? ¿Por qué?
+
+**Ejercicio 2: Subrayado**
+Toma un texto de cualquier asignatura (1-2 páginas) y:
+1. Léelo completo sin subrayar
+2. En una segunda lectura, subraya solo las ideas principales y palabras clave
+3. Comprueba: ¿has subrayado menos del 30% del texto?
+
+**Ejercicio 3: Técnicas de estudio**
+Elige un tema de este curso (por ejemplo, "Las categorías gramaticales") y:
+1. Haz un esquema con las ideas principales
+2. Crea 5 fichas de estudio con preguntas y respuestas
+3. Intenta explicar el tema a alguien sin mirar los apuntes
+
+**Ejercicio 4: Método SQ3R**
+Aplica el método SQ3R a un texto de tu libro de ciencias:
+1. Explora (lee títulos y subtítulos)
+2. Convierte los títulos en preguntas
+3. Lee buscando respuestas
+4. Recita lo que has aprendido
+5. Repasa al final

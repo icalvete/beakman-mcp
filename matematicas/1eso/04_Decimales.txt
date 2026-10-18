@@ -1,0 +1,82 @@
+TEMA 4 – DECIMALES
+
+Los decimales son otra forma de representar partes de una unidad.
+Usan la coma (o punto) para separar la parte entera de la parte decimal.
+
+EXPLICACIÓN VISUAL
+Imagina un euro. Si lo divides en 100 partes iguales, cada parte es un céntimo.
+- 1 euro = 1,00 €
+- 50 céntimos = 0,50 € (medio euro)
+- 1 euro y 25 céntimos = 1,25 €
+
+La coma separa los euros (enteros) de los céntimos (partes).
+
+IDEAS CLAVE
+
+EL SISTEMA DECIMAL Y LAS POSICIONES
+Cada cifra tiene un valor según su posición:
+
+Parte entera | coma | Parte decimal
+Centenas Decenas Unidades , Décimas Centésimas Milésimas
+
+En 3,45:
+- 3 = 3 unidades (parte entera)
+- 4 = 4 décimas (4/10)
+- 5 = 5 centésimas (5/100)
+
+LEER DECIMALES
+0,5 = "cero coma cinco" o "cinco décimas"
+0,25 = "cero coma veinticinco" o "veinticinco centésimas"
+2,375 = "dos coma trescientos setenta y cinco" o "dos unidades y 375 milésimas"
+
+COMPARAR DECIMALES
+Se comparan posición por posición, de izquierda a derecha.
+3,5 > 3,48 (aunque 48 parece mayor que 5, 3,5 = 3,50 > 3,48)
+Truco: iguala el número de decimales añadiendo ceros a la derecha.
+
+OPERACIONES CON DECIMALES
+
+SUMAR Y RESTAR
+Alinea las comas y opera como con enteros.
+  3,25
++ 1,40
+------
+  4,65
+
+MULTIPLICAR
+Multiplica como si fueran enteros, luego cuenta los decimales totales.
+2,5 × 1,2 = 3,0 (1 decimal + 1 decimal = 2 decimales en el resultado, pero 3,00 = 3,0)
+Ejemplo: 25 × 12 = 300, con 2 decimales → 3,00
+
+DIVIDIR
+Mueve la coma del divisor hasta hacerlo entero, y mueve igual en el dividendo.
+4,5 ÷ 1,5 = 45 ÷ 15 = 3
+
+REDONDEAR
+- Si la cifra siguiente es 5 o más, sube.
+- Si es menos de 5, se queda igual.
+3,47 redondeado a una décima = 3,5 (el 7 hace subir)
+3,42 redondeado a una décima = 3,4 (el 2 no hace subir)
+
+ERRORES TÍPICOS
+- Leer decimales como enteros: pensar que 3,15 es mayor que 3,8 porque "15 > 8".
+  (En realidad 3,8 = 3,80 > 3,15)
+- Olvidar alinear las comas al sumar o restar.
+- Poner mal la coma en la multiplicación.
+- Pensar que más cifras decimales significa número mayor.
+
+EJEMPLOS COTIDIANOS
+- Precios: 2,99 € (dos euros con noventa y nueve céntimos).
+- Temperaturas: 36,5 °C (treinta y seis grados y medio).
+- Medidas: 1,75 m de altura (un metro setenta y cinco).
+- Notas: un 7,5 sobre 10.
+
+PREGUNTAS PARA PENSAR
+- ¿Es lo mismo 3,5 que 3,50? ¿Y que 3,500?
+- ¿Qué número está entre 2,4 y 2,5?
+- ¿Por qué los precios suelen terminar en ,99?
+
+RELACIÓN CON OTROS TEMAS
+- Los decimales son otra forma de escribir fracciones (1/2 = 0,5).
+- El siguiente tema explica cómo convertir entre fracciones y decimales.
+- Los porcentajes usan decimales para calcular.

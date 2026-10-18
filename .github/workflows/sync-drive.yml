@@ -1,0 +1,63 @@
+# Genera los ficheros de cada Gem y los sube a Google Drive.
+# Sobrescribe los ficheros existentes sin cambiar su ID, así que los Gems ven el cambio solos.
+# Necesita el secreto RCLONE_CONF: el contenido de ~/.config/rclone/rclone.conf con un
+# remote llamado "beakman" (tipo drive, scope drive.file). Ver docs/guia/montar-el-tuyo.html.
+name: Sincronizar con Drive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "beakman/**"
+      - "historia/**"
+      - "matematicas/**"
+      - "ciencias/**"
+      - "lengua/**"
+      - "scripts/build.py"
+      - ".github/workflows/sync-drive.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: sync-drive
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  RCLONE_VERSION: v1.75.2
+  RCLONE_SHA256: 349ac8fba6ff65d6247043f1750cdcb518ec5d500ef91463a10d37c0ccdf3702
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generar los ficheros
+        run: python3 scripts/build.py
+
+      - name: Instalar rclone
+        run: |
+          zip="rclone-${RCLONE_VERSION}-linux-amd64.zip"
+          curl -fsSLO "https://downloads.rclone.org/${RCLONE_VERSION}/${zip}"
+          echo "${RCLONE_SHA256}  ${zip}" | sha256sum -c -
+          unzip -q "$zip"
+          sudo install "rclone-${RCLONE_VERSION}-linux-amd64/rclone" /usr/local/bin/rclone
+          rclone version | head -1
+
+      - name: Configurar rclone
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          if [ -z "$RCLONE_CONF" ]; then echo "Falta el secreto RCLONE_CONF"; exit 1; fi
+          mkdir -p ~/.config/rclone
+          printf '%s\n' "$RCLONE_CONF" > ~/.config/rclone/rclone.conf
+          chmod 600 ~/.config/rclone/rclone.conf
+
+      - name: Subir a Drive
+        run: |
+          for dir in dist/*/; do
+            subject=$(basename "$dir")
+            rclone copy "$dir" "beakman:Beakman/${subject}" --exclude gem.txt --checksum -v
+          done

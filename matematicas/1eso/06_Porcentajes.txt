@@ -1,0 +1,84 @@
+TEMA 6 – PORCENTAJES
+
+Un porcentaje es una forma de expresar una parte de 100.
+El símbolo % significa "de cada 100".
+
+EXPLICACIÓN VISUAL
+Imagina que tienes 100 cromos y regalas 25.
+Has regalado 25 de cada 100, es decir, el 25%.
+Si tuvieras 200 cromos y regalas el 25%, serían 50 cromos (25 de cada 100, dos veces).
+
+IDEAS CLAVE
+
+¿QUÉ SIGNIFICA PORCENTAJE?
+"Por ciento" = "de cada cien"
+25% = 25 de cada 100 = 25/100 = 0,25
+
+RELACIÓN PORCENTAJE - FRACCIÓN - DECIMAL
+50% = 50/100 = 1/2 = 0,5
+25% = 25/100 = 1/4 = 0,25
+10% = 10/100 = 1/10 = 0,1
+1% = 1/100 = 0,01
+
+CALCULAR EL PORCENTAJE DE UNA CANTIDAD
+Para calcular el X% de una cantidad, multiplica por X/100 (o por el decimal).
+
+El 20% de 50:
+- Método fracción: 20/100 × 50 = 1000/100 = 10
+- Método decimal: 0,20 × 50 = 10
+- Método mental: 10% de 50 = 5, luego 20% = 10
+
+TRUCOS PARA CALCULAR MENTALMENTE
+- 50% = la mitad
+- 25% = la cuarta parte (divide entre 4)
+- 10% = mueve la coma un lugar a la izquierda
+- 1% = mueve la coma dos lugares a la izquierda
+- 5% = la mitad del 10%
+
+Ejemplo: 15% de 80
+10% de 80 = 8
+5% de 80 = 4 (la mitad de 8)
+15% de 80 = 8 + 4 = 12
+
+AUMENTOS Y DESCUENTOS
+
+DESCUENTO
+Precio original - descuento = precio final
+Un descuento del 30% sobre 60€:
+30% de 60 = 18€
+Precio final = 60 - 18 = 42€
+
+Atajo: pagar el 70% directamente (100% - 30% = 70%)
+70% de 60 = 0,7 × 60 = 42€
+
+AUMENTO
+Precio original + aumento = precio final
+Un aumento del 20% sobre 50€:
+20% de 50 = 10€
+Precio final = 50 + 10 = 60€
+
+Atajo: pagar el 120% directamente
+120% de 50 = 1,2 × 50 = 60€
+
+ERRORES TÍPICOS
+- Desconectar porcentaje de fracción: 25% ES lo mismo que 1/4.
+- Calcular mal el descuento: el 30% de descuento NO es pagar el 30%, es pagar el 70%.
+- Sumar porcentajes incorrectamente: subir 10% y luego otro 10% NO es subir 20%.
+- Confundir "el 20% de 50" con "50% de 20" (dan lo mismo, pero el razonamiento importa).
+
+EJEMPLOS COTIDIANOS
+- Rebajas: "30% de descuento" en una camiseta de 25€ → pagas 17,50€.
+- Notas: sacar un 7/10 es el 70%.
+- Propinas: dejar el 10% de propina en un restaurante.
+- Batería del móvil: 45% de carga.
+- Estadísticas: "El 60% de la clase aprobó".
+
+PREGUNTAS PARA PENSAR
+- Si algo sube un 50% y luego baja un 50%, ¿vuelve al precio original?
+- ¿Qué es más, el 30% de 50 o el 50% de 30?
+- ¿Por qué las rebajas nunca llegan al 100%?
+
+RELACIÓN CON OTROS TEMAS
+- Los porcentajes son fracciones con denominador 100.
+- Usar decimales hace más fáciles los cálculos (25% = 0,25).
+- En estadística se usan mucho para representar datos.

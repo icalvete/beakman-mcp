@@ -1,0 +1,43 @@
+TEMA 1 – NÚMEROS NATURALES
+
+Los números naturales sirven para contar y ordenar cantidades.
+Son los números que usamos desde pequeños: 1, 2, 3, 4, 5...
+
+EXPLICACIÓN VISUAL
+Imagina que tienes canicas en una bolsa. Los números naturales te dicen cuántas hay.
+Si tienes 7 canicas, el número 7 representa esa cantidad exacta.
+Puedes ponerlas en fila y contarlas: cada canica corresponde a un número.
+
+IDEAS CLAVE
+- Representan cantidades enteras (no hay "medio" en los naturales).
+- El cero es el punto de partida (aunque a veces no se considera natural).
+- Se pueden situar en la recta numérica: cada número tiene su lugar fijo.
+- Sirven para contar (¿cuántos hay?) y para ordenar (¿quién va primero?).
+
+OPERACIONES BÁSICAS
+- Suma: juntar cantidades. 3 manzanas + 2 manzanas = 5 manzanas.
+- Resta: quitar cantidades. 5 manzanas - 2 manzanas = 3 manzanas.
+- Multiplicación: sumar varias veces lo mismo. 4 × 3 = 4 + 4 + 4 = 12.
+- División: repartir en partes iguales. 12 ÷ 3 = 4 (12 caramelos entre 3 amigos).
+
+ERRORES TÍPICOS
+- Confundir el número con la posición: "El 5" no es lo mismo que "el quinto".
+- Operar sin entender el significado: hacer cuentas mecánicamente sin saber qué representan.
+- Pensar que multiplicar siempre da un número mayor (con naturales mayores que 1, sí).
+- En la resta, restar el grande del pequeño cuando debería ser al revés.
+
+EJEMPLOS COTIDIANOS
+- Contar los escalones de una escalera.
+- Los dorsales de los jugadores de fútbol.
+- El número de páginas de un libro.
+- Tu edad en años.
+
+PREGUNTAS PARA PENSAR
+- ¿Puedes contar hacia atrás para siempre o hay un límite?
+- ¿Qué pasa si intentas restar un número mayor de uno menor?
+- ¿Por qué el orden importa en la resta pero no en la suma?
+
+RELACIÓN CON OTROS TEMAS
+Base de todo el curso.
+Los números naturales son el punto de partida para entender fracciones, decimales y álgebra.
+La divisibilidad (tema 2) estudia cómo se relacionan los naturales entre sí.

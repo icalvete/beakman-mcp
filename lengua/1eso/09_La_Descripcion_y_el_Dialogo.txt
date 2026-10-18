@@ -1,0 +1,239 @@
+TEMA 9 – LA DESCRIPCIÓN Y EL DIÁLOGO
+
+Cuando escribimos o leemos, podemos DESCRIBIR (pintar con palabras cómo es algo o alguien) o hacer que los personajes HABLEN (diálogo). Ambas técnicas enriquecen los textos y los hacen más vivos.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Compara estos dos textos:
+
+**Sin descripción ni diálogo**:
+"Ana fue a la tienda. Compró pan. Volvió a casa."
+
+**Con descripción y diálogo**:
+"Ana, una chica de pelo rizado y ojos verdes, caminó despacio por la **estrecha calle empedrada** hasta llegar a la pequeña panadería de la esquina, donde el olor a pan recién hecho la envolvió.
+— Buenos días, señora López —dijo con una sonrisa—. ¿Me pone una barra de pan?
+— Claro, guapa. Aquí tienes, recién salida del horno."
+
+¿Ves la diferencia? El segundo texto te permite VER la escena, OLER el pan y ESCUCHAR las voces.
+
+---
+
+IDEAS CLAVE
+
+## PARTE 1: LA DESCRIPCIÓN
+
+**Qué es**: Representar con palabras cómo es una persona, objeto, lugar, animal o proceso.
+
+### TIPOS DE DESCRIPCIÓN SEGÚN QUÉ SE DESCRIBE
+
+**1. Descripción de personas (retrato)**:
+
+- **Prosopografía**: Descripción física (aspecto exterior)
+  → "Tenía el pelo largo y negro, ojos azules, era alto y delgado"
+
+- **Etopeya**: Descripción psicológica (carácter, personalidad)
+  → "Era una persona tímida, generosa y soñadora. Le gustaba ayudar a los demás"
+
+- **Retrato**: Descripción física + psicológica (combinación de las anteriores)
+  → "Ana era una chica alta y delgada, de pelo rizado. Siempre sonreía y ayudaba a todos, aunque a veces era un poco despistada"
+
+- **Caricatura**: Descripción exagerada de rasgos (normalmente cómicos o críticos)
+  → "Tenía una nariz tan larga que parecía un pepino, y las orejas como alas de avión"
+
+**2. Descripción de lugares (topografía)**:
+- Se describe un paisaje, una habitación, una ciudad...
+  → "El bosque era oscuro y silencioso. Los árboles altos y frondosos apenas dejaban pasar la luz del sol"
+
+**3. Descripción de objetos**:
+- Se describe la forma, tamaño, color, textura, utilidad...
+  → "El reloj era antiguo, de madera tallada, con números romanos dorados y un tic-tac suave y constante"
+
+**4. Descripción de procesos (cronografía temporal)**:
+- Se explica cómo se hace algo, paso a paso
+  → "Primero, se baten los huevos. Después, se añade la harina poco a poco..."
+
+---
+
+### TIPOS DE DESCRIPCIÓN SEGÚN EL ENFOQUE
+
+**Descripción objetiva**:
+- Se describe de forma neutral, sin opiniones ni emociones
+- Usa datos concretos, medibles
+- Típica de textos científicos, instrucciones, noticias
+  → "La mesa mide 1,20 m de largo, 80 cm de ancho y es de madera de roble"
+
+**Descripción subjetiva**:
+- Se describe según las impresiones, emociones y opiniones del que describe
+- Usa adjetivos valorativos
+- Típica de textos literarios
+  → "La mesa era preciosa, con una madera cálida y suave al tacto, que invitaba a sentarse a tomar el té"
+
+---
+
+### RECURSOS PARA DESCRIBIR BIEN
+
+1. **Usa los 5 sentidos**:
+   - Vista: colores, formas, tamaños
+   - Oído: sonidos, ruidos, música
+   - Olfato: olores, aromas
+   - Tacto: texturas, temperatura
+   - Gusto: sabores
+
+2. **Usa adjetivos precisos**:
+   - En vez de "bonito" → elegante, llamativo, armonioso
+   - En vez de "grande" → enorme, inmenso, gigantesco
+
+3. **Compara con cosas conocidas**:
+   - "Tenía los ojos como el cielo en verano"
+   - "Su voz era suave como el terciopelo"
+
+4. **Ordena la descripción**:
+   - De lo general a lo particular (primero el conjunto, luego los detalles)
+   - De arriba abajo (cabeza → pies)
+   - De izquierda a derecha
+
+---
+
+## PARTE 2: EL DIÁLOGO
+
+**Qué es**: Conversación entre dos o más personajes. Reproducir lo que dicen.
+
+### FORMAS DE INTRODUCIR EL DIÁLOGO
+
+**1. Estilo directo**:
+- Se reproducen las palabras exactas del personaje
+- Se usan comillas ("...") o guiones (—)
+  → Ana dijo: "Voy al cine"
+  → —Voy al cine —dijo Ana
+
+**2. Estilo indirecto**:
+- El narrador cuenta lo que dijo el personaje, pero con sus propias palabras
+- Se usa "que" para introducir lo dicho
+  → Ana dijo **que** iba al cine
+
+**Comparación**:
+- Directo: María dijo: "**Estoy** cansada"
+- Indirecto: María dijo que **estaba** cansada
+  (Cambia el tiempo verbal y los pronombres)
+
+---
+
+### FUNCIONES DEL DIÁLOGO
+
+1. **Caracterizar personajes**: Lo que dicen y cómo lo dicen nos revela su personalidad, educación, estado de ánimo...
+   → Si un personaje usa palabrotas, es diferente a uno que habla de forma educada
+
+2. **Hacer avanzar la acción**: Los personajes toman decisiones, revelan información...
+   → —Tenemos que irnos ya, la policía está llegando
+
+3. **Crear realismo**: Los diálogos hacen la historia más creíble y cercana
+
+4. **Romper la monotonía**: Alternar narración y diálogo hace el texto más dinámico
+
+---
+
+### CÓMO ESCRIBIR BUENOS DIÁLOGOS
+
+1. **Que suenen naturales**: Como hablaría realmente una persona
+   - ❌ "Buenos días, querido amigo, ¿cómo te encuentras en este maravilloso día?"
+   - ✅ "Hola, ¿qué tal?"
+
+2. **Usar verbos de habla variados**:
+   - En vez de repetir siempre "dijo" → murmuró, gritó, susurró, respondió, preguntó, exclamó
+
+3. **Añadir acotaciones** (gestos, acciones, pensamientos):
+   - —No sé —dijo Ana **mientras miraba al suelo**
+   - —¡Cuidado! —gritó, **señalando el peligro**
+
+4. **Reflejar la personalidad del personaje**:
+   - Un niño no habla igual que un adulto
+   - Un profesor no habla igual que un rapero
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Describir TODO con exceso de detalles
+✅ **Realidad**: Describe solo lo relevante. No hace falta decir el color de cada objeto.
+
+❌ **Error**: Hacer que todos los personajes hablen igual
+✅ **Realidad**: Cada personaje debe tener su propia forma de hablar (vocabulario, tono, expresiones...)
+
+❌ **Error**: Abusar de "dijo" o no poner verbos de habla
+✅ **Equilibrio**: Alterna "dijo" con otros verbos, pero tampoco fuerces sinónimos raros ("espetó", "vociferó" todo el rato)
+
+❌ **Error**: Confundir estilo directo e indirecto
+✅ **Clave**:
+   - Directo: "Voy al cine" (palabras exactas, entre comillas o con guion)
+   - Indirecto: Dijo que iba al cine (el narrador lo cuenta)
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Descripciones en tu vida**:
+   - Cuando describes tu habitación a un amigo
+   - Cuando cuentas cómo es alguien que acabas de conocer
+   - Instrucciones de un videojuego (descripción de procesos)
+
+2. **Diálogos en tu vida**:
+   - Conversaciones de WhatsApp (estilo directo)
+   - "Mi madre me dijo que estudiara" (estilo indirecto)
+   - Conversaciones en series, películas, cómics
+
+3. **Diferencia entre directo e indirecto en redes sociales**:
+   - Directo: Captura de pantalla de un mensaje (palabras exactas)
+   - Indirecto: "Mi amigo me contó que había ido al concierto"
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. Lee esta descripción: "El cielo era azul". ¿Es objetiva o subjetiva? ¿Qué podrías añadir para hacerla más rica?
+
+2. Transforma esta frase a estilo indirecto:
+   Juan dijo: "Mañana iré al médico porque me duele la cabeza"
+
+3. ¿Por qué crees que en los libros se alternan partes narrativas, descriptivas y dialogadas? ¿Qué pasaría si un libro fuera TODO diálogo?
+
+4. Describe tu móvil de forma objetiva (datos) y luego de forma subjetiva (opiniones, emociones).
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 3 (Adjetivos)**: Los adjetivos son fundamentales para describir con precisión.
+- **Tema 6 (Puntuación)**: Saber usar comillas, guiones y puntos es clave para escribir diálogos correctamente.
+- **Tema 8 (La narración)**: La descripción y el diálogo son técnicas narrativas esenciales.
+- **Tema 12 (Expresión escrita)**: Dominar la descripción y el diálogo mejora tus redacciones.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+**Ejercicio 1: Descripción**
+Elige a un compañero de clase y haz:
+- Una prosopografía (solo aspecto físico)
+- Una etopeya (solo personalidad)
+- Un retrato completo (físico + psicológico)
+
+**Ejercicio 2: Transformación de estilo**
+Transforma estas frases de directo a indirecto y viceversa:
+
+1. María dijo: "No quiero ir al parque"
+2. Luis comentó que estaba muy cansado
+3. El profesor preguntó: "¿Habéis estudiado?"
+4. Ana respondió que sí, que había estudiado mucho
+
+**Ejercicio 3: Diálogo creativo**
+Escribe un diálogo breve (6-8 líneas) entre dos personajes MUY diferentes (por ejemplo: un abuelo y un adolescente, un alien y un humano, un perro y un gato...). Haz que se note la diferencia en cómo hablan.
+
+**Ejercicio 4: Descripción sensorial**
+Describe tu comida favorita usando los 5 sentidos:
+- Vista: ¿Qué colores tiene? ¿Qué forma?
+- Olfato: ¿Qué huele?
+- Tacto: ¿Qué textura tiene?
+- Gusto: ¿Qué sabor?
+- Oído: ¿Hace algún sonido al comerla? (cruje, chisporrotea...)

@@ -1,0 +1,102 @@
+TEMA 10 – ESTADÍSTICA Y PROBABILIDAD
+
+La estadística organiza y analiza datos para sacar conclusiones.
+La probabilidad estudia el azar y predice qué tan probable es que ocurra algo.
+
+EXPLICACIÓN VISUAL
+ESTADÍSTICA: Imagina que preguntas a tu clase cuál es su color favorito.
+Recoges las respuestas, las cuentas, haces una tabla y un gráfico.
+Ahora puedes decir: "El color más popular es el azul" (conclusión basada en datos).
+
+PROBABILIDAD: Imagina que lanzas una moneda.
+No sabes qué saldrá, pero puedes decir: "Hay un 50% de que salga cara".
+La probabilidad te dice cuántas posibilidades hay.
+
+IDEAS CLAVE - ESTADÍSTICA
+
+POBLACIÓN Y MUESTRA
+- Población: todos los individuos que queremos estudiar.
+- Muestra: una parte de la población que seleccionamos para estudiar.
+Ejemplo: Población = todos los alumnos del colegio. Muestra = los de tu clase.
+
+VARIABLES ESTADÍSTICAS
+- Cualitativas: se expresan con palabras (color favorito, deporte preferido).
+- Cuantitativas: se expresan con números (edad, altura, nota).
+
+TABLA DE FRECUENCIAS
+Organiza los datos contando cuántas veces aparece cada valor.
+
+| Color   | Frecuencia |
+|---------|------------|
+| Azul    | 8          |
+| Rojo    | 5          |
+| Verde   | 3          |
+| Total   | 16         |
+
+TIPOS DE GRÁFICOS
+- Diagrama de barras: barras que muestran la frecuencia de cada categoría.
+- Diagrama de sectores (circular/tarta): divide un círculo en porciones según los porcentajes.
+- Pictograma: usa dibujos para representar cantidades.
+
+MEDIDAS DE CENTRALIZACIÓN
+
+MEDIA (promedio)
+Suma todos los valores y divide entre cuántos hay.
+Notas: 6, 7, 8, 5, 9 → Media = (6+7+8+5+9) ÷ 5 = 35 ÷ 5 = 7
+
+MEDIANA
+El valor que queda en el medio al ordenar los datos.
+Datos ordenados: 5, 6, 7, 8, 9 → Mediana = 7 (el del medio)
+Si hay número par de datos, se hace la media de los dos centrales.
+
+MODA
+El valor que más se repite.
+Datos: 3, 5, 5, 7, 5, 8 → Moda = 5 (aparece 3 veces)
+
+IDEAS CLAVE - PROBABILIDAD
+
+EXPERIMENTO ALEATORIO
+Situación cuyo resultado depende del azar (lanzar un dado, una moneda, sacar una carta).
+
+SUCESO
+Un posible resultado o conjunto de resultados.
+- Suceso seguro: siempre ocurre (sacar un número del 1 al 6 en un dado).
+- Suceso imposible: nunca ocurre (sacar un 7 en un dado normal).
+- Suceso probable: puede ocurrir o no.
+
+CÁLCULO DE PROBABILIDAD
+Probabilidad = casos favorables ÷ casos posibles
+
+Ejemplo: ¿Probabilidad de sacar un 3 en un dado?
+- Casos favorables: 1 (solo el 3)
+- Casos posibles: 6 (números del 1 al 6)
+- Probabilidad = 1/6 ≈ 0,17 ≈ 17%
+
+Ejemplo: ¿Probabilidad de sacar par en un dado?
+- Casos favorables: 3 (el 2, 4 y 6)
+- Casos posibles: 6
+- Probabilidad = 3/6 = 1/2 = 0,5 = 50%
+
+ERRORES TÍPICOS
+- Interpretar mal los gráficos: no mirar la escala del eje.
+- Confundir media, mediana y moda.
+- Pensar que la probabilidad predice el resultado exacto (solo indica tendencia).
+- Olvidar dividir entre el total de casos posibles.
+- En probabilidad, creer que un suceso "le toca" después de no salir varias veces.
+
+EJEMPLOS COTIDIANOS
+- Estadística: encuestas de televisión ("El 40% ve este programa").
+- Media: tu nota media del trimestre.
+- Probabilidad: posibilidades de lluvia en el pronóstico del tiempo.
+- Sorteos: probabilidad de ganar la lotería.
+- Juegos de mesa: probabilidad de sacar doble en los dados.
+
+PREGUNTAS PARA PENSAR
+- Si la media de la clase es 6, ¿significa que todos tienen un 6?
+- ¿Por qué a veces se usa la mediana en vez de la media?
+- Si lanzo una moneda 10 veces y salen 10 caras, ¿qué probabilidad hay de que la siguiente sea cara?
+
+RELACIÓN CON OTROS TEMAS
+- Las fracciones y porcentajes son esenciales para expresar probabilidades.
+- Los decimales ayudan a interpretar las probabilidades (0,5 = 50%).
+- Los gráficos de sectores usan porcentajes y ángulos (360° = 100%).

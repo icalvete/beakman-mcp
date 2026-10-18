@@ -1,0 +1,121 @@
+TEMA 2 – LAS PALABRAS: ESTRUCTURA Y FORMACIÓN
+
+Las palabras no son bloques indivisibles. Como las piezas de Lego, tienen partes que se pueden combinar para crear significados nuevos. Entender cómo se forman las palabras te ayudará a comprender palabras nuevas y a crear las tuyas propias.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina la palabra "PARAGUAS":
+- PARA- (significa "proteger de")
+- -AGUAS (significa "agua")
+
+Si juntas las dos partes: "proteger del agua" = paraguas.
+
+Ahora piensa: si conoces "paracaídas" (proteger de la caída), puedes deducir qué significa "parabrisas" sin haberlo escuchado nunca.
+
+Las palabras tienen una RAÍZ (la parte principal con el significado básico) y PIEZAS QUE SE AÑADEN (que modifican o completan ese significado).
+
+---
+
+IDEAS CLAVE
+
+1. **Lexema (o raíz)**: La parte de la palabra que contiene el significado principal.
+   - En "libr-o", "libr-ería", "libr-ero" → el lexema es LIBR- (relacionado con libros)
+
+2. **Morfemas**: Las piezas que se añaden al lexema para modificar su significado o función.
+
+   Tipos de morfemas:
+   - **Derivativos** (cambian el significado):
+     - Prefijos: van ANTES del lexema → DES-hacer, IN-feliz, PRE-historia
+     - Sufijos: van DESPUÉS del lexema → libr-ERO, pan-ADERÍA, rapid-EZ
+
+   - **Flexivos** (indican género, número, tiempo...):
+     - Género: gat-O / gat-A
+     - Número: libro / libro-S
+     - Tiempo verbal: cant-É / cant-ABA / cant-ARÉ
+
+3. **Tipos de palabras según su formación**:
+
+   - **Simples**: Solo tienen lexema (o lexema + morfemas flexivos)
+     → pan, sol, árbol, casa
+
+   - **Derivadas**: Lexema + morfemas derivativos
+     → pan-adería, sol-eado, árbol-eda, cas-ita
+
+   - **Compuestas**: Dos o más lexemas unidos
+     → lava-platos, saca-corchos, para-aguas, pelo-rojo
+
+   - **Parasintéticas**: Derivación + composición al mismo tiempo
+     → quince-añ-ero (no existe "quinceaño" ni "añero" por separado)
+     → en-lata-do (no existe "enlata" ni "latado" por separado)
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que todas las palabras se pueden dividir en partes
+✅ **Realidad**: Algunas palabras simples no se pueden dividir más (sol, luz, pan). No busques prefijos o sufijos donde no los hay.
+
+❌ **Error**: Confundir letras con morfemas
+✅ **Realidad**: La -S en "lunes" NO es un morfema de plural (no existe "lune"). En cambio, la -S en "gatos" SÍ es morfema de plural.
+
+❌ **Error**: Pensar que "sacapuntas" es una palabra derivada
+✅ **Realidad**: Es compuesta (saca + puntas). Las derivadas tienen prefijos o sufijos, las compuestas unen palabras completas.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Palabras inventadas que entiendes**:
+   - Si te dicen "tengo que desinstalar una app" entiendes que DES- significa "hacer lo contrario".
+   - Si alguien dice "ese tuit es retuiteable", entiendes que -BLE significa "que se puede".
+
+2. **Nombres de profesiones**:
+   - Panadero (pan + -ero) → persona que trabaja con pan
+   - Frutero (frut + -ero) → persona que vende fruta
+   - Librero (libr + -ero) → persona que vende libros
+
+   El sufijo -ERO indica profesión u oficio.
+
+3. **Palabras compuestas en tu vida**:
+   - Rascacielos (rasca + cielos)
+   - Lavavajillas (lava + vajillas)
+   - Pelirrojo (pelo + rojo)
+   - Baloncesto (balón + cesto)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que decimos "submarino" y no "bajo-marino"? ¿Qué significa el prefijo SUB-?
+
+2. Si "zapatero" es quien hace zapatos, y "carnicero" quien vende carne, ¿qué sería un "mensajero"? ¿Sigue la misma lógica?
+
+3. Inventa una palabra compuesta para "aparato que limpia ventanas". ¿Cómo la llamarías?
+
+4. ¿Por qué "coliflor" (col + flor) es una palabra compuesta pero no lo entendemos como "una col que es una flor"?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 3 y 4 (Categorías gramaticales)**: Según los morfemas que añadimos, una palabra puede cambiar de categoría (feliz → adjetivo / feliz-mente → adverbio).
+- **Tema 6 (Ortografía)**: Conocer las partes de las palabras ayuda a escribirlas bien (si sabes que IN- es un prefijo, escribirás "innecesario" con dos enes).
+- **Tema 12 (Expresión escrita)**: Usar derivados y compuestos enriquece tu vocabulario y hace tus textos más variados.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Elige 5 palabras de tu alrededor (carteles, envases, libros) y analízalas:
+1. ¿Es simple, derivada, compuesta o parasintética?
+2. ¿Cuál es el lexema?
+3. ¿Qué morfemas tiene? ¿Son derivativos o flexivos?
+
+Ejemplo:
+- Palabra: "descongelado"
+- Tipo: derivada
+- Lexema: -congel-
+- Morfemas derivativos: des- (prefijo), -ado (sufijo)
+- Morfemas flexivos: -o (género masculino)

@@ -1,0 +1,269 @@
+TEMA 10 – LOS TEXTOS EXPOSITIVOS Y ARGUMENTATIVOS
+
+No todos los textos cuentan historias o expresan sentimientos. Algunos textos tienen como objetivo INFORMAR (expositivos) o CONVENCER (argumentativos). Saber distinguirlos y crearlos es fundamental para estudiar y comunicarte bien.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina tres situaciones diferentes:
+
+1. **Texto expositivo**: Tu profesor te explica qué es la fotosíntesis
+   → Objetivo: que ENTIENDAS cómo funciona (INFORMAR)
+
+2. **Texto argumentativo**: Intentas convencer a tus padres de que te compren un móvil nuevo
+   → Objetivo: que te CREAN y ACEPTEN tu idea (PERSUADIR)
+
+3. **Texto narrativo**: Cuentas una anécdota divertida que te pasó
+   → Objetivo: ENTRETENER
+
+Mismo canal (lenguaje), diferentes objetivos.
+
+---
+
+IDEAS CLAVE
+
+## PARTE 1: TEXTOS EXPOSITIVOS
+
+**Qué son**: Textos que tienen como objetivo principal INFORMAR, EXPLICAR o ENSEÑAR algo de forma clara y objetiva.
+
+**Características**:
+
+1. **Objetividad**: No se dan opiniones personales, solo hechos y datos
+   → "El agua hierve a 100°C" (dato objetivo)
+   → NO "Creo que el agua hierve más o menos a 100°C" (subjetivo)
+
+2. **Claridad**: Se explica de forma comprensible, sin ambigüedades
+
+3. **Orden lógico**: La información está organizada de forma coherente
+
+4. **Lenguaje preciso**: Se usan términos técnicos cuando es necesario
+
+5. **Función referencial**: El lenguaje se centra en transmitir información sobre la realidad
+
+---
+
+### ESTRUCTURA DE UN TEXTO EXPOSITIVO
+
+**Estructura básica (modelo general)**:
+
+1. **Introducción**:
+   - Presentación del tema
+   - Anticipa de qué se va a hablar
+   → "En este texto vamos a explicar qué es la fotosíntesis"
+
+2. **Desarrollo**:
+   - Explicación detallada del tema
+   - Datos, ejemplos, clasificaciones
+   → "La fotosíntesis es el proceso por el cual las plantas..."
+
+3. **Conclusión**:
+   - Resumen de lo explicado
+   - Cierre del tema
+   → "En resumen, la fotosíntesis permite a las plantas obtener energía de la luz solar"
+
+**Estructuras específicas** (formas de organizar la información):
+
+- **Secuencial**: Explica pasos o etapas en orden
+  → "Primero... después... finalmente..."
+  → Instrucciones, recetas, procesos
+
+- **Causa-efecto**: Explica por qué ocurre algo y qué consecuencias tiene
+  → "El cambio climático (causa) provoca el deshielo de los polos (efecto)"
+
+- **Comparación**: Presenta semejanzas y diferencias
+  → "Las plantas y los animales se parecen en que ambos son seres vivos, pero se diferencian en..."
+
+- **Problema-solución**: Plantea un problema y propone soluciones
+  → "El problema es la contaminación. Una solución es reciclar"
+
+- **Enumeración**: Lista características, tipos, ejemplos...
+  → "Hay tres tipos de rocas: ígneas, sedimentarias y metamórficas"
+
+---
+
+### EJEMPLOS DE TEXTOS EXPOSITIVOS
+
+- Libros de texto (como este)
+- Artículos de enciclopedia
+- Noticias (la parte informativa, sin opinión)
+- Instrucciones de uso
+- Artículos científicos divulgativos
+- Definiciones de diccionario
+
+---
+
+## PARTE 2: TEXTOS ARGUMENTATIVOS
+
+**Qué son**: Textos que tienen como objetivo CONVENCER al receptor de una idea u opinión mediante razones (argumentos).
+
+**Características**:
+
+1. **Subjetividad**: El autor expresa su opinión o punto de vista
+   → "Creo que deberíamos proteger más el medio ambiente"
+
+2. **Presencia de argumentos**: Razones que apoyan la opinión
+
+3. **Función apelativa**: Se intenta influir en el receptor
+
+4. **Posible presencia de contraargumentos**: Se refutan opiniones contrarias
+
+---
+
+### ESTRUCTURA DE UN TEXTO ARGUMENTATIVO
+
+1. **Introducción (tesis)**:
+   - Se presenta el tema
+   - Se expone la opinión o tesis que se va a defender
+   → "Los deberes escolares deberían reducirse porque..."
+
+2. **Desarrollo (argumentación)**:
+   - Se presentan los argumentos (razones) que apoyan la tesis
+   - Cada argumento con ejemplos, datos, citas...
+   → **Argumento 1**: "Los niños necesitan tiempo libre para descansar"
+   → **Argumento 2**: "Demasiados deberes generan estrés"
+   → **Argumento 3**: "Hay estudios que demuestran que..."
+
+3. **Conclusión**:
+   - Se reafirma la tesis
+   - Se hace un resumen de los argumentos
+   - A veces se incluye una llamada a la acción
+   → "Por todo esto, considero que es necesario reducir los deberes escolares"
+
+---
+
+### TIPOS DE ARGUMENTOS
+
+1. **Argumento de autoridad**: Cita a un experto o fuente fiable
+   → "Según la OMS, la contaminación es perjudicial para la salud"
+
+2. **Argumento de ejemplos**: Usa casos concretos
+   → "En Noruega, donde hay menos deberes, los estudiantes obtienen mejores resultados"
+
+3. **Argumento de experiencia personal**: Cuenta una vivencia propia
+   → "Yo he vivido en primera persona cómo el estrés afecta al rendimiento"
+
+4. **Argumento de datos y estadísticas**: Usa cifras
+   → "El 70% de los estudiantes dice sentirse agobiado por los deberes"
+
+5. **Argumento lógico**: Usa razonamientos causa-efecto
+   → "Si los niños no descansan, no pueden concentrarse en clase"
+
+6. **Argumento emotivo**: Apela a los sentimientos
+   → "Imagina a un niño de 7 años pasando 3 horas haciendo deberes después de un largo día de colegio"
+
+---
+
+### EJEMPLOS DE TEXTOS ARGUMENTATIVOS
+
+- Artículos de opinión en periódicos
+- Ensayos
+- Críticas de cine, libros, música
+- Debates
+- Publicidad (convencer para comprar)
+- Discursos políticos
+- Cartas de reclamación
+
+---
+
+## DIFERENCIAS CLAVE ENTRE EXPOSITIVO Y ARGUMENTATIVO
+
+| Aspecto | Expositivo | Argumentativo |
+|---------|------------|---------------|
+| **Objetivo** | Informar, explicar | Convencer, persuadir |
+| **Subjetividad** | Objetivo (sin opinión) | Subjetivo (con opinión) |
+| **Lenguaje** | Neutro, técnico | Persuasivo, valorativo |
+| **Ejemplo** | "El tabaco contiene nicotina" | "Fumar debería estar prohibido porque es perjudicial" |
+
+**IMPORTANTE**: A veces se mezclan. Por ejemplo, un texto argumentativo puede incluir partes expositivas para explicar datos antes de argumentar.
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir opinión con argumento
+✅ **Realidad**:
+   - Opinión: "Los deberes son malos" (solo dice qué piensas)
+   - Argumento: "Los deberes son malos porque generan estrés y reducen el tiempo de descanso" (da razones)
+
+❌ **Error**: Usar opiniones en un texto expositivo
+✅ **Realidad**: En un texto expositivo NO se dice "yo creo", "en mi opinión", "me parece"...
+
+❌ **Error**: No dar ejemplos o datos en los argumentos
+✅ **Realidad**: Un argumento sin apoyo (ejemplos, datos, citas) es débil.
+
+❌ **Error**: Usar argumentos emocionales sin razones lógicas
+✅ **Equilibrio**: Los argumentos emotivos pueden ser útiles, pero deben apoyarse en razones sólidas.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Texto expositivo**:
+   - Entrada de Wikipedia sobre "El sistema solar"
+   - Instrucciones de un videojuego
+   - Explicación de tu profesor sobre las ecuaciones
+
+2. **Texto argumentativo**:
+   - Cuando intentas convencer a tus padres de algo
+   - Reseña de una película en IMDB ("Esta película es genial porque...")
+   - Comentarios en YouTube defendiendo a tu artista favorito
+
+3. **Mezcla de ambos**:
+   - Un documental: primero INFORMA (expositivo), luego opina sobre el problema (argumentativo)
+   - Un artículo periodístico: primero da los HECHOS (expositivo), luego la OPINIÓN del autor (argumentativo)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. Lee esta frase: "Los videojuegos mejoran los reflejos porque obligan a tomar decisiones rápidas". ¿Es expositiva o argumentativa? ¿Por qué?
+
+2. ¿Qué tipo de argumento es más convincente: uno con datos y cifras, o uno que apela a las emociones? ¿Por qué?
+
+3. ¿Puede un texto expositivo tener opiniones? ¿Y un texto argumentativo tener datos objetivos?
+
+4. Piensa en una discusión que hayas tenido. ¿Usaste argumentos? ¿De qué tipo?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 1 (Comunicación)**: Los textos expositivos y argumentativos tienen funciones del lenguaje diferentes (referencial vs apelativa).
+- **Tema 4 (Conjunciones)**: Las conjunciones causales, consecutivas y adversativas son claves en la argumentación.
+- **Tema 6 (Puntuación)**: Los textos bien estructurados requieren buena puntuación.
+- **Tema 12 (Expresión escrita)**: Saber escribir textos expositivos y argumentativos es fundamental para redacciones, exámenes y trabajos.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+**Ejercicio 1: Identificación**
+Di si estos textos son expositivos o argumentativos:
+
+1. "El agua es una sustancia formada por dos átomos de hidrógeno y uno de oxígeno"
+2. "Creo que el fútbol es el mejor deporte porque desarrolla el trabajo en equipo"
+3. "La fotosíntesis es el proceso mediante el cual las plantas transforman la luz en energía"
+4. "Deberíamos prohibir los plásticos de un solo uso para proteger el planeta"
+
+**Ejercicio 2: Creación de argumentos**
+Elige una tesis y escribe 3 argumentos diferentes para defenderla:
+- Tesis: "Los estudiantes deberían poder usar el móvil en clase"
+
+Usa:
+- Un argumento de autoridad
+- Un argumento de ejemplos
+- Un argumento lógico
+
+**Ejercicio 3: Transformación**
+Transforma esta frase expositiva en argumentativa:
+- Expositiva: "El ejercicio físico mejora la salud cardiovascular"
+- Argumentativa: ...?
+
+**Ejercicio 4: Texto argumentativo completo**
+Escribe un texto argumentativo breve (10-15 líneas) defendiendo una de estas tesis:
+- "Las redes sociales tienen más aspectos negativos que positivos"
+- "Leer es más importante que ver la televisión"
+- "Los animales no deberían estar en zoológicos"
+
+Incluye: introducción (tesis), 2-3 argumentos con ejemplos, conclusión.

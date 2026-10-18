@@ -1,0 +1,211 @@
+TEMA 7 – LOS GÉNEROS LITERARIOS: NARRATIVA, LÍRICA Y TEATRO
+
+La literatura se agrupa en tres grandes familias según CÓMO se cuenta la historia. No es lo mismo leer una novela, que un poema, que una obra de teatro. Cada género tiene sus propias reglas y formas.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina que quieres contar la historia de Romeo y Julieta:
+
+1. **NARRATIVA**: Un narrador te la cuenta
+   → "Había una vez dos jóvenes enamorados llamados Romeo y Julieta..."
+
+2. **LÍRICA**: Expresas los sentimientos de Romeo con un poema
+   → "Oh, Julieta, luz de mi alma, / tu amor inflama mi corazón..."
+
+3. **TEATRO**: Los personajes la representan en un escenario con diálogos
+   → ROMEO: Julieta, ¿eres tú?
+   → JULIETA: Sí, Romeo, soy yo
+
+La misma historia, tres formas diferentes de contarla.
+
+---
+
+IDEAS CLAVE
+
+### 1. GÉNERO NARRATIVO
+
+**Qué es**: Género en el que un **narrador** cuenta una historia (real o ficticia) con personajes, acciones y un desarrollo temporal.
+
+**Características**:
+- Hay un **narrador** que cuenta lo que pasa
+- Aparecen **personajes** que realizan acciones
+- Hay un **argumento** (secuencia de acontecimientos)
+- Se desarrolla en un **tiempo** y un **espacio**
+
+**Subgéneros narrativos**:
+
+- **Cuento**: Narración breve, pocos personajes, trama sencilla, un solo conflicto
+  → Ejemplo: "Caperucita Roja", "El patito feo"
+
+- **Novela**: Narración extensa, varios personajes, trama compleja, múltiples conflictos
+  → Ejemplo: "Don Quijote de la Mancha", "Harry Potter"
+
+- **Leyenda**: Relato tradicional basado en hechos reales, pero con elementos fantásticos
+  → Ejemplo: "La leyenda del Cid"
+
+- **Fábula**: Narración breve con moraleja, protagonizada por animales con comportamiento humano
+  → Ejemplo: "La cigarra y la hormiga" (Esopo)
+
+- **Mito**: Relato tradicional que explica el origen del mundo, dioses y fenómenos naturales
+  → Ejemplo: Mitos griegos (Zeus, Hércules...)
+
+**Elementos de la narrativa** (veremos más en el Tema 8):
+- Narrador
+- Personajes
+- Tiempo
+- Espacio
+- Acción
+
+---
+
+### 2. GÉNERO LÍRICO (o poesía)
+
+**Qué es**: Género en el que el autor expresa sus **sentimientos, emociones o pensamientos** de forma personal y subjetiva, normalmente en verso.
+
+**Características**:
+- **Expresión de sentimientos**: amor, tristeza, alegría, nostalgia...
+- Uso del **verso** (aunque también hay prosa poética)
+- Lenguaje con **ritmo, rima y musicalidad**
+- Uso de **recursos literarios** (metáforas, comparaciones, personificaciones...)
+- Predomina la **función expresiva** del lenguaje
+
+**Elementos del poema**:
+
+- **Verso**: Cada línea del poema
+  → "En el silencio solo se escuchaba"
+
+- **Estrofa**: Conjunto de versos
+  → Dos versos = pareado
+  → Cuatro versos = cuarteto
+
+- **Rima**: Repetición de sonidos al final de los versos
+  - **Consonante**: Se repiten vocales y consonantes
+    → "Viento" - "lento" (ento - ento)
+  - **Asonante**: Solo se repiten las vocales
+    → "Luna" - "cuna" (u-a / u-a)
+
+- **Ritmo**: Musicalidad del poema (repetición de acentos)
+
+**Subgéneros líricos**:
+- **Oda**: Poema que exalta algo o alguien
+- **Elegía**: Poema triste, suele expresar dolor por una pérdida
+- **Soneto**: Poema de 14 versos con estructura fija
+- **Romance**: Poema narrativo con versos de 8 sílabas y rima asonante en versos pares
+
+---
+
+### 3. GÉNERO TEATRAL (o dramático)
+
+**Qué es**: Género escrito para ser **representado** por actores en un escenario. Los personajes cuentan la historia mediante **diálogos** y **acciones**.
+
+**Características**:
+- **No hay narrador**: La historia se cuenta solo con diálogos y acciones
+- Está escrita para ser **representada** (aunque también se puede leer)
+- Se divide en **actos** y **escenas**
+- Incluye **acotaciones** (indicaciones para los actores: cómo moverse, hablar, gestos...)
+
+**Elementos del texto teatral**:
+
+- **Diálogos**: Lo que dicen los personajes
+  → ROMEO: ¿Eres tú, Julieta?
+
+- **Acotaciones**: Indicaciones entre paréntesis o en cursiva sobre gestos, movimientos, escenografía...
+  → (Romeo entra por la izquierda, nervioso)
+
+- **Actos**: Partes principales en que se divide la obra
+
+- **Escenas**: Subdivisiones de los actos (cambian cuando entran o salen personajes)
+
+**Subgéneros teatrales**:
+
+- **Tragedia**: Obra seria con final desgraciado. Conflictos graves, personajes nobles, temas universales.
+  → Ejemplo: "Romeo y Julieta" (Shakespeare)
+
+- **Comedia**: Obra con final feliz, situaciones divertidas, pretende hacer reír.
+  → Ejemplo: "El enfermo imaginario" (Molière)
+
+- **Drama**: Mezcla elementos trágicos y cómicos. Más cercano a la realidad cotidiana.
+  → Ejemplo: "La casa de Bernarda Alba" (Lorca)
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que la lírica es siempre sobre amor
+✅ **Realidad**: Puede expresar cualquier sentimiento: tristeza, alegría, rabia, nostalgia, miedo, admiración...
+
+❌ **Error**: Confundir narrador con autor
+✅ **Realidad**:
+   - **Autor**: Persona real que escribe (Miguel de Cervantes)
+   - **Narrador**: Voz ficticia que cuenta la historia en la narración
+
+❌ **Error**: Pensar que el teatro es solo el texto escrito
+✅ **Realidad**: El teatro está pensado para la representación. El texto es solo la base.
+
+❌ **Error**: Creer que toda la poesía rima
+✅ **Realidad**: Existe el **verso libre** (sin rima ni métrica fija)
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Narrativa en tu vida**:
+   - Series de Netflix (te cuentan una historia)
+   - Películas narrativas
+   - Novelas que lees
+   - Cuentos que te contaban de pequeño
+
+2. **Lírica en tu vida**:
+   - **Letras de canciones** (la música es poesía con melodía)
+   - Poemas que lees en clase
+   - Frases emotivas en redes sociales
+
+3. **Teatro en tu vida**:
+   - Obras de teatro en vivo
+   - Diálogos en películas y series
+   - Sketches de humor (monólogos, teatro breve)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Una canción de tu grupo favorito es lírica o narrativa? ¿Por qué? (Pista: ¿cuenta una historia o expresa sentimientos?)
+
+2. Lee este texto: "Caminaba por la calle cuando de repente vio una luz extraña". ¿Es narrativa, lírica o teatro? ¿Cómo lo sabes?
+
+3. Si quisieras contar la historia de tu día, ¿qué género usarías? ¿Y si quisieras expresar cómo te sientes?
+
+4. ¿Por qué crees que en el teatro no hay narrador? ¿Cómo se entera el público de lo que pasa?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 8 (La narración)**: Profundizaremos en los elementos del género narrativo (narrador, personajes, estructura...).
+- **Tema 9 (Descripción y diálogo)**: El diálogo es fundamental en el teatro, y la descripción en la narrativa.
+- **Tema 11 (Comprensión lectora)**: Saber qué género estás leyendo te ayuda a entender mejor el texto.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Lee estos fragmentos y di a qué género pertenecen (narrativa, lírica o teatro):
+
+1. "MARÍA: ¿Dónde está mi libro?
+    JUAN: (nervioso) No lo sé, te juro que no lo he visto."
+
+2. "El viento susurraba entre los árboles mientras Ana caminaba por el bosque oscuro."
+
+3. "Tu risa es como el agua fresca
+    que calma mi sed en el desierto,
+    luz que ilumina mis mañanas,
+    canción que alegra mi alma."
+
+4. "Había una vez un rey que tenía tres hijos. El más pequeño era valiente y generoso."
+
+Ahora elige una situación cotidiana (por ejemplo, "llegar tarde a clase") y escribe:
+- Una frase narrativa (un narrador cuenta lo que pasó)
+- Una frase lírica (expresas cómo te sientes)
+- Una frase teatral (diálogo entre dos personajes)

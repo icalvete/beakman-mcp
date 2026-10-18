@@ -1,0 +1,88 @@
+TEMA 9 – GEOMETRÍA PLANA
+
+La geometría plana estudia las formas en dos dimensiones (largo y ancho).
+Trabajamos con figuras que podemos dibujar en un papel.
+
+EXPLICACIÓN VISUAL
+Imagina que recortas figuras de cartulina: cuadrados, rectángulos, triángulos, círculos.
+- El PERÍMETRO es la longitud del borde (cuánto mide el contorno si lo recorres con el dedo).
+- El ÁREA es la superficie interior (cuánta cartulina has usado).
+
+IDEAS CLAVE
+
+ELEMENTOS BÁSICOS
+- Punto: posición sin tamaño (lo marcamos con una letra: A, B, C).
+- Recta: infinita en ambas direcciones, sin curvas.
+- Segmento: trozo de recta con inicio y fin.
+- Ángulo: abertura entre dos rectas que se juntan en un punto (vértice).
+
+TIPOS DE ÁNGULOS
+- Agudo: menor de 90° (como una V cerrada).
+- Recto: exactamente 90° (esquina de una hoja).
+- Obtuso: mayor de 90° y menor de 180° (como una V muy abierta).
+- Llano: exactamente 180° (una línea recta).
+
+FIGURAS PLANAS
+
+TRIÁNGULOS (3 lados)
+Según sus lados:
+- Equilátero: 3 lados iguales
+- Isósceles: 2 lados iguales
+- Escaleno: 3 lados diferentes
+
+Según sus ángulos:
+- Acutángulo: todos los ángulos agudos
+- Rectángulo: un ángulo recto
+- Obtusángulo: un ángulo obtuso
+
+CUADRILÁTEROS (4 lados)
+- Cuadrado: 4 lados iguales, 4 ángulos rectos.
+- Rectángulo: lados opuestos iguales, 4 ángulos rectos.
+- Rombo: 4 lados iguales, ángulos NO rectos.
+- Paralelogramo: lados opuestos paralelos e iguales.
+- Trapecio: solo 2 lados paralelos.
+
+CÍRCULO
+- Radio (r): distancia del centro al borde.
+- Diámetro (d): distancia de lado a lado pasando por el centro. d = 2r
+- Circunferencia: el borde del círculo (la línea curva).
+
+PERÍMETRO
+El perímetro es la suma de todos los lados.
+
+- Cuadrado: P = 4 × lado = 4L
+- Rectángulo: P = 2 × base + 2 × altura = 2(b + h)
+- Triángulo: P = lado₁ + lado₂ + lado₃
+- Circunferencia: P = 2 × π × r (donde π ≈ 3,14)
+
+ÁREA
+El área mide la superficie interior en unidades cuadradas (cm², m²).
+
+- Cuadrado: A = lado × lado = L²
+- Rectángulo: A = base × altura = b × h
+- Triángulo: A = (base × altura) ÷ 2 = (b × h)/2
+- Círculo: A = π × r² (π ≈ 3,14)
+
+ERRORES TÍPICOS
+- Confundir área y perímetro: perímetro es el "marco", área es el "relleno".
+- Olvidar dividir entre 2 en el área del triángulo.
+- Usar unidades incorrectas: el perímetro es en cm, el área en cm².
+- Confundir radio y diámetro (el diámetro es el doble del radio).
+- Sumar lados que no corresponden en el perímetro.
+
+EJEMPLOS COTIDIANOS
+- Perímetro: cuánta valla necesitas para rodear un jardín.
+- Área: cuántos metros de césped necesitas para cubrir el jardín.
+- Una pista de atletismo mide el perímetro; un campo de fútbol se mide por área.
+- Baldosas: para saber cuántas baldosas necesitas, calculas el área.
+- Marcos de fotos: para el marco, calculas el perímetro.
+
+PREGUNTAS PARA PENSAR
+- ¿Puede un cuadrado tener el mismo perímetro que un rectángulo? ¿Y la misma área?
+- ¿Por qué el área del triángulo lleva "dividido entre 2"?
+- Si duplicas el lado de un cuadrado, ¿se duplica el área?
+
+RELACIÓN CON OTROS TEMAS
+- Las medidas de longitud (tema 8) son necesarias para calcular perímetros.
+- El álgebra ayuda con fórmulas: A = b × h es una expresión algebraica.
+- Las fracciones aparecen en el área del triángulo (÷2 = ×1/2).

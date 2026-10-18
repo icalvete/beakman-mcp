@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monta tu propio Beakman · Mi mundo de Beakman</title>
+<meta name="description" content="Guía técnica para montar tus propios Gems de Beakman: fork del repositorio, credenciales de Google Drive, rclone, el GitHub Action y la creación de cada Gem en Gemini.">
+<link rel="canonical" href="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">
+<meta name="theme-color" content="#A6D41E">
+<meta name="color-scheme" content="light">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Mi mundo de Beakman">
+<meta property="og:title" content="Monta tu propio Beakman">
+<meta property="og:description" content="Fork, credenciales de Google Drive, rclone, GitHub Action y un Gem por asignatura. Paso a paso.">
+<meta property="og:url" content="https://icalvete.github.io/beakman-gems/guia/montar-el-tuyo.html">
+<meta property="og:locale" content="es_ES">
+<meta property="og:image" content="https://icalvete.github.io/beakman-gems/img/og-image.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="Mi mundo de Beakman: cuatro fotos del profesor Beakman con su bata verde lima">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://icalvete.github.io/beakman-gems/img/og-image.png">
+<link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Nunito:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="wrap top">
+  <a class="brand" href="../"><img src="../img/favicon.svg" alt="" width="36" height="36"><span>Mi mundo de Beakman</span></a>
+  <nav aria-label="Principal">
+    <a href="../">Portada</a>
+    <a class="hide-sm" href="../#como-funciona">Cómo funciona</a>
+    <a href="https://github.com/icalvete/beakman-gems">GitHub</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap doc prose">
+  <p class="kicker">Para gente técnica</p>
+  <h1>Monta tu propio Beakman</h1>
+  <p class="lead">Haz un fork, conecta tu Google Drive y crea tus Gems. Después, cada cambio en tu repositorio llega solo a los Gems.</p>
+  <p>Necesitas una cuenta de GitHub, una cuenta de Google, <a href="https://rclone.org/install/">rclone</a> y <a href="https://cli.github.com/">gh</a> instalados en tu ordenador. Si sabes usar git, te sobra para seguir la guía.</p>
+
+  <nav class="toc" aria-label="En esta página">
+    <strong>En esta página</strong>
+    <ol>
+      <li><a href="#fork">Haz un fork</a></li>
+      <li><a href="#client-id">Crea tus credenciales de Google</a></li>
+      <li><a href="#rclone">Configura rclone</a></li>
+      <li><a href="#secreto">Guarda el secreto en GitHub</a></li>
+      <li><a href="#action">Lanza el Action</a></li>
+      <li><a href="#gems">Crea cada Gem</a></li>
+      <li><a href="#editar">Edita y listo</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="fork">1. Haz un fork</h2>
+  <p>Haz un fork de <a href="https://github.com/icalvete/beakman-gems">icalvete/beakman-gems</a> y clónalo.</p>
+  <p>GitHub desactiva los Actions en los forks. Actívalos en la pestaña <strong>Actions</strong> de tu fork.</p>
+  <p>Lo que hay dentro:</p>
+  <ul>
+    <li><code>beakman/base.md</code>: la personalidad y el método, comunes a todas las asignaturas.</li>
+    <li><code>beakman/gem_stub.txt</code>: el texto corto y fijo que va en la caja de instrucciones de cada Gem.</li>
+    <li><code>&lt;asignatura&gt;/asignatura.md</code>: lo propio de cada asignatura. Su cabecera lleva el nombre, el nombre del Gem y la descripción.</li>
+    <li><code>&lt;asignatura&gt;/1eso/</code> y <code>2eso/</code>: los temas, un fichero por tema.</li>
+    <li><code>scripts/build.py</code>: genera los ficheros de cada Gem en <code>dist/</code>.</li>
+    <li><code>.github/workflows/sync-drive.yml</code>: el Action que genera y sube a Drive.</li>
+  </ul>
+  <p>Puedes probar el build en local con <code>python3 scripts/build.py</code>. Con <code>--check</code> solo comprueba, sin escribir nada.</p>
+
+  <h2 id="client-id">2. Crea tus credenciales de Google</h2>
+  <p>rclone trae un client_id compartido, pero tiene cuotas bajas y Google lo limita a menudo. Mejor uno tuyo. Es gratis.</p>
+  <ol class="big">
+    <li>Entra en <a href="https://console.cloud.google.com/">Google Cloud Console</a> y crea un proyecto. Por ejemplo, <code>beakman</code>.</li>
+    <li>En <strong>APIs y servicios → Biblioteca</strong>, busca <strong>Google Drive API</strong> y habilítala.</li>
+    <li>Configura la <strong>pantalla de consentimiento de OAuth</strong> con tipo de usuario <strong>Externo</strong>. Rellena el nombre y tu correo. No hace falta añadir permisos aquí.</li>
+    <li><strong>Publica la app en producción.</strong> En estado de prueba («Testing»), el refresh token caduca a los 7 días y el Action deja de funcionar. Al publicarla, Google puede avisar de que la app no está verificada. Para uso propio no importa: al autorizar, pulsa «Configuración avanzada» y continúa.</li>
+    <li>En <strong>Credenciales → Crear credenciales → ID de cliente de OAuth</strong>, elige el tipo <strong>Aplicación de escritorio</strong>. Apunta el ID de cliente y el secreto de cliente.</li>
+  </ol>
+
+  <h2 id="rclone">3. Configura rclone</h2>
+  <p>Crea un remote que se llame <code>beakman</code>. El Action usa ese nombre.</p>
+<pre><code>rclone config create beakman drive \
+  scope=drive.file \
+  client_id=TU_CLIENT_ID \
+  client_secret=TU_CLIENT_SECRET</code></pre>
+  <p>Se abre el navegador para que autorices el acceso con tu cuenta de Google. Al terminar, la configuración queda en <code>~/.config/rclone/rclone.conf</code>.</p>
+  <p><strong>Por qué <code>drive.file</code>.</strong> Con ese permiso, rclone solo ve los ficheros que crea él. No puede leer ni tocar el resto de tu Drive. Si el secreto se filtrara algún día, el daño se queda en la carpeta de Beakman.</p>
+  <p>La otra cara: si subes los ficheros a mano por la web de Drive, rclone no los ve y crea otros nuevos. Deja que los cree el Action.</p>
+
+  <h2 id="secreto">4. Guarda el secreto en GitHub</h2>
+  <p>Desde la carpeta de tu fork:</p>
+<pre><code>gh secret set RCLONE_CONF &lt; ~/.config/rclone/rclone.conf</code></pre>
+  <p>Así el fichero va directo de tu disco a GitHub, sin pasar por la pantalla ni el historial. Si tu <code>rclone.conf</code> tiene más remotes, mejor crea uno aparte solo con el de <code>beakman</code>.</p>
+
+  <h2 id="action">5. Lanza el Action</h2>
+  <p>En la pestaña <strong>Actions</strong>, elige <strong>Sincronizar con Drive</strong> y pulsa <strong>Run workflow</strong>. O desde la terminal:</p>
+<pre><code>gh workflow run sync-drive.yml</code></pre>
+  <p>A partir de ahora se lanza solo en cada push a <code>main</code> que toque el contenido.</p>
+  <p>Al acabar, en tu Drive aparece una carpeta <code>Beakman</code> con una subcarpeta por asignatura: <code>Historia</code>, <code>Matematicas</code>, <code>Ciencias</code> y <code>Lengua</code>. Cada una tiene tres ficheros:</p>
+  <ul>
+    <li><code>Beakman_&lt;Asignatura&gt;_00_Instrucciones.txt</code></li>
+    <li><code>Beakman_&lt;Asignatura&gt;_01_Curso_1ESO.txt</code></li>
+    <li><code>Beakman_&lt;Asignatura&gt;_02_Curso_2ESO.txt</code></li>
+  </ul>
+  <p>En cada ejecución se sobrescriben y conservan su identificador de Drive. Por eso los Gems ven los cambios sin hacer nada.</p>
+
+  <h2 id="gems">6. Crea cada Gem</h2>
+  <p>Este paso es a mano porque Gemini no tiene una API para crear Gems. Se hace una vez por asignatura.</p>
+  <p>Ejecuta <code>python3 scripts/build.py</code> en local. Te deja en <code>dist/&lt;Asignatura&gt;/gem.txt</code> todo lo que hay que pegar: nombre, descripción, instrucciones y la lista de ficheros.</p>
+  <ol class="big">
+    <li>Abre <a href="https://gemini.google.com/">Gemini</a> con la misma cuenta de Google que autorizó rclone. Ve a <strong>Gems → Nuevo Gem</strong>.</li>
+    <li>Pega el <strong>nombre</strong> y la <strong>descripción</strong> de <code>gem.txt</code>.</li>
+    <li>En <strong>Instrucciones</strong>, pega el texto fijo de <code>gem.txt</code>. Sale de <code>beakman/gem_stub.txt</code> con el nombre de la asignatura ya puesto. Solo dice que siga el fichero de instrucciones.</li>
+    <li>En <strong>Conocimiento</strong>, añade los tres ficheros desde Google Drive, de la carpeta <code>Beakman/&lt;Asignatura&gt;</code>. Enlázalos desde Drive, no los subas desde el ordenador: si los subes, el Gem se queda con una copia que no se actualiza.</li>
+    <li>Guarda el Gem y pruébalo escribiendo «Ayuda».</li>
+    <li>Compártelo con enlace, con permiso de lector. Ese enlace es el que das a familias y alumnos.</li>
+  </ol>
+  <p>Si quieres publicar tu propia página, cambia los <code>href="#"</code> de <code>docs/index.html</code> por tus enlaces. Cada botón tiene un comentario <code>GEM_URL_…</code> encima.</p>
+
+  <h2 id="editar">7. Edita y listo</h2>
+  <p>A partir de aquí, para cambiar a Beakman solo editas el repositorio:</p>
+  <ul>
+    <li>Para cambiar su forma de ser o el método, <code>beakman/base.md</code>.</li>
+    <li>Para algo de una asignatura, su <code>asignatura.md</code>.</li>
+    <li>Para añadir un tema, un fichero nuevo en <code>1eso/</code> o <code>2eso/</code>. Se ordenan por nombre, así que empieza por el número.</li>
+  </ul>
+  <p>Haces push y el Action hace el resto. Nadie copia nada a mano.</p>
+  <p>No cambies los nombres de los tres ficheros de Drive ni los borres. El Gem los enlaza por su identificador. Si uno desaparece, hay que volver a enlazarlo a mano en el Gem.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mi mundo de Beakman · homenaje sin afiliación</span>
+    <nav aria-label="Pie">
+      <a href="../privacidad.html">Privacidad</a>
+      <a href="../">Portada</a>
+      <a href="https://github.com/icalvete/beakman-gems">Código en GitHub</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

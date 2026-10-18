@@ -1,0 +1,211 @@
+TEMA 5 – LA ORACIÓN SIMPLE: SUJETO Y PREDICADO
+
+Una oración no es un montón de palabras sueltas. Tiene una estructura organizada. Entender esa estructura te ayudará a expresarte mejor y a comprender lo que lees.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina que una oración es como una noticia deportiva:
+
+"**El delantero del equipo** marcó un gol increíble en el último minuto"
+
+Si te preguntan:
+- ¿**Quién** hizo algo? → El delantero del equipo (SUJETO)
+- ¿**Qué** hizo? → marcó un gol increíble en el último minuto (PREDICADO)
+
+Toda oración se divide en dos grandes bloques: quien realiza la acción y lo que se dice sobre él.
+
+---
+
+IDEAS CLAVE
+
+### 1. LA ORACIÓN
+
+**Definición**: Unidad de comunicación con sentido completo que contiene al menos un verbo en forma personal.
+
+**Ejemplos**:
+- ✅ "Llueve" (es una oración, tiene verbo y sentido completo)
+- ✅ "Ana estudia matemáticas"
+- ❌ "Ana matemáticas" (no es oración, falta el verbo)
+- ❌ "Estudiando matemáticas" (no es oración, el gerundio no es forma personal del verbo)
+
+---
+
+### 2. SUJETO
+
+**Qué es**: La parte de la oración que indica quién realiza la acción o de quién se dice algo.
+
+**Cómo identificarlo**:
+1. Pregunta al verbo: ¿**Quién** o **qué** + verbo?
+   - "El perro ladra" → ¿Quién ladra? → El perro (SUJETO)
+   - "Los libros están en la mesa" → ¿Qué están en la mesa? → Los libros (SUJETO)
+
+2. **Concordancia**: El sujeto concuerda con el verbo en número y persona
+   - "El gato duerme" → gato (singular) / duerme (3ª persona singular)
+   - "Los gatos duermen" → gatos (plural) / duermen (3ª persona plural)
+
+**Núcleo del sujeto**: La palabra más importante del sujeto (normalmente un sustantivo o pronombre).
+- "**El perro** pequeño de mi vecino" → NÚCLEO: perro
+
+**Tipos de sujeto**:
+
+- **Expreso (o explícito)**: Aparece en la oración
+  → "**Ana** come manzanas"
+
+- **Omitido (o elíptico)**: No aparece, pero se sobreentiende
+  → "(Yo) Como manzanas"
+  → "(Nosotros) Vamos al cine"
+
+- **Agente**: Realiza la acción
+  → "**El niño** rompió el cristal"
+
+- **Paciente**: Recibe la acción (en oraciones pasivas)
+  → "**El cristal** fue roto por el niño"
+
+---
+
+### 3. PREDICADO
+
+**Qué es**: La parte de la oración que dice algo sobre el sujeto. Siempre contiene el verbo.
+
+**Núcleo del predicado**: El verbo.
+- "Ana **estudia** matemáticas en su habitación" → NÚCLEO: estudia
+
+**Tipos de predicado**:
+
+- **Predicado verbal**: El núcleo es un verbo con significado pleno (cualquier verbo excepto ser, estar, parecer en ciertos casos)
+  → "Ana **corre** por el parque"
+  → "Luis **come** manzanas"
+
+- **Predicado nominal**: El núcleo es un verbo copulativo (ser, estar, parecer) + atributo
+  → "Ana **es** inteligente" (inteligente = atributo, describe al sujeto)
+  → "Luis **está** cansado" (cansado = atributo)
+
+---
+
+### 4. COMPLEMENTOS DEL PREDICADO (básicos)
+
+**Complemento Directo (CD)**:
+- Qué o a quién recibe directamente la acción del verbo
+- Pregunta: ¿**Qué** + verbo? o ¿**A quién** + verbo?
+- Se puede sustituir por: lo, la, los, las
+
+Ejemplo:
+- "Ana lee **un libro**" → ¿Qué lee? → un libro (CD)
+- "Ana **lo** lee" (lo = el libro)
+
+**Complemento Indirecto (CI)**:
+- Para quién o a quién se realiza la acción
+- Pregunta: ¿**A quién** o **para quién** + verbo?
+- Se puede sustituir por: le, les
+- Normalmente lleva las preposiciones "a" o "para"
+
+Ejemplo:
+- "Ana regaló un libro **a Luis**" → ¿A quién regaló? → a Luis (CI)
+- "Ana **le** regaló un libro" (le = a Luis)
+
+**Complemento Circunstancial (CC)**:
+- Indica las circunstancias de la acción (lugar, tiempo, modo, cantidad, causa...)
+- Preguntas: ¿Dónde? ¿Cuándo? ¿Cómo? ¿Cuánto? ¿Por qué?
+
+Tipos:
+- **CC de Lugar**: "Estudio **en mi habitación**" (¿Dónde?)
+- **CC de Tiempo**: "Llegó **ayer**" (¿Cuándo?)
+- **CC de Modo**: "Habla **despacio**" (¿Cómo?)
+- **CC de Cantidad**: "Come **mucho**" (¿Cuánto?)
+- **CC de Causa**: "No fui **por la lluvia**" (¿Por qué?)
+
+**Atributo (Atrib.)**:
+- Solo aparece con verbos copulativos (ser, estar, parecer)
+- Describe una cualidad del sujeto
+- Pregunta: ¿**Cómo** es/está el sujeto?
+
+Ejemplo:
+- "Ana es **inteligente**" → ¿Cómo es Ana? → inteligente (Atributo)
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Pensar que el sujeto siempre va al principio
+✅ **Realidad**: Puede ir en cualquier posición:
+   - "Ana estudia" (al principio)
+   - "Estudia Ana" (al final)
+   - "En clase estudia Ana" (en medio)
+
+❌ **Error**: Confundir CD con CI
+✅ **Truco**: Sustitúyelo por un pronombre:
+   - Si es "lo/la/los/las" → CD
+   - Si es "le/les" → CI
+
+❌ **Error**: Pensar que el sujeto es siempre "quien hace la acción"
+✅ **Realidad**: A veces el sujeto recibe la acción:
+   - "El balón fue lanzado por Ana" → Sujeto: El balón (recibe la acción)
+
+❌ **Error**: Confundir el CC con el CD o CI
+✅ **Truco**: Los CC se pueden quitar sin que la frase pierda sentido básico:
+   - "Ana estudia matemáticas **en su habitación**" → Si quitas "en su habitación", la frase sigue teniendo sentido
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Mensaje de WhatsApp**:
+   - "(Yo) Te envío las fotos ahora"
+   - Sujeto: Yo (omitido)
+   - Predicado: Te envío las fotos ahora
+   - CD: las fotos
+   - CI: te
+   - CC de tiempo: ahora
+
+2. **Noticia deportiva**:
+   - "El delantero marcó un gol increíble en el último minuto"
+   - Sujeto: El delantero
+   - Predicado: marcó un gol increíble en el último minuto
+   - CD: un gol increíble
+   - CC de tiempo: en el último minuto
+
+3. **Conversación**:
+   - "Mi hermana está muy contenta hoy"
+   - Sujeto: Mi hermana
+   - Predicado nominal: está muy contenta hoy
+   - Atributo: muy contenta
+   - CC de tiempo: hoy
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. En "Llueve mucho en mi ciudad", ¿quién es el sujeto? ¿Hay sujeto?
+
+2. ¿Cuál es la diferencia entre estas dos frases?
+   - "Regalé un libro a Ana"
+   - "Regalé a Ana" (¿falta algo?)
+
+3. Transforma esta oración cambiando el orden: "Ana lee un libro en el parque"
+   ¿Sigue siendo la misma oración? ¿Cambia el sujeto?
+
+4. En "Ana es profesora", ¿"profesora" es CD o atributo? ¿Cómo lo sabes?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 3 y 4 (Categorías gramaticales)**: El sujeto suele tener un sustantivo como núcleo. El predicado siempre tiene un verbo como núcleo.
+- **Tema 12 (Expresión escrita)**: Conocer la estructura de la oración te ayuda a construir frases claras y variadas.
+- **Tema 11 (Comprensión lectora)**: Identificar sujeto y predicado facilita la comprensión de textos complejos.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Analiza estas oraciones. Identifica:
+- Sujeto (y su núcleo)
+- Predicado (y su núcleo)
+- Complementos (CD, CI, CC, Atributo)
+
+1. "Mi hermano pequeño compró un regalo para Ana ayer en el centro comercial"
+2. "Los estudiantes están nerviosos por el examen"
+3. "(Nosotros) Vimos una película increíble en el cine"
+4. "El profesor explicó la lección con paciencia a los alumnos"

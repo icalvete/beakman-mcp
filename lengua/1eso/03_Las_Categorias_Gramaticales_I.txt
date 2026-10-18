@@ -1,0 +1,186 @@
+TEMA 3 – LAS CATEGORÍAS GRAMATICALES I: SUSTANTIVO, ADJETIVO, DETERMINANTES Y PRONOMBRES
+
+Las palabras se agrupan en "familias" según su función. En este tema veremos las palabras que NOMBRAN cosas (sustantivos), las que DESCRIBEN (adjetivos) y las que SEÑALAN o SUSTITUYEN (determinantes y pronombres).
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina que estás describiendo tu habitación a alguien por teléfono:
+
+- "Tengo una **cama** grande" → CAMA = sustantivo (nombra un objeto)
+- "La cama es **grande**" → GRANDE = adjetivo (describe cómo es)
+- "**Mi** cama" → MI = determinante (indica de quién es)
+- "**Ella** es cómoda" → ELLA = pronombre (sustituye a "la cama")
+
+Cada tipo de palabra cumple un papel diferente, como los jugadores en un equipo de fútbol.
+
+---
+
+IDEAS CLAVE
+
+### 1. SUSTANTIVO (o nombre)
+
+**Qué es**: Palabra que nombra seres, objetos, lugares, ideas, sentimientos...
+
+**Tipos**:
+- **Comunes**: gato, ciudad, mesa (nombran de forma general)
+- **Propios**: Pelusa, Madrid, Ana (nombran de forma específica, con mayúscula)
+- **Concretos**: silla, agua, perro (se pueden percibir con los sentidos)
+- **Abstractos**: amor, libertad, miedo (no se pueden tocar ni ver, son ideas)
+- **Individuales**: árbol, oveja, soldado (nombran a uno solo)
+- **Colectivos**: bosque, rebaño, ejército (nombran a un conjunto)
+- **Contables**: libro, manzana (se pueden contar)
+- **No contables**: agua, arroz, azúcar (no se cuentan, se miden)
+
+**Características**:
+- Tienen género (masculino/femenino): el gato / la gata
+- Tienen número (singular/plural): libro / libros
+
+---
+
+### 2. ADJETIVO
+
+**Qué es**: Palabra que describe o califica al sustantivo.
+
+**Tipos**:
+- **Calificativos**: describen cualidades → casa grande, cielo azul, persona amable
+- **Relacionales**: indican relación o pertenencia → problema matemático, energía solar
+- **Gentilicios**: indican origen o procedencia → español, madrileño, europeo
+
+**Grados del adjetivo**:
+- **Positivo**: alto, rápido, inteligente
+- **Comparativo**: más alto que, tan rápido como, menos inteligente que
+- **Superlativo**: altísimo, muy rápido, el más inteligente
+
+**Características**:
+- Concuerdan con el sustantivo en género y número
+  → gato negro / gata negr**a** / gatos negro**s** / gatas negr**as**
+
+---
+
+### 3. DETERMINANTES
+
+**Qué es**: Palabras que acompañan al sustantivo para concretarlo, señalarlo o indicar cantidad.
+
+**Tipos**:
+
+- **Artículos**: el, la, los, las, un, una, unos, unas
+  → **El** libro / **Una** mesa
+
+- **Demostrativos**: este, ese, aquel (y variantes)
+  → **Este** bolígrafo / **Esa** silla / **Aquellos** árboles
+  (Indican cercanía o lejanía)
+
+- **Posesivos**: mi, tu, su, nuestro, vuestro...
+  → **Mi** mochila / **Tus** apuntes / **Nuestro** profesor
+
+- **Numerales**: uno, dos, tres, primero, segundo, doble, triple...
+  → **Tres** hermanos / **Segunda** fila
+
+- **Indefinidos**: algún, ningún, muchos, pocos, varios, ciertos...
+  → **Algunos** días / **Pocos** estudiantes
+
+- **Interrogativos/Exclamativos**: qué, cuánto, cuál...
+  → ¿**Qué** hora es? / ¡**Cuánta** gente!
+
+**Importante**: Los determinantes SIEMPRE acompañan a un sustantivo.
+
+---
+
+### 4. PRONOMBRES
+
+**Qué es**: Palabras que SUSTITUYEN al sustantivo (para no repetirlo).
+
+**Tipos** (los mismos que los determinantes, pero con una diferencia clave):
+
+- **Personales**: yo, tú, él, ella, nosotros, vosotros, ellos, me, te, se, lo, la...
+  → "Ana llegó. **Ella** trajo galletas" (ella = Ana)
+
+- **Demostrativos**: este, ese, aquel (sin sustantivo)
+  → "Tengo dos bolis. Prefiero **este**" (este = este bolígrafo)
+
+- **Posesivos**: mío, tuyo, suyo, nuestro...
+  → "Tu móvil es nuevo, **el mío** es viejo" (el mío = mi móvil)
+
+- **Numerales**: uno, primero, segundo...
+  → "Llegaron tres chicos. **Uno** era alto" (uno = un chico)
+
+- **Indefinidos**: alguien, nadie, algo, nada, alguno, ninguno...
+  → "¿Quieres galletas? Sí, quiero **algunas**" (algunas = algunas galletas)
+
+- **Interrogativos/Exclamativos**: qué, quién, cuál, cuánto...
+  → "¿**Quién** ha venido?" (quién = qué persona)
+
+**Diferencia clave**:
+- Determinante → acompaña al sustantivo: "**Este** libro"
+- Pronombre → sustituye al sustantivo: "Prefiero **este**"
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir determinante con pronombre
+✅ **Clave**: Si va con sustantivo → determinante. Si va solo → pronombre.
+   - "**Mi** hermana" → determinante
+   - "La casa es **mía**" → pronombre
+
+❌ **Error**: Pensar que todos los adjetivos terminan en -o/-a
+✅ **Realidad**: Muchos no varían: chico feliz / chica feliz, problema fácil / tarea fácil
+
+❌ **Error**: Usar "su" cuando puede crear confusión
+✅ **Mejor**: En vez de "Juan vio a Pedro y le dio su libro" (¿de quién es el libro?), di "Juan vio a Pedro y le dio el libro de Juan" o usa el nombre.
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **En una conversación**:
+   - "¿Has visto **mi** móvil?" (determinante posesivo)
+   - "Sí, **ese** está en la mesa" (pronombre demostrativo)
+   - "No, **el mío** es azul" (pronombre posesivo)
+
+2. **En una descripción**:
+   - "Mi **perro** es **pequeño** y **juguetón**"
+   - perro = sustantivo
+   - pequeño, juguetón = adjetivos
+   - mi = determinante posesivo
+
+3. **Sustitución con pronombres**:
+   - "María llegó tarde. **Ella** perdió el autobús"
+   - (Ella sustituye a María para no repetir el nombre)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué "rebaño" es un sustantivo individual o colectivo? (Pista: piensa en cuántas ovejas nombra)
+
+2. En "este libro es interesante", ¿"este" es determinante o pronombre? ¿Y en "prefiero este"?
+
+3. ¿Cuál es la diferencia entre decir "un amigo" y "el amigo"? ¿Qué información aporta cada artículo?
+
+4. Inventa una frase donde "su" pueda crear confusión. Luego reescríbela para que quede clara.
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 2 (Estructura de palabras)**: Los adjetivos y sustantivos pueden formar familias léxicas (feliz → felicidad → felizmente).
+- **Tema 5 (La oración simple)**: El sustantivo suele ser el núcleo del sujeto. Los adjetivos complementan al sustantivo.
+- **Tema 9 (La descripción)**: Los adjetivos son fundamentales para describir con precisión.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Analiza esta frase e identifica cada palabra:
+"Mis amigos compraron tres entradas para aquella película. Ella era muy divertida."
+
+Clasifica:
+- Sustantivos
+- Adjetivos
+- Determinantes
+- Pronombres
+
+¿Qué sustituye "ella" en la segunda frase?

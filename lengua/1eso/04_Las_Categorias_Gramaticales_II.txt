@@ -1,0 +1,216 @@
+TEMA 4 – LAS CATEGORÍAS GRAMATICALES II: VERBO, ADVERBIO, PREPOSICIONES Y CONJUNCIONES
+
+En el tema anterior vimos las palabras que nombran y describen. Ahora veremos las que expresan ACCIONES (verbos), las que modifican verbos y adjetivos (adverbios), y las que CONECTAN unas palabras con otras (preposiciones y conjunciones).
+
+---
+
+EXPLICACIÓN VISUAL
+
+Imagina esta secuencia:
+
+"Ana **corre rápidamente hacia** el parque **y** después **descansa**"
+
+- **corre**, **descansa** = verbos (acciones)
+- **rápidamente** = adverbio (cómo corre)
+- **hacia** = preposición (conecta "corre" con "el parque")
+- **y** = conjunción (une "corre" con "descansa")
+
+Sin verbos no hay acción. Sin adverbios perdemos detalles. Sin preposiciones y conjunciones, las frases quedarían sueltas e inconexas.
+
+---
+
+IDEAS CLAVE
+
+### 1. VERBO
+
+**Qué es**: Palabra que expresa acciones, estados o procesos.
+
+**Ejemplos**:
+- Acciones: correr, saltar, escribir, pensar
+- Estados: ser, estar, parecer
+- Procesos: crecer, envejecer, aprender
+
+**Características del verbo**:
+
+1. **Persona**: quién realiza la acción
+   - 1ª persona: yo, nosotros → (yo) canto, (nosotros) cantamos
+   - 2ª persona: tú, vosotros → (tú) cantas, (vosotros) cantáis
+   - 3ª persona: él/ella, ellos/ellas → (él) canta, (ellos) cantan
+
+2. **Número**: singular o plural
+   - canto (singular) / cantamos (plural)
+
+3. **Tiempo**: cuándo ocurre la acción
+   - **Presente**: canto, como, escribo
+   - **Pasado (pretérito)**: canté, comí, escribí / cantaba, comía, escribía
+   - **Futuro**: cantaré, comeré, escribiré
+
+4. **Modo**: actitud del hablante hacia la acción
+   - **Indicativo**: presenta la acción como real → "Llueve"
+   - **Subjuntivo**: presenta la acción como deseo, duda o posibilidad → "Ojalá llueva"
+   - **Imperativo**: expresa orden o mandato → "¡Estudia!"
+
+5. **Formas no personales** (no indican persona):
+   - **Infinitivo**: cantar, comer, vivir
+   - **Gerundio**: cantando, comiendo, viviendo
+   - **Participio**: cantado, comido, vivido
+
+**Verbos auxiliares**: ser, haber, estar (se usan para formar tiempos compuestos)
+- "He comido" → HE (auxiliar) + COMIDO (participio)
+
+---
+
+### 2. ADVERBIO
+
+**Qué es**: Palabra invariable que modifica al verbo, al adjetivo o a otro adverbio.
+
+**Tipos según el significado**:
+
+- **Lugar**: aquí, allí, cerca, lejos, arriba, abajo, delante, detrás
+  → "Vive **cerca**" / "Está **arriba**"
+
+- **Tiempo**: hoy, ayer, mañana, ahora, después, siempre, nunca, tarde, pronto
+  → "Llegó **tarde**" / "**Siempre** estudia"
+
+- **Modo** (cómo se hace): bien, mal, así, despacio, deprisa, fácilmente, rápidamente
+  → "Habla **bien**" / "Corre **rápidamente**"
+  (Muchos se forman añadiendo -mente al adjetivo: rápida → rápidamente)
+
+- **Cantidad**: muy, poco, mucho, bastante, demasiado, más, menos, tan
+  → "Es **muy** alto" / "Come **demasiado**"
+
+- **Afirmación**: sí, también, ciertamente, efectivamente
+  → "**Sí**, iré"
+
+- **Negación**: no, tampoco, nunca, jamás
+  → "**No** quiero" / "**Nunca** miente"
+
+- **Duda**: quizá(s), tal vez, probablemente, posiblemente, acaso
+  → "**Quizá** llueva" / "**Tal vez** venga"
+
+**Importante**: Los adverbios NO cambian de género ni número (siempre iguales).
+- El chico corre rápidamente
+- La chica corre rápidamente
+- Los chicos corren rápidamente
+
+---
+
+### 3. PREPOSICIONES
+
+**Qué son**: Palabras invariables que relacionan palabras dentro de una oración.
+
+**Lista de preposiciones** (mejor memorizarlas):
+a, ante, bajo, con, contra, de, desde, durante, en, entre, hacia, hasta, mediante, para, por, según, sin, sobre, tras, versus, vía
+
+**Ejemplos de uso**:
+- "Voy **a** casa" (dirección)
+- "El libro **de** Ana" (posesión)
+- "Café **con** leche" (compañía)
+- "Viajar **en** tren" (medio)
+- "Lucho **por** ti" (causa)
+- "Esto es **para** ti" (destinatario)
+- "Estudia **desde** las 5 **hasta** las 7" (tiempo)
+
+**Truco**: Las preposiciones son palabras cortas que normalmente no se pueden usar solas. Siempre necesitan algo después.
+
+---
+
+### 4. CONJUNCIONES
+
+**Qué son**: Palabras invariables que unen palabras, grupos de palabras u oraciones.
+
+**Tipos**:
+
+- **Copulativas** (suman, añaden): y, e, ni
+  → "Ana **y** Luis" / "Madre **e** hija" / "**Ni** estudia **ni** trabaja"
+
+- **Disyuntivas** (presentan opciones): o, u
+  → "¿Vienes **o** te quedas?" / "Siete **u** ocho"
+
+- **Adversativas** (oponen ideas): pero, mas, sino, aunque, sin embargo
+  → "Quiero ir, **pero** no puedo" / "No es azul, **sino** verde"
+
+- **Causales** (indican causa): porque, pues, puesto que, ya que
+  → "No fui **porque** estaba enfermo"
+
+- **Consecutivas** (indican consecuencia): así que, por lo tanto, entonces
+  → "Llovió, **así que** no salimos"
+
+- **Condicionales** (indican condición): si, con tal de que, siempre que
+  → "**Si** estudias, aprobarás"
+
+**Diferencia con preposiciones**:
+- Preposición: relaciona palabras → "Voy **a** casa"
+- Conjunción: une oraciones o palabras del mismo tipo → "Voy a casa **y** después al parque"
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Confundir "a" (preposición) con "ha" (verbo haber)
+✅ **Clave**: "Ha" se puede sustituir por "había" → "Ha comido" = "Había comido"
+
+❌ **Error**: Usar "y" delante de palabra que empiece por "i"
+✅ **Realidad**: Se cambia a "e" → "Padre **e** hijo" (no "y hijo")
+
+❌ **Error**: Escribir los adverbios en -mente sin tilde cuando el adjetivo la lleva
+✅ **Realidad**: Si el adjetivo lleva tilde, el adverbio también → rápida → rápidamente
+
+❌ **Error**: Confundir "porque" (causa) con "por qué" (pregunta)
+✅ **Clave**:
+   - "¿**Por qué** llueve?" (pregunta)
+   - "Llueve **porque** hay nubes" (respuesta/causa)
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **Verbos en tu día**:
+   - "Me **levanté**, **desayuné** y **salí** corriendo"
+   - Todos los verbos están en pasado (pretérito perfecto simple)
+
+2. **Adverbios en descripciones**:
+   - "Mi hermano corre **muy rápidamente**"
+   - muy (adverbio de cantidad) + rápidamente (adverbio de modo)
+
+3. **Preposiciones en redes sociales**:
+   - "Foto **de** mis amigos **en** la playa **con** el perro"
+   - de (posesión), en (lugar), con (compañía)
+
+4. **Conjunciones en conversación**:
+   - "Quiero ir al cine, **pero** tengo deberes. **Si** los termino pronto, voy"
+   - pero (adversativa), si (condicional)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué crees que el verbo se llama "el núcleo de la oración"? ¿Qué pasaría si quitamos el verbo?
+
+2. Transforma estos adjetivos en adverbios: lenta, fácil, feliz. ¿Qué añades?
+
+3. ¿Cuál es la diferencia entre "para" y "por"? Prueba en estas frases:
+   - "Esto es **para** ti" vs "Lucho **por** ti"
+
+4. Si dices "Voy y vuelvo", ¿qué une la conjunción "y"? ¿Dos palabras o dos acciones?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 5 (La oración simple)**: El verbo es el núcleo del predicado. Las preposiciones introducen complementos.
+- **Tema 6 (Ortografía)**: Diferenciar "porque/por qué", "a/ha", "e/y", "u/o" es clave para escribir bien.
+- **Tema 10 y 12 (Textos argumentativos y expresión escrita)**: Las conjunciones ayudan a conectar ideas y argumentos de forma coherente.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+Analiza esta frase e identifica:
+"Ayer corrí rápidamente hacia el parque, pero no encontré a mis amigos porque llegué tarde"
+
+Clasifica:
+- Verbos (indica tiempo y persona)
+- Adverbios (indica el tipo)
+- Preposiciones
+- Conjunciones (indica el tipo)

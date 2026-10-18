@@ -1,0 +1,210 @@
+TEMA 6 – ORTOGRAFÍA: ACENTUACIÓN Y PUNTUACIÓN
+
+La ortografía no es solo "escribir bien". Es hacer que tus textos se entiendan correctamente. Una tilde o una coma pueden cambiar completamente el significado de una frase.
+
+---
+
+EXPLICACIÓN VISUAL
+
+Compara estas dos frases:
+
+- "No, espere"
+- "No espere"
+
+La primera le dice a alguien que se detenga. La segunda le dice que NO se detenga. Solo cambia una coma, pero el significado es opuesto.
+
+Otro ejemplo con tildes:
+
+- "Él llegó solo" (sin compañía)
+- "El llegó solo" (¿quién llegó solo? falta información)
+
+Las tildes y los signos de puntuación son como las señales de tráfico: te guían para entender el mensaje correctamente.
+
+---
+
+IDEAS CLAVE
+
+### 1. ACENTUACIÓN
+
+**Sílaba tónica**: La sílaba que se pronuncia con más fuerza en una palabra.
+- ca-SA (tónica: SA)
+- LÁ-piz (tónica: LÁ)
+- ra-tón (tónica: tón)
+
+**Tilde (o acento gráfico)**: El símbolo (´) que se escribe sobre algunas vocales.
+
+**Clasificación de palabras según la sílaba tónica**:
+
+1. **Agudas**: Sílaba tónica en la ÚLTIMA posición
+   - Ejemplos: ca-fé, ra-tón, or-de-na-dor, Pa-rís
+   - **Llevan tilde si terminan en vocal, -n o -s**
+   - ✅ café, ratón, París, compás
+   - ❌ ordenador, reloj, feliz (terminan en consonante que no es -n o -s)
+
+2. **Llanas (o graves)**: Sílaba tónica en la PENÚLTIMA posición
+   - Ejemplos: LÁ-piz, ÁR-bol, me-SA, li-BRO
+   - **Llevan tilde si NO terminan en vocal, -n o -s**
+   - ✅ lápiz, árbol, cárcel, Félix
+   - ❌ mesa, libro, examen, libros (terminan en vocal, -n o -s)
+
+3. **Esdrújulas**: Sílaba tónica en la ANTEPENÚLTIMA posición
+   - Ejemplos: MÚ-si-ca, MÁ-qui-na, pá-JA-ro, plá-TA-no
+   - **SIEMPRE llevan tilde**
+   - ✅ música, máquina, pájaro, plátano
+
+4. **Sobresdrújulas**: Sílaba tónica ANTES de la antepenúltima posición
+   - Ejemplos: cuén-ta-me-lo, dí-ga-se-lo
+   - **SIEMPRE llevan tilde**
+
+**Reglas especiales**:
+
+- **Monosílabos**: Normalmente NO llevan tilde
+  - pan, sol, mar, dio, fue, fui, vio
+  - **Excepción**: Tilde diacrítica (para diferenciar significados)
+
+- **Tilde diacrítica** (diferencia palabras que se escriben igual):
+  - **tú** (pronombre) / **tu** (posesivo): "**Tú** tienes **tu** libro"
+  - **él** (pronombre) / **el** (artículo): "**Él** compró **el** pan"
+  - **mí** (pronombre) / **mi** (posesivo): "Es para **mí**, no para **mi** hermano"
+  - **sí** (afirmación o pronombre) / **si** (condicional): "**Sí**, iré **si** puedo"
+  - **té** (bebida) / **te** (pronombre): "**Te** gusta el **té**"
+  - **más** (cantidad) / **mas** (pero): "Quiero **más**, **mas** no puedo"
+  - **sé** (verbo saber o ser) / **se** (pronombre): "Ya lo **sé**" / "**Se** fue"
+  - **dé** (verbo dar) / **de** (preposición): "Espero que me **dé** el libro **de** Ana"
+
+- **Interrogativos y exclamativos**: SIEMPRE llevan tilde
+  - **qué, quién, cuál, cuándo, dónde, cómo, cuánto**
+  - "¿**Qué** hora es?" / "¡**Cuánta** gente!" / "No sé **dónde** está"
+  - Pero SIN tilde cuando no preguntan ni exclaman: "El día **que** llegaste"
+
+**Diptongos, triptongos e hiatos** (palabras con varias vocales juntas):
+- **Diptongo**: Dos vocales en la misma sílaba (una abierta -a,e,o- y una cerrada -i,u-, o dos cerradas)
+  - ai-re, pei-ne, ciu-dad
+  - Sigue las reglas generales de acentuación
+
+- **Hiato**: Dos vocales en sílabas separadas
+  - Si es vocal abierta + cerrada tónica → SIEMPRE tilde en la cerrada
+  - pa-ís, Ma-rí-a, ba-úl, ra-íz, re-ír, o-ír
+  - (Aunque sean llanas acabadas en vocal o -s, llevan tilde)
+
+---
+
+### 2. PUNTUACIÓN
+
+**El punto (.)**:
+- Indica pausa larga y final de una oración
+- **Punto y seguido**: Separa oraciones dentro del mismo párrafo
+- **Punto y aparte**: Separa párrafos
+- **Punto final**: Termina el texto
+
+**La coma (,)**:
+- Indica pausa breve
+- **Usos**:
+  - Separar elementos de una lista: "Compré pan, leche, huevos y fruta"
+  - Antes de "pero, aunque, sino, mas": "Quiero ir, pero no puedo"
+  - Para aislar aclaraciones: "Ana, mi hermana, vive en Madrid"
+  - Después de conectores al inicio: "Sin embargo, no pudo venir"
+  - En vocativos (llamar a alguien): "Ana, ven aquí" / "Buenos días, profesor"
+
+**El punto y coma (;)**:
+- Pausa intermedia (más que coma, menos que punto)
+- Separa oraciones relacionadas: "Llegó tarde; perdió el autobús"
+
+**Los dos puntos (:)**:
+- Antes de una enumeración: "Compré tres cosas: pan, leche y huevos"
+- Antes de una cita textual: "Ana dijo: 'Voy al cine'"
+- Después del saludo en cartas: "Querida Ana:"
+
+**Puntos suspensivos (...)**:
+- Indican frase incompleta, duda o suspense
+- "No sé si..."
+- "Era una noche oscura, silenciosa, tenebrosa..."
+- Siempre son TRES puntos (no más, no menos)
+
+**Signos de interrogación (¿?) y exclamación (¡!)**:
+- En español se usan al PRINCIPIO y al FINAL
+- ¿Cómo estás?
+- ¡Qué sorpresa!
+- ¡Cuidado!
+- Después de cerrarlos NO se pone punto (ya lo incluyen)
+
+**Comillas (" ")**:
+- Para citas textuales: Ana dijo "No iré"
+- Para títulos de artículos, capítulos, poemas: Leí "El principito"
+- Para palabras usadas de forma especial: Ese "amigo" te traicionó
+
+**Paréntesis ( ) y rayas (—)**:
+- Para aclaraciones o información adicional
+- "Ana (mi hermana) vive en Madrid"
+- "Ana —que es mi hermana— vive en Madrid"
+
+---
+
+ERRORES TÍPICOS
+
+❌ **Error**: Escribir "que" con tilde cuando no pregunta
+✅ **Realidad**: "El libro **que** leí" (sin tilde) vs "¿**Qué** libro leíste?" (con tilde)
+
+❌ **Error**: No poner signos de apertura (¿ ¡)
+✅ **Realidad**: En español son obligatorios: ¿Cómo estás? ¡Hola!
+
+❌ **Error**: Poner coma entre sujeto y verbo
+✅ **Realidad**: Nunca se separan con coma:
+   - ❌ "Mi hermano pequeño, llegó tarde"
+   - ✅ "Mi hermano pequeño llegó tarde"
+
+❌ **Error**: Confundir "solo" (ya no lleva tilde nunca desde 2010)
+✅ **Realidad**: "Vino solo" (sin compañía o solamente) → el contexto lo aclara
+
+---
+
+EJEMPLOS COTIDIANOS
+
+1. **En WhatsApp**:
+   - "¿Vienes?" (pregunta)
+   - "Sí, voy" (afirmación, lleva tilde)
+   - "Si puedo, voy" (condición, sin tilde)
+
+2. **Diferencia de significado por una coma**:
+   - "Vamos a comer, niños" (llamamos a los niños para comer)
+   - "Vamos a comer niños" (¡error grave de significado!)
+
+3. **Tildes que cambian el tiempo verbal**:
+   - "Llegó" (pasado, 3ª persona)
+   - "Llego" (presente, 1ª persona)
+
+---
+
+PREGUNTAS PARA PENSAR
+
+1. ¿Por qué "examen" no lleva tilde pero "exámenes" sí? (Pista: piensa en dónde está la sílaba tónica)
+
+2. Pon comas en esta frase: "Ana que es mi hermana vive en Madrid estudia medicina y trabaja en un hospital"
+
+3. ¿Qué significa cada una de estas frases?
+   - "Él está solo"
+   - "El está solo"
+   - "Él esta solo" (¿es correcta?)
+
+4. ¿Por qué "María" lleva tilde si termina en vocal y es llana?
+
+---
+
+RELACIÓN CON OTROS TEMAS
+
+- **Tema 4 (Categorías gramaticales)**: Diferenciar "porque" (conjunción) de "por qué" (interrogativo).
+- **Tema 5 (Oración simple)**: La coma ayuda a separar elementos del sujeto y del predicado.
+- **Tema 12 (Expresión escrita)**: La puntuación correcta hace que tus textos sean claros y profesionales.
+
+---
+
+ACTIVIDAD PRÁCTICA
+
+1. Clasifica estas palabras (aguda, llana, esdrújula) y pon tilde si es necesario:
+   - carcel, musica, cafe, libro,acion, arbol, compas, telefono
+
+2. Coloca las tildes que faltan:
+   - "¿Que hora es? No se, pero creo que el reloj esta ahi"
+
+3. Pon los signos de puntuación necesarios:
+   - "Ana compró pan leche huevos y fruta luego fue al parque"

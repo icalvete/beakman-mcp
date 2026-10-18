@@ -1,0 +1,85 @@
+TEMA 7 – ÁLGEBRA INICIAL
+
+El álgebra usa letras para representar números desconocidos o variables.
+Es como un "hueco" que rellenar con el número correcto.
+
+EXPLICACIÓN VISUAL
+Imagina una balanza equilibrada. En un lado hay 3 kg y una bolsa misteriosa (x).
+En el otro lado hay 7 kg.
+Si la balanza está equilibrada: 3 + x = 7
+¿Qué pesa la bolsa? x = 4 kg
+
+La letra "x" es el número que no conocemos y queremos descubrir.
+
+IDEAS CLAVE
+
+¿QUÉ ES UNA VARIABLE?
+Una letra que representa un número (normalmente desconocido).
+- x, y, z son las más comunes
+- Puede tener cualquier valor según el problema
+
+EXPRESIONES ALGEBRAICAS
+Combinación de números, letras y operaciones.
+- 2x significa "2 veces x" (2 × x)
+- x + 5 significa "x más 5"
+- 3x - 2 significa "3 veces x, menos 2"
+
+VALOR NUMÉRICO
+Sustituir la letra por un número y calcular.
+Si x = 4, entonces:
+- 2x = 2 × 4 = 8
+- x + 5 = 4 + 5 = 9
+- 3x - 2 = 3 × 4 - 2 = 12 - 2 = 10
+
+ECUACIONES
+Una ecuación es una igualdad con una incógnita (letra).
+Resolver la ecuación = encontrar el valor de la letra que hace que se cumpla.
+
+Ejemplo: x + 3 = 10
+Pregunta: ¿qué número más 3 da 10?
+Respuesta: x = 7 (porque 7 + 3 = 10)
+
+RESOLVER ECUACIONES SENCILLAS
+Regla de oro: lo que hagas a un lado, hazlo al otro (para mantener el equilibrio).
+
+x + 5 = 12
+x + 5 - 5 = 12 - 5 (resto 5 a ambos lados)
+x = 7
+
+2x = 14
+2x ÷ 2 = 14 ÷ 2 (divido entre 2 ambos lados)
+x = 7
+
+3x + 2 = 11
+3x + 2 - 2 = 11 - 2 (resto 2)
+3x = 9
+x = 3 (divido entre 3)
+
+LENGUAJE ALGEBRAICO
+Traducir frases a expresiones:
+- "El doble de un número" → 2x
+- "Un número más cinco" → x + 5
+- "La mitad de un número" → x/2
+- "Tres menos que un número" → x - 3
+- "El triple de un número, más dos" → 3x + 2
+
+ERRORES TÍPICOS
+- Pensar que la letra es un objeto: "x" NO es "una manzana", es un número.
+- Confundir 2x con x + 2: 2x significa "dos veces x", no "x más dos".
+- No hacer lo mismo a ambos lados de la ecuación.
+- Olvidar que 5x significa 5 × x (la multiplicación está "escondida").
+
+EJEMPLOS COTIDIANOS
+- "Tengo algunos cromos (x) y me dan 5 más. Ahora tengo 12. ¿Cuántos tenía?" → x + 5 = 12
+- "Un número pensado, multiplicado por 2, da 18. ¿Qué número es?" → 2x = 18
+- "La edad de mi hermano es el doble de la mía menos 3 años."
+
+PREGUNTAS PARA PENSAR
+- ¿Puede x valer distintos números en distintos problemas?
+- ¿Por qué 2x no es lo mismo que x²?
+- Si 2x = 10, ¿cuánto vale 4x sin resolver primero x?
+
+RELACIÓN CON OTROS TEMAS
+- Las operaciones con números (temas 1-6) son la base del álgebra.
+- El álgebra permite generalizar patrones y resolver problemas.
+- Se usa mucho en geometría para calcular medidas desconocidas.
