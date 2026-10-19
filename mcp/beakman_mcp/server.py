@@ -170,12 +170,14 @@ def buscar_en_temario(consulta: str, asignatura: str | None = None, curso: str |
 
 
 # ---- prompts: un arranque por asignatura ----------------------------------
+# Sin argumentos: claude.ai pinta cada argumento como un formulario (aunque sea opcional),
+# y eso confunde. El curso lo pregunta Beakman en el chat.
 
 def _starter(nombre: str):
-    def starter(curso: str = "") -> str:
-        cuando = f"Estoy en {curso}." if curso else "Pregúntame en qué curso estoy."
-        return (f"Quiero estudiar {nombre} con Beakman. {cuando} "
-                f"Llama a empezar_clase con la asignatura «{nombre}» y sigue sus instrucciones.")
+    def starter() -> str:
+        return (f"Quiero estudiar {nombre} con Beakman. Pregúntame en qué curso estoy y qué quiero "
+                f"repasar, y luego llama a empezar_clase con la asignatura «{nombre}» y sigue sus "
+                f"instrucciones.")
     return starter
 
 
