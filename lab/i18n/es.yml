@@ -17,6 +17,8 @@ recurso_n: "{n} recursos"
 proximamente: Próximamente
 sin_recursos: "Todavía no hay recursos de {curso}. Están en el horno."
 solo_pc: Para ordenador
+objetivo: Para qué sirve
+metodo: Cómo lo hace
 abrir: Abrir
 volver: Todas las asignaturas
 tutores: Los tutores de Beakman

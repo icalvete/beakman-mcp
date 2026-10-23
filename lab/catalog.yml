@@ -1,5 +1,6 @@
 # Catálogo del laboratorio de Beakman (lab.beakman.kademy.net).
 # build.py genera con él la portada de cada idioma y la página de cada asignatura.
+# Cada recurso lleva, por idioma: título, temas, descripción, objetivo (para qué sirve) y método (cómo lo hace).
 # Un recurso nuevo: su carpeta en lab/<id>/ (código) y su página en site/<idioma>/<asignatura>/<curso>/<id>/,
 # más una entrada aquí. Los textos van por idioma; un recurso sin un idioma no sale en ese idioma.
 
@@ -37,3 +38,10 @@ recursos:
       descripcion: >-
         Mueve la barra del 476 al 1492 y mira qué reinos, ciudades y batallas coincidieron en el tiempo.
         Cada acontecimiento cuenta qué cambió, al poco y a la larga.
+      objetivo: >-
+        Ver qué existía a la vez, que es lo que más cuesta de la Edad Media. Situar cada reino, ciudad y batalla
+        en el mapa y en el tiempo, y entender cómo un acontecimiento lleva al siguiente.
+      metodo: >-
+        Aprender explorando: el tiempo lo mueves tú. En diez paradas Beakman te hace una pregunta para pensar
+        antes de ver la pista. Cada acontecimiento explica sus consecuencias en la gente, la política, el arte y la
+        cultura, y las palabras difíciles tienen su explicación al pasar el ratón.

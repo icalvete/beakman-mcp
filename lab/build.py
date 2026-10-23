@@ -81,6 +81,10 @@ def resource_card(t, r, lang, up, prefix):
       <div class="meta"><span class="tag">{e(tx["temas"])}</span>{pc}</div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
+      <dl class="why">
+        <dt>{e(t["objetivo"])}</dt><dd>{e(tx["objetivo"])}</dd>
+        <dt>{e(t["metodo"])}</dt><dd>{e(tx["metodo"])}</dd>
+      </dl>
     </div>
   </a>
 """
