@@ -233,3 +233,13 @@ footer nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .chat.anim p.typing::after { content: ""; position: absolute; left: 17px; top: 15px; width: 6px; height: 6px; border-radius: 50%;
   background: var(--muted); box-shadow: 11px 0 0 var(--muted), 22px 0 0 var(--muted); animation: dots 1s infinite; }
 @keyframes dots { 0%, 100% { opacity: .3; } 50% { opacity: .9; } }
+
+/* herramientas */
+.tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 20px; }
+.tool { display: flex; flex-direction: column; background: var(--card); border: 2px solid var(--ink); border-radius: 18px; overflow: hidden;
+  box-shadow: 4px 4px 0 var(--lime); color: var(--text); text-decoration: none; transition: transform .1s, box-shadow .1s; }
+.tool:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--lime); }
+.tool img { display: block; width: 100%; height: auto; aspect-ratio: 800 / 423; object-fit: cover; border-bottom: 2px solid var(--ink); }
+.tool .body { padding: 16px 18px 18px; display: grid; gap: 8px; }
+.tool .tag { font-size: 0.85rem; font-weight: 700; color: var(--ink); background: var(--lime-soft); border-radius: 6px; padding: 2px 8px; justify-self: start; }
+.tool p { font-size: 0.97rem; color: var(--muted); }

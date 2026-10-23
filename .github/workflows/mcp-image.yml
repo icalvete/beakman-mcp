@@ -1,4 +1,4 @@
-# Construye y publica la imagen del servidor MCP en GHCR cuando cambia su código.
+# Construye y publica la imagen del servidor MCP en GHCR cuando cambia su código o la web (docs/).
 # El temario no está en la imagen: el servidor lo lee de GitHub, así que un cambio de
 # contenido no necesita imagen nueva. El despliegue en alala lo hace el repo de kademy.
 name: Imagen del servidor MCP
@@ -6,7 +6,7 @@ name: Imagen del servidor MCP
 on:
   push:
     branches: [main]
-    paths: ["mcp/**", ".github/workflows/mcp-image.yml"]
+    paths: ["mcp/**", "docs/**", ".github/workflows/mcp-image.yml"]
   workflow_dispatch:
 
 permissions:
@@ -25,7 +25,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: mcp
+          context: .
+          file: mcp/Dockerfile
           push: true
           labels: org.opencontainers.image.source=https://github.com/${{ github.repository }}
           tags: |

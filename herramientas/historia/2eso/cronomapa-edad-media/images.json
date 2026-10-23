@@ -1,0 +1,848 @@
+{
+ "romulo": {
+  "src": "img/romulo.jpg",
+  "alt": "Moneda de Rómulo Augústulo, último emperador de Occidente",
+  "credit": "ANS",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:Gold_Solidus_of_Romulus_Augustulus.jpg",
+  "file": "Gold_Solidus_of_Romulus_Augustulus.jpg",
+  "article": "Rómulo Augústulo"
+ },
+ "clodoveo": {
+  "src": "img/clodoveo.jpg",
+  "alt": "El bautismo de Clodoveo",
+  "credit": "Master of Saint Giles",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Master_Of_Saint_Gilles_-_The_Baptism_of_Clovis_-_WGA14482.jpg",
+  "file": "Master Of Saint Gilles - The Baptism of Clovis - WGA14482.jpg",
+  "article": "Master of Saint Giles Baptism of Clovis"
+ },
+ "justiniano": {
+  "src": "img/justiniano.jpg",
+  "alt": "Justiniano en el mosaico de San Vital de Rávena",
+  "credit": "Petar Milošević",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg",
+  "file": "Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg",
+  "article": "Justiniano I"
+ },
+ "leovigildo": {
+  "src": "img/leovigildo.jpg",
+  "alt": "Leovigildo, rey visigodo",
+  "credit": "Juan de Barroeta",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:El_rey_Leovigildo_(Museo_del_Prado).jpg",
+  "file": "El_rey_Leovigildo_(Museo_del_Prado).jpg",
+  "article": "Leovigildo"
+ },
+ "recaredo": {
+  "src": "img/recaredo.jpg",
+  "alt": "La conversión de Recaredo",
+  "credit": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Reccaredo-1.jpg",
+  "file": "Reccaredo-1.jpg",
+  "article": "Recaredo I"
+ },
+ "pelayo": {
+  "src": "img/pelayo.jpg",
+  "alt": "Pelayo, primer rey de Asturias",
+  "credit": "Luis de Madrazo y Kuntz",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Don_Pelayo,_rey_de_Asturias.jpg",
+  "file": "Don_Pelayo,_rey_de_Asturias.jpg",
+  "article": "Don Pelayo"
+ },
+ "abderraman1": {
+  "src": "img/abderraman1.jpg",
+  "alt": "Abderramán I, emir de Córdoba",
+  "credit": "Pablogilena",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Abderramanalmu%C3%B1ecar.jpg",
+  "file": "Abderramanalmuñecar.jpg",
+  "article": "Abderramán I"
+ },
+ "carlomagno": {
+  "src": "img/carlomagno.jpg",
+  "alt": "Carlomagno, emperador",
+  "credit": "Louis-Félix Amiel",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Louis-F%C3%A9lix_Amiel_-_Charlemagne_empereur_d%27Occident_(742-814).jpg",
+  "file": "Louis-Félix_Amiel_-_Charlemagne_empereur_d'Occident_(742-814).jpg",
+  "article": "Carlomagno"
+ },
+ "abderraman3": {
+  "src": "img/abderraman3.jpg",
+  "alt": "Abderramán III, califa de Córdoba",
+  "credit": "Numismática Pliego",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Dirham_abd_al_rahman_iii_17494.jpg",
+  "file": "Dirham_abd_al_rahman_iii_17494.jpg",
+  "article": "Abderramán III"
+ },
+ "alfonso6": {
+  "src": "img/alfonso6.jpg",
+  "alt": "Alfonso VI, rey de Castilla y León",
+  "credit": "Uploaded by MaiDireLollo",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:AlfonsoVI_of_Castile.jpg",
+  "file": "AlfonsoVI_of_Castile.jpg",
+  "article": "Alfonso VI de León"
+ },
+ "alfonso1ar": {
+  "src": "img/alfonso1ar.jpg",
+  "alt": "Alfonso I el Batallador, rey de Aragón",
+  "credit": "derivative work: Escarlati (talk) Papiroflexia_Commons_021.jpg: User:Archivaldo",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Estatua_de_Alfonso_I_de_Arag%C3%B3n.jpg",
+  "file": "Estatua_de_Alfonso_I_de_Aragón.jpg",
+  "article": "Alfonso I de Aragón"
+ },
+ "petronila": {
+  "src": "img/petronila.jpg",
+  "alt": "Petronila de Aragón y Ramón Berenguer IV",
+  "credit": "derivative work: Escarlati (talk) Genealogía_Casa_de_Aragón.jpg: Genealogía a…",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Peronella_reina.jpg",
+  "file": "Peronella_reina.jpg",
+  "article": "Petronila I de Aragón"
+ },
+ "alfonso1pt": {
+  "src": "img/alfonso1pt.jpg",
+  "alt": "Alfonso Enríquez, primer rey de Portugal",
+  "credit": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:D._Afonso_Henriques_-_Compendio_de_cr%C3%B3nicas_de_reyes_(Biblioteca_Nacional_de_Espa%C3%B1a).png",
+  "file": "D._Afonso_Henriques_-_Compendio_de_crónicas_de_reyes_(Biblioteca_Nacional_de_España).png",
+  "article": "Alfonso I de Portugal"
+ },
+ "jaime1": {
+  "src": "img/jaime1.jpg",
+  "alt": "Jaime I el Conquistador",
+  "credit": "Gonçal Peris Sarrià and Jaume Mateu",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:El_rey_Jaime_I_el_Conquistador,_por_Jaume_Mateu.jpg",
+  "file": "El_rey_Jaime_I_el_Conquistador,_por_Jaume_Mateu.jpg",
+  "article": "Jaime I de Aragón"
+ },
+ "fernando3": {
+  "src": "img/fernando3.jpg",
+  "alt": "Fernando III el Santo",
+  "credit": "AnonymousUnknown author",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Fernando_III_de_Castilla_02.jpg",
+  "file": "Fernando_III_de_Castilla_02.jpg",
+  "article": "Fernando III de Castilla"
+ },
+ "alfonso10": {
+  "src": "img/alfonso10.jpg",
+  "alt": "Alfonso X el Sabio",
+  "credit": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Alfonso_X_el_Sabio_en_El_libro_de_los_juegos.jpg",
+  "file": "Alfonso_X_el_Sabio_en_El_libro_de_los_juegos.jpg",
+  "article": "Alfonso X de Castilla"
+ },
+ "osman": {
+  "src": "img/osman.jpg",
+  "alt": "Osmán I, fundador del Imperio otomano",
+  "credit": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Osman_Gazi2.jpg",
+  "file": "Osman_Gazi2.jpg",
+  "article": "Osmán I"
+ },
+ "enrique2": {
+  "src": "img/enrique2.jpg",
+  "alt": "Enrique de Trastámara",
+  "credit": "Jaume Serra",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Enrique_II_de_Castilla.jpg",
+  "file": "Enrique_II_de_Castilla.jpg",
+  "article": "Enrique II de Castilla"
+ },
+ "juana": {
+  "src": "img/juana.jpg",
+  "alt": "Juana de Arco",
+  "credit": "Autor desconocido",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Joan_of_Arc_miniature_graded.jpg",
+  "file": "Joan_of_Arc_miniature_graded.jpg",
+  "article": "Juana de Arco"
+ },
+ "gutenberg": {
+  "src": "img/gutenberg.jpg",
+  "alt": "Johannes Gutenberg",
+  "credit": "Autor desconocido",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Gutenberg.jpg",
+  "file": "Gutenberg.jpg",
+  "article": "Johannes Gutenberg"
+ },
+ "mehmed2": {
+  "src": "img/mehmed2.jpg",
+  "alt": "El sultán Mehmed II",
+  "credit": "Gentile Bellini",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Gentile_Bellini_(c.1429-1507)_(attributed_to)_-_The_Sultan_Mehmet_II_-_LOAN-NATIONAL_GALLERY.425-2009_-_Victoria_and_Albert_Museum.jpg",
+  "file": "Gentile_Bellini_(c.1429-1507)_(attributed_to)_-_The_Sultan_Mehmet_II_-_LOAN-NATIONAL_GALLERY.425-2009_-_Victoria_and_Albert_Museum.jpg",
+  "article": "Mehmed II"
+ },
+ "reyescatolicos": {
+  "src": "img/reyescatolicos.jpg",
+  "alt": "Isabel I de Castilla y Fernando II de Aragón",
+  "credit": "anonymous",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Ferdinand_of_Aragon,_Isabella_of_Castile.jpg",
+  "file": "Ferdinand_of_Aragon,_Isabella_of_Castile.jpg",
+  "article": "Reyes Católicos"
+ },
+ "colon": {
+  "src": "img/colon.jpg",
+  "alt": "Cristóbal Colón",
+  "credit": "Sebastiano del Piombo",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Portrait_of_a_Man,_Said_to_be_Christopher_Columbus.jpg",
+  "file": "Portrait_of_a_Man,_Said_to_be_Christopher_Columbus.jpg",
+  "article": "Cristóbal Colón"
+ },
+ "santasofia": {
+  "src": "img/santasofia.jpg",
+  "alt": "Santa Sofía, en Estambul",
+  "credit": "Arild Vågen",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Mars_2013.jpg",
+  "file": "Hagia_Sophia_Mars_2013.jpg",
+  "article": "Santa Sofía"
+ },
+ "spania": {
+  "src": "img/spania.jpg",
+  "alt": "La provincia bizantina de Spania",
+  "credit": "Iberia 560-pt.svg: Medievalista derivative work: Rowanwindwhistler",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Iberia_560-es.svg",
+  "file": "Iberia_560-es.svg",
+  "article": "Provincia de Spania"
+ },
+ "kaaba": {
+  "src": "img/kaaba.jpg",
+  "alt": "La Kaaba, en La Meca",
+  "credit": "Tahir mq",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Kaaba_111.jpg",
+  "file": "Kaaba_111.jpg",
+  "article": "Kaaba"
+ },
+ "mezquitaprofeta": {
+  "src": "img/mezquitaprofeta.jpg",
+  "alt": "La Mezquita del Profeta, en Medina",
+  "credit": "Wurzelgnohm",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:MasjidNabawi.jpg",
+  "file": "MasjidNabawi.jpg",
+  "article": "Mezquita del Profeta"
+ },
+ "omeyasdamasco": {
+  "src": "img/omeyasdamasco.jpg",
+  "alt": "La Mezquita de los Omeyas, en Damasco",
+  "credit": "Hala Chemical",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9_%D8%A7%D9%84%D8%A3%D9%85%D9%88%D9%8A_%D8%A7%D9%84%D9%83%D8%A8%D9%8A%D8%B1.jpg",
+  "file": "الجامع_الأموي_الكبير.jpg",
+  "article": "Mezquita de los Omeyas"
+ },
+ "guadalete": {
+  "src": "img/guadalete.jpg",
+  "alt": "La batalla de Guadalete",
+  "credit": "Bernardo Blanco y Pérez",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:El_rey_Don_Rodrigo_arengando_a_sus_tropas_en_la_batalla_de_Guadalete_(Museo_del_Prado).jpg",
+  "file": "El_rey_Don_Rodrigo_arengando_a_sus_tropas_en_la_batalla_de_Guadalete_(Museo_del_Prado).jpg",
+  "article": "Batalla de Guadalete"
+ },
+ "abasies": {
+  "src": "img/abasies.jpg",
+  "alt": "El alminar en espiral de Samarra, de época abasí",
+  "credit": "David Stanley from Nanaimo, Canada",
+  "license": "CC BY 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Malwiya_Minaret_(30553349415).jpg",
+  "file": "Malwiya Minaret (30553349415).jpg",
+  "article": "Samarra Malwiya minaret"
+ },
+ "casasabiduria": {
+  "src": "img/casasabiduria.jpg",
+  "alt": "Sabios en una biblioteca abasí",
+  "credit": "Zereshk",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Maqamat_hariri.jpg",
+  "file": "Maqamat_hariri.jpg",
+  "article": "Casa de la Sabiduría"
+ },
+ "mezquitacordoba": {
+  "src": "img/mezquitacordoba.jpg",
+  "alt": "Los arcos de la Mezquita de Córdoba",
+  "credit": "Timor Espallargas",
+  "license": "CC BY-SA 2.5",
+  "link": "https://commons.wikimedia.org/wiki/File:Mosque_Cordoba_edited.jpg",
+  "file": "Mosque_Cordoba_edited.jpg",
+  "article": "Mezquita-catedral de Córdoba"
+ },
+ "marcahispanica": {
+  "src": "img/marcahispanica.jpg",
+  "alt": "La Marca Hispánica",
+  "credit": "Europe 814.svg: Hel-hama (talk · contribs) derivative work: Janitoalevic (talk)",
+  "license": "CC BY 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Marca_hisp%C3%A1nica_814.svg",
+  "file": "Marca_hispánica_814.svg",
+  "article": "Marca Hispánica"
+ },
+ "catedralsantiago": {
+  "src": "img/catedralsantiago.jpg",
+  "alt": "La catedral de Santiago de Compostela",
+  "credit": "Fernando",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Santiago_cathedral_2021.jpg",
+  "file": "Santiago_cathedral_2021.jpg",
+  "article": "Catedral de Santiago de Compostela"
+ },
+ "cluny": {
+  "src": "img/cluny.jpg",
+  "alt": "La abadía de Cluny",
+  "credit": "Benjamin Smith",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Cluny_-_B%C3%A2timents_abbatiaux_-_08.jpg",
+  "file": "Cluny_-_Bâtiments_abbatiaux_-_08.jpg",
+  "article": "Abadía de Cluny"
+ },
+ "medinaazahara": {
+  "src": "img/medinaazahara.jpg",
+  "alt": "Restos de Medina Azahara",
+  "credit": "Wwal",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Puerta_del_primer_ministro.JPG",
+  "file": "Puerta_del_primer_ministro.JPG",
+  "article": "Medina Azahara"
+ },
+ "taifas": {
+  "src": "img/taifas.jpg",
+  "alt": "Los reinos de taifas",
+  "credit": "Crates",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Map_Iberian_Peninsula_1030-es.svg",
+  "file": "Map_Iberian_Peninsula_1030-es.svg",
+  "article": "Taifa"
+ },
+ "cisma": {
+  "src": "img/cisma.jpg",
+  "alt": "El Cisma de Oriente",
+  "credit": "Barrikader (talk · contribs)",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Great_Schism_with_former_borders_(1054).png",
+  "file": "Great_Schism_with_former_borders_(1054).png",
+  "article": "Cisma de Oriente"
+ },
+ "bolonia": {
+  "src": "img/bolonia.jpg",
+  "alt": "El Archiginnasio de Bolonia",
+  "credit": "Palickap",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Bologna,_Archiginnasio,_courtyard_(1).jpg",
+  "file": "Bologna, Archiginnasio, courtyard (1).jpg",
+  "article": "Archiginnasio Bologna courtyard"
+ },
+ "jerusalen1099": {
+  "src": "img/jerusalen1099.jpg",
+  "alt": "La toma de Jerusalén por los cruzados",
+  "credit": "Émile Signol",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Taking_of_Jerusalem_by_the_Crusaders,_15th_July_1099.jpg",
+  "file": "Taking_of_Jerusalem_by_the_Crusaders,_15th_July_1099.jpg",
+  "article": "Sitio de Jerusalén (1099)"
+ },
+ "saintdenis": {
+  "src": "img/saintdenis.jpg",
+  "alt": "La basílica de Saint-Denis",
+  "credit": "Chabe01",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Basilique_St_Denis_fa%C3%A7ade_ouest_St_Denis_Seine_St_Denis_20.jpg",
+  "file": "Basilique_St_Denis_façade_ouest_St_Denis_Seine_St_Denis_20.jpg",
+  "article": "Basílica de Saint-Denis"
+ },
+ "portico": {
+  "src": "img/portico.jpg",
+  "alt": "El Pórtico de la Gloria",
+  "credit": "pedronchi",
+  "license": "CC BY 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Pantocrator_del_p%C3%B3rtico_de_la_Gloria_en_Santiago_de_Compostela.jpg",
+  "file": "Pantocrator_del_pórtico_de_la_Gloria_en_Santiago_de_Compostela.jpg",
+  "article": "Pórtico de la Gloria"
+ },
+ "navas": {
+  "src": "img/navas.jpg",
+  "alt": "La batalla de las Navas de Tolosa",
+  "credit": "Francisco de Paula Van Halen",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Batalla_de_las_Navas_de_Tolosa,_por_Francisco_van_Halen.jpg",
+  "file": "Batalla_de_las_Navas_de_Tolosa,_por_Francisco_van_Halen.jpg",
+  "article": "Batalla de las Navas de Tolosa"
+ },
+ "salamanca_u": {
+  "src": "img/salamanca_u.jpg",
+  "alt": "La fachada de la Universidad de Salamanca",
+  "credit": "Original uploader was Jentges at lb.wikipedia",
+  "license": "Attribution",
+  "link": "https://commons.wikimedia.org/wiki/File:Salamanca_Fachada_Plateresca_de_la_Universidad.jpg",
+  "file": "Salamanca Fachada Plateresca de la Universidad.jpg",
+  "article": "Fachada Universidad de Salamanca plateresca"
+ },
+ "valencia1238": {
+  "src": "img/valencia1238.jpg",
+  "alt": "La conquista de Valencia",
+  "credit": "Andreu Marçal de Sax / Andrès Marçal de Sas",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Batalla_del_Puig_por_Marzal_de_Sas_(1410-20).jpg",
+  "file": "Batalla_del_Puig_por_Marzal_de_Sas_(1410-20).jpg",
+  "article": "Conquista de Valencia por Jaime I"
+ },
+ "alhambra": {
+  "src": "img/alhambra.jpg",
+  "alt": "El Patio de los Leones de la Alhambra",
+  "credit": "John Gregory Crace",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:The_Court_of_Lions_in_the_Alhambra,_Spain_MET_DP209232.jpg",
+  "file": "The Court of Lions in the Alhambra, Spain MET DP209232.jpg",
+  "article": "Court of the Lions Alhambra fountain"
+ },
+ "giralda": {
+  "src": "img/giralda.jpg",
+  "alt": "La Giralda de Sevilla",
+  "credit": "Jebulon",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:La_Giralda_August_2012_Seville_Spain.jpg",
+  "file": "La_Giralda_August_2012_Seville_Spain.jpg",
+  "article": "Giralda"
+ },
+ "catedralleon": {
+  "src": "img/catedralleon.jpg",
+  "alt": "La catedral de León",
+  "credit": "David Jiménez Llanes",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Catedral_G%C3%B3tica_de_Le%C3%B3n.jpg",
+  "file": "Catedral_Gótica_de_León.jpg",
+  "article": "Catedral de León"
+ },
+ "cienanos": {
+  "src": "img/cienanos.jpg",
+  "alt": "La batalla de Crécy, en una crónica de la época",
+  "credit": "Loyset Liédet",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Battle_of_crecy_froissart.jpg",
+  "file": "Battle of crecy froissart.jpg",
+  "article": "Battle of Crecy Froissart"
+ },
+ "peste": {
+  "src": "img/peste.jpg",
+  "alt": "Entierro de víctimas de la peste negra",
+  "credit": "Pierart dou Tielt (fl. 1340-1360)",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Doutielt3.jpg",
+  "file": "Doutielt3.jpg",
+  "article": "Peste negra"
+ },
+ "santamariafiore": {
+  "src": "img/santamariafiore.jpg",
+  "alt": "La cúpula de Brunelleschi en Florencia",
+  "credit": "Bruce Stokes on Flickr",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:View_of_Santa_Maria_del_Fiore_in_Florence.jpg",
+  "file": "View_of_Santa_Maria_del_Fiore_in_Florence.jpg",
+  "article": "Catedral de Santa María del Fiore"
+ },
+ "caidaconstantinopla": {
+  "src": "img/caidaconstantinopla.jpg",
+  "alt": "La caída de Constantinopla",
+  "credit": "Fausto Zonaro",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Conquest_of_Constantinople,_Zonaro.jpg",
+  "file": "Conquest_of_Constantinople,_Zonaro.jpg",
+  "article": "Caída de Constantinopla"
+ },
+ "inquisicion": {
+  "src": "img/inquisicion.jpg",
+  "alt": "Un auto de fe, pintado por Pedro Berruguete",
+  "credit": "Pedro Berruguete",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Pedro_Berruguete_Saint_Dominic_Presiding_over_an_Auto-da-fe_1495.jpg",
+  "file": "Pedro Berruguete Saint Dominic Presiding over an Auto-da-fe 1495.jpg",
+  "article": "Berruguete Auto de fe Santo Domingo"
+ },
+ "tomagranada": {
+  "src": "img/tomagranada.jpg",
+  "alt": "La rendición de Granada",
+  "credit": "Francisco Pradilla y Ortiz",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:La_Rendici%C3%B3n_de_Granada_-_Pradilla.jpg",
+  "file": "La_Rendición_de_Granada_-_Pradilla.jpg",
+  "article": "Guerra de Granada"
+ },
+ "c_roma": {
+  "src": "img/c_roma.jpg",
+  "alt": "Roma",
+  "credit": "FeaturedPics",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Colosseo_2020.jpg",
+  "file": "Colosseo_2020.jpg",
+  "article": "Roma"
+ },
+ "c_constantinopla": {
+  "src": "img/c_constantinopla.jpg",
+  "alt": "Las murallas de Constantinopla",
+  "credit": "Carole Raddato from FRANKFURT, Germany",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Theodosian_Walls_of_Constantinople,_Istanbul_(24053561188).jpg",
+  "file": "Theodosian Walls of Constantinople, Istanbul (24053561188).jpg",
+  "article": "Walls of Constantinople"
+ },
+ "c_ravena": {
+  "src": "img/c_ravena.jpg",
+  "alt": "Rávena",
+  "credit": "Petar Milošević Petar Milošević Stefano Suozzo Sailko Petar Milošević Чигот J…",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Early_Christian_Monuments_of_Ravenna.jpg",
+  "file": "Early_Christian_Monuments_of_Ravenna.jpg",
+  "article": "Ravena"
+ },
+ "c_toledo": {
+  "src": "img/c_toledo.jpg",
+  "alt": "Vista de Toledo, de El Greco",
+  "credit": "El Greco",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:View_of_Toledo_MET_DP349564.jpg",
+  "file": "View of Toledo MET DP349564.jpg",
+  "article": "View of Toledo El Greco Metropolitan"
+ },
+ "c_cordoba": {
+  "src": "img/c_cordoba.jpg",
+  "alt": "El puente romano y la Mezquita de Córdoba",
+  "credit": "Jose María Ligero Loarte",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Centro_Hist%C3%B3rico,_16.9_--_2023_--_C%C3%B3rdoba,_Espa%C3%B1a.jpg",
+  "file": "Centro Histórico, 16.9 -- 2023 -- Córdoba, España.jpg",
+  "article": "Puente romano Córdoba Mezquita"
+ },
+ "c_sevilla": {
+  "src": "img/c_sevilla.jpg",
+  "alt": "La Torre del Oro de Sevilla",
+  "credit": "Jebulon",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:Torre_del_Oro_flag_Seville_Spain.jpg",
+  "file": "Torre del Oro flag Seville Spain.jpg",
+  "article": "Torre del Oro Sevilla"
+ },
+ "c_granada": {
+  "src": "img/c_granada.jpg",
+  "alt": "La Alhambra desde el Albaicín",
+  "credit": "Slaunger",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Alhambra_evening_panorama_Mirador_San_Nicolas_sRGB-1.jpg",
+  "file": "Alhambra evening panorama Mirador San Nicolas sRGB-1.jpg",
+  "article": "Alhambra Mirador de San Nicolás"
+ },
+ "c_valencia": {
+  "src": "img/c_valencia.jpg",
+  "alt": "Las Torres de Serranos de Valencia",
+  "credit": "Diego Delso",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Puerta_de_los_Serranos,_Valencia,_Espa%C3%B1a,_2014-06-30,_DD_86.JPG",
+  "file": "Puerta de los Serranos, Valencia, España, 2014-06-30, DD 86.JPG",
+  "article": "Torres de Serranos Valencia"
+ },
+ "c_zaragoza": {
+  "src": "img/c_zaragoza.jpg",
+  "alt": "La Aljafería de Zaragoza",
+  "credit": "Fernando",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Aljafer%C3%ADa_Palace.jpg",
+  "file": "Aljafería Palace.jpg",
+  "article": "Aljafería Zaragoza"
+ },
+ "c_barcelona": {
+  "src": "img/c_barcelona.jpg",
+  "alt": "Santa María del Mar, en Barcelona",
+  "credit": "Enric",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:335_Santa_Maria_del_Mar_(Barcelona),_fa%C3%A7ana_sud,_i_peveter_del_Fossar_de_les_Moreres.jpg",
+  "file": "335 Santa Maria del Mar (Barcelona), façana sud, i peveter del Fossar de les Moreres.jpg",
+  "article": "Santa Maria del Mar Barcelona façana"
+ },
+ "c_lisboa": {
+  "src": "img/c_lisboa.jpg",
+  "alt": "El castillo de San Jorge de Lisboa",
+  "credit": "Berthold Werner",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Lisbon_Castelo_de_S%C3%A3o_Jorge_BW_2018-10-03_11-13-09.jpg",
+  "file": "Lisbon Castelo de São Jorge BW 2018-10-03 11-13-09.jpg",
+  "article": "Castelo de São Jorge Lisboa"
+ },
+ "c_leon": {
+  "src": "img/c_leon.jpg",
+  "alt": "San Isidoro de León",
+  "credit": "José Luis Filpo Cabana",
+  "license": "CC BY 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Bas%C3%ADlica_de_San_Isidoro_de_Le%C3%B3n._Fachada_principal.jpg",
+  "file": "Basílica de San Isidoro de León. Fachada principal.jpg",
+  "article": "Basílica San Isidoro León fachada"
+ },
+ "c_oviedo": {
+  "src": "img/c_oviedo.jpg",
+  "alt": "Santa María del Naranco, en Oviedo",
+  "credit": "Fernando",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Santa_Mar%C3%ADa_del_Naranco_2021.jpg",
+  "file": "Santa María del Naranco 2021.jpg",
+  "article": "Santa María del Naranco"
+ },
+ "c_burgos": {
+  "src": "img/c_burgos.jpg",
+  "alt": "La catedral de Burgos",
+  "credit": "Javier Perez Montes",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Fachada_Oeste_-_Catedral_de_Burgos_-_Burgos_01.jpg",
+  "file": "Fachada Oeste - Catedral de Burgos - Burgos 01.jpg",
+  "article": "Catedral de Burgos fachada"
+ },
+ "c_santiago": {
+  "src": "img/c_santiago.jpg",
+  "alt": "La plaza del Obradoiro de Santiago",
+  "credit": "Lmbuga",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Torre_da_vela_dende_a_praza_do_Obradoiro._Catedral_de_Santiago_de_Compostela.jpg",
+  "file": "Torre da vela dende a praza do Obradoiro. Catedral de Santiago de Compostela.jpg",
+  "article": "Plaza del Obradoiro catedral Santiago"
+ },
+ "c_salamanca": {
+  "src": "img/c_salamanca.jpg",
+  "alt": "El puente romano y la catedral de Salamanca",
+  "credit": "liakada-web",
+  "license": "CC BY 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Salamanca,_Puente_Romano_-_54013231433.jpg",
+  "file": "Salamanca, Puente Romano - 54013231433.jpg",
+  "article": "Puente romano Salamanca catedral"
+ },
+ "c_pamplona": {
+  "src": "img/c_pamplona.jpg",
+  "alt": "El claustro de la catedral de Pamplona",
+  "credit": "José Luis Filpo Cabana",
+  "license": "CC BY 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Claustro_de_la_Catedral_de_Pamplona._Epifan%C3%ADa.jpg",
+  "file": "Claustro de la Catedral de Pamplona. Epifanía.jpg",
+  "article": "Catedral de Pamplona claustro gótico"
+ },
+ "c_damasco": {
+  "src": "img/c_damasco.jpg",
+  "alt": "La ciudad vieja de Damasco",
+  "credit": "Bassel Khabbaz",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Damascus_Straight_Street_-_Old_House.jpg",
+  "file": "Damascus Straight Street - Old House.jpg",
+  "article": "Damascus Straight Street old city"
+ },
+ "c_bagdad": {
+  "src": "img/c_bagdad.jpg",
+  "alt": "La madrasa Mustansiriya de Bagdad, de época abasí",
+  "credit": "Mahmoudalrawi",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Mustansiriya_Madrasah_gate.jpg",
+  "file": "Mustansiriya Madrasah gate.jpg",
+  "article": "Mustansiriya Madrasah Baghdad"
+ },
+ "c_meca": {
+  "src": "img/c_meca.jpg",
+  "alt": "La Kaaba, en La Meca",
+  "credit": "Tahir mq",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Kaaba_111.jpg",
+  "file": "Kaaba_111.jpg",
+  "article": "Kaaba"
+ },
+ "c_medina": {
+  "src": "img/c_medina.jpg",
+  "alt": "La Mezquita del Profeta, en Medina",
+  "credit": "Wurzelgnohm",
+  "license": "CC0",
+  "link": "https://commons.wikimedia.org/wiki/File:MasjidNabawi.jpg",
+  "file": "MasjidNabawi.jpg",
+  "article": "Mezquita del Profeta"
+ },
+ "c_jerusalen": {
+  "src": "img/c_jerusalen.jpg",
+  "alt": "La Cúpula de la Roca, en Jerusalén",
+  "credit": "Godot13",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Jerusalem-2013-Temple_Mount-Dome_of_the_Rock_%26_Chain_02.jpg",
+  "file": "Jerusalem-2013-Temple Mount-Dome of the Rock & Chain 02.jpg",
+  "article": "Dome of the Rock Jerusalem"
+ },
+ "c_alejandria": {
+  "src": "img/c_alejandria.jpg",
+  "alt": "La ciudadela de Qaitbay, en Alejandría",
+  "credit": "Summering2018",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:%D8%A7%D9%84%D9%82%D9%84%D8%B9%D8%A9_%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9.jpg",
+  "file": "القلعة اسكندرية.jpg",
+  "article": "Citadel of Qaitbay Alexandria"
+ },
+ "c_cairo": {
+  "src": "img/c_cairo.jpg",
+  "alt": "La mezquita de Ibn Tulun, en El Cairo",
+  "credit": "User:Berthold Werner",
+  "license": "CC BY 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Kairo_Ibn_Tulun_Moschee_BW_4.jpg",
+  "file": "Kairo Ibn Tulun Moschee BW 4.jpg",
+  "article": "Mosque of Ibn Tulun courtyard"
+ },
+ "c_cartago": {
+  "src": "img/c_cartago.jpg",
+  "alt": "Cartago",
+  "credit": "Calips",
+  "license": "CC BY 2.5",
+  "link": "https://commons.wikimedia.org/wiki/File:Tunisie_Carthage_Ruines_08.JPG",
+  "file": "Tunisie_Carthage_Ruines_08.JPG",
+  "article": "Cartago"
+ },
+ "c_kairuan": {
+  "src": "img/c_kairuan.jpg",
+  "alt": "Cairuán",
+  "credit": "Momin Bannani from London, UK",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Vue_a%C3%A9rienne_rapproch%C3%A9e_de_la_Grande_Mosqu%C3%A9e_de_Kairouan.jpg",
+  "file": "Vue_aérienne_rapprochée_de_la_Grande_Mosquée_de_Kairouan.jpg",
+  "article": "Keruán"
+ },
+ "c_aquisgran": {
+  "src": "img/c_aquisgran.jpg",
+  "alt": "La capilla de Carlomagno en Aquisgrán",
+  "credit": "Jim Linwood",
+  "license": "CC BY 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Aachen_Cathedral_And_Palatine_Chapel,_Germany.jpg",
+  "file": "Aachen Cathedral And Palatine Chapel, Germany.jpg",
+  "article": "Aachen Cathedral Palatine Chapel octagon"
+ },
+ "c_paris": {
+  "src": "img/c_paris.jpg",
+  "alt": "Notre-Dame de París",
+  "credit": "Benh LIEU SONG",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Notre_Dame_Paris_front_facade_lower.jpg",
+  "file": "Notre Dame Paris front facade lower.jpg",
+  "article": "Notre-Dame de Paris façade"
+ },
+ "c_venecia": {
+  "src": "img/c_venecia.jpg",
+  "alt": "La basílica de San Marcos de Venecia",
+  "credit": "Petar Milosevic",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:San_Marco_cathedral_in_Venice.JPG",
+  "file": "San Marco cathedral in Venice.JPG",
+  "article": "Basilica di San Marco facade Venice"
+ },
+ "c_genova": {
+  "src": "img/c_genova.jpg",
+  "alt": "La Porta Soprana de Génova",
+  "credit": "Mongolo1984",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Porta_Soprana_(Genova)_05.jpg",
+  "file": "Porta Soprana (Genova) 05.jpg",
+  "article": "Porta Soprana Genova"
+ },
+ "c_florencia": {
+  "src": "img/c_florencia.jpg",
+  "alt": "Florencia",
+  "credit": "Giorgio Galeotti",
+  "license": "CC BY 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Firenze_-_Piazzale_Michelangelo,_Firenze,_Italy_-_April_6,_2015_02.jpg",
+  "file": "Firenze_-_Piazzale_Michelangelo,_Firenze,_Italy_-_April_6,_2015_02.jpg",
+  "article": "Florencia"
+ },
+ "c_londres": {
+  "src": "img/c_londres.jpg",
+  "alt": "La Torre Blanca de Londres",
+  "credit": "Bob Collowan",
+  "license": "CC BY-SA 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Tower_of_London_viewed_from_the_River_Thames.jpg",
+  "file": "Tower of London viewed from the River Thames.jpg",
+  "article": "Tower of London White Tower"
+ },
+ "c_tolosa": {
+  "src": "img/c_tolosa.jpg",
+  "alt": "Tolosa",
+  "credit": "Tonio94 (talk · contribs)",
+  "license": "CC BY-SA 2.5",
+  "link": "https://commons.wikimedia.org/wiki/File:Toulouse_-_View_on_Saint_Sernin.jpg",
+  "file": "Toulouse_-_View_on_Saint_Sernin.jpg",
+  "article": "Toulouse"
+ },
+ "sanvital": {
+  "src": "img/sanvital.jpg",
+  "alt": "Mosaicos de San Vital de Rávena",
+  "credit": "Petar Milošević",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Basilica_of_San_Vitale_-_Lamb_of_God_mosaic.jpg",
+  "file": "Basilica of San Vitale - Lamb of God mosaic.jpg",
+  "article": "Basilica of San Vitale Ravenna"
+ },
+ "sanisidoro": {
+  "src": "img/sanisidoro.jpg",
+  "alt": "El panteón de San Isidoro de León",
+  "credit": "Teófilo Rufflé Según dibujo de Jaume Serra i Gibert",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Le%C3%B3n._Pintura_mural_del_Pante%C3%B3n_de_los_Reyes,_en_la_Colegiata_de_San_Isidoro_-_Te%C3%B3filo_Ruffl%C3%A9.jpg",
+  "file": "León. Pintura mural del Panteón de los Reyes, en la Colegiata de San Isidoro - Teófilo Rufflé.jpg",
+  "article": "Panteón de los Reyes San Isidoro León"
+ },
+ "jacquerie": {
+  "src": "img/jacquerie.jpg",
+  "alt": "La Jacquerie en una miniatura de la época",
+  "credit": "Loyset Liédet",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Jacquerie_meaux.jpg",
+  "file": "Jacquerie meaux.jpg",
+  "article": "Jacquerie Meaux miniature Froissart"
+ },
+ "palaciopapas": {
+  "src": "img/palaciopapas.jpg",
+  "alt": "El Palacio de los Papas de Aviñón",
+  "credit": "Uoaei1",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Avignon_Papstpalast_Gartenseite_20250629.jpg",
+  "file": "Avignon Papstpalast Gartenseite 20250629.jpg",
+  "article": "Palais des Papes Avignon"
+ },
+ "revuelta1381": {
+  "src": "img/revuelta1381.jpg",
+  "alt": "La revuelta campesina de 1381",
+  "credit": "Jean Froissar",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Peasants%27_Revolt_(death_of_Wat_Tyler).jpg",
+  "file": "Peasants' Revolt (death of Wat Tyler).jpg",
+  "article": "Peasants Revolt 1381 Froissart Wat Tyler"
+ },
+ "pogromo1391": {
+  "src": "img/pogromo1391.jpg",
+  "alt": "El antiguo barrio judío de Sevilla",
+  "credit": "Jl FilpoC",
+  "license": "CC BY-SA 4.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Calle_Juder%C3%ADa,_Barrio_de_Santa_Cruz_(Sevilla).jpg",
+  "file": "Calle Judería, Barrio de Santa Cruz (Sevilla).jpg",
+  "article": "Judería Sevilla Santa Cruz barrio"
+ },
+ "rodrigo": {
+  "src": "img/rodrigo.jpg",
+  "alt": "Don Rodrigo, último rey visigodo",
+  "credit": "Federico de Madrazo y Kuntz",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:F._de_Madrazo_-_1840,_Don_Pelayo_reconoce_a_Don_Rodrigo_tras_la_Batalla_de_Guadalete_(Valencia,_colecci%C3%B3n_particular,_25_x_32_cm).jpg",
+  "file": "F. de Madrazo - 1840, Don Pelayo reconoce a Don Rodrigo tras la Batalla de Guadalete (Valencia, colección particular, 25 x 32 cm).jpg",
+  "article": "Rodrigo rey visigodo Madrazo"
+ }
+}

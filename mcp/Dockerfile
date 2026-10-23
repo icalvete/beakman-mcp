@@ -1,12 +1,14 @@
-# Servidor MCP de Beakman. El temario no va en la imagen: lo lee de GitHub al arrancar
-# y lo refresca solo (ver beakman_mcp/content.py).
+# Servidor MCP de Beakman y su web. El temario no va en la imagen: lo lee de GitHub al arrancar
+# y lo refresca solo (ver beakman_mcp/content.py). La web (docs/) sí va: se sirve en /.
+# Se construye desde la raíz del repo: docker build -f mcp/Dockerfile .
 FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY requirements.txt .
+COPY mcp/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY beakman_mcp ./beakman_mcp
+COPY mcp/beakman_mcp ./beakman_mcp
+COPY docs ./site
 
 RUN useradd --system --uid 10001 beakman
 USER beakman
