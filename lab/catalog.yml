@@ -11,8 +11,8 @@ cursos: [1eso, 2eso]
 asignaturas:
   - id: historia
     foto: historia.jpg
-    es: {slug: historia, nombre: Historia, lema: "Por qué pasaron las cosas, no solo cuándo."}
-    en: {slug: history, nombre: History, lema: "Why things happened, not just when."}
+    es: {slug: historia, nombre: Historia, lema: "Cuándo y dónde, sí. Pero sobre todo por qué pasó, a quién le cambió la vida y qué queda hoy."}
+    en: {slug: history, nombre: History, lema: "When and where, yes. But above all why it happened, whose lives it changed and what is left today."}
   - id: matematicas
     foto: matematicas.jpg
     es: {slug: matematicas, nombre: Matemáticas, lema: "El porqué de cada paso."}
