@@ -1,0 +1,39 @@
+# Catálogo del laboratorio de Beakman (lab.beakman.kademy.net).
+# build.py genera con él la portada de cada idioma y la página de cada asignatura.
+# Un recurso nuevo: su carpeta en lab/<id>/ (código) y su página en site/<idioma>/<asignatura>/<curso>/<id>/,
+# más una entrada aquí. Los textos van por idioma; un recurso sin un idioma no sale en ese idioma.
+
+idiomas: [es]          # idiomas publicados; el primero es el de por defecto
+
+cursos: [1eso, 2eso]
+
+asignaturas:
+  - id: historia
+    foto: historia.jpg
+    es: {slug: historia, nombre: Historia, lema: "Por qué pasaron las cosas, no solo cuándo."}
+    en: {slug: history, nombre: History, lema: "Why things happened, not just when."}
+  - id: matematicas
+    foto: matematicas.jpg
+    es: {slug: matematicas, nombre: Matemáticas, lema: "El porqué de cada paso."}
+    en: {slug: maths, nombre: Maths, lema: "The why behind every step."}
+  - id: ciencias
+    foto: ciencias.webp
+    es: {slug: ciencias, nombre: Ciencias, lema: "Mirar el mundo y preguntarle cosas."}
+    en: {slug: science, nombre: Science, lema: "Look at the world and ask it questions."}
+  - id: lengua
+    foto: lengua.webp
+    es: {slug: lengua, nombre: Lengua y Literatura, lema: "Entender lo que lees y decir lo que piensas."}
+    en: {slug: language, nombre: Language and Literature, lema: "Understand what you read, say what you think."}
+
+recursos:
+  - id: cronomapa-edad-media
+    asignatura: historia
+    curso: 2eso
+    imagen: cronomapa-edad-media.jpg
+    solo_pc: true
+    es:
+      titulo: Cronomapa de la Edad Media
+      temas: Temas 4 a 14
+      descripcion: >-
+        Mueve la barra del 476 al 1492 y mira qué reinos, ciudades y batallas coincidieron en el tiempo.
+        Cada acontecimiento cuenta qué cambió, al poco y a la larga.

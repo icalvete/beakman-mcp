@@ -1,6 +1,6 @@
 """Busca en Wikipedia (es) la imagen principal de cada artículo, su licencia y su autor, y baja una miniatura.
 
-Salida: las miniaturas, en la carpeta publicada (docs/historia/2eso/cronomapa-edad-media/img/<clave>.jpg),
+Salida: las miniaturas, en la carpeta común a los idiomas (lab/site/media/cronomapa-edad-media/<clave>.jpg),
 y images.json {clave: {src, alt, credit, license, link, title}}.
 """
 import html
@@ -14,7 +14,7 @@ import urllib.parse
 import urllib.request
 
 UA = "BeakmanCronomapa/1.0 (+https://github.com/icalvete/beakman-mcp)"
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../../../docs/historia/2eso/cronomapa-edad-media/img")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../site/media/cronomapa-edad-media")
 
 # clave -> (artículo de es.wikipedia, texto alternativo)
 WANT = {

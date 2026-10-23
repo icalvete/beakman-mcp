@@ -7,6 +7,7 @@ Cuatro tutores Beakman (Historia, Matemáticas, Ciencias, Lengua) para 1º y 2º
 - `python3 scripts/build.py --check`: valida sin escribir.
 - Servidor MCP: `mcp/` (Python, `mcp` 2.x `MCPServer`). En local: `BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.server:app --app-dir mcp`. En producción lee el temario de GitHub (`main`) y lo refresca cada 5 min, así que un cambio de contenido no necesita imagen nueva. La imagen la publica `.github/workflows/mcp-image.yml` en `ghcr.io/icalvete/beakman-mcp`; se despliega en alala (`beakman.kademy.net`) desde el repo de kademy (`iac/roles/kademy_stack`).
 - Web: `docs/` (GitHub Pages desde `main`, carpeta `/docs`). Vista previa: `python3 -m http.server -d docs`.
+- Laboratorio (recursos por asignatura y curso): `lab/`, publicado en lab.beakman.kademy.net por el mismo contenedor (según el Host). `python3 lab/build.py` regenera portadas y páginas de asignatura; ver `lab/README.md`.
 
 ## Reglas que no se rompen
 - **Los nombres de los ficheros de `dist/` no cambian nunca.** Cada Gem enlaza los ficheros de Drive por su ID. Un tema nuevo va en `<asignatura>/<curso>/` y acaba dentro del fichero del curso. Nunca crear un cuarto fichero por Gem.

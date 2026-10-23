@@ -1,0 +1,5 @@
+cronomapa-edad-media/data/
+cronomapa-edad-media/data.json
+cronomapa-edad-media/venv/
+__pycache__/
+site/**/test.html

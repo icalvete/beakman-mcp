@@ -1,4 +1,5 @@
 """Genera data.json para el cronomapa: épocas, trazados, ciudades y acontecimientos."""
+import os
 import hashlib
 import json
 import sys
@@ -12,6 +13,9 @@ import events as EV
 import geo
 import iberia
 from realms import REALMS
+
+# Las imágenes son comunes a los idiomas: viven en lab/site/media/, a cuatro niveles de la página.
+MEDIA = "../../../../media/cronomapa-edad-media/"
 
 START, END = 476, 1493   # END no incluido: el último año es 1492
 
@@ -131,6 +135,8 @@ def main():
             c["img"] = k
             used.add(k)
     out["images"] = {k: {f: imgs[k][f] for f in ("src", "alt", "credit", "license", "link")} for k in sorted(used)}
+    for im in out["images"].values():
+        im["src"] = MEDIA + os.path.basename(im["src"])
     missing = [e["id"] for e in out["events"] if not e["img"]]
     print("sin imagen:", missing, "| ciudades sin imagen:", [c["id"] for c in out["cities"] if "img" not in c],
           file=sys.stderr)

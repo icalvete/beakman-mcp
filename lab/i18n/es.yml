@@ -1,0 +1,28 @@
+# Textos fijos de las páginas del laboratorio, en español. El inglés irá en en.yml con las mismas claves.
+lang: es
+nombre_idioma: Español
+sitio: El laboratorio de Beakman
+descripcion: >-
+  Mapas, juegos y experimentos para estudiar la ESO con las manos: Historia, Matemáticas, Ciencias y Lengua,
+  con Beakman.
+portada_titulo: Aquí se aprende tocando.
+portada_lead: >-
+  Mapas, juegos y experimentos para estudiar la ESO con las manos. No hay que conectar nada ni crear una cuenta:
+  elige una asignatura y a trastear.
+asignaturas: Asignaturas
+todos: Todos los recursos
+cursos: {1eso: 1º ESO, 2eso: 2º ESO}
+recurso_1: "1 recurso"
+recurso_n: "{n} recursos"
+proximamente: Próximamente
+sin_recursos: "Todavía no hay recursos de {curso}. Están en el horno."
+solo_pc: Para ordenador
+abrir: Abrir
+volver: Todas las asignaturas
+tutores: Los tutores de Beakman
+tutores_url: https://beakman.kademy.net/
+tutores_texto: >-
+  ¿Te atascas con un tema? Los tutores de Beakman te lo explican con preguntas, sin hacerte los deberes.
+pie: >-
+  Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.
+github: Código en GitHub

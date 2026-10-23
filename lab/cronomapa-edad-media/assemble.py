@@ -1,4 +1,4 @@
-"""Mete data.json en la plantilla y escribe la página publicada (docs/historia/2eso/cronomapa-edad-media/index.html).
+"""Mete data.json en la plantilla y escribe la página publicada (lab/site/es/historia/2eso/cronomapa-edad-media/index.html).
 
 Con argumentos (año, vista, tema) escribe además test.html aquí, que arranca en ese año: sirve para probar en local.
 """
@@ -6,7 +6,7 @@ import os
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "../../../../docs/historia/2eso/cronomapa-edad-media")
+OUT = os.path.join(HERE, "../site/es/historia/2eso/cronomapa-edad-media")
 
 HEAD = """<!doctype html>
 <html lang="es">
@@ -15,7 +15,7 @@ HEAD = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Mapa de la Edad Media con una barra de años: qué reinos, ciudades y acontecimientos
 coincidieron en el tiempo. Historia de 2º de la ESO, con Beakman.">
-<link rel="icon" href="../../../img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
 {boot}</head>
 <body>
 """

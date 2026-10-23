@@ -3,13 +3,13 @@
 Mapa de Europa y el Mediterráneo del 476 al 1492 con una barra de años: reinos, ciudades,
 batallas y acontecimientos de los temas 4 a 14 de Historia de 2º ESO, en la voz de Beakman.
 
-Publicado en https://beakman.kademy.net/historia/2eso/cronomapa-edad-media/ (la página construida está en
-`docs/historia/2eso/cronomapa-edad-media/`, con sus imágenes).
+Publicado en https://lab.beakman.kademy.net/es/historia/2eso/cronomapa-edad-media/ (la página construida está en
+`lab/site/es/historia/2eso/cronomapa-edad-media/`; las imágenes, comunes a los idiomas, en `lab/site/media/cronomapa-edad-media/`).
 
 ## Rehacerlo
     python3 -m venv venv && ./venv/bin/pip install shapely==2.0.6
     ./venv/bin/python build.py      # data.json: épocas, trazados, ciudades y acontecimientos
-    python3 assemble.py             # docs/historia/2eso/cronomapa-edad-media/index.html
+    python3 assemble.py             # lab/site/es/historia/2eso/cronomapa-edad-media/index.html
     python3 assemble.py 1250 peninsula   # además test.html, que arranca en 1250 en la vista de la Península
 
 - `template.html`: la página (estilos y código); `__DATA__` se sustituye por `data.json`.
@@ -23,7 +23,7 @@ Publicado en https://beakman.kademy.net/historia/2eso/cronomapa-edad-media/ (la 
 ## Imágenes
 - `images.py` busca la imagen principal de cada artículo de la Wikipedia en español (o, con `--search`, en
   Wikimedia Commons), guarda autor, licencia y enlace en `images.json` y baja una miniatura de 640 px a la
-  carpeta publicada (`img/`). La página muestra autor, licencia y enlace de cada una.
+  carpeta común (`lab/site/media/cronomapa-edad-media/`). La página muestra autor, licencia y enlace de cada una.
 - Cada imagen se ha revisado a mano. Para Mahoma no hay retrato (en el islam no se representa al profeta):
   se usan la Kaaba y la Mezquita del Profeta.
 

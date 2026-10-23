@@ -13,7 +13,7 @@ from mcp.server.mcpserver import MCPServer
 from mcp.server.transport_security import TransportSecuritySettings
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from starlette.routing import Mount
+from starlette.routing import Host, Mount
 from starlette.staticfiles import StaticFiles
 
 from .content import COURSES, Library, Part, Store, Subject, Topic, course_key, normalize
@@ -205,8 +205,15 @@ app = mcp.streamable_http_app(
     transport_security=TransportSecuritySettings(allowed_hosts=ALLOWED_HOSTS),
 )
 
-# La web (docs/: portada, guías y herramientas) en el resto de rutas. Va la última, así que /mcp y /up
-# siguen yendo al servidor MCP. En la imagen está en /app/site; en local, BEAKMAN_SITE_DIR=$PWD/docs.
+# El laboratorio (lab/site/) en su propio nombre, lab.beakman.kademy.net: va el primero, así que en ese nombre
+# todas las rutas son del laboratorio. En la imagen está en /app/lab; en local, BEAKMAN_LAB_DIR=$PWD/lab/site.
+LAB_DIR = os.environ.get("BEAKMAN_LAB_DIR", "/app/lab")
+LAB_HOST = os.environ.get("BEAKMAN_LAB_HOST", "lab.beakman.kademy.net")
+if os.path.isdir(LAB_DIR):
+    app.router.routes.insert(0, Host(LAB_HOST, app=StaticFiles(directory=LAB_DIR, html=True), name="lab"))
+
+# La web de los tutores (docs/) en el resto de rutas. Va la última, así que /mcp y /up siguen yendo al
+# servidor MCP. En la imagen está en /app/site; en local, BEAKMAN_SITE_DIR=$PWD/docs.
 SITE_DIR = os.environ.get("BEAKMAN_SITE_DIR", "/app/site")
 if os.path.isdir(SITE_DIR):
     app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
