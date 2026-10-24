@@ -171,22 +171,9 @@ def buscar_en_temario(consulta: str, asignatura: str | None = None, curso: str |
     return "\n\n".join(h[1] for h in hits[:6]) + REMINDER
 
 
-# ---- prompts: un arranque por asignatura ----------------------------------
-# Sin argumentos: claude.ai pinta cada argumento como un formulario (aunque sea opcional),
-# y eso confunde. El curso lo pregunta Beakman en el chat.
-
-def _starter(nombre: str):
-    def starter() -> str:
-        return (f"Quiero estudiar {nombre} con Beakman. Pregúntame en qué curso estoy y qué quiero "
-                f"repasar, y luego llama a empezar_clase con la asignatura «{nombre}» y sigue sus "
-                f"instrucciones.")
-    return starter
-
-
-for _key, _name in [("historia", "Historia"), ("matematicas", "Matemáticas"),
-                    ("ciencias", "Ciencias"), ("lengua", "Lengua")]:
-    mcp.prompt(name=f"beakman_{_key}", title=f"Beakman de {_name}",
-               description=f"Empieza una clase de {_name} con Beakman.")(_starter(_name))
+# Sin prompts (24-oct-2026): claude.ai mete el texto de un prompt en la conversación como
+# un adjunto, y al alumno le parece que se ha subido un fichero raro. Se empieza escribiendo
+# ("quiero estudiar historia con Beakman") y Claude llama a empezar_clase.
 
 
 # ---- HTTP -----------------------------------------------------------------
