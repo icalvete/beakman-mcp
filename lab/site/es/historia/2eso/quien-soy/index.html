@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Quién soy? · El laboratorio de Beakman</title>
+<meta name="description" content="Juego de personajes del inicio de la Edad Media: adivina quién habla con el menor número de pistas. Historia de 2º de la ESO, Tema 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* ¿Quién soy?: pistas en primera persona, de la más difícil a la más fácil */
+[hidden] { display: none !important; }
+.game { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 22px; align-items: start; }
+.status { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.status .count { font: 600 1.05rem/1.2 var(--display); color: var(--ink); }
+.pips { display: flex; gap: 5px; flex-wrap: wrap; }
+.pip { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
+.pip.now { background: var(--lime); }
+.pip.win { background: #2E7D32; border-color: #2E7D32; }
+.pip.lost { background: #B23B2E; border-color: #B23B2E; }
+
+.clues { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 10px; }
+.clue { display: flex; gap: 12px; align-items: flex-start; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px;
+  animation: pop .25s ease-out; }
+.clue .n { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--lime-soft);
+  border: 2px solid var(--ink); font: 700 .95rem/1 var(--display); color: var(--ink); }
+.clue q { font-size: 1.08rem; quotes: "«" "»"; }
+.clue .pts { margin-left: auto; flex: none; font-size: .8rem; font-weight: 800; color: var(--muted); white-space: nowrap; }
+.clue.locked { border-style: dashed; color: var(--muted); background: transparent; animation: none; }
+@keyframes pop { from { transform: translateY(6px); } to { transform: none; } }
+
+.answerbox { display: grid; gap: 12px; }
+.opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+.opts .chip { justify-content: center; font-size: 1rem; padding: 10px 12px; }
+.opts .chip:disabled { cursor: default; opacity: .75; }
+.typed { display: flex; gap: 8px; flex-wrap: wrap; }
+.typed input { flex: 1 1 260px; border: 2px solid var(--line); border-radius: 12px; padding: 9px 12px; font: 600 1.05rem/1.3 var(--body); color: var(--text); }
+.typed input:focus { outline: none; border-color: var(--ink); }
+.feedback { min-height: 1.6em; font-weight: 700; }
+
+.side { display: grid; gap: 14px; }
+.score { text-align: center; background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 14px; box-shadow: 3px 3px 0 var(--lime); }
+.score b { display: block; font: 700 2.4rem/1 var(--display); color: var(--ink); }
+.score small { color: var(--muted); font-weight: 700; }
+.howto { font-size: .93rem; }
+.howto ul { margin: 6px 0 0; padding-left: 18px; }
+.modes { display: inline-flex; border: 2px solid var(--line); border-radius: 999px; overflow: hidden; }
+.modes button { border: 0; background: #fff; padding: 6px 12px; font: 800 .88rem/1 var(--body); color: var(--muted); cursor: pointer; }
+.modes button + button { border-left: 2px solid var(--line); }
+.modes button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
+
+/* ficha del personaje */
+.card { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 18px; background: #fff; border: 2px solid var(--ink); border-radius: 16px;
+  padding: 16px; margin-top: 4px; animation: pop .3s ease-out; }
+.card figure { margin: 0; display: grid; gap: 4px; align-content: start; }
+.card figure img { width: 100%; height: 240px; object-fit: cover; object-position: center 25%; border-radius: 10px; border: 2px solid var(--line); background: var(--card); }
+.card .noimg { height: 240px; display: grid; place-items: center; text-align: center; padding: 14px; border-radius: 10px; border: 2px dashed var(--line);
+  color: var(--muted); font-weight: 700; background: var(--card); }
+.card h3 { font-size: 1.6rem; }
+.card .dates { font-weight: 800; color: #4F6B0A; margin: 2px 0 8px; }
+.card dl { margin: 0; display: grid; gap: 8px; }
+.card dt { font: 600 1rem/1.2 var(--display); color: var(--ink); }
+.card dd { margin: 0; }
+.card .book { background: var(--lime-soft); border-radius: 10px; padding: 8px 12px; font-size: .95rem; }
+.verdict { font: 600 1.15rem/1.3 var(--display); margin-bottom: 8px; }
+
+.final { display: grid; gap: 14px; }
+.final .big { font: 700 3rem/1 var(--display); color: var(--ink); }
+.failed { display: flex; flex-wrap: wrap; gap: 8px; }
+.failed span { background: #FBE5E1; border: 2px solid #B23B2E; border-radius: 10px; padding: 4px 10px; font-weight: 700; }
+.table-res { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; }
+.table-res td, .table-res th { padding: 6px 10px; border-bottom: 1px solid var(--line); text-align: left; font-size: .95rem; }
+.table-res th { font-family: var(--display); font-weight: 600; color: var(--ink); background: var(--lime-soft); }
+@media (max-width: 860px) { .game { grid-template-columns: 1fr; } .card { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>¿Quién <em>soy</em>?</h1>
+    <p class="lead">Trece personajes del inicio de la Edad Media te hablan en primera persona. La primera pista es difícil; cada una
+      que pidas lo pone más fácil, pero da menos puntos. ¿A cuántos reconoces a la primera?</p>
+  </div>
+
+  <section class="block" id="juego">
+    <div class="game">
+      <div>
+        <div class="status">
+          <span class="count" id="count">Personaje 1 de 13</span>
+          <div class="pips" id="pips" aria-hidden="true"></div>
+        </div>
+        <ol class="clues" id="clues" aria-live="polite"></ol>
+        <div id="play" class="answerbox">
+          <div class="row">
+            <button class="b ghost" id="more" type="button">Dame otra pista</button>
+            <button class="b ghost small" id="giveup" type="button">Me rindo</button>
+          </div>
+          <div class="opts" id="opts"></div>
+          <form class="typed" id="typed" hidden>
+            <input id="guess" type="text" autocomplete="off" spellcheck="false" placeholder="Escribe el nombre (sin preocuparte por las tildes)" aria-label="Tu respuesta">
+            <button class="b" type="submit">Comprobar</button>
+          </form>
+          <p class="feedback" id="feedback" aria-live="polite"></p>
+        </div>
+        <div id="result" hidden></div>
+      </div>
+      <aside class="side">
+        <div class="score"><b id="score">0</b><small>puntos de <span id="max">52</span> posibles</small></div>
+        <div class="soft howto">
+          <b>Cómo responder</b>
+          <div class="modes" role="group" aria-label="Forma de responder" style="margin-top:6px">
+            <button type="button" data-mode="opts" aria-pressed="true">Elegir</button>
+            <button type="button" data-mode="typed" aria-pressed="false">Escribir</button>
+          </div>
+          <ul>
+            <li>Con 1 pista: <b>4 puntos</b>.</li>
+            <li>Con 2: 3 · con 3: 2 · con 4: 1.</li>
+            <li>Si fallas, te doy la siguiente pista.</li>
+            <li>Escribir es más difícil, y se aprende más.</li>
+          </ul>
+        </div>
+        <div class="beak"><img src="../../../../media/beakman.jpg" alt="">
+          <div><b>Truco de Beakman</b>Antes de pedir otra pista, piensa en qué siglo estás y en qué lugar del Mediterráneo. Con eso ya descartas a medio reparto.</div></div>
+        <p class="hint" id="best"></p>
+      </aside>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script type="application/json" id="data">
+[
+ {"id":"romulo","name":"Rómulo Augústulo","alias":["romulo augustulo","romulo","augustulo","romulo augusto"],
+  "clues":["Me sentaron en el trono casi siendo un niño. Quien mandaba de verdad era mi padre, un general.",
+           "Mi apodo significa algo así como «el pequeño Augusto».",
+           "Un jefe germánico me quitó la corona y me mandó a vivir retirado al sur de Italia.",
+           "Fui el último emperador romano de Occidente, hasta el año 476."],
+  "img":"romulo","imgAlt":"Moneda de oro con la cara de Rómulo Augústulo","credit":"ANS","license":"CC0","link":"https://commons.wikimedia.org/wiki/File:Gold_Solidus_of_Romulus_Augustulus.jpg",
+  "dates":"Emperador de Occidente del 475 al 476",
+  "did":"Fue un emperador de adorno: lo nombró su padre, el general Orestes, y casi no gobernó. En el 476 el germano Odoacro lo depuso.",
+  "why":"Con él se acaba el Imperio romano de Occidente. Por eso los historiadores ponen en el 476 el inicio de la Edad Media.",
+  "book":"Apartado 1, «¿Cómo se inició la Edad Media?»"},
+ {"id":"odoacro","name":"Odoacro","alias":["odoacro","odoacer"],
+  "clues":["Fui un jefe militar germánico, al servicio del ejército romano.",
+           "Cuando tuve el poder, no quise llamarme emperador: mandé las insignias imperiales a Constantinopla.",
+           "Mis tropas me proclamaron rey en Italia.",
+           "En el 476 depuse a Rómulo Augústulo, el último emperador de Occidente."],
+  "img":"","imgAlt":"","noimg":"No queda ningún retrato fiable de Odoacro.",
+  "dates":"Hacia el 433 – 493 · rey en Italia del 476 al 493",
+  "did":"Mandaba las tropas germánicas que servían a Roma. En el 476 quitó del trono a Rómulo Augústulo y gobernó Italia como rey.",
+  "why":"Su golpe marca el fin del Imperio romano de Occidente. Ya no hubo más emperadores en Occidente hasta Carlomagno, en el 800.",
+  "book":"Apartado 1, «¿Cómo se inició la Edad Media?»"},
+ {"id":"justiniano","name":"Justiniano","alias":["justiniano","justiniano i","justiniano primero","justinian"],
+  "clues":["Durante una gran revuelta en mi capital pensé en huir, pero mi esposa Teodora me convenció de quedarme.",
+           "Mis generales recuperaron Italia, el norte de África y hasta un trozo del sur de Hispania.",
+           "Mandé construir una iglesia con una cúpula enorme: Santa Sofía, en Constantinopla.",
+           "Reuní las leyes romanas en un código que lleva mi nombre."],
+  "img":"justiniano","imgAlt":"Justiniano en el mosaico de San Vital de Rávena","credit":"Petar Milošević","license":"CC BY-SA 4.0","link":"https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg",
+  "dates":"Hacia el 482 – 565 · emperador bizantino del 527 al 565",
+  "did":"Quiso rehacer el viejo Imperio romano: reconquistó tierras en Italia, África y el sur de Hispania, recopiló las leyes romanas y levantó Santa Sofía.",
+  "why":"Con él, el Imperio bizantino vivió su época de mayor esplendor. Su código de leyes es la base del derecho de muchos países, también el nuestro. (Tu libro pone 518: ese año empezó a reinar su tío Justino, y Justiniano ya le ayudaba a gobernar. En el examen, pon las fechas de tu libro.)",
+  "book":"Apartado 2, «¿Fue el Imperio bizantino una continuidad del romano?»"},
+ {"id":"clodoveo","name":"Clodoveo","alias":["clodoveo","clodoveo i","clovis"],
+  "clues":["Junté bajo mi mando a casi todas las tribus de mi pueblo germánico.",
+           "Hice de París la capital de mi reino.",
+           "Hacia el año 500 me bauticé como cristiano católico, y mi pueblo me siguió.",
+           "Soy el rey de los francos que en el 507 venció a los visigodos en Vouillé."],
+  "img":"clodoveo","imgAlt":"El bautismo de Clodoveo, pintura del siglo XV","credit":"Maestro de Saint-Gilles","license":"Dominio público","link":"https://commons.wikimedia.org/wiki/File:Master_Of_Saint_Gilles_-_The_Baptism_of_Clovis_-_WGA14482.jpg",
+  "dates":"Hacia el 466 – 511 · rey de los francos desde el 481",
+  "did":"Unió a los francos, se hizo católico y en la batalla de Vouillé (507) echó a los visigodos de casi toda la Galia.",
+  "why":"Tras Vouillé, los visigodos se fueron a Hispania, que acabó siendo el centro de su reino. Y el reino franco que él fundó es la semilla de Francia.",
+  "book":"Apartado 4, «Un pueblo germánico asentado en Hispania: los visigodos» (la batalla de Vouillé)"},
+ {"id":"leovigildo","name":"Leovigildo","alias":["leovigildo"],
+  "clues":["Fui el primer rey de mi pueblo que se sentó en un trono y vistió como los emperadores.",
+           "Mi propio hijo, Hermenegildo, se rebeló contra mí.",
+           "En el 585 conquisté el reino de los suevos, en Galicia.",
+           "Fui un rey visigodo que hizo de Toledo la gran capital y luchó por dominar toda la península."],
+  "img":"leovigildo","imgAlt":"Leovigildo, retrato imaginado del siglo XIX","credit":"Juan de Barroeta","license":"Dominio público","link":"https://commons.wikimedia.org/wiki/File:El_rey_Leovigildo_(Museo_del_Prado).jpg",
+  "dates":"Rey visigodo del 568 al 586",
+  "did":"Hizo campañas por toda la península, acabó con el reino suevo y fijó la capital en Toledo. Quiso una monarquía fuerte, al estilo de Bizancio.",
+  "why":"Con él, el reino visigodo pasó a dominar casi toda Hispania. Solo quedaban fuera algunos pueblos del norte y la franja bizantina del sur.",
+  "book":"Apartado 4, «Un pueblo germánico asentado en Hispania: los visigodos» (mapa de sus campañas)"},
+ {"id":"recaredo","name":"Recaredo","alias":["recaredo","recaredo i"],
+  "clues":["Mi padre fue un rey muy guerrero, y yo le sucedí en el trono.",
+           "Mi pueblo era arriano: cristianos, pero con una creencia distinta de la de los hispanorromanos.",
+           "En el III Concilio de Toledo, en el 589, todo el reino se hizo católico.",
+           "Soy el rey visigodo que se convirtió al catolicismo para unir a visigodos e hispanorromanos."],
+  "img":"recaredo","imgAlt":"La conversión de Recaredo, pintura del siglo XIX","credit":"Autor desconocido","license":"Dominio público","link":"https://commons.wikimedia.org/wiki/File:Reccaredo-1.jpg",
+  "dates":"Rey visigodo del 586 al 601",
+  "did":"Hijo de Leovigildo. Se hizo católico en el 587 y en el III Concilio de Toledo (589) el reino abandonó el arrianismo.",
+  "why":"Visigodos e hispanorromanos pasaron a compartir religión. Ese paso, y luego una misma ley (el Liber Iudiciorum), los fue uniendo en un solo pueblo.",
+  "book":"Apartado 4, «Un pueblo germánico asentado en Hispania: los visigodos» (la importancia de la Iglesia)"},
+ {"id":"mahoma","name":"Mahoma","alias":["mahoma","muhammad","mohamed","mahoma el profeta","el profeta mahoma"],
+  "clues":["Nací en La Meca hacia el 570 y de joven trabajé en el comercio de caravanas.",
+           "Según la tradición musulmana, hacia el 610 el arcángel Gabriel me transmitió el mensaje de Alá.",
+           "En el 622 tuve que irme de La Meca a Medina. Ese viaje se llama Hégira.",
+           "Soy el profeta del islam."],
+  "img":"kaaba","imgAlt":"La Kaaba, en La Meca","credit":"Tahir mq","license":"CC BY-SA 4.0","link":"https://commons.wikimedia.org/wiki/File:Kaaba_111.jpg",
+  "imgNote":"En el islam no se representa al profeta. Por eso aquí ves la Kaaba, en La Meca, su ciudad.",
+  "dates":"Hacia el 570 – 632",
+  "did":"Predicó una nueva religión monoteísta, el islam. Tras la Hégira (622) reunió seguidores en Medina, conquistó La Meca y unió a casi toda Arabia.",
+  "why":"La Hégira es el año 1 del calendario musulmán. Tras su muerte (632), sus sucesores, los califas, extendieron el islam desde la India hasta la península ibérica.",
+  "book":"Apartado 7, «¿Cómo surgió y se expandió el islam?»"},
+ {"id":"tariq","name":"Tariq","alias":["tariq","tarik","tariq ibn ziyad","tarik ibn ziyad","tareq"],
+  "clues":["Fui un jefe bereber, del norte de África, al servicio del gobernador musulmán Musa.",
+           "Una gran roca junto al estrecho lleva hoy mi nombre, un poco cambiado por el paso de los siglos.",
+           "En el 711 crucé el estrecho con un ejército pequeño.",
+           "Vencí al rey visigodo Rodrigo en la batalla de Guadalete."],
+  "img":"guadalete","imgAlt":"El rey Rodrigo arengando a sus tropas en Guadalete, pintura del siglo XIX","credit":"Bernardo Blanco y Pérez","license":"Dominio público","link":"https://commons.wikimedia.org/wiki/File:El_rey_Don_Rodrigo_arengando_a_sus_tropas_en_la_batalla_de_Guadalete_(Museo_del_Prado).jpg",
+  "imgNote":"No hay retrato de Tariq. El cuadro muestra a su rival, el rey Rodrigo, en Guadalete.",
+  "dates":"Murió hacia el 720 · cruzó el estrecho en el 711",
+  "did":"Mandó el ejército musulmán que entró en la península en el 711 y derrotó al rey Rodrigo en Guadalete. Gibraltar viene de «Yabal Tariq», la montaña de Tariq.",
+  "why":"Aquella victoria hundió el reino visigodo. En pocos años los musulmanes dominaron casi toda la península y nació al-Ándalus.",
+  "book":"Apartado 8, «Al-Ándalus. ¿Cómo se originó y evolucionó?» (la conquista del reino visigodo)"},
+ {"id":"pelayo","name":"Pelayo","alias":["pelayo","don pelayo"],
+  "clues":["Fui un noble visigodo que se refugió en las montañas del norte.",
+           "Los astures me eligieron como su jefe.",
+           "Según la tradición, hacia el 722 vencí a una tropa musulmana junto a una cueva de los Picos de Europa.",
+           "Con mi victoria en Covadonga empezó el reino de Asturias."],
+  "img":"pelayo","imgAlt":"Don Pelayo, retrato imaginado del siglo XIX","credit":"Luis de Madrazo y Kuntz","license":"CC BY-SA 4.0","link":"https://commons.wikimedia.org/wiki/File:Don_Pelayo,_rey_de_Asturias.jpg",
+  "dates":"Murió en el 737 · Covadonga, hacia el 722",
+  "did":"Encabezó a los cristianos que resistían en la franja montañosa del norte y venció en Covadonga.",
+  "why":"El reino de Asturias fue el primer reino cristiano de la península tras la conquista musulmana. De él saldrá después el reino de León.",
+  "book":"Apartado 8, «Al-Ándalus. ¿Cómo se originó y evolucionó?» (Covadonga, en el mapa y en las preguntas)"},
+ {"id":"carlomagno","name":"Carlomagno","alias":["carlomagno","carlos el grande","carlos i el grande","carlos magno"],
+  "clues":["Mi abuelo, Carlos Martel, frenó a los musulmanes en Poitiers.",
+           "Para vigilar a mis condes y marqueses enviaba inspectores: los missi dominici.",
+           "Mi corte estaba en Aquisgrán y allí hubo un renacer de la cultura.",
+           "El papa León III me coronó emperador en la Navidad del año 800."],
+  "img":"carlomagno","imgAlt":"Carlomagno, retrato imaginado del siglo XIX","credit":"Louis-Félix Amiel","license":"Dominio público","link":"https://commons.wikimedia.org/wiki/File:Louis-F%C3%A9lix_Amiel_-_Charlemagne_empereur_d%27Occident_(742-814).jpg",
+  "dates":"Hacia el 742 – 814 · emperador desde el 800",
+  "did":"Rey de los francos, conquistó gran parte de Europa occidental y la organizó en condados y marcas, con leyes llamadas capitulares.",
+  "why":"Volvió a haber un emperador en Occidente por primera vez desde el 476. Su imperio se partió en el 843 (Tratado de Verdún), y de esos trozos salen Francia y Alemania.",
+  "book":"Apartado 5, «¿Consiguió Carlomagno crear un gran imperio cristiano?»"},
+ {"id":"abderraman1","name":"Abderramán I","alias":["abderraman i","abderraman primero","abderraman 1","abd al rahman i","abd al-rahman i","abd al rahman 1","abdal rahman i"],
+  "clues":["Los abasíes mataron a casi toda mi familia, los omeyas. Yo escapé por muy poco.",
+           "Huí a través del norte de África hasta llegar a al-Ándalus.",
+           "Empecé a construir la gran mezquita de Córdoba.",
+           "En el 756 me proclamé emir independiente en Córdoba."],
+  "img":"abderraman1","imgAlt":"Estatua de Abderramán I en Almuñécar","credit":"Pablogilena","license":"CC BY-SA 4.0","link":"https://commons.wikimedia.org/wiki/File:Abderramanalmu%C3%B1ecar.jpg",
+  "dates":"731 – 788 · emir de Córdoba del 756 al 788",
+  "did":"Último superviviente de los omeyas de Damasco. Llegó a al-Ándalus y fundó el Emirato independiente de Córdoba (756).",
+  "why":"Desde él, al-Ándalus ya no obedece políticamente a Bagdad (aunque sigue aceptando su autoridad religiosa). Y comenzó la Mezquita de Córdoba.",
+  "book":"Apartado 8, «Al-Ándalus. ¿Cómo se originó y evolucionó?» (del emirato dependiente al independiente)"},
+ {"id":"abderraman3","name":"Abderramán III","alias":["abderraman iii","abderraman tercero","abderraman 3","abd al rahman iii","abd al-rahman iii","abd al rahman 3","abdal rahman iii"],
+  "clues":["Cuando llegué al poder, al-Ándalus estaba lleno de rebeliones, y fui acabando con ellas.",
+           "Mandé construir una ciudad-palacio junto a Córdoba: Medina Azahara.",
+           "En mi época, Córdoba se convirtió en la ciudad más poblada de Europa.",
+           "En el 929 me proclamé califa: ya no obedecía a Bagdad ni en lo religioso."],
+  "img":"abderraman3","imgAlt":"Moneda de plata (dírham) de Abderramán III","credit":"Numismática Pliego","license":"CC BY-SA 3.0","link":"https://commons.wikimedia.org/wiki/File:Dirham_abd_al_rahman_iii_17494.jpg",
+  "dates":"891 – 961 · emir desde el 912 y califa del 929 al 961",
+  "did":"Acabó con las rebeliones, frenó a los reinos cristianos y en el 929 creó el Califato de Córdoba.",
+  "why":"Abrió la época de mayor esplendor de al-Ándalus: comercio entre Oriente y Europa, ciencia, cultura y una Córdoba enorme.",
+  "book":"Apartado 8, «Al-Ándalus. ¿Cómo se originó y evolucionó?» (el esplendor del Califato de Córdoba)"},
+ {"id":"almanzor","name":"Almanzor","alias":["almanzor","al mansur","al-mansur","almansur"],
+  "clues":["No fui califa: gobernaba en nombre de un califa que era un niño, Hisham II.",
+           "Amplié la Mezquita de Córdoba por última vez y la dejé enorme.",
+           "Mi nombre árabe, al-Mansur, significa «el victorioso».",
+           "Hice decenas de razias contra los reinos cristianos; en el 997 saqueé Santiago de Compostela."],
+  "img":"mezquitacordoba","imgAlt":"Los arcos de la Mezquita de Córdoba","credit":"Timor Espallargas","license":"CC BY-SA 2.5","link":"https://commons.wikimedia.org/wiki/File:Mosque_Cordoba_edited.jpg",
+  "imgNote":"No hay retrato de Almanzor. Aquí ves la Mezquita de Córdoba, que él amplió.",
+  "dates":"Hacia el 938 – 1002",
+  "did":"Fue el hombre fuerte del Califato de Córdoba. Con sus expediciones militares (razias) obligó a los reinos cristianos a pagar parias.",
+  "why":"Fue el último gran momento de poder del califato. Pocos años después de su muerte empezó la guerra civil que acabó con él (1031) y dio paso a las taifas.",
+  "book":"Apartado 8, «Al-Ándalus. ¿Cómo se originó y evolucionó?» (lo llama Al-Mansur)"}
+]
+</script>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.quien-soy.t1';
+  const ALL = JSON.parse(document.getElementById('data').textContent);
+  const IMG = '../../../../media/cronomapa-edad-media/';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[-'’.,;:¿?¡!]/g, ' ')
+    .replace(/\bprimero\b/g, 'i').replace(/\btercero\b/g, 'iii').replace(/\s+/g, ' ').trim();
+
+  let mode = store.get(KEY + '.mode', 'opts');
+  let deck = [], idx = 0, shown = 1, score = 0, results = [], done = false, isRetry = false;
+
+  function start(list, retry) {
+    deck = shuffle(list); idx = 0; score = 0; results = []; isRetry = !!retry;
+    $('max').textContent = deck.length * 4;
+    $('juego').scrollIntoView({ block: 'start', behavior: 'smooth' });
+    next();
+  }
+
+  function next() {
+    shown = 1; done = false;
+    $('result').hidden = true; $('result').innerHTML = '';
+    $('play').hidden = false; $('feedback').textContent = '';
+    $('guess').value = '';
+    renderStatus(); renderClues(); renderAnswers();
+    if (mode === 'typed') $('guess').focus();
+  }
+
+  function renderStatus() {
+    $('count').textContent = (isRetry ? 'Repaso · ' : '') + 'Personaje ' + (idx + 1) + ' de ' + deck.length;
+    $('score').textContent = score;
+    $('pips').innerHTML = deck.map((_, i) => {
+      const r = results[i];
+      return '<span class="pip' + (i === idx && !r ? ' now' : '') + (r ? (r.pts ? ' win' : ' lost') : '') + '"></span>';
+    }).join('');
+  }
+
+  function renderClues() {
+    const p = deck[idx];
+    $('clues').innerHTML = p.clues.map((c, i) => i < shown
+      ? '<li class="clue"><span class="n">' + (i + 1) + '</span><q>' + esc(c) + '</q><span class="pts">' + (i === shown - 1 && !done ? 'ahora vale ' + (4 - i) + ' pt' : '') + '</span></li>'
+      : '<li class="clue locked"><span class="n">' + (i + 1) + '</span><span>Pista guardada</span></li>').join('');
+    $('more').disabled = shown >= p.clues.length || done;
+  }
+
+  function renderAnswers() {
+    const p = deck[idx];
+    document.querySelectorAll('.modes button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    $('opts').hidden = mode !== 'opts'; $('typed').hidden = mode !== 'typed';
+    const others = shuffle(ALL.filter((x) => x.id !== p.id)).slice(0, 5);
+    $('opts').innerHTML = shuffle([p, ...others]).map((x) => '<button type="button" class="chip" data-id="' + x.id + '">' + esc(x.name) + '</button>').join('');
+  }
+
+  function wrong(msg) {
+    const p = deck[idx];
+    if (shown < p.clues.length) {
+      shown++; renderClues();
+      $('feedback').innerHTML = '<span class="kot">' + msg + '</span> Te doy otra pista.';
+    } else finish(false);
+  }
+
+  function check(id, label) {
+    if (done) return;
+    if (id === deck[idx].id) finish(true);
+    else wrong('No, no soy ' + esc(label) + '.');
+  }
+
+  $('opts').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-id]'); if (!b || b.disabled) return;
+    const ok = b.dataset.id === deck[idx].id;
+    if (!ok) { b.classList.add('ko'); b.disabled = true; }
+    check(b.dataset.id, b.textContent);
+  });
+
+  $('typed').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const raw = $('guess').value; const g = norm(raw); if (!g) return;
+    const p = deck[idx];
+    if (p.alias.some((a) => norm(a) === g)) return finish(true);
+    if (/^(abderraman|abd al rahman|abdal rahman|abd alrahman)$/.test(g) && p.id.startsWith('abderraman')) {
+      $('feedback').innerHTML = '<span class="kot">¡Casi!</span> Hubo varios Abderramanes. ¿Cuál? Añade el número (I o III).';
+      return;
+    }
+    const other = ALL.find((x) => x.alias.some((a) => norm(a) === g));
+    $('guess').value = '';
+    wrong(other ? 'No, no soy ' + esc(other.name) + '.' : 'No es «' + esc(raw.trim()) + '».');
+  });
+
+  $('more').addEventListener('click', () => { const p = deck[idx]; if (shown < p.clues.length) { shown++; renderClues(); $('feedback').textContent = ''; } });
+  $('giveup').addEventListener('click', () => { if (!done) finish(false); });
+  document.querySelectorAll('.modes button').forEach((b) => b.addEventListener('click', () => {
+    mode = b.dataset.mode; store.set(KEY + '.mode', mode);
+    if (!done) { renderAnswers(); if (mode === 'typed') $('guess').focus(); }
+  }));
+
+  function finish(ok) {
+    const p = deck[idx]; done = true;
+    const pts = ok ? 4 - (shown - 1) : 0;
+    score += pts; results[idx] = { id: p.id, pts, clues: shown };
+    shown = p.clues.length; renderClues(); renderStatus();
+    $('play').hidden = true;
+    const praise = ok ? (pts === 4 ? '¡A la primera! +4 puntos.' : pts === 3 ? '¡Muy bien! Con dos pistas: +3 puntos.' : '¡Lo tienes! +' + pts + (pts === 1 ? ' punto.' : ' puntos.'))
+                      : 'Esta vez no. Lee su ficha: la próxima lo reconoces.';
+    const fig = p.img
+      ? '<figure><img src="' + IMG + p.img + '.jpg" alt="' + esc(p.imgAlt) + '" loading="lazy">' +
+        (p.imgNote ? '<span class="credit">' + esc(p.imgNote) + '</span>' : '') +
+        '<span class="credit">Imagen: ' + esc(p.credit) + ' · ' + esc(p.license) + ' · <a href="' + esc(p.link) + '" target="_blank" rel="noopener">Wikimedia Commons</a></span></figure>'
+      : '<figure><div class="noimg">' + esc(p.noimg) + '</div></figure>';
+    const last = idx === deck.length - 1;
+    $('result').innerHTML =
+      '<p class="verdict ' + (ok ? 'okt' : 'kot') + '">' + praise + '</p>' +
+      '<div class="card">' + fig + '<div><h3>' + esc(p.name) + '</h3><p class="dates">' + esc(p.dates) + '</p><dl>' +
+      '<dt>Qué hizo</dt><dd>' + esc(p.did) + '</dd>' +
+      '<dt>Por qué importa</dt><dd>' + esc(p.why) + '</dd>' +
+      '<dt>En tu libro</dt><dd class="book">' + esc(p.book) + '</dd></dl></div></div>' +
+      '<div class="row" style="margin-top:14px"><button class="b" id="nextBtn" type="button">' + (last ? 'Ver mi resultado' : 'Siguiente personaje →') + '</button></div>';
+    $('result').hidden = false;
+    $('nextBtn').addEventListener('click', () => { if (last) final(); else { idx++; next(); } });
+    $('nextBtn').focus({ preventScroll: true });
+  }
+
+  function final() {
+    $('clues').innerHTML = ''; $('play').hidden = true;
+    $('count').textContent = isRetry ? 'Repaso terminado' : '¡Partida terminada!';
+    renderStatusEnd();
+    const max = deck.length * 4;
+    const failed = results.filter((r) => !r.pts).map((r) => ALL.find((x) => x.id === r.id));
+    const firsts = results.filter((r) => r.pts === 4).length;
+    let msg;
+    const ratio = score / max;
+    if (ratio >= .8) msg = 'Te mueves por el inicio de la Edad Media como por tu casa.';
+    else if (ratio >= .5) msg = 'Buen trabajo. Repasa los que se te resistieron y vuelve a jugar: verás cómo sube.';
+    else msg = 'Ya has conocido a todos. La segunda partida siempre sale mejor: el cerebro ya tiene dónde colgar cada pista.';
+    if (!isRetry) {
+      const best = store.get(KEY + '.best', 0);
+      if (score > best) store.set(KEY + '.best', score);
+    }
+    $('result').innerHTML =
+      '<div class="final"><p class="big">' + score + ' <small style="font-size:1.2rem">de ' + max + ' puntos</small></p>' +
+      '<p>' + msg + ' Has acertado a la primera <b>' + firsts + '</b> ' + (firsts === 1 ? 'vez' : 'veces') + '.</p>' +
+      (failed.length ? '<div><b>Para repetir:</b><div class="failed" style="margin-top:6px">' + failed.map((f) => '<span>' + esc(f.name) + '</span>').join('') + '</div></div>'
+                     : '<p class="okt">¡No has fallado ninguno!</p>') +
+      '<table class="table-res"><thead><tr><th>Personaje</th><th>Pistas usadas</th><th>Puntos</th></tr></thead><tbody>' +
+      results.map((r) => { const p = ALL.find((x) => x.id === r.id); return '<tr><td>' + esc(p.name) + '</td><td>' + (r.pts ? r.clues : '—') + '</td><td class="' + (r.pts ? 'okt' : 'kot') + '">' + r.pts + '</td></tr>'; }).join('') +
+      '</tbody></table>' +
+      '<div class="row">' + (failed.length ? '<button class="b" id="retry" type="button">Repetir los que fallé (' + failed.length + ')</button>' : '') +
+      '<button class="b ghost" id="again" type="button">Jugar otra vez con todos</button></div></div>';
+    $('result').hidden = false;
+    if (failed.length) $('retry').addEventListener('click', () => start(failed, true));
+    $('again').addEventListener('click', () => start(ALL, false));
+    showBest();
+  }
+
+  function renderStatusEnd() {
+    $('score').textContent = score;
+    $('pips').innerHTML = results.map((r) => '<span class="pip ' + (r.pts ? 'win' : 'lost') + '"></span>').join('');
+  }
+
+  function showBest() {
+    const best = store.get(KEY + '.best', 0);
+    $('best').textContent = best ? 'Tu mejor partida completa en este ordenador: ' + best + ' puntos.' : '';
+  }
+
+  showBest();
+  start(ALL, false);
+  window.scrollTo(0, 0);
+})();
+</script>
+</body>
+</html>

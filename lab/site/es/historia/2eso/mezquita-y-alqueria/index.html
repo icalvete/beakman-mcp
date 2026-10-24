@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La mezquita y la alquería por dentro · El laboratorio de Beakman</title>
+<meta name="description" content="Dos dibujos para pulsar: las partes de una mezquita y de una alquería andalusí de regadío, con un modo para ponerte a prueba. Tema 1, La huella andalusí.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.stage { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: 18px; align-items: start; }
+.draw { background: #FFFDF6; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.draw svg { display: block; width: 100%; height: auto; font-family: var(--body); }
+.side { display: grid; gap: 12px; }
+.modes { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; background: #fff; }
+.modes button { border: 0; background: #fff; font: 800 .92rem/1 var(--body); color: var(--ink); padding: 8px 14px; cursor: pointer; }
+.modes button + button { border-left: 2px solid var(--ink); }
+.modes button[aria-pressed="true"] { background: var(--lime); }
+.info { background: #fff; border: 1.5px solid var(--line); border-left: 6px solid var(--lime); border-radius: 0 14px 14px 0; padding: 12px 16px; min-height: 150px; }
+.info h3 { font-size: 1.3rem; margin-bottom: 6px; }
+.info p + p { margin-top: 8px; }
+.info .extra { font-size: .95rem; background: var(--note); border-radius: 10px; padding: 8px 10px; }
+.info .extra b { color: var(--ink); }
+.quiz { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 16px; display: grid; gap: 8px; }
+.quiz .ask { font: 600 1.35rem/1.2 var(--display); color: var(--ink); }
+.quiz .fb { min-height: 1.6em; font-weight: 700; }
+.score { display: flex; gap: 14px; font-weight: 800; }
+.score .okt, .score .kot { font-size: 1.05rem; }
+[hidden] { display: none !important; }
+
+/* piezas del dibujo */
+.part { cursor: pointer; }
+.part .hl { fill: none; stroke: transparent; stroke-width: 5; transition: stroke .15s; }
+.part:hover .hl { stroke: rgba(166, 212, 30, .95); }
+.part.on .hl { stroke: #1F3A0B; stroke-dasharray: 8 5; }
+.part.good .hl { stroke: #2E7D32; stroke-dasharray: none; stroke-width: 6; }
+.part.bad .hl { stroke: #B23B2E; stroke-dasharray: none; stroke-width: 6; }
+.lbl { cursor: pointer; }
+.lbl rect { fill: #fff; stroke: #1F3A0B; stroke-width: 1.5; }
+.lbl text { font: 800 15px var(--body); fill: #1F3A0B; }
+.lbl line { stroke: #1F3A0B; stroke-width: 1.3; stroke-dasharray: 3 3; }
+.lbl circle { fill: #1F3A0B; }
+.lbl.on rect { fill: var(--lime); }
+.nolabels .lbl { display: none; }
+.decor { pointer-events: none; }
+.chip { font-family: var(--body); }
+
+.crops { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; align-items: center; }
+.crops b { margin-right: 4px; }
+.crops span { background: #fff; border: 1.5px solid var(--line); border-radius: 999px; padding: 2px 10px; font-weight: 700; font-size: .92rem; }
+
+.traps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.trap { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; }
+.trap h3 { font-size: 1.05rem; }
+.trap .opts { display: grid; gap: 6px; }
+.trap .chip { justify-content: flex-start; font-size: .95rem; }
+.trap .why2 { font-size: .93rem; }
+
+.pillars { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; counter-reset: p; }
+.pillar { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 12px 12px 14px; display: grid; gap: 4px; align-content: start; }
+.pillar .n { width: 34px; height: 34px; border-radius: 50%; background: var(--lime); border: 2px solid var(--ink); display: grid; place-items: center;
+  font: 700 1.05rem/1 var(--display); color: var(--ink); }
+.pillar h3 { font-size: 1.05rem; }
+.pillar p { font-size: .92rem; }
+
+@media (max-width: 900px) {
+  .stage { grid-template-columns: 1fr; }
+  .traps, .pillars { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>La mezquita y la alquería <em>por dentro</em></h1>
+    <p class="lead">Dos sitios clave de al-Ándalus: donde se rezaba y donde se cultivaba. Pulsa cada parte para saber qué es y para qué servía. Cuando te las sepas, ponte a prueba sin etiquetas.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes de la página">
+    <a href="#mezquita">La mezquita</a><a href="#trampas">Trampas típicas</a><a href="#alqueria">La alquería</a><a href="#deberes">Los cinco deberes</a>
+  </nav>
+
+  <section class="block" id="mezquita">
+    <h2>La mezquita</h2>
+    <p class="hint">La mezquita es el lugar donde los musulmanes rezan juntos. La dirige el imán. Aquí la ves desde arriba, como un plano.</p>
+    <div class="stage">
+      <div class="draw">
+        <svg id="svg-mez" viewBox="0 0 760 510" role="img" aria-label="Plano de una mezquita con sus partes">
+          <defs>
+            <pattern id="tiles" width="20" height="20" patternUnits="userSpaceOnUse">
+              <rect width="20" height="20" fill="#F3DFB8"/><path d="M0 0H20V20" fill="none" stroke="#E4C691" stroke-width="1.2"/>
+            </pattern>
+            <pattern id="naves" width="30" height="10" patternUnits="userSpaceOnUse" x="137">
+              <rect width="15" height="10" fill="#F8E7C8"/><rect x="15" width="15" height="10" fill="#F2DAB0"/>
+            </pattern>
+            <radialGradient id="agua" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#BFE6F2"/><stop offset="1" stop-color="#5BAFD0"/></radialGradient>
+            <linearGradient id="oro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7D774"/><stop offset="1" stop-color="#D49A2A"/></linearGradient>
+          </defs>
+          <rect width="760" height="510" fill="#FFFDF6"/>
+          <g class="decor">
+            <path d="M560 54 V14" stroke="#1F3A0B" stroke-width="3"/><path d="M552 24 L560 10 L568 24 Z" fill="#1F3A0B"/>
+            <text x="574" y="30" font-size="14" font-weight="800" fill="#1F3A0B">hacia La Meca</text>
+            <rect x="124" y="58" width="472" height="446" rx="6" fill="#C98C4F"/>
+          </g>
+
+          <!-- sala de oraciones -->
+          <g class="part" data-id="sala">
+            <rect x="130" y="76" width="460" height="184" fill="url(#naves)"/>
+            <g fill="#A0522D">
+              <!-- columnas: se generan con JS -->
+            </g>
+            <rect class="hl" x="133" y="79" width="454" height="178" rx="4"/>
+          </g>
+
+          <!-- patio -->
+          <g class="part" data-id="patio">
+            <rect x="130" y="262" width="460" height="188" fill="url(#tiles)"/>
+            <rect x="130" y="262" width="22" height="188" fill="#E6C48E"/><rect x="568" y="262" width="22" height="188" fill="#E6C48E"/>
+            <g id="naranjos"></g>
+            <rect class="hl" x="133" y="265" width="454" height="182" rx="4"/>
+          </g>
+          <!-- muro entre patio y sala, con arcos -->
+          <g class="decor">
+            <rect x="130" y="256" width="460" height="8" fill="#B5703A"/>
+            <g fill="#F3DFB8" id="arcos"></g>
+          </g>
+
+          <!-- fuente -->
+          <g class="part" data-id="fuente">
+            <polygon points="352,330 368,330 380,342 380,358 368,370 352,370 340,358 340,342" fill="#E9D6B0" stroke="#A0522D" stroke-width="3"/>
+            <circle cx="360" cy="350" r="13" fill="url(#agua)"/>
+            <circle cx="360" cy="350" r="3" fill="#fff"/>
+            <polygon class="hl" points="350,324 370,324 386,340 386,360 370,376 350,376 334,360 334,340"/>
+          </g>
+
+          <!-- minarete -->
+          <g class="part" data-id="minarete">
+            <rect x="340" y="452" width="56" height="56" fill="#000" opacity=".12"/>
+            <rect x="334" y="446" width="52" height="52" fill="#D9A15F" stroke="#7A3F18" stroke-width="3"/>
+            <rect x="345" y="457" width="30" height="30" fill="#C7853F" stroke="#7A3F18" stroke-width="2"/>
+            <circle cx="360" cy="472" r="9" fill="url(#oro)" stroke="#7A3F18" stroke-width="1.5"/>
+            <rect class="hl" x="329" y="441" width="62" height="62" rx="4"/>
+          </g>
+
+          <!-- quibla -->
+          <g class="part" data-id="quibla">
+            <rect x="124" y="58" width="472" height="18" fill="#8E3B1E"/>
+            <g fill="#B4532A"><rect x="150" y="62" width="160" height="4"/><rect x="410" y="62" width="160" height="4"/></g>
+            <rect class="hl" x="120" y="54" width="480" height="26" rx="4"/>
+          </g>
+
+          <!-- mihrab -->
+          <g class="part" data-id="mihrab">
+            <path d="M342 76 V52 L350 42 H370 L378 52 V76 Z" fill="url(#oro)" stroke="#7A3F18" stroke-width="3"/>
+            <path d="M352 76 V58 Q360 49 368 58 V76 Z" fill="#7A3F18" opacity=".55"/>
+            <path class="hl" d="M336 82 V50 L347 36 H373 L384 50 V82 Z"/>
+          </g>
+
+          <!-- mimbar -->
+          <g class="part" data-id="mimbar">
+            <rect x="388" y="80" width="18" height="40" fill="#6B3A1E"/>
+            <g fill="#A8683A"><rect x="390" y="84" width="14" height="6"/><rect x="390" y="93" width="14" height="6"/><rect x="390" y="102" width="14" height="6"/><rect x="390" y="111" width="14" height="6"/></g>
+            <rect x="386" y="78" width="22" height="5" fill="#3D1F0C"/>
+            <rect class="hl" x="382" y="74" width="30" height="52" rx="4"/>
+          </g>
+        </svg>
+      </div>
+      <div class="side">
+        <div class="row">
+          <div class="modes" role="group" aria-label="Modo">
+            <button type="button" data-mode="explore" aria-pressed="true">Explorar</button>
+            <button type="button" data-mode="quiz" aria-pressed="false">Ponte a prueba</button>
+          </div>
+        </div>
+        <div class="info" aria-live="polite"><h3>Pulsa una parte</h3><p>Toca cualquier zona del plano o su etiqueta. Te cuento qué es y para qué sirve.</p></div>
+        <div class="quiz" hidden aria-live="polite">
+          <div class="ask"></div>
+          <div class="fb"></div>
+          <div class="score"><span class="okt">✓ 0</span><span class="kot">✗ 0</span><span class="left"></span></div>
+          <div class="row"><button type="button" class="b small again" hidden>Otra vez</button><span class="best" style="color:var(--muted);font-size:.92rem"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="trampas">
+    <h2>Trampas típicas del examen</h2>
+    <p class="hint">Tres preguntas donde mucha gente se lía. Elige una respuesta en cada tarjeta.</p>
+    <div class="traps" id="traps"></div>
+  </section>
+
+  <section class="block" id="alqueria">
+    <h2>La alquería andalusí</h2>
+    <p class="hint">Una alquería era una aldea o granja del campo, rodeada de tierras de regadío. Todo gira alrededor del agua: cómo subirla, llevarla y guardarla.</p>
+    <div class="stage">
+      <div class="draw">
+        <svg id="svg-alq" viewBox="0 0 760 500" role="img" aria-label="Dibujo de una alquería andalusí con sus partes">
+          <defs>
+            <pattern id="trigo" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+              <rect width="10" height="10" fill="#EBD27A"/><rect width="10" height="3" fill="#D9B850"/>
+            </pattern>
+            <pattern id="arrozal" width="12" height="12" patternUnits="userSpaceOnUse">
+              <rect width="12" height="12" fill="#B9DD8A"/><rect width="12" height="4" fill="#9CCB6A"/><circle cx="6" cy="9" r="1.2" fill="#7FB5D0"/>
+            </pattern>
+            <pattern id="surcos" width="8" height="8" patternUnits="userSpaceOnUse">
+              <rect width="8" height="8" fill="#8DBF55"/><rect width="8" height="3" fill="#6FA53E"/>
+            </pattern>
+            <linearGradient id="rio" x1="0" x2="1"><stop offset="0" stop-color="#78C3DD"/><stop offset=".5" stop-color="#4FA6CC"/><stop offset="1" stop-color="#78C3DD"/></linearGradient>
+          </defs>
+          <rect width="760" height="500" fill="#E4EBC0"/>
+          <g class="decor" stroke="#C9B57E" stroke-width="10" fill="none" stroke-linecap="round">
+            <path d="M0 300 H40"/><path d="M200 470 V495"/>
+          </g>
+
+          <!-- cultivos -->
+          <g class="part" data-id="cultivos">
+            <rect x="12" y="345" width="180" height="143" rx="6" fill="url(#trigo)"/>
+            <rect x="216" y="445" width="404" height="45" rx="6" fill="url(#arrozal)"/>
+            <path class="hl" d="M8 341 H196 V441 H624 V494 H8 Z"/>
+          </g>
+
+          <!-- frutales -->
+          <g class="part" data-id="frutales">
+            <rect x="12" y="160" width="180" height="170" rx="6" fill="#CFE0A0"/>
+            <g id="arboles"></g>
+            <rect class="hl" x="8" y="156" width="188" height="178" rx="8"/>
+          </g>
+
+          <!-- palmeral -->
+          <g class="part" data-id="palmeral">
+            <rect x="12" y="12" width="210" height="104" rx="6" fill="#E9DDAA"/>
+            <g id="palmas"></g>
+            <rect class="hl" x="8" y="8" width="218" height="112" rx="8"/>
+          </g>
+
+          <!-- huertos -->
+          <g class="part" data-id="huertos">
+            <g id="parcelas"></g>
+            <rect class="hl" x="220" y="322" width="402" height="114" rx="6"/>
+          </g>
+
+          <!-- acequias -->
+          <g class="part" data-id="acequias">
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path class="hl" d="M632 132 H200 V440 M200 316 H640 M505 200 V316 M300 132 V200" stroke-width="16"/>
+              <path d="M632 132 H200 V440 M200 316 H640 M505 200 V316 M300 132 V200" stroke="#3E8FB8" stroke-width="7"/>
+              <path d="M632 132 H200 V440 M200 316 H640 M505 200 V316 M300 132 V200" stroke="#9AD3EA" stroke-width="2.5"/>
+            </g>
+          </g>
+
+          <!-- alberca -->
+          <g class="part" data-id="alberca">
+            <rect x="465" y="150" width="80" height="52" rx="3" fill="#C9A878" stroke="#8C6A3E" stroke-width="3"/>
+            <rect x="472" y="157" width="66" height="38" fill="url(#rio)"/>
+            <path d="M480 170 q8 -4 16 0 t16 0" stroke="#fff" stroke-width="1.5" fill="none" opacity=".8"/>
+            <rect class="hl" x="459" y="144" width="92" height="64" rx="5"/>
+          </g>
+
+          <!-- noria -->
+          <g class="part" data-id="noria">
+            <circle cx="262" cy="252" r="36" fill="#D8C08D"/>
+            <circle cx="262" cy="252" r="24" fill="none" stroke="#B89A62" stroke-width="2" stroke-dasharray="4 4"/>
+            <circle cx="262" cy="252" r="12" fill="#5B8FB0" stroke="#7A5A2E" stroke-width="3"/>
+            <path d="M262 252 L286 240" stroke="#5B3A1A" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(288 238) rotate(-25)">
+              <ellipse cx="0" cy="0" rx="9" ry="5" fill="#8A7F75"/><circle cx="9" cy="-1" r="3.5" fill="#6E655D"/>
+            </g>
+            <path d="M262 264 V290 H200" stroke="#3E8FB8" stroke-width="4" fill="none"/>
+            <circle class="hl" cx="262" cy="252" r="42"/>
+          </g>
+
+          <!-- vivienda principal -->
+          <g class="part" data-id="vivienda">
+            <rect x="334" y="200" width="104" height="90" fill="#000" opacity=".12" transform="translate(5 5)"/>
+            <rect x="334" y="200" width="104" height="90" fill="#C65D3B" stroke="#7A2F17" stroke-width="2"/>
+            <rect x="358" y="222" width="56" height="46" fill="#F3E6C7" stroke="#7A2F17" stroke-width="2"/>
+            <circle cx="386" cy="245" r="7" fill="#5BAFD0"/>
+            <g stroke="#A54A2C" stroke-width="1.2"><path d="M334 210 H438 M334 220 H358 M414 220 H438 M334 270 H358 M414 270 H438 M334 280 H438"/></g>
+            <rect class="hl" x="328" y="194" width="116" height="102" rx="5"/>
+          </g>
+
+          <!-- horno -->
+          <g class="part" data-id="horno">
+            <circle cx="462" cy="252" r="15" fill="#B97A4A" stroke="#6B3A1E" stroke-width="2.5"/>
+            <circle cx="462" cy="252" r="5" fill="#3D1F0C"/>
+            <path d="M470 236 q6 -8 0 -14 q-6 -6 2 -12" stroke="#9A9A9A" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>
+            <circle class="hl" cx="462" cy="250" r="21"/>
+          </g>
+
+          <!-- molino -->
+          <g class="part" data-id="molino">
+            <rect x="578" y="290" width="44" height="44" fill="#000" opacity=".12" transform="translate(4 4)"/>
+            <rect x="578" y="290" width="44" height="44" fill="#E2C79A" stroke="#7A5A2E" stroke-width="2.5"/>
+            <path d="M578 290 L600 302 L622 290 M578 334 L600 322 L622 334" stroke="#B58A52" stroke-width="2" fill="none"/>
+            <circle cx="600" cy="316" r="9" fill="#9E9E9E" stroke="#555" stroke-width="2"/>
+            <rect class="hl" x="572" y="284" width="56" height="56" rx="5"/>
+          </g>
+
+          <!-- torre de vigía -->
+          <g class="part" data-id="torre">
+            <rect x="557" y="30" width="46" height="46" fill="#000" opacity=".14" transform="translate(6 6)"/>
+            <rect x="557" y="30" width="46" height="46" fill="#D7B48A" stroke="#6B4A28" stroke-width="3"/>
+            <g fill="#B08A5C"><rect x="557" y="30" width="10" height="10"/><rect x="575" y="30" width="10" height="10"/><rect x="593" y="30" width="10" height="10"/>
+              <rect x="557" y="48" width="10" height="10"/><rect x="593" y="48" width="10" height="10"/><rect x="557" y="66" width="10" height="10"/><rect x="575" y="66" width="10" height="10"/><rect x="593" y="66" width="10" height="10"/></g>
+            <rect class="hl" x="551" y="24" width="58" height="58" rx="5"/>
+          </g>
+
+          <!-- río -->
+          <g class="part" data-id="rio">
+            <path d="M664 0 C690 80 640 160 668 250 C694 340 650 420 672 500 H760 V0 Z" fill="url(#rio)"/>
+            <path d="M700 40 q10 -5 20 0 M690 200 q10 -5 20 0 M705 330 q10 -5 20 0 M695 450 q10 -5 20 0" stroke="#E6F6FB" stroke-width="2" fill="none"/>
+            <path class="hl" d="M664 4 C690 80 640 160 668 250 C694 340 650 420 672 496 H756 V4 Z"/>
+          </g>
+
+          <!-- rueda hidráulica -->
+          <g class="part" data-id="rueda">
+            <rect x="618" y="124" width="40" height="16" fill="#9C7A4E" stroke="#6B4A28" stroke-width="2"/>
+            <g transform="translate(666 150)">
+              <circle r="34" fill="none" stroke="#6B4A28" stroke-width="5"/>
+              <circle r="6" fill="#6B4A28"/>
+              <g stroke="#6B4A28" stroke-width="3"><path d="M-34 0 H34 M0 -34 V34 M-24 -24 L24 24 M-24 24 L24 -24"/></g>
+              <g fill="#C98A4B" stroke="#6B4A28" stroke-width="1.5" id="cangilones"></g>
+            </g>
+            <circle class="hl" cx="666" cy="150" r="44"/>
+          </g>
+        </svg>
+      </div>
+      <div class="side">
+        <div class="row">
+          <div class="modes" role="group" aria-label="Modo">
+            <button type="button" data-mode="explore" aria-pressed="true">Explorar</button>
+            <button type="button" data-mode="quiz" aria-pressed="false">Ponte a prueba</button>
+          </div>
+        </div>
+        <div class="info" aria-live="polite"><h3>Pulsa una parte</h3><p>Sigue el camino del agua: del río a la rueda, de la rueda a las acequias, y de ahí a la alberca y a los huertos.</p></div>
+        <div class="quiz" hidden aria-live="polite">
+          <div class="ask"></div>
+          <div class="fb"></div>
+          <div class="score"><span class="okt">✓ 0</span><span class="kot">✗ 0</span><span class="left"></span></div>
+          <div class="row"><button type="button" class="b small again" hidden>Otra vez</button><span class="best" style="color:var(--muted);font-size:.92rem"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="crops"><b>Cultivos que trajeron o extendieron los andalusíes:</b>
+      <span>arroz</span><span>naranja amarga</span><span>limón</span><span>berenjena</span><span>espinaca</span><span>sandía</span><span>algodón</span><span>azafrán</span><span>caña de azúcar</span></div>
+  </section>
+
+  <section class="block" id="deberes">
+    <h2>Los cinco deberes del musulmán</h2>
+    <p class="hint">También se llaman los cinco pilares del islam. Son las cinco obligaciones básicas de quien sigue el islam.</p>
+    <div class="pillars">
+      <div class="pillar"><span class="n">1</span><h3>Profesión de fe</h3><p>Repetir que no hay más dios que Alá y que Mahoma es su profeta.</p></div>
+      <div class="pillar"><span class="n">2</span><h3>Oración</h3><p>Rezar cinco veces al día mirando hacia La Meca. Y los viernes, día sagrado, ir a la mezquita.</p></div>
+      <div class="pillar"><span class="n">3</span><h3>Limosna</h3><p>Dar parte de lo que tienes a quien lo necesita.</p></div>
+      <div class="pillar"><span class="n">4</span><h3>Ayuno</h3><p>No comer ni beber de día durante el Ramadán, el noveno mes del calendario lunar.</p></div>
+      <div class="pillar"><span class="n">5</span><h3>Peregrinación</h3><p>Viajar a La Meca al menos una vez en la vida, si se puede.</p></div>
+    </div>
+    <div class="beak" style="margin-top:16px"><img src="../../../../media/beakman.jpg" alt=""><div><b>Truco de Beakman</b>
+      Fíjate en cómo encajan: la oración (deber 2) es la razón de que la mezquita tenga una quibla y una fuente. Si recuerdas para qué sirve cada parte, el edificio se explica solo.</div></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+
+  /* ---------- decoración generada ---------- */
+  // columnas de la sala de oraciones: filas que miran a la quibla
+  const cols = document.querySelector('#svg-mez [data-id="sala"] g');
+  for (let x = 152; x <= 572; x += 30) for (let y = 104; y <= 240; y += 27) {
+    if (y < 130 && x > 326 && x < 414) continue;
+    el('circle', { cx: x, cy: y, r: 4.2 }, cols);
+  }
+  const arcos = document.getElementById('arcos');
+  for (let x = 160; x <= 560; x += 40) el('path', { d: `M${x - 9} 264 V259 Q${x} 252 ${x + 9} 259 V264 Z` }, arcos);
+  const nar = document.getElementById('naranjos');
+  [[190, 300], [250, 300], [470, 300], [530, 300], [190, 360], [250, 360], [470, 360], [530, 360], [190, 418], [250, 418], [470, 418], [530, 418], [300, 300], [420, 300], [300, 418], [420, 418]]
+    .forEach(([x, y]) => { el('circle', { cx: x + 2, cy: y + 3, r: 12, fill: '#000', opacity: .1 }, nar);
+      el('circle', { cx: x, cy: y, r: 12, fill: '#5E9B3A' }, nar); el('circle', { cx: x - 4, cy: y - 3, r: 2.6, fill: '#F29A2E' }, nar);
+      el('circle', { cx: x + 4, cy: y + 3, r: 2.6, fill: '#F29A2E' }, nar); });
+
+  const arb = document.getElementById('arboles');
+  for (let y = 182; y <= 316; y += 34) for (let x = 32; x <= 176; x += 36) {
+    const fruit = ['#F29A2E', '#E04A3A', '#F2C94C'][(x + y) % 3];
+    el('circle', { cx: x + 2, cy: y + 3, r: 13, fill: '#000', opacity: .1 }, arb);
+    el('circle', { cx: x, cy: y, r: 13, fill: '#4F8F35' }, arb);
+    el('circle', { cx: x - 4, cy: y - 3, r: 2.4, fill: fruit }, arb); el('circle', { cx: x + 5, cy: y + 2, r: 2.4, fill: fruit }, arb);
+  }
+  const pal = document.getElementById('palmas');
+  [[36, 40], [80, 32], [126, 42], [172, 34], [56, 86], [104, 82], [150, 88], [198, 80]].forEach(([x, y]) => {
+    const g = el('g', { transform: `translate(${x} ${y})` }, pal);
+    for (let a = 0; a < 360; a += 45) el('path', { d: 'M0 0 Q8 -6 20 -2 Q9 0 0 0', fill: '#3F7D2A', transform: `rotate(${a})` }, g);
+    el('circle', { r: 3.5, fill: '#8A5A2B' }, g);
+  });
+  const parc = document.getElementById('parcelas');
+  const tones = ['#7DB84A', '#A7CF5E', '#5E9E3C', '#C9DB7A', '#8DBF55', '#B5D36B'];
+  let t = 0;
+  for (let y = 326; y < 430; y += 36) for (let x = 224; x < 616; x += 50) {
+    if (x > 570 && y < 345) continue;
+    el('rect', { x, y, width: 44, height: 30, rx: 3, fill: tones[t++ % tones.length], stroke: '#5C7A2E', 'stroke-width': 1 }, parc);
+    for (let i = 1; i < 4; i++) el('path', { d: `M${x + 3} ${y + i * 7.5} H${x + 41}`, stroke: '#4A7A26', 'stroke-width': 1, opacity: .5 }, parc);
+  }
+  const cang = document.getElementById('cangilones');
+  for (let a = 0; a < 360; a += 30) {
+    const r = a * Math.PI / 180;
+    el('rect', { x: Math.cos(r) * 34 - 4, y: Math.sin(r) * 34 - 4, width: 8, height: 8, rx: 1.5 }, cang);
+  }
+
+  /* ---------- datos ---------- */
+  const MEZ = {
+    minarete: { name: 'Minarete (o alminar)', lbl: 'Minarete', at: [690, 472, 386, 472],
+      text: 'Es la torre de la mezquita. Desde arriba, una persona llamaba a la oración cinco veces al día, y su voz se oía por todo el barrio. Además, se veía desde lejos y señalaba dónde estaba la mezquita.',
+      extra: 'En Córdoba, Abderramán III levantó un gran minarete en el siglo X. Hoy sigue allí, escondido dentro de la torre campanario de la catedral.' },
+    patio: { name: 'Patio', lbl: 'Patio', at: [690, 300, 560, 300],
+      text: 'Un espacio abierto, antes de entrar a rezar. Servía para reunirse, descansar a la sombra y prepararse para la oración.',
+      extra: 'El patio de la Mezquita de Córdoba se llama hoy Patio de los Naranjos, por los árboles que tiene.' },
+    fuente: { name: 'Fuente', lbl: 'Fuente', at: [690, 380, 386, 352],
+      text: 'En ella se hacen las abluciones: lavarse manos, cara y pies antes de rezar. Es una forma de purificarse, de llegar limpio a la oración.' },
+    sala: { name: 'Sala de oraciones', lbl: 'Sala de oraciones', at: [690, 190, 572, 190],
+      text: 'Es la parte cubierta. Se divide en varias naves sostenidas por columnas, y todas miran a la quibla. Los fieles rezan en filas, hombro con hombro, mirando hacia ese muro.',
+      extra: 'La de Córdoba parece un bosque de columnas. Sus arcos alternan piezas rojas de ladrillo y blancas de piedra.' },
+    quibla: { name: 'Quibla', lbl: 'Quibla', at: [62, 66, 124, 66],
+      text: 'Es un muro: el muro orientado hacia La Meca. Marca hacia dónde hay que mirar al rezar. Toda la mezquita se construye a partir de él.',
+      extra: 'Curiosidad: la quibla de la Mezquita de Córdoba no apunta exactamente a La Meca, sino casi al sur.' },
+    mihrab: { name: 'Mihrab', lbl: 'Mihrab', at: [250, 28, 344, 52],
+      text: 'Es un nicho, un hueco, situado en el centro de la quibla. Señala la dirección de La Meca y es el lugar más sagrado y más decorado de la mezquita. El imán dirige la oración delante de él.',
+      extra: 'El mihrab de Córdoba lo mandó hacer al-Hakam II en el siglo X. Es casi una pequeña sala, cubierta de mosaicos dorados.' },
+    mimbar: { name: 'Mimbar', lbl: 'Mimbar', at: [690, 98, 410, 98],
+      text: 'Es el púlpito: una especie de escalera con un asiento arriba, junto al mihrab. Desde él, el imán dirige la oración y habla a los fieles, sobre todo el viernes.' }
+  };
+  const ALQ = {
+    rio: { name: 'Río', lbl: 'Río', at: [712, 470, 712, 470], noline: true,
+      text: 'Toda alquería de regadío necesita una fuente de agua cercana: un río, un arroyo o un pozo. De aquí sale el agua que mueve la rueda y riega los campos.' },
+    rueda: { name: 'Rueda hidráulica', lbl: 'Rueda hidráulica', at: [690, 222, 666, 186],
+      text: 'Una gran rueda que gira empujada por la corriente del río. Lleva cangilones (recipientes) en el borde: se llenan abajo, suben y vuelcan el agua arriba, en la acequia.',
+      extra: 'Es la noria que se mueve sola, con la fuerza del agua.' },
+    noria: { name: 'Noria', lbl: 'Noria', at: [262, 192, 262, 216],
+      text: 'También sube agua con cangilones, pero de un pozo. La mueve un animal, normalmente un burro o una mula, que da vueltas y vueltas alrededor.',
+      extra: 'La palabra «noria» viene del árabe, como «acequia», «alberca» o «aljibe».' },
+    acequias: { name: 'Acequias', lbl: 'Acequias', at: [110, 140, 200, 132],
+      text: 'Canales que llevan el agua por toda la finca. Se abren y se cierran para regar cada parcela por turnos. Una red bien hecha llega a todos los rincones.' },
+    alberca: { name: 'Alberca', lbl: 'Alberca', at: [505, 226, 505, 204],
+      text: 'Un depósito para guardar agua. Así había reserva para regar aunque el río bajara flojo o la rueda estuviera parada.' },
+    huertos: { name: 'Huertos', lbl: 'Huertos', at: [420, 412, 420, 412], noline: true,
+      text: 'Parcelas pequeñas de regadío con hortalizas: berenjenas, espinacas, acelgas, calabazas… Al tener agua, daban varias cosechas al año.' },
+    frutales: { name: 'Frutales', lbl: 'Frutales', at: [102, 324, 102, 316], noline: true,
+      text: 'Árboles de fruta: naranjos amargos, limoneros, higueras, granados… Daban comida, sombra y algo que vender en el mercado de la ciudad.' },
+    palmeral: { name: 'Palmeral', lbl: 'Palmeral', at: [118, 108, 118, 100], noline: true,
+      text: 'Un grupo de palmeras, como las de los oasis. Dan dátiles y hojas para hacer cestos y esteras.' },
+    vivienda: { name: 'Vivienda principal', lbl: 'Vivienda principal', at: [386, 182, 386, 198],
+      text: 'La casa de la familia, organizada alrededor de un patio interior. Por fuera tenía pocas ventanas: la vida se hacía hacia dentro, en el patio.' },
+    horno: { name: 'Horno', lbl: 'Horno', at: [462, 290, 462, 268],
+      text: 'Para cocer el pan. Solía haber uno para toda la alquería.' },
+    molino: { name: 'Molino', lbl: 'Molino', at: [600, 362, 600, 338],
+      text: 'Aprovecha la fuerza del agua para mover una piedra que muele el grano y lo convierte en harina.' },
+    torre: { name: 'Torre de vigía', lbl: 'Torre de vigía', at: [490, 52, 555, 52],
+      text: 'Desde lo alto se vigilaba el campo. Si llegaba un peligro, los vecinos podían refugiarse en ella.' },
+    cultivos: { name: 'Cultivos', lbl: 'Cultivos', at: [102, 470, 102, 470], noline: true,
+      text: 'Campos más grandes de cereal (trigo, cebada) y, donde había mucha agua, arrozales. El arroz es uno de los cultivos que llegaron con los andalusíes.' }
+  };
+
+  /* ---------- un dibujo interactivo ---------- */
+  function diagram(section, svg, data, opts) {
+    const parts = {}, labels = {};
+    svg.querySelectorAll('.part').forEach(p => { parts[p.dataset.id] = p; });
+    const layer = el('g', { class: 'labels' }, svg);
+    for (const id in data) {
+      const d = data[id], [lx, ly, ax, ay] = d.at;
+      const g = el('g', { class: 'lbl', 'data-for': id }, layer);
+      if (!d.noline) { el('line', { x1: lx, y1: ly, x2: ax, y2: ay }, g); el('circle', { cx: ax, cy: ay, r: 3 }, g); }
+      const r = el('rect', { rx: 8 }, g);
+      const tx = el('text', { x: lx, y: ly + 5.2, 'text-anchor': 'middle' }, g); tx.textContent = d.lbl;
+      const w = tx.getComputedTextLength() + 16;
+      r.setAttribute('x', lx - w / 2); r.setAttribute('y', ly - 13); r.setAttribute('width', w); r.setAttribute('height', 26);
+      labels[id] = g;
+    }
+    const info = section.querySelector('.info'), quiz = section.querySelector('.quiz');
+    const ask = quiz.querySelector('.ask'), fb = quiz.querySelector('.fb');
+    const okS = quiz.querySelector('.okt'), koS = quiz.querySelector('.kot'), left = quiz.querySelector('.left');
+    const again = quiz.querySelector('.again'), bestEl = quiz.querySelector('.best');
+    let mode = 'explore', order = [], qi = 0, ok = 0, ko = 0, locked = false;
+
+    const clear = () => { Object.values(parts).forEach(p => p.classList.remove('on', 'good', 'bad'));
+      Object.values(labels).forEach(l => l.classList.remove('on')); };
+    const show = id => {
+      const d = data[id]; clear(); parts[id].classList.add('on'); labels[id].classList.add('on');
+      info.innerHTML = `<h3>${d.name}</h3><p>${d.text}</p>` + (d.extra ? `<p class="extra"><b>${opts.extraTitle(id)}</b> ${d.extra}</p>` : '');
+    };
+    const showBest = () => { const b = store.get(opts.key, null); bestEl.textContent = b ? `Tu mejor marca: ${b} de ${Object.keys(data).length}` : ''; };
+    const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const nextQ = () => {
+      clear(); locked = false;
+      if (qi >= order.length) {
+        ask.textContent = `¡Terminado! ${ok} de ${order.length} a la primera.`;
+        fb.textContent = ok === order.length ? 'Todo bien. Te lo sabes de memoria.' : 'Repite y fíjate en las que fallaste: a la segunda salen mejor.';
+        const b = store.get(opts.key, 0); if (ok > b) store.set(opts.key, ok); showBest();
+        again.hidden = false; left.textContent = ''; return;
+      }
+      ask.textContent = `Pulsa ${opts.article(order[qi])}`; fb.textContent = ''; fb.className = 'fb';
+      left.textContent = `Pregunta ${qi + 1} de ${order.length}`;
+    };
+    const startQuiz = () => { order = shuffle(Object.keys(data)); qi = 0; ok = 0; ko = 0; again.hidden = true;
+      okS.textContent = '✓ 0'; koS.textContent = '✗ 0'; nextQ(); };
+    const pick = id => {
+      if (mode === 'explore') { show(id); return; }
+      if (locked || qi >= order.length) return;
+      const want = order[qi]; locked = true;
+      if (id === want) { ok++; parts[id].classList.add('good'); fb.textContent = '¡Bien! ' + data[id].name + '.'; fb.className = 'fb okt'; }
+      else { ko++; parts[id].classList.add('bad'); parts[want].classList.add('good');
+        fb.textContent = `Eso es ${opts.article(id)}. Lo que buscabas está marcado en verde.`; fb.className = 'fb kot'; }
+      okS.textContent = '✓ ' + ok; koS.textContent = '✗ ' + ko; qi++;
+      setTimeout(nextQ, id === want ? 900 : 1900);
+    };
+    Object.entries(parts).forEach(([id, p]) => p.addEventListener('click', () => pick(id)));
+    Object.entries(labels).forEach(([id, l]) => l.addEventListener('click', () => pick(id)));
+    section.querySelectorAll('.modes button').forEach(b => b.addEventListener('click', () => {
+      mode = b.dataset.mode;
+      section.querySelectorAll('.modes button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      svg.classList.toggle('nolabels', mode === 'quiz');
+      info.hidden = mode === 'quiz'; quiz.hidden = mode !== 'quiz'; clear();
+      if (mode === 'quiz') { showBest(); startQuiz(); }
+    }));
+    again.addEventListener('click', startQuiz);
+    return { pick, setMode: m => section.querySelector(`.modes [data-mode="${m}"]`).click() };
+  }
+
+  const ART = { minarete: 'el minarete', patio: 'el patio', fuente: 'la fuente', sala: 'la sala de oraciones', quibla: 'la quibla', mihrab: 'el mihrab', mimbar: 'el mimbar',
+    rio: 'el río', rueda: 'la rueda hidráulica', noria: 'la noria', acequias: 'las acequias', alberca: 'la alberca', huertos: 'los huertos', frutales: 'los frutales',
+    palmeral: 'el palmeral', vivienda: 'la vivienda principal', horno: 'el horno', molino: 'el molino', torre: 'la torre de vigía', cultivos: 'los cultivos' };
+  window.__mez = diagram(document.getElementById('mezquita'), document.getElementById('svg-mez'), MEZ,
+    { key: 'lab.mezquita.best', article: id => ART[id], extraTitle: () => 'En Córdoba:' });
+  window.__alq = diagram(document.getElementById('alqueria'), document.getElementById('svg-alq'), ALQ,
+    { key: 'lab.alqueria.best', article: id => ART[id], extraTitle: () => 'Para recordar:' });
+
+  /* ---------- trampas típicas ---------- */
+  const TRAPS = [
+    { q: '¿Hacia dónde rezan los musulmanes?', opts: ['Hacia Jerusalén', 'Hacia La Meca', 'Hacia donde sale el sol', 'Hacia Córdoba'], a: 1,
+      why: 'Hacia La Meca, la ciudad donde nació Mahoma. Por eso la quibla mira hacia allí.' },
+    { q: '¿Qué es la quibla?', opts: ['Un nicho en la pared', 'El púlpito del imán', 'El muro orientado hacia La Meca', 'La torre para llamar a la oración'], a: 2,
+      why: 'La quibla es el muro entero. El nicho que hay en él es el mihrab. Truco: el mihrab está dentro de la quibla.' },
+    { q: '¿Qué es el mihrab?', opts: ['El muro orientado hacia La Meca', 'Un nicho en el centro de la quibla', 'La fuente de las abluciones', 'El púlpito'], a: 1,
+      why: 'El mihrab es el hueco, el nicho. Primero está el muro (quibla) y en él se abre el nicho (mihrab).' }
+  ];
+  const trapsEl = document.getElementById('traps');
+  TRAPS.forEach((t, i) => {
+    const card = document.createElement('div'); card.className = 'trap';
+    card.innerHTML = `<h3>${t.q}</h3><div class="opts">${t.opts.map((o, j) => `<button type="button" class="chip" data-j="${j}">${o}</button>`).join('')}</div><p class="why2" hidden></p>`;
+    const why = card.querySelector('.why2');
+    card.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+      card.querySelectorAll('.chip').forEach(x => x.classList.remove('ok', 'ko'));
+      const j = +b.dataset.j;
+      if (j === t.a) { b.classList.add('ok'); why.innerHTML = '<span class="okt">¡Eso es!</span> ' + t.why; }
+      else { b.classList.add('ko'); why.innerHTML = '<span class="kot">Casi.</span> Prueba otra opción.'; }
+      why.hidden = false;
+    }));
+    trapsEl.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>

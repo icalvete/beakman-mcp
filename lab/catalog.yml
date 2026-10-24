@@ -117,3 +117,94 @@ recursos:
       metodo: >-
         Situación, tres preguntas guía y una chuleta de datos; el texto se guarda en el ordenador y un botón lo
         copia para que Beakman lo revise en Claude, con una persona adulta al lado.
+
+  - id: mezquita-y-alqueria
+    asignatura: historia
+    curso: 2eso
+    imagen: mezquita-y-alqueria.jpg
+    solo_pc: true
+    es:
+      titulo: La mezquita y la alquería por dentro
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Dos dibujos para pulsar: las partes de una mezquita (minarete, patio, fuente, sala de oraciones, quibla,
+        mihrab y mimbar) y las de una alquería de regadío (rueda hidráulica, noria, acequias, alberca, huertos…).
+        Con los cinco deberes del musulmán.
+      objetivo: >-
+        Reconocer cada parte de la mezquita y de la alquería y saber para qué servía, sin confundir la quibla con
+        el mihrab.
+      metodo: >-
+        Primero exploras: pulsas cada parte y lees qué es. Después, en «Ponte a prueba», se ocultan las etiquetas
+        y tienes que encontrar cada parte. Y tres trampas típicas del examen.
+
+  - id: mayrit
+    asignatura: historia
+    curso: 2eso
+    imagen: mayrit.jpg
+    solo_pc: true
+    es:
+      titulo: Mayrit, el Madrid de al-Ándalus
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Un plano para pulsar de la fortaleza andalusí que dio origen a Madrid, con una capa que superpone el Madrid
+        de hoy, una línea de tiempo y un paseo por lo que queda.
+      objetivo: >-
+        Saber quién fundó Mayrit, para qué y cómo era, y reconocer en el Madrid de hoy dónde estaban el alcázar, la
+        muralla y la mezquita.
+      metodo: >-
+        Exploras el plano parte a parte, cambias a «Madrid de hoy» para comparar, repasas la línea de tiempo y
+        terminas con un mini reto de cinco preguntas con corrección.
+
+  - id: quien-soy
+    asignatura: historia
+    curso: 2eso
+    imagen: quien-soy.jpg
+    solo_pc: true
+    es:
+      titulo: ¿Quién soy?
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Trece personajes del inicio de la Edad Media te hablan en primera persona: de Rómulo Augústulo a Almanzor.
+        Adivina quién es con el menor número de pistas.
+      objetivo: >-
+        Poner cara, fecha y lugar a los protagonistas del tema y entender por qué importa cada uno: quién cerró el
+        Imperio de Occidente, quién unió a visigodos e hispanorromanos, quién creó el emirato y el califato.
+      metodo: >-
+        Pistas de la más difícil a la más fácil: cuantas menos uses, más puntos. Eliges entre opciones o escribes el
+        nombre. Al acertar ves su ficha y al final repites solo los que fallaste.
+
+  - id: vocabulario-tema-1
+    asignatura: historia
+    curso: 2eso
+    imagen: vocabulario-tema-1.jpg
+    solo_pc: true
+    es:
+      titulo: Vocabulario del Tema 1
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Las 47 palabras clave del tema en tarjetas que giran: de Mare Nostrum y basileus a taifa, alquería y Mayrit,
+        con su definición y un ejemplo.
+      objetivo: >-
+        Saber definir con tus palabras los términos que caen en el examen, apartado por apartado, y llegar al día del
+        examen con todos dominados.
+      metodo: >-
+        Repaso espaciado con cajas: lo que sabes sale cada vez menos y lo que fallas vuelve enseguida. Filtro por
+        apartado, contador de dominadas y un examen rápido en el que escribes la definición y la comparas.
+
+  - id: tres-carriles
+    asignatura: historia
+    curso: 2eso
+    imagen: tres-carriles.jpg
+    solo_pc: true
+    es:
+      titulo: El Tema 1 en tres carriles
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Una línea del tiempo del 400 al 1500 con tres carriles en paralelo: Imperio bizantino, Europa germánica y
+        carolingia, y el islam y al-Ándalus. Cabe en un folio para imprimir.
+      objetivo: >-
+        Ver qué pasaba a la vez en las tres civilizaciones del Mediterráneo, que es lo que más cuesta del tema, y
+        situar cada fecha clave en su etapa.
+      metodo: >-
+        Una regla que mueves tú corta los tres carriles y te cuenta qué existía en ese año y qué pasó cerca. En papel,
+        un A4 apaisado para tenerlo delante al estudiar.

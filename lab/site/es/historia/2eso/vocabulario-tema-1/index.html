@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulario del Tema 1 · El laboratorio de Beakman</title>
+<meta name="description" content="Tarjetas de memoria con repaso espaciado para las palabras clave del inicio de la Edad Media y al-Ándalus. Historia de 2º de la ESO, Tema 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* Tarjetas con cajas de Leitner: lo que sabes se espacia, lo que fallas vuelve pronto */
+[hidden] { display: none !important; }
+.modebar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); }
+.seg button { border: 0; background: #fff; padding: 8px 16px; font: 800 .95rem/1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.filters .chip { font-size: .86rem; padding: 5px 10px; border-radius: 999px; }
+.filters .chip small { font-weight: 800; color: var(--muted); }
+
+.study { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 24px; align-items: start; }
+
+/* la tarjeta que gira */
+.flip { perspective: 1400px; }
+.fcard { position: relative; height: 300px; transform-style: preserve-3d; transition: transform .45s; cursor: pointer; }
+.fcard.turned { transform: rotateY(180deg); }
+.face2 { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #fff; border: 2px solid var(--ink);
+  border-radius: 20px; box-shadow: 5px 5px 0 var(--lime); padding: 22px 28px; display: grid; align-content: center; gap: 12px; text-align: center; }
+.face2.back { transform: rotateY(180deg); text-align: left; align-content: start; }
+.face2 .apt { position: absolute; top: 14px; left: 18px; right: 18px; font-size: .8rem; font-weight: 800; color: #4F6B0A; text-align: left; }
+.face2 .boxn { position: absolute; top: 14px; right: 18px; font-size: .8rem; font-weight: 800; color: var(--muted); }
+.face2 .term { font: 600 2.3rem/1.15 var(--display); color: var(--ink); }
+.face2 .tip { color: var(--muted); font-size: .95rem; }
+.face2.back .term { font-size: 1.35rem; margin-top: 18px; }
+.face2 .def { font-size: 1.12rem; }
+.face2 .ex { border-left: 5px solid var(--lime); background: var(--lime-soft); border-radius: 0 10px 10px 0; padding: 8px 12px; font-size: 1rem; }
+.face2 .ex b { font-family: var(--display); font-weight: 600; color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 18px; min-height: 46px; }
+.b.know { background: #CDEBC5; }
+.b.almost { background: var(--note); }
+.b.dunno { background: #F7CFC8; }
+.keys { text-align: center; font-size: .82rem; color: var(--muted); margin-top: 8px; }
+kbd { font: 700 .78rem/1 var(--body); border: 1.5px solid var(--line); border-bottom-width: 3px; border-radius: 6px; padding: 1px 6px; background: #fff; }
+
+.panel { display: grid; gap: 14px; }
+.mastered { background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime); padding: 14px 16px; text-align: center; }
+.mastered b { display: block; font: 700 2.4rem/1 var(--display); color: var(--ink); }
+.mastered small { font-weight: 700; color: var(--muted); }
+.bar { height: 10px; background: var(--card); border: 1.5px solid var(--line); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+.bar i { display: block; height: 100%; background: #2E7D32; width: 0; transition: width .3s; }
+.boxes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; }
+.boxes div { background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 6px 2px; }
+.boxes b { display: block; font: 700 1.3rem/1.1 var(--display); color: var(--ink); }
+.boxes span { font-size: .72rem; font-weight: 800; color: var(--muted); }
+.boxes div:last-child { border-color: #2E7D32; background: #E3F3DF; }
+.round { font-weight: 800; color: var(--ink); }
+.done { text-align: center; display: grid; gap: 12px; justify-items: center; padding: 30px 20px; background: #fff; border: 2px dashed var(--line); border-radius: 20px; }
+.done h3 { font-size: 1.5rem; }
+
+/* examen rápido */
+.exam { display: grid; gap: 12px; max-width: 760px; }
+.exam .q { font: 600 2rem/1.2 var(--display); color: var(--ink); }
+.exam .meta2 { font-weight: 800; color: var(--muted); font-size: .9rem; }
+.exam .yours { background: #fff; border: 1.5px dashed var(--line); border-radius: 12px; padding: 10px 14px; white-space: pre-wrap; }
+.exam .yours:empty::before { content: "(no escribiste nada)"; color: var(--muted); }
+.reslist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.reslist li { background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 6px 12px; display: flex; justify-content: space-between; gap: 10px; }
+.foot { display: flex; justify-content: flex-end; margin-top: 8px; }
+@media (max-width: 860px) { .study { grid-template-columns: 1fr; } .face2 .term { font-size: 1.8rem; } .fcard { height: 340px; } }
+@media (prefers-reduced-motion: reduce) { .fcard { transition: none; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Vocabulario del <em>Tema 1</em></h1>
+    <p class="lead">Las palabras clave de «La huella andalusí» en tarjetas. Piensa la respuesta, gira la tarjeta y sé sincera contigo:
+      lo que ya sabes se espacia y lo que fallas vuelve enseguida. Así el cerebro guarda lo que de verdad le cuesta.</p>
+  </div>
+
+  <section class="block" id="vocab">
+    <div class="modebar">
+      <div class="seg" role="group" aria-label="Modo">
+        <button type="button" data-mode="study" aria-pressed="true">Repasar tarjetas</button>
+        <button type="button" data-mode="exam" aria-pressed="false">Examen rápido</button>
+      </div>
+      <span class="round" id="roundLbl"></span>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="Apartado"></div>
+
+    <div id="study" class="study">
+      <div>
+        <div id="cardWrap">
+          <div class="flip"><div class="fcard" id="fcard" tabindex="0" role="button" aria-label="Girar la tarjeta">
+            <div class="face2 front"><span class="apt" id="fApt"></span><span class="boxn" id="fBox"></span>
+              <div class="term" id="fTerm"></div><p class="tip">¿Qué significa? Piénsalo y pulsa para girar.</p></div>
+            <div class="face2 back"><span class="apt" id="bApt"></span>
+              <div class="term" id="bTerm"></div><p class="def" id="bDef"></p><p class="ex" id="bEx"></p></div>
+          </div></div>
+          <div class="actions" id="actions">
+            <button class="b" id="turn" type="button">Girar la tarjeta</button>
+          </div>
+          <div class="actions" id="grade" hidden>
+            <button class="b dunno" data-g="0" type="button">No lo sabía</button>
+            <button class="b almost" data-g="1" type="button">Casi</button>
+            <button class="b know" data-g="2" type="button">Lo sabía</button>
+          </div>
+          <p class="keys">Teclado: <kbd>Espacio</kbd> gira · <kbd>1</kbd> no lo sabía · <kbd>2</kbd> casi · <kbd>3</kbd> lo sabía</p>
+        </div>
+        <div class="done" id="roundDone" hidden></div>
+      </div>
+      <aside class="panel">
+        <div class="mastered"><b><span id="nMast">0</span><small style="font-size:1rem"> / <span id="nTot">0</span></small></b><small>tarjetas dominadas</small>
+          <div class="bar"><i id="barFill"></i></div></div>
+        <div>
+          <div class="boxes" id="boxes"></div>
+          <p class="hint" style="margin-top:6px;font-size:.88rem">Cada «Lo sabía» sube la tarjeta una caja. Las de la caja 1 salen en cada ronda; las de la 2, cada dos; las de la 3, cada tres. Tres aciertos seguidos y queda dominada. Un «No lo sabía» la devuelve a la caja 1 y la vuelve a sacar dentro de tres tarjetas.</p>
+        </div>
+        <div class="beak"><img src="../../../../media/beakman.jpg" alt="">
+          <div><b>Consejo de Beakman</b>Dilo en voz alta antes de girar, aunque sea con tus palabras. Si solo «te suena», marca «Casi»: no es trampa, es ciencia.</div></div>
+      </aside>
+    </div>
+
+    <div id="exam" hidden></div>
+
+    <div class="foot"><button class="b ghost small" id="reset" type="button">Reiniciar mi progreso</button></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script type="application/json" id="data">
+{
+"apartados": {
+ "1": "1. Inicio de la Edad Media",
+ "2": "2. Imperio bizantino",
+ "3": "3. Reinos germánicos",
+ "4": "4. Los visigodos",
+ "5": "5. Carlomagno",
+ "7": "7. El islam",
+ "8": "8. Al-Ándalus",
+ "9": "9. La economía andalusí",
+ "10": "10-11. Ciudad andalusí y Mayrit"
+},
+"cards": [
+ {"id":"edad-media","a":"1","t":"Edad Media","d":"Los unos mil años que van de la caída del Imperio romano de Occidente (476) a la caída de Constantinopla (1453) o la llegada de Colón a América (1492).","e":"Covadonga, Carlomagno y la Alhambra son de la Edad Media."},
+ {"id":"mare-nostrum","a":"1","t":"Mare Nostrum","d":"«Nuestro mar»: así llamaban los romanos al Mediterráneo, porque todas sus orillas eran del Imperio.","e":"Al caer Roma, las orillas del Mare Nostrum se repartieron entre tres civilizaciones: bizantinos, germanos y musulmanes."},
+ {"id":"germanicos","a":"1","t":"Pueblos germánicos","d":"Pueblos que vivían al otro lado del Rin y el Danubio y que en el siglo V entraron en el Imperio y fundaron reinos. Los romanos los llamaban «bárbaros».","e":"Visigodos, francos, suevos, vándalos y ostrogodos eran pueblos germánicos."},
+ {"id":"hunos","a":"1","t":"Hunos","d":"Pueblo nómada de Asia, de jinetes y arqueros muy hábiles. Al avanzar hacia el oeste empujaron a los germanos dentro del Imperio.","e":"Su jefe más famoso fue Atila."},
+ {"id":"bizantino","a":"2","t":"Imperio bizantino","d":"La mitad oriental del Imperio romano, que sobrevivió hasta 1453. Su capital era Constantinopla, la antigua Bizancio.","e":"Acabaron hablando griego, pero se seguían llamando a sí mismos «romanos»."},
+ {"id":"basileus","a":"2","t":"Basileus","d":"Título del emperador bizantino («rey», en griego). Concentraba el poder político, militar y religioso.","e":"El patriarca de Constantinopla coronaba al basileus, pero estaba bajo su autoridad."},
+ {"id":"codigo-justiniano","a":"2","t":"Código de Justiniano","d":"Recopilación de las leyes romanas que mandó hacer el emperador Justiniano en el siglo VI.","e":"Muchas leyes europeas de hoy, también las españolas, beben de él."},
+ {"id":"cisma","a":"2","t":"Cisma de Oriente","d":"Separación, en 1054, de la Iglesia de Roma (católica) y la de Constantinopla (ortodoxa).","e":"Por eso hoy en Grecia o Rusia la mayoría son cristianos ortodoxos."},
+ {"id":"iconostasio","a":"2","t":"Iconostasio","d":"En un templo ortodoxo, mampara cubierta de imágenes religiosas (iconos) que separa y oculta el altar.","e":"Los fieles rezan delante del iconostasio; el altar queda detrás."},
+ {"id":"monasterio","a":"3","t":"Monasterio","d":"Edificio donde vive una comunidad de monjes que dedica el día a rezar y trabajar. En la Alta Edad Media guardó la cultura escrita.","e":"Los monjes copiaban a mano los libros antiguos en los monasterios."},
+ {"id":"aldea","a":"3","t":"Aldea germánica","d":"Pequeño pueblo de campesinos, rodeado de una empalizada, que producía casi todo lo que necesitaba: era autosuficiente.","e":"Con la crisis de las ciudades, mucha gente se fue a vivir a aldeas, bajo la protección de un gran propietario."},
+ {"id":"arrianismo","a":"4","t":"Arrianismo","d":"Forma de cristianismo que decía que Jesús no era igual a Dios Padre. La Iglesia católica la consideraba una herejía.","e":"Los visigodos eran arrianos y los hispanorromanos, católicos, hasta que Recaredo se convirtió."},
+ {"id":"aula-regia","a":"4","t":"Aula Regia","d":"Asamblea de nobles y clérigos que aconsejaba al rey visigodo.","e":"El rey se apoyaba en el Aula Regia y en los Concilios de Toledo para gobernar."},
+ {"id":"concilios","a":"4","t":"Concilios de Toledo","d":"Asambleas de obispos convocadas por el rey visigodo. Decidían asuntos religiosos y también de gobierno.","e":"En el III Concilio de Toledo (589) el reino visigodo se hizo católico."},
+ {"id":"liber","a":"4","t":"Liber Iudiciorum","d":"Código de leyes del rey Recesvinto (654), igual para visigodos e hispanorromanos.","e":"Desde entonces, un visigodo y un hispanorromano se juzgaban por la misma ley."},
+ {"id":"conde","a":"5","t":"Conde","d":"Hombre de confianza del emperador que gobernaba un condado en su nombre: hacía justicia, cobraba impuestos y reunía soldados.","e":"Carlomagno dividió su imperio en condados, cada uno con su conde."},
+ {"id":"marca","a":"5","t":"Marca y marqués","d":"Una marca era un territorio de frontera, con muchas tropas para defenderla. Al frente estaba un jefe militar: el marqués.","e":"La Marca Hispánica protegía la frontera con al-Ándalus."},
+ {"id":"missi","a":"5","t":"Missi dominici","d":"«Enviados del señor»: inspectores de Carlomagno que recorrían el imperio vigilando a condes y marqueses.","e":"Si un conde abusaba de su poder, los missi dominici se lo contaban al emperador."},
+ {"id":"capitulares","a":"5","t":"Capitulares","d":"Leyes aprobadas por Carlomagno, que se ponían por escrito y se conservaban.","e":"Las decisiones de las reuniones anuales de la corte se convertían en capitulares."},
+ {"id":"verdun","a":"5","t":"Tratado de Verdún","d":"Acuerdo del año 843 por el que los tres hijos de Luis el Piadoso, nietos de Carlomagno, se repartieron el imperio.","e":"De ese reparto salen, con los siglos, Francia y Alemania."},
+ {"id":"islam","a":"7","t":"Islam","d":"Religión monoteísta que predicó Mahoma en Arabia en el siglo VII. Quiere decir «sumisión» a Dios, Alá. Sus fieles son los musulmanes.","e":"El islam reconoce como profetas a Abraham, Moisés y Jesús, y considera a Mahoma el último."},
+ {"id":"hegira","a":"7","t":"Hégira","d":"La marcha de Mahoma de La Meca a Medina en el año 622. Es el año 1 del calendario musulmán.","e":"Si un documento árabe dice «año 92 de la Hégira», está hablando del 711."},
+ {"id":"coran","a":"7","t":"Corán","d":"El libro sagrado del islam. Recoge las revelaciones de Alá a Mahoma y se divide en 114 capítulos llamados suras.","e":"El Corán regula la vida religiosa y también la vida diaria de los creyentes."},
+ {"id":"umma","a":"7","t":"Umma","d":"La comunidad de todos los musulmanes, vivan donde vivan.","e":"El Corán marca normas para toda la umma."},
+ {"id":"pilares","a":"7","t":"Cinco pilares del islam","d":"Los cinco deberes de todo musulmán: decir la profesión de fe, rezar cinco veces al día mirando a La Meca, ayunar en Ramadán, dar limosna y peregrinar a La Meca al menos una vez si puede.","e":"El ayuno del Ramadán es uno de los cinco pilares."},
+ {"id":"califa","a":"7","t":"Califa","d":"Sucesor de Mahoma: a la vez jefe religioso, juez supremo y jefe de los ejércitos.","e":"Los omeyas de Damasco y los abasíes de Bagdad fueron dinastías de califas."},
+ {"id":"mezquita","a":"7","t":"Mezquita","d":"Lugar donde los musulmanes rezan. También sirve para reunirse y estudiar el Corán. Tiene patio con fuente, sala de oración y una torre (alminar o minarete).","e":"Desde el alminar se llama a la oración."},
+ {"id":"mihrab","a":"7","t":"Quibla y mihrab","d":"La quibla es el muro de la mezquita orientado hacia La Meca. El mihrab es el nicho de ese muro que marca hacia dónde rezar.","e":"El mihrab de la Mezquita de Córdoba está cubierto de mosaicos dorados."},
+ {"id":"alandalus","a":"8","t":"Al-Ándalus","d":"El territorio de la península ibérica gobernado por musulmanes, del 711 al 1492. Su tamaño fue cambiando con los siglos.","e":"En el siglo X, al-Ándalus ocupaba casi toda la península; en el XV, solo el reino de Granada."},
+ {"id":"emirato-dep","a":"8","t":"Emirato dependiente","d":"Al-Ándalus del 711 al 756: una provincia del califato omeya de Damasco, gobernada por un emir (gobernador) que obedecía al califa.","e":"Su capital era Córdoba, pero las órdenes llegaban de Damasco."},
+ {"id":"emirato-ind","a":"8","t":"Emirato independiente","d":"Al-Ándalus del 756 al 929. Abderramán I, un omeya, se proclamó emir y dejó de obedecer en política a los abasíes de Bagdad, aunque aceptaba su autoridad religiosa.","e":"Abderramán I empezó la Mezquita de Córdoba."},
+ {"id":"califato","a":"8","t":"Califato de Córdoba","d":"Al-Ándalus del 929 al 1031. Abderramán III se proclamó califa y se independizó también en lo religioso. Fue la época de mayor esplendor.","e":"Córdoba llegó a ser la ciudad más poblada de Europa."},
+ {"id":"razia","a":"8","t":"Razia","d":"Expedición militar rápida para saquear y asustar al enemigo, sin quedarse a conquistar.","e":"Almanzor hizo decenas de razias contra los reinos cristianos."},
+ {"id":"parias","a":"8","t":"Parias","d":"Impuestos que un reino pagaba a otro más fuerte a cambio de paz.","e":"Con el califato, los reinos cristianos pagaban parias; con las taifas, fue al revés."},
+ {"id":"taifa","a":"8","t":"Taifa","d":"Cada uno de los más de 25 reinos en que se dividió al-Ándalus en 1031, al acabar el califato. Cada uno giraba en torno a una gran ciudad.","e":"Hubo taifas de Toledo, Sevilla, Zaragoza, Badajoz…"},
+ {"id":"almoravides","a":"8","t":"Almorávides y almohades","d":"Dos pueblos musulmanes del norte de África que llegaron para frenar a los cristianos y se adueñaron de las taifas: los almorávides en 1086 y los almohades en 1147.","e":"Los almohades fueron derrotados en las Navas de Tolosa (1212)."},
+ {"id":"nazari","a":"8","t":"Reino nazarí","d":"El último reino musulmán de la península, con capital en Granada, del 1238 al 1492.","e":"Los nazaríes construyeron la Alhambra."},
+ {"id":"alqueria","a":"9","t":"Alquería","d":"Pequeña aldea agrícola de al-Ándalus, con sus huertos y sus sistemas de riego.","e":"Una alquería podía tener noria, acequias, molino y torre de vigía."},
+ {"id":"noria","a":"9","t":"Noria","d":"Máquina con una rueda llena de vasijas que sube el agua de un pozo para regar. La movía un animal dando vueltas.","e":"Gracias a la noria se pudieron regar huertos lejos de los ríos."},
+ {"id":"acequia","a":"9","t":"Acequia","d":"Canal que lleva el agua de riego hasta los campos.","e":"En Valencia y Murcia aún se usan acequias de origen andalusí."},
+ {"id":"zoco","a":"9","t":"Zoco","d":"El mercado de una ciudad andalusí.","e":"En el zoco se vendían productos del campo, cerámica, tejidos y especias."},
+ {"id":"dinar","a":"9","t":"Dinar y dírham","d":"Las monedas de al-Ándalus: el dinar era de oro y el dírham, de plata. Eran estables y muy valoradas.","e":"Se usaban también en los reinos cristianos y en el mundo islámico."},
+ {"id":"medina","a":"10","t":"Medina","d":"El centro de la ciudad andalusí, rodeado de murallas, con la mezquita mayor y el zoco.","e":"Fuera de la medina crecían los arrabales."},
+ {"id":"alcazaba","a":"10","t":"Alcazaba","d":"Recinto fortificado en la parte alta de la ciudad, donde vivía el gobernador con sus soldados.","e":"La alcazaba de Málaga y la de la Alhambra siguen en pie."},
+ {"id":"mayrit","a":"10","t":"Mayrit","d":"El nombre árabe de Madrid. Fue una fortaleza fundada por el emir Muhammad I en la segunda mitad del siglo IX para vigilar el camino hacia Toledo.","e":"Junto al Palacio Real se conservan restos de la muralla de Mayrit."},
+ {"id":"mozarabe","a":"10","t":"Mozárabe","d":"Cristiano que vivía en al-Ándalus, bajo gobierno musulmán, y mantenía su religión.","e":"Los mozárabes pagaban un impuesto especial por no ser musulmanes."},
+ {"id":"muladi","a":"10","t":"Muladí","d":"Hispano (de familia hispanovisigoda) que se convirtió al islam.","e":"Con el tiempo, los muladíes fueron la mayoría de la población de al-Ándalus."}
+]
+}
+</script>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+                  del(k) { try { localStorage.removeItem(k); } catch (e) {} } };
+  const KEY = 'beakman.vocabulario-t1.v1';
+  const DATA = JSON.parse(document.getElementById('data').textContent);
+  const CARDS = DATA.cards, APT = DATA.apartados;
+  const byId = Object.fromEntries(CARDS.map((c) => [c.id, c]));
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  const MASTER = 4;                          // caja 4 = dominada
+  const EVERY = { 1: 1, 2: 2, 3: 3 };        // cada cuántas rondas sale una tarjeta de esa caja
+  const ROUND_MAX = 15;                      // tarjetas por ronda (sin contar las que vuelven)
+
+  const fresh = () => ({ round: 1, filter: 'all', cards: {} });
+  let S = Object.assign(fresh(), store.get(KEY, {}));
+  const save = () => store.set(KEY, S);
+  const st = (id) => S.cards[id] || { b: 1, last: 0 };
+
+  let queue = [], cur = null, turned = false, mode = 'study';
+
+  const inFilter = (c) => S.filter === 'all' || c.a === S.filter;
+  const isDue = (c) => { const s = st(c.id); return s.last === 0 || (s.b < MASTER && S.round - s.last >= EVERY[s.b]); };
+
+  function buildQueue() {
+    const pool = CARDS.filter(inFilter);
+    const old = shuffle(pool.filter((c) => st(c.id).last > 0 && isDue(c))).sort((x, y) => st(x.id).b - st(y.id).b);
+    const neu = pool.filter((c) => st(c.id).last === 0);
+    const n = Math.max(ROUND_MAX, Math.min(old.length, 25));
+    return old.slice(0, n).concat(shuffle(neu.slice(0, Math.max(0, n - old.length)))).map((c) => c.id);
+  }
+
+  function startRound(advance) {
+    if (advance) {
+      let tries = 0;
+      do { S.round++; tries++; queue = buildQueue(); } while (!queue.length && tries < 6 && !allMastered());
+      save();
+    } else queue = buildQueue();
+    showNext();
+  }
+
+  const allMastered = () => CARDS.filter(inFilter).every((c) => st(c.id).b >= MASTER);
+
+  function showNext() {
+    $('roundDone').hidden = true; $('cardWrap').hidden = false;
+    if (!queue.length) { cur = null; renderPanel(); return roundOver(); }
+    cur = byId[queue.shift()]; turned = false;
+    const s = st(cur.id);
+    $('fcard').classList.remove('turned');
+    $('fApt').textContent = APT[cur.a]; $('bApt').textContent = APT[cur.a];
+    $('fBox').textContent = s.last === 0 ? 'nueva' : s.b >= MASTER ? 'dominada' : 'caja ' + s.b;
+    $('fTerm').textContent = cur.t; $('bTerm').textContent = cur.t;
+    $('bDef').textContent = cur.d;
+    $('bEx').innerHTML = '<b>Por ejemplo:</b> ' + esc(cur.e);
+    $('actions').hidden = false; $('grade').hidden = true;
+    renderPanel();
+  }
+
+  function roundOver() {
+    cur = null; $('cardWrap').hidden = true; const box = $('roundDone'); box.hidden = false;
+    if (allMastered()) {
+      box.innerHTML = '<h3>¡Todas dominadas' + (S.filter === 'all' ? '' : ' en este apartado') + '!</h3><p>Tu cerebro ya las tiene bien archivadas. Prueba el examen rápido para comprobarlo escribiendo.</p>' +
+        '<div class="row"><button class="b" id="again" type="button">Repasarlas igualmente</button></div>';
+      $('again').addEventListener('click', () => { queue = shuffle(CARDS.filter(inFilter)).slice(0, ROUND_MAX).map((c) => c.id); showNext(); });
+    } else {
+      box.innerHTML = '<h3>Ronda ' + S.round + ' terminada</h3><p>Muy bien. Ahora deja descansar un poco las que ya sabes: en la siguiente ronda solo salen las que tocan.</p>' +
+        '<div class="row"><button class="b" id="nextRound" type="button">Empezar la ronda ' + (S.round + 1) + '</button></div>';
+      $('nextRound').addEventListener('click', () => startRound(true));
+    }
+  }
+
+  function turn() { if (!cur || turned) return; turned = true; $('fcard').classList.add('turned'); $('actions').hidden = true; $('grade').hidden = false; }
+
+  function grade(g, id) {
+    const s = Object.assign({}, st(id));
+    if (g === 2) s.b = Math.min(MASTER, (s.last === 0 ? 1 : s.b) + 1);
+    else if (g === 0) s.b = 1;
+    s.last = S.round; S.cards[id] = s; save();
+    return s;
+  }
+
+  function onGrade(g) {
+    if (!cur || !turned) return;
+    const id = cur.id; grade(g, id);
+    if (g === 0) queue.splice(Math.min(3, queue.length), 0, id);   // vuelve dentro de tres tarjetas
+    showNext();
+  }
+
+  function renderPanel() {
+    const pool = CARDS.filter(inFilter);
+    const n = [0, 0, 0, 0, 0];
+    pool.forEach((c) => { const s = st(c.id); n[s.last === 0 ? 0 : s.b]++; });
+    const total = CARDS.length, mast = CARDS.filter((c) => st(c.id).b >= MASTER).length;
+    $('nMast').textContent = mast; $('nTot').textContent = total;
+    $('barFill').style.width = (100 * mast / total) + '%';
+    $('boxes').innerHTML = [['Caja 1', n[0] + n[1], 'nuevas incluidas'], ['Caja 2', n[2]], ['Caja 3', n[3]], ['Dominadas', n[4]]]
+      .map(([l, v]) => '<div><b>' + v + '</b><span>' + l + '</span></div>').join('');
+    $('roundLbl').textContent = mode === 'study' ? 'Ronda ' + S.round + (cur || queue.length ? ' · quedan ' + (queue.length + (cur ? 1 : 0)) : '') : '';
+  }
+
+  function renderFilters() {
+    const count = (k) => CARDS.filter((c) => k === 'all' || c.a === k).length;
+    $('filters').innerHTML = [['all', 'Todo el tema']].concat(Object.entries(APT)).map(([k, l]) =>
+      '<button type="button" class="chip' + (S.filter === k ? ' sel' : '') + '" data-f="' + k + '">' + esc(l) + ' <small>' + count(k) + '</small></button>').join('');
+  }
+
+  $('filters').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-f]'); if (!b) return;
+    S.filter = b.dataset.f; save(); renderFilters();
+    if (mode === 'study') startRound(false); else startExam();
+  });
+
+  $('fcard').addEventListener('click', turn);
+  $('turn').addEventListener('click', turn);
+  $('grade').addEventListener('click', (e) => { const b = e.target.closest('[data-g]'); if (b) onGrade(+b.dataset.g); });
+  document.addEventListener('keydown', (e) => {
+    if (mode !== 'study' || (e.target instanceof Element && e.target.matches('textarea, input, button, select'))) return;
+    if (e.key === ' ' || e.key === 'Enter') { if (cur && !turned) { e.preventDefault(); turn(); } }
+    else if (['1', '2', '3'].includes(e.key)) onGrade(+e.key - 1);
+  });
+
+  // examen rápido
+  let ex = null;
+  function startExam() {
+    const pool = CARDS.filter(inFilter);
+    ex = { list: shuffle(pool).slice(0, 10).map((c) => c.id), i: 0, res: [] };
+    renderExam();
+  }
+  function renderExam() {
+    const box = $('exam');
+    if (ex.i >= ex.list.length) {
+      const ok = ex.res.filter((r) => r === 2).length, al = ex.res.filter((r) => r === 1).length, ko = ex.res.filter((r) => r === 0).length;
+      const label = ['No lo sabía', 'Casi', 'Lo sabía'], cls = ['kot', '', 'okt'];
+      box.innerHTML = '<div class="exam"><h3 style="font-size:1.5rem">Examen terminado</h3>' +
+        '<p><b class="okt">' + ok + ' bien</b> · <b>' + al + ' casi</b> · <b class="kot">' + ko + ' por repasar</b>, de ' + ex.list.length + '.</p>' +
+        '<p>' + (ok >= ex.list.length * .8 ? '¡Estupendo! Así se escribe una definición de examen.' : 'Las que marcaste como «casi» o «no» ya han vuelto a la caja que les toca: aparecerán antes en el repaso.') + '</p>' +
+        '<ul class="reslist">' + ex.list.map((id, k) => '<li><span>' + esc(byId[id].t) + '</span><span class="' + cls[ex.res[k]] + '">' + label[ex.res[k]] + '</span></li>').join('') + '</ul>' +
+        '<div class="row"><button class="b" id="exAgain" type="button">Otro examen</button><button class="b ghost" id="exBack" type="button">Volver a las tarjetas</button></div></div>';
+      $('exAgain').addEventListener('click', startExam);
+      $('exBack').addEventListener('click', () => setMode('study'));
+      renderPanel(); return;
+    }
+    const c = byId[ex.list[ex.i]];
+    box.innerHTML = '<div class="exam"><p class="meta2">Pregunta ' + (ex.i + 1) + ' de ' + ex.list.length + ' · ' + esc(APT[c.a]) + '</p>' +
+      '<p class="q">' + esc(c.t) + '</p>' +
+      '<label for="exAns" class="hint">Escribe qué es, con tus palabras, como en el examen:</label>' +
+      '<textarea class="answer" id="exAns" placeholder="Es…"></textarea>' +
+      '<div class="row"><button class="b" id="exCmp" type="button">Comparar con la definición</button></div>' +
+      '<div id="exCheck" hidden></div></div>';
+    $('exAns').focus();
+    $('exCmp').addEventListener('click', () => {
+      const yours = $('exAns').value.trim();
+      $('exAns').hidden = true; $('exCmp').parentNode.hidden = true;
+      document.querySelector('label[for="exAns"]').hidden = true;
+      const chk = $('exCheck'); chk.hidden = false;
+      chk.innerHTML = '<p class="hint">Lo que escribiste:</p><div class="yours">' + esc(yours) + '</div>' +
+        '<p class="hint">La definición:</p><div class="model">' + esc(c.d) + '<br><i>Por ejemplo: ' + esc(c.e) + '</i></div>' +
+        '<p class="hint">¿Cómo te ha salido? Sé sincera: lo que marques mueve la tarjeta de caja.</p>' +
+        '<div class="row"><button class="b dunno" data-x="0" type="button">No lo sabía</button><button class="b almost" data-x="1" type="button">Casi</button><button class="b know" data-x="2" type="button">Lo sabía</button></div>';
+      chk.querySelectorAll('[data-x]').forEach((b) => b.addEventListener('click', () => {
+        const g = +b.dataset.x; ex.res.push(g); grade(g, c.id); ex.i++; renderExam();
+      }));
+    });
+  }
+
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll('.seg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
+    $('study').hidden = m !== 'study'; $('exam').hidden = m !== 'exam';
+    if (m === 'exam') startExam(); else startRound(false);
+    renderPanel();
+  }
+  document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+  $('reset').addEventListener('click', () => {
+    if (!confirm('¿Seguro? Todas las tarjetas vuelven a la caja 1 y el contador de dominadas se pone a cero.')) return;
+    S = fresh(); store.del(KEY); renderFilters(); setMode('study');
+  });
+
+  renderFilters();
+  setMode('study');
+})();
+</script>
+</body>
+</html>

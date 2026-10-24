@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Tema 1 en tres carriles · El laboratorio de Beakman</title>
+<meta name="description" content="Línea del tiempo del 400 al 1500 con tres carriles paralelos: Imperio bizantino, Europa germánica y carolingia, y el islam y al-Ándalus. Para ver en pantalla y para imprimir en un A4. Historia de 2º de la ESO, Tema 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* Un folio A4 apaisado: tres carriles en paralelo para ver qué pasaba a la vez */
+main.wrap { max-width: 1150px; }
+#folio-block { padding: 14px; }
+@page { size: A4 landscape; margin: 10mm; }
+:root {
+  --biz: #7B4C9C; --biz-soft: #EFE6F5;
+  --ger: #2F64A8; --ger-soft: #E3ECF7;
+  --isl: #2E7D4F; --isl-soft: #E1F1E6;
+  --fs: 10.5px;
+}
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.sheet-wrap { overflow-x: auto; padding: 4px 6px 10px 0; }
+.folio { position: relative; width: 277mm; height: 188mm; background: #fff; border: 1.5px solid var(--ink); border-radius: 6px;
+  box-shadow: 4px 4px 0 var(--lime); overflow: hidden; color: #1d2417; font-family: var(--body);
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.fhead { position: absolute; left: 0; right: 0; top: 0; height: 12.5mm; display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 0 4mm; border-bottom: 1px solid #c9d3b8; background: #fbfdf5; }
+.fhead h2 { font: 600 17px/1.1 var(--display); color: var(--ink); }
+.fhead h2 small { font: 700 11px/1 var(--body); color: #4F6B0A; margin-left: 8px; }
+.legend { display: flex; gap: 12px; align-items: center; font-size: 10px; font-weight: 700; color: #4a5541; }
+.legend i { display: inline-block; vertical-align: middle; margin-right: 4px; }
+.legend .ldot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+.legend .lbar { width: 20px; height: 8px; border-radius: 3px; background: #888; }
+.legend .lera { width: 16px; height: 9px; background: #f3efe2; border: 1px solid #ddd3b5; }
+.ffoot { position: absolute; left: 4mm; right: 4mm; bottom: 1.2mm; display: flex; justify-content: space-between; font-size: 9px; color: #5d6853; }
+
+.chart { position: absolute; left: 0; right: 0; top: 12.5mm; bottom: 5mm; }
+.era { position: absolute; top: 0; bottom: 0; border-left: 1px dashed #cfc6a6; }
+.era span { position: absolute; top: 3px; left: 4px; font: 700 10px/1.1 var(--body); color: #7a6a33; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+.grid { position: absolute; top: 18px; bottom: 16px; border-left: 1px solid rgba(0,0,0,.07); }
+.yr { position: absolute; bottom: 2px; transform: translateX(-50%); font: 700 9.5px/1 var(--body); color: #4a5541; }
+
+.lane { position: absolute; left: 0; right: 0; border-top: 1.5px solid; }
+.lane .lname { position: absolute; left: 0; top: 0; bottom: 0; width: 26px; color: #fff; display: grid; place-items: center; }
+.lane .lname span { writing-mode: vertical-rl; transform: rotate(180deg); font: 600 10.5px/1.05 var(--display); text-align: center; white-space: nowrap; }
+.lane.biz { border-color: var(--biz); background: linear-gradient(90deg, transparent 26px, rgba(123,76,156,.035) 26px); }
+.lane.ger { border-color: var(--ger); background: linear-gradient(90deg, transparent 26px, rgba(47,100,168,.035) 26px); }
+.lane.isl { border-color: var(--isl); background: linear-gradient(90deg, transparent 26px, rgba(46,125,79,.035) 26px); }
+.biz .lname { background: var(--biz); } .ger .lname { background: var(--ger); } .isl .lname { background: var(--isl); }
+
+.span { position: absolute; height: 14px; font-size: calc(var(--fs) - .5px); line-height: 14px; font-weight: 800; white-space: nowrap; }
+.span .bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; }
+.span .t { position: relative; padding-left: 4px; }
+.biz .span .bar { background: var(--biz-soft); border: 1.5px solid var(--biz); } .biz .span .t { color: #4f2c69; }
+.ger .span .bar { background: var(--ger-soft); border: 1.5px solid var(--ger); } .ger .span .t { color: #1f4577; }
+.isl .span .bar { background: var(--isl-soft); border: 1.5px solid var(--isl); } .isl .span .t { color: #1d5535; }
+.span.thin .bar { opacity: .55; }
+
+.evline { position: absolute; height: 0; border-top: 1px solid rgba(0,0,0,.18); }
+.ev { position: absolute; left: 0; top: 0; font-size: var(--fs); line-height: 1.17; white-space: nowrap; }
+.ev .lead { position: absolute; width: 0; border-left: 1.2px solid; }
+.ev .dot { position: absolute; width: 7px; height: 7px; border-radius: 50%; transform: translate(-50%, -50%); }
+.ev .lab { position: absolute; top: 0; background: #fff; padding: 0 3px 1px; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0,0,0,.06); }
+.ev .lab.r { text-align: right; }
+.ev .dot.approx { background: #fff !important; border: 1.5px dashed; }
+.biz .ev .dot.approx { border-color: var(--biz); } .ger .ev .dot.approx { border-color: var(--ger); } .isl .ev .dot.approx { border-color: var(--isl); }
+.ev .lab b { font-weight: 800; }
+.ev .lab small { display: block; font-size: calc(var(--fs) - 1px); color: #4d5645; }
+.biz .ev .lead { border-color: var(--biz); } .biz .ev .dot { background: var(--biz); } .biz .ev .lab b { color: var(--biz); }
+.ger .ev .lead { border-color: var(--ger); } .ger .ev .dot { background: var(--ger); } .ger .ev .lab b { color: var(--ger); }
+.isl .ev .lead { border-color: var(--isl); } .isl .ev .dot { background: var(--isl); } .isl .ev .lab b { color: var(--isl); }
+
+/* regla móvil (solo en pantalla) */
+.ruler { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px solid #D2421E; z-index: 5; pointer-events: none; }
+.ruler .knob { position: absolute; top: -1px; left: 0; transform: translateX(-50%); background: #D2421E; color: #fff; font: 800 11px/1 var(--body);
+  padding: 3px 7px; border-radius: 999px; white-space: nowrap; pointer-events: auto; cursor: ew-resize; box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.ruler .knob:focus-visible { outline: 3px solid var(--lime); }
+.chart.dragging { cursor: ew-resize; user-select: none; }
+.chart { cursor: crosshair; touch-action: pan-y; }
+
+.now { margin-top: 18px; }
+.now h3 { font-size: 1.25rem; margin-bottom: 10px; }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.col { background: #fff; border: 2px solid; border-radius: 14px; padding: 10px 12px; font-size: .95rem; }
+.col h4 { margin: 0 0 6px; font: 600 1rem/1.2 var(--display); }
+.col ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+.col .none { color: var(--muted); font-style: italic; }
+.col.biz { border-color: var(--biz); } .col.biz h4 { color: var(--biz); }
+.col.ger { border-color: var(--ger); } .col.ger h4 { color: var(--ger); }
+.col.isl { border-color: var(--isl); } .col.isl h4 { color: var(--isl); }
+.col li.near { color: var(--muted); }
+
+@media print {
+  html, body { background: #fff !important; }
+  body { border: 0; }
+  header.rtop, .rhead, .toolbar, .now, footer, .phone-note, .noprint, .ruler { display: none !important; }
+  main.wrap { max-width: none; padding: 0; margin: 0; }
+  section.block, #folio-block { border: 0; box-shadow: none; padding: 0; margin: 0; background: none; }
+  .sheet-wrap { overflow: visible; padding: 0; }
+  .folio { box-shadow: none; border: 1px solid #999; border-radius: 0; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>El Tema 1 en <em>tres carriles</em></h1>
+    <p class="lead">Tu libro dice que, al romperse el Imperio romano, alrededor del Mediterráneo crecieron tres civilizaciones. Aquí van
+      en paralelo, como tres carriles de una autopista. Arrastra la regla roja y mira qué pasaba a la vez en cada uno.</p>
+  </div>
+
+  <section class="block" id="folio-block">
+    <div class="toolbar noprint">
+      <p class="hint" style="margin:0">Pulsa o arrastra sobre el folio para mover la regla. Con el teclado: flechas (1 año) y Mayúsculas + flechas (10 años).</p>
+      <button class="b" type="button" id="print">Imprimir (A4 apaisado)</button>
+    </div>
+    <div class="sheet-wrap">
+      <div class="folio" id="folio">
+        <div class="fhead">
+          <h2>La Edad Media en tres carriles <small>Tema 1 · La huella andalusí · 2º ESO</small></h2>
+          <div class="legend"><span><i class="ldot"></i>un hecho</span><span><i class="lbar"></i>cuánto duró</span><span><i class="lera"></i>etapa</span><span>«hacia» = fecha aproximada</span></div>
+        </div>
+        <div class="chart" id="chart"></div>
+        <div class="ffoot"><span>El laboratorio de Beakman · lab.beakman.kademy.net</span><span>Del 395 (división del Imperio romano) al 1492 (toma de Granada)</span></div>
+      </div>
+    </div>
+
+    <div class="now noprint" id="now" aria-live="polite"></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script type="application/json" id="data">
+{
+"from": 378, "to": 1512,
+"eras": [
+ {"a": 378, "b": 476, "t": "Antigüedad"},
+ {"a": 476, "b": 1000, "t": "Alta Edad Media (siglos V-X)"},
+ {"a": 1000, "b": 1300, "t": "Plena Edad Media (XI-XIII)"},
+ {"a": 1300, "b": 1492, "t": "Baja Edad Media (XIV-XV)"},
+ {"a": 1492, "b": 1512, "t": ""}
+],
+"lanes": [
+ {"id": "biz", "name": "Imperio bizantino", "short": "Bizancio",
+  "spans": [
+   {"a": 395, "b": 1453, "t": "Imperio romano de Oriente o bizantino (395-1453) · capital, Constantinopla", "thin": true},
+   {"a": 527, "b": 565, "t": "Justiniano (527-565)"},
+   {"a": 554, "b": 624, "t": "Bizantinos en el sur de Hispania (554-624)"}
+  ],
+  "events": [
+   {"y": 395, "d": "395", "t": "El Imperio romano se divide", "s": "en Oriente y Occidente"},
+   {"y": 554, "d": "554", "t": "Los bizantinos ocupan", "s": "el sur de Hispania"},
+   {"y": 1054, "d": "1054", "t": "Cisma de Oriente", "s": "se separan ortodoxos y católicos"},
+   {"y": 1453, "d": "1453", "t": "Los turcos toman Constantinopla", "s": "fin del Imperio bizantino"}
+  ]},
+ {"id": "ger", "name": "Europa germánica y carolingia", "short": "Germanos",
+  "spans": [
+   {"a": 481, "b": 800, "t": "Reino de los francos (481-800)"},
+   {"a": 800, "b": 843, "t": "Imperio carolingio (800-843)"},
+   {"a": 507, "b": 711, "t": "Reino visigodo en Hispania (507-711) · capital, Toledo"},
+   {"a": 722, "b": 910, "t": "Reino de Asturias (722-910)"},
+   {"a": 910, "b": 1492, "t": "Reinos cristianos de la península: avanzan hacia el sur", "thin": true}
+  ],
+  "events": [
+   {"y": 409, "d": "409", "t": "Suevos, vándalos y alanos", "s": "entran en Hispania"},
+   {"y": 476, "d": "476", "t": "Fin del Imperio de Occidente", "s": "Odoacro depone a Rómulo"},
+   {"y": 507, "d": "507", "t": "Batalla de Vouillé", "s": "los francos vencen a los visigodos"},
+   {"y": 589, "d": "589", "t": "Recaredo: reino católico", "s": "III Concilio de Toledo"},
+   {"y": 722, "d": "722", "t": "Covadonga", "s": "Pelayo; nace el reino de Asturias"},
+   {"y": 732, "d": "732", "t": "Poitiers", "s": "Carlos Martel frena a los musulmanes"},
+   {"y": 800, "d": "800", "t": "Carlomagno, emperador", "s": "lo corona el papa León III"},
+   {"y": 843, "d": "843", "t": "Tratado de Verdún", "s": "el imperio se reparte en tres"},
+   {"y": 1212, "d": "1212", "t": "Navas de Tolosa", "s": "gran derrota almohade"}
+  ]},
+ {"id": "isl", "name": "El islam y al-Ándalus", "short": "Islam",
+  "spans": [
+   {"a": 632, "b": 661, "t": "Primeros califas"},
+   {"a": 661, "b": 750, "t": "Omeyas (Damasco)"},
+   {"a": 750, "b": 1258, "t": "Califas abasíes (Bagdad, 750-1258)", "thin": true},
+   {"a": 711, "b": 756, "t": "Emirato dependiente"},
+   {"a": 756, "b": 929, "t": "Emirato independiente de Córdoba (756-929)"},
+   {"a": 929, "b": 1031, "t": "Califato de Córdoba (929-1031)"},
+   {"a": 1031, "b": 1238, "t": "Taifas, almorávides y almohades"},
+   {"a": 1238, "b": 1492, "t": "Reino nazarí de Granada (1238-1492)"}
+  ],
+  "events": [
+   {"y": 622, "d": "622", "t": "Hégira", "s": "Mahoma, de La Meca a Medina"},
+   {"y": 632, "d": "632", "t": "Muere Mahoma", "s": "empiezan las conquistas"},
+   {"y": 661, "d": "661", "t": "Los omeyas, califas", "s": "capital en Damasco"},
+   {"y": 711, "d": "711", "t": "Guadalete", "s": "Tariq vence al rey Rodrigo"},
+   {"y": 750, "d": "750", "t": "Los abasíes toman el poder", "s": "capital en Bagdad"},
+   {"y": 756, "d": "756", "t": "Abderramán I", "s": "emirato independiente"},
+   {"y": 869, "d": "hacia 852-886", "t": "Fundación de Mayrit", "s": "Madrid, por el emir Muhammad I", "approx": true},
+   {"y": 929, "d": "929", "t": "Abderramán III, califa", "s": "esplendor de Córdoba"},
+   {"y": 1031, "d": "hacia 1009-1031", "t": "Fin del califato", "s": "al-Ándalus se rompe en taifas"},
+   {"y": 1086, "d": "1086", "t": "Llegan los almorávides", "s": "batalla de Sagrajas"},
+   {"y": 1238, "d": "1238", "t": "Reino nazarí de Granada"},
+   {"y": 1492, "d": "1492", "t": "Los Reyes Católicos toman Granada", "s": "fin de al-Ándalus"}
+  ]}
+]
+}
+</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById('data').textContent);
+  const chart = document.getElementById('chart');
+  const folio = document.getElementById('folio');
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const LBL = 26, PADR = 6, TOP = 18, BOTTOM = 16;          // px: columna de nombres, margen derecho, ejes
+  const SPAN_H = 14, SPAN_GAP = 3;
+  let X, fs = 10.5, rulerYear = 711;
+
+  function makeX() {
+    const w = chart.clientWidth;
+    return (y) => LBL + 4 + (y - D.from) * (w - LBL - 4 - PADR) / (D.to - D.from);
+  }
+
+  // mide el ancho de una etiqueta con el mismo estilo que tendrá
+  const meter = document.createElement('div');
+  meter.className = 'lane ' + 'biz';
+  meter.style.cssText = 'visibility:hidden;position:absolute;left:0;top:0;border:0';
+  chart.appendChild(meter);
+  function measure(html, cls) {
+    meter.innerHTML = '<div class="' + cls + '" style="position:static;display:inline-block">' + html + '</div>';
+    const r = meter.firstChild.getBoundingClientRect();
+    return { w: r.width, h: r.height };
+  }
+  const evHtml = (e) => '<span class="lab"><b>' + esc(e.d) + '</b> ' + esc(e.t) + (e.s ? '<small>' + esc(e.s) + '</small>' : '') + '</span>';
+  const evLab = (e) => '<b>' + esc(e.d) + '</b> ' + esc(e.t) + (e.s ? '<small>' + esc(e.s) + '</small>' : '');
+
+  // reparte etiquetas en filas sin que se pisen (ni las etiquetas ni sus líneas guía)
+  function packEvents(events) {
+    const placed = [];
+    // de derecha a izquierda: así los hechos muy juntos bajan en escalera y ninguna línea guía cruza una etiqueta
+    events.slice().sort((a, b) => b.y - a.y).forEach((e) => {
+      const m = measure('<span class="lab" style="position:static;display:inline-block">' + evLab(e) + '</span>', 'ev');
+      const lx = X(e.y), w = m.w + 4, right = chart.clientWidth - PADR, left = LBL + 4;
+      // la etiqueta puede ir a la derecha de su línea guía o, si así cabe más arriba, a la izquierda
+      const sides = [false, true].filter((ar) => ar ? lx - w - 1 >= left : lx + w + 2 <= right);
+      let best = null;
+      sides.forEach((ar) => {
+        const x0 = ar ? lx - w - 1 : lx + 1, x1 = ar ? lx - 1 : lx + 1 + w;
+        const clash = (r) => placed.some((p) => p.row === r && x0 < p.x1 + 5 && x1 > p.x0 - 5);
+        const crosses = (r) => placed.some((p) =>
+            (p.row < r && lx > p.x0 - 3 && lx < p.x1 + 3) ||
+            (p.row > r && p.lx > x0 - 3 && p.lx < x1 + 3));
+        let r = 0;
+        while (r < 12 && (clash(r) || crosses(r))) r++;
+        if (r === 12) { r = 0; while (clash(r)) r++; r += 12; }   // sin hueco limpio: penalizado
+        if (!best || r < best.r) best = { r, ar, x0, x1 };
+      });
+      placed.push({ e, row: best.r >= 12 ? best.r - 12 : best.r, x0: best.x0, x1: best.x1, lx, anchorRight: best.ar, h: m.h, w });
+    });
+    return placed;
+  }
+  function packSpans(spans) {
+    const placed = [];
+    spans.forEach((s) => {
+      const tw = measure('<span class="t">' + esc(s.t) + '</span>', 'span').w + 6;
+      const x0 = X(s.a), bw = X(s.b) - x0, inside = tw <= bw, x1 = inside ? x0 + bw : x0 + bw + tw;
+      let r = 0;
+      while (placed.some((p) => p.row === r && x0 < p.x1 + 4 && x1 > p.x0 - 4)) r++;
+      placed.push({ s, row: r, x0, x1, bw, inside });
+    });
+    return placed;
+  }
+
+  function layout() {
+    X = makeX();
+    folio.style.setProperty('--fs', fs + 'px');
+    chart.querySelectorAll(':scope > :not(:first-child)').forEach((n) => n.remove());
+    const W = chart.clientWidth, H = chart.clientHeight;
+    let html = '';
+    D.eras.forEach((er, i) => {
+      const bg = i % 2 ? '#f6f3e8' : '#fbfaf4';
+      html += '<div class="era" style="left:' + X(er.a) + 'px;width:' + (X(er.b) - X(er.a)) + 'px;background:' + bg + (i === 0 ? ';border-left:0' : '') + '">' +
+        (er.t ? '<span>' + esc(er.t) + '</span>' : '') + '</div>';
+    });
+    for (let y = 400; y <= 1500; y += 100) {
+      html += '<div class="grid" style="left:' + X(y) + 'px"></div><div class="yr" style="left:' + X(y) + 'px">' + y + '</div>';
+    }
+
+    // calcular la altura que pide cada carril
+    const lanes = D.lanes.map((l) => {
+      const sp = packSpans(l.spans), ev = packEvents(l.events);
+      const sRows = Math.max(0, ...sp.map((p) => p.row)) + 1;
+      const rowH = Math.max(...ev.map((p) => p.h)) + 4;
+      const eRows = Math.max(0, ...ev.map((p) => p.row)) + 1;
+      return { l, sp, ev, sRows, eRows, rowH, need: 6 + sRows * (SPAN_H + SPAN_GAP) + 10 + eRows * rowH + 4 };
+    });
+    const avail = H - TOP - BOTTOM;
+    const need = lanes.reduce((a, b) => a + b.need, 0);
+    if (need > avail && fs > 8) { fs -= .25; return layout(); }
+    const extra = (avail - need) / lanes.length;
+    let top = TOP;
+    lanes.forEach((ln) => {
+      const h = ln.need + extra;
+      const sTop = 6 + Math.min(extra * .25, 8);
+      const evTop = sTop + ln.sRows * (SPAN_H + SPAN_GAP) + 10;
+      const rowH = ln.rowH + Math.min(extra * .5 / Math.max(ln.eRows, 1), 6);
+      let inner = '<div class="lname"><span>' + esc(ln.l.name) + '</span></div>';
+      ln.sp.forEach((p) => {
+        inner += '<div class="span' + (p.s.thin ? ' thin' : '') + '" style="left:' + p.x0 + 'px;top:' + (sTop + p.row * (SPAN_H + SPAN_GAP)) + 'px;width:' + (p.x1 - p.x0) + 'px">' +
+          '<span class="bar" style="width:' + p.bw + 'px"></span><span class="t"' + (p.inside ? '' : ' style="left:' + p.bw + 'px"') + '>' + esc(p.s.t) + '</span></div>';
+      });
+      inner += '<div class="evline" style="left:' + (LBL + 2) + 'px;right:' + PADR + 'px;top:' + (evTop - 4) + 'px"></div>';
+      let leads = '', labs = '';
+      ln.ev.forEach((p) => {
+        const y = evTop + p.row * rowH;
+        leads += '<span class="lead" style="left:' + p.lx + 'px;top:' + (evTop - 4) + 'px;height:' + (y - evTop + 4 + 7) + 'px"></span>' +
+          '<span class="dot' + (p.e.approx ? ' approx' : '') + '" style="left:' + p.lx + 'px;top:' + (evTop - 4) + 'px"></span>';
+        labs += '<span class="lab' + (p.anchorRight ? ' r' : '') + '" style="left:' + p.x0 + 'px;top:' + y + 'px">' + evLab(p.e) + '</span>';
+      });
+      inner += '<div class="ev">' + leads + labs + '</div>';
+      html += '<div class="lane ' + ln.l.id + '" style="top:' + top + 'px;height:' + h + 'px">' + inner + '</div>';
+      top += h;
+    });
+    html += '<div class="ruler noprint" id="ruler"><span class="knob" id="knob" tabindex="0" role="slider" aria-label="Año de la regla" aria-valuemin="400" aria-valuemax="1500"></span></div>';
+    chart.insertAdjacentHTML('beforeend', html);
+    bindRuler();
+    setRuler(rulerYear);
+  }
+
+  // regla
+  const yearAt = (px) => {
+    const w = chart.clientWidth;
+    return Math.round(D.from + (px - LBL - 4) * (D.to - D.from) / (w - LBL - 4 - PADR));
+  };
+  function setRuler(y) {
+    rulerYear = Math.max(395, Math.min(1500, y));
+    const r = document.getElementById('ruler'); if (!r) return;
+    r.style.left = X(rulerYear) + 'px';
+    const k = document.getElementById('knob');
+    k.textContent = 'año ' + rulerYear; k.setAttribute('aria-valuenow', rulerYear);
+    renderNow();
+  }
+  function bindRuler() {
+    const k = document.getElementById('knob');
+    k.addEventListener('keydown', (e) => {
+      const step = e.shiftKey ? 10 : 1;
+      if (e.key === 'ArrowRight') { setRuler(rulerYear + step); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { setRuler(rulerYear - step); e.preventDefault(); }
+    });
+  }
+  let dragging = false;
+  const fromEvent = (e) => yearAt(e.clientX - chart.getBoundingClientRect().left);
+  chart.addEventListener('pointerdown', (e) => { dragging = true; chart.classList.add('dragging'); try { chart.setPointerCapture(e.pointerId); } catch (err) {} setRuler(fromEvent(e)); });
+  chart.addEventListener('pointermove', (e) => { if (dragging) setRuler(fromEvent(e)); });
+  const stop = () => { dragging = false; chart.classList.remove('dragging'); };
+  chart.addEventListener('pointerup', stop); chart.addEventListener('pointercancel', stop);
+
+  function renderNow() {
+    const y = rulerYear;
+    const era = D.eras.find((er) => y >= er.a && y < er.b);
+    const cols = D.lanes.map((l) => {
+      const act = l.spans.filter((s) => y >= s.a && y <= s.b).map((s) => '<li>' + esc(s.t) + '</li>');
+      const near = l.events.filter((e) => Math.abs(e.y - y) <= 25).sort((a, b) => Math.abs(a.y - y) - Math.abs(b.y - y))
+        .map((e) => '<li class="' + (e.y === y ? '' : 'near') + '"><b>' + esc(e.d) + '</b> ' + esc(e.t) + (e.s ? ': ' + esc(e.s) : '') + '</li>');
+      return '<div class="col ' + l.id + '"><h4>' + esc(l.name) + '</h4>' +
+        (act.length ? '<ul>' + act.join('') + '</ul>' : '<p class="none">Aquí todavía no hay nada (o ya se ha acabado).</p>') +
+        (near.length ? '<p style="margin:8px 0 2px;font-weight:800;font-size:.85rem">Hechos cercanos (±25 años)</p><ul>' + near.join('') + '</ul>' : '') + '</div>';
+    });
+    document.getElementById('now').innerHTML = '<h3>En el año ' + y + (era && era.t ? ' <small style="font:700 .9rem var(--body);color:var(--muted)">· ' + esc(era.t) + '</small>' : '') + '</h3>' +
+      '<div class="cols">' + cols.join('') + '</div>';
+  }
+
+  document.getElementById('print').addEventListener('click', () => window.print());
+  const go = () => { fs = 10.5; layout(); };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
+  go();
+  window.addEventListener('beforeprint', go);
+})();
+</script>
+</body>
+</html>

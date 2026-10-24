@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mayrit, el Madrid de al-Ándalus · El laboratorio de Beakman</title>
+<meta name="description" content="Un plano para pulsar del Mayrit andalusí, con una capa que superpone el Madrid de hoy, una línea de tiempo, un paseo por lo que queda y un mini reto. Tema 1, La huella andalusí.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.stage { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: 18px; align-items: start; }
+.draw { background: #FFFDF6; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.draw svg { display: block; width: 100%; height: auto; font-family: var(--body); }
+.side { display: grid; gap: 12px; }
+.modes { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; background: #fff; }
+.modes button { border: 0; background: #fff; font: 800 .92rem/1 var(--body); color: var(--ink); padding: 8px 14px; cursor: pointer; }
+.modes button + button { border-left: 2px solid var(--ink); }
+.modes button[aria-pressed="true"] { background: var(--lime); }
+.info { background: #fff; border: 1.5px solid var(--line); border-left: 6px solid var(--lime); border-radius: 0 14px 14px 0; padding: 12px 16px; min-height: 170px; }
+.info h3 { font-size: 1.3rem; margin-bottom: 6px; }
+.info p + p { margin-top: 8px; }
+.info .extra { font-size: .95rem; background: var(--note); border-radius: 10px; padding: 8px 10px; }
+.legend { font-size: .9rem; color: var(--muted); }
+
+.part { cursor: pointer; }
+.part .hl { fill: none; stroke: transparent; stroke-width: 5; transition: stroke .15s; }
+.part:hover .hl { stroke: rgba(166, 212, 30, .95); }
+.part.on .hl { stroke: #1F3A0B; stroke-dasharray: 8 5; }
+.lbl { cursor: pointer; }
+.lbl rect { fill: #fff; stroke: #1F3A0B; stroke-width: 1.5; }
+.lbl text { font: 800 15px var(--body); fill: #1F3A0B; }
+.lbl line { stroke: #1F3A0B; stroke-width: 1.3; stroke-dasharray: 3 3; }
+.lbl circle { fill: #1F3A0B; }
+.lbl.on rect { fill: var(--lime); }
+.lbl.today rect { fill: #FFF4D6; stroke: #8A4B12; }
+.lbl.today.on rect { fill: #F7C85C; }
+.decor { pointer-events: none; }
+.chip { font-family: var(--body); font-size: .95rem; }
+#old, #now { transition: opacity .3s; }
+.is-now #old { opacity: .32; pointer-events: none; }
+.is-now #old-labels { display: none; }
+#now, #now-labels { display: none; }
+.is-now #now, .is-now #now-labels { display: inline; }
+
+.timeline { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; position: relative; margin-top: 8px; }
+.timeline::before { content: ""; position: absolute; left: 4%; right: 4%; top: 22px; height: 6px; border-radius: 3px; background: var(--lime); border: 1.5px solid var(--ink); }
+.ev { position: relative; padding: 0 10px; display: grid; gap: 6px; justify-items: start; }
+.ev .dot { width: 50px; height: 50px; border-radius: 50%; background: #fff; border: 3px solid var(--ink); display: grid; place-items: center;
+  font: 700 .8rem/1 var(--display); color: var(--ink); text-align: center; z-index: 1; }
+.ev .when { font: 600 1.05rem/1.2 var(--display); color: var(--ink); }
+.ev p { font-size: .95rem; }
+
+.walk { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: s; }
+.stop { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 12px 14px; display: grid; gap: 6px; align-content: start; position: relative; }
+.stop::before { counter-increment: s; content: counter(s); width: 32px; height: 32px; border-radius: 50%; background: var(--lime); border: 2px solid var(--ink);
+  display: grid; place-items: center; font: 700 1rem/1 var(--display); color: var(--ink); }
+.stop h3 { font-size: 1.08rem; }
+.stop p { font-size: .94rem; }
+
+.quizq { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 12px; }
+.quizq h3 { font-size: 1.08rem; margin-bottom: 8px; }
+.quizq .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.quizq .fbq { margin-top: 8px; font-size: .95rem; }
+.total { font: 600 1.2rem/1.3 var(--display); color: var(--ink); }
+
+@media (max-width: 900px) {
+  .stage, .timeline, .walk { grid-template-columns: 1fr; }
+  .timeline::before { display: none; }
+}
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Mayrit, el <em>Madrid de al-Ándalus</em></h1>
+    <p class="lead">Madrid nació como una fortaleza andalusí sobre un cerro junto al Manzanares. Explora el plano, cambia al Madrid de hoy y descubre que parte de aquella muralla sigue en pie.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes de la página">
+    <a href="#plano">El plano</a><a href="#nombre">El nombre</a><a href="#tiempo">Línea de tiempo</a><a href="#paseo">Ve a verlo</a><a href="#reto">Mini reto</a>
+  </nav>
+
+  <section class="block" id="plano">
+    <h2>El plano de Mayrit</h2>
+    <p class="hint">Pulsa cada parte. Luego cambia a «Madrid de hoy» para ver qué hay ahora en el mismo sitio. Es un plano esquemático: las formas son aproximadas.</p>
+    <div class="stage">
+      <div class="draw">
+        <svg id="svg-map" viewBox="0 0 780 520" role="img" aria-label="Plano esquemático de Mayrit y del Madrid de hoy">
+          <defs>
+            <radialGradient id="cerro" cx="50%" cy="48%" r="55%"><stop offset="0" stop-color="#F0D9A8"/><stop offset="1" stop-color="#E2C68C"/></radialGradient>
+            <linearGradient id="agua" x1="0" x2="1"><stop offset="0" stop-color="#7CC4DE"/><stop offset=".5" stop-color="#4FA3CA"/><stop offset="1" stop-color="#7CC4DE"/></linearGradient>
+            <pattern id="huerta" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#CFE3A0"/><rect width="14" height="4" fill="#B9D584"/></pattern>
+          </defs>
+          <rect width="780" height="520" fill="#EEF0D2"/>
+
+          <g id="old">
+            <!-- vega con huertas y cerro -->
+            <g class="decor">
+              <path d="M110 0 H210 C190 120 180 260 200 380 C215 450 240 500 250 520 H110 Z" fill="url(#huerta)"/>
+              <ellipse cx="350" cy="262" rx="200" ry="190" fill="url(#cerro)"/>
+              <ellipse cx="350" cy="262" rx="200" ry="190" fill="none" stroke="#CDAE70" stroke-width="1.5" stroke-dasharray="5 6"/>
+              <ellipse cx="352" cy="258" rx="168" ry="160" fill="none" stroke="#CDAE70" stroke-width="1.5" stroke-dasharray="5 6"/>
+              <text x="148" y="448" font-size="12" font-style="italic" font-weight="700" fill="#5E7A2E" transform="rotate(-84 148 448)">vega con huertas</text>
+              <path d="M640 470 L700 520" stroke="#B89D68" stroke-width="5" stroke-dasharray="10 8" fill="none"/>
+              <text x="560" y="510" font-size="13" font-weight="800" fill="#6B5A1E">camino de Toledo ↓</text>
+              <text x="470" y="22" font-size="13" font-weight="800" fill="#6B5A1E">↑ al norte: la sierra y los reinos cristianos</text>
+            </g>
+
+            <!-- río Manzanares -->
+            <g class="part" data-id="rio">
+              <path d="M70 0 C95 90 60 180 85 270 C105 350 70 430 95 520 H135 C110 430 145 350 125 270 C100 180 135 90 110 0 Z" fill="url(#agua)"/>
+              <path class="hl" d="M70 0 C95 90 60 180 85 270 C105 350 70 430 95 520 H135 C110 430 145 350 125 270 C100 180 135 90 110 0 Z"/>
+            </g>
+
+            <!-- arrabal -->
+            <g class="part" data-id="arrabal">
+              <rect x="532" y="170" width="200" height="250" rx="40" fill="#E9DDB8" opacity=".85"/>
+              <g id="casas-arrabal"></g>
+              <rect class="hl" x="528" y="166" width="208" height="258" rx="42"/>
+            </g>
+            <path class="decor" d="M600 420 L640 470" stroke="#B89D68" stroke-width="5" stroke-dasharray="10 8"/>
+
+            <!-- almudaina: el recinto amurallado -->
+            <g class="part" data-id="almudaina">
+              <polygon points="230,120 330,96 430,108 480,180 492,280 462,370 370,410 270,395 215,320 205,210" fill="#F6E6C2"/>
+              <g id="casas-dentro"></g>
+              <polygon class="hl" points="240,132 330,110 422,120 466,186 478,280 452,358 368,396 276,382 228,316 220,214"/>
+            </g>
+
+            <!-- muralla -->
+            <g class="part" data-id="muralla">
+              <polygon points="230,120 330,96 430,108 480,180 492,280 462,370 370,410 270,395 215,320 205,210" fill="none" stroke="#8E5A2B" stroke-width="8" stroke-linejoin="round"/>
+              <polygon points="230,120 330,96 430,108 480,180 492,280 462,370 370,410 270,395 215,320 205,210" fill="none" stroke="transparent" stroke-width="18" stroke-linejoin="round"/>
+              <g id="torres" fill="#A8693A" stroke="#6B3A1E" stroke-width="1.5"></g>
+              <polygon class="hl" points="230,120 330,96 430,108 480,180 492,280 462,370 370,410 270,395 215,320 205,210" stroke-width="14" stroke-linejoin="round"/>
+            </g>
+
+            <!-- alcázar -->
+            <g class="part" data-id="alcazar">
+              <rect x="246" y="132" width="88" height="66" fill="#000" opacity=".12" transform="translate(4 4)"/>
+              <rect x="246" y="132" width="88" height="66" fill="#D29A5E" stroke="#6B3A1E" stroke-width="3"/>
+              <rect x="266" y="148" width="48" height="34" fill="#F3DFB8" stroke="#6B3A1E" stroke-width="1.5"/>
+              <g fill="#A8693A" stroke="#6B3A1E" stroke-width="1.5"><rect x="240" y="126" width="14" height="14"/><rect x="326" y="126" width="14" height="14"/><rect x="240" y="190" width="14" height="14"/><rect x="326" y="190" width="14" height="14"/></g>
+              <rect class="hl" x="234" y="120" width="112" height="90" rx="5"/>
+            </g>
+
+            <!-- mezquita -->
+            <g class="part" data-id="mezquita">
+              <rect x="404" y="236" width="56" height="48" fill="#000" opacity=".12" transform="translate(4 4)"/>
+              <rect x="404" y="236" width="56" height="48" fill="#E5B979" stroke="#6B3A1E" stroke-width="2.5"/>
+              <rect x="404" y="236" width="56" height="20" fill="#C9844A"/>
+              <rect x="420" y="262" width="24" height="16" fill="#F3DFB8"/>
+              <rect x="398" y="276" width="14" height="14" fill="#B5703A" stroke="#6B3A1E" stroke-width="1.5"/>
+              <rect class="hl" x="394" y="228" width="74" height="66" rx="5"/>
+            </g>
+
+            <!-- puertas -->
+            <g class="part" data-id="pvega">
+              <rect x="232" y="346" width="22" height="22" rx="3" fill="#5A2E12" transform="rotate(-50 243 357)"/>
+              <circle cx="243" cy="357" r="5" fill="#F6E6C2"/>
+              <circle class="hl" cx="243" cy="357" r="18"/>
+            </g>
+            <g class="part" data-id="psantamaria">
+              <rect x="476" y="262" width="22" height="22" rx="3" fill="#5A2E12" transform="rotate(84 487 273)"/>
+              <circle cx="487" cy="273" r="5" fill="#F6E6C2"/>
+              <circle class="hl" cx="487" cy="273" r="18"/>
+            </g>
+            <g class="part" data-id="psagra">
+              <rect x="444" y="134" width="22" height="22" rx="3" fill="#5A2E12" transform="rotate(55 455 145)"/>
+              <circle cx="455" cy="145" r="5" fill="#F6E6C2"/>
+              <circle class="hl" cx="455" cy="145" r="18"/>
+            </g>
+          </g>
+
+          <!-- Madrid de hoy -->
+          <g id="now">
+            <g class="part" data-id="palacio">
+              <rect x="236" y="112" width="108" height="94" fill="#000" opacity=".15" transform="translate(5 5)"/>
+              <rect x="236" y="112" width="108" height="94" fill="#FBF7EE" stroke="#6E6A60" stroke-width="3"/>
+              <rect x="262" y="134" width="56" height="50" fill="#E7E1D2" stroke="#6E6A60" stroke-width="2"/>
+              <rect class="hl" x="230" y="106" width="120" height="106" rx="5"/>
+            </g>
+            <g class="decor"><rect x="262" y="210" width="56" height="24" fill="#E8E2D2" opacity=".9"/></g>
+            <g class="part" data-id="catedral">
+              <path d="M296 238 H336 V266 H362 V296 H336 V350 H296 V296 H270 V266 H296 Z" fill="#000" opacity=".15" transform="translate(5 5)"/>
+              <path d="M296 238 H336 V266 H362 V296 H336 V350 H296 V296 H270 V266 H296 Z" fill="#FBF7EE" stroke="#6E6A60" stroke-width="3"/>
+              <circle cx="316" cy="281" r="13" fill="#9FB7C9" stroke="#6E6A60" stroke-width="2"/>
+              <path class="hl" d="M290 232 H342 V260 H368 V302 H342 V356 H290 V302 H264 V260 H290 Z"/>
+            </g>
+            <g class="part" data-id="mayor">
+              <path d="M492 284 C560 280 650 270 780 262" stroke="#9A9488" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M492 284 C560 280 650 270 780 262" stroke="#D9D4C8" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path class="hl" d="M492 284 C560 280 650 270 780 262" stroke-width="26"/>
+            </g>
+            <g class="part" data-id="cuesta">
+              <path d="M488 298 C430 330 380 362 300 370 C250 372 210 392 130 420" stroke="#9A9488" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M488 298 C430 330 380 362 300 370 C250 372 210 392 130 420" stroke="#D9D4C8" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path class="hl" d="M488 298 C430 330 380 362 300 370 C250 372 210 392 130 420" stroke-width="26"/>
+            </g>
+            <g class="part" data-id="restos">
+              <path d="M246 362 L270 395 L330 404" stroke="#C0392B" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M246 362 L270 395 L330 404" stroke="#F5B7A8" stroke-width="3" fill="none" stroke-dasharray="6 5"/>
+              <path class="hl" d="M246 362 L270 395 L330 404" stroke-width="28" stroke-linejoin="round"/>
+            </g>
+            <g class="part" data-id="santamaria">
+              <circle cx="432" cy="260" r="20" fill="#FFF4D6" fill-opacity=".6" stroke="#8A4B12" stroke-width="2.5" stroke-dasharray="5 4"/>
+              <text x="432" y="266" text-anchor="middle" font-size="17" font-weight="800" fill="#8A4B12">?</text>
+              <circle class="hl" cx="432" cy="260" r="26"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="side">
+        <div class="row">
+          <div class="modes" role="group" aria-label="Época">
+            <button type="button" data-era="old" aria-pressed="true">Mayrit (siglo X)</button>
+            <button type="button" data-era="now" aria-pressed="false">Madrid de hoy</button>
+          </div>
+        </div>
+        <div class="info" aria-live="polite"><h3>Pulsa una parte</h3><p>Empieza por el alcázar, arriba a la izquierda: era el corazón de la fortaleza.</p></div>
+        <p class="legend">Arriba está el norte. El río Manzanares corre por la izquierda, al pie del cerro.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="nombre">
+    <h2>¿Por qué Mayrit?</h2>
+    <div class="beak"><img src="../../../../media/beakman.jpg" alt=""><div><b>Un nombre con agua dentro</b>
+      Lo más probable es que «Mayrit» venga de una palabra árabe relacionada con los cauces o corrientes de agua: algo así como «lugar de muchos cauces». Tiene sentido, porque la zona era rica en arroyos y aguas subterráneas. Ojo: los expertos no se ponen del todo de acuerdo, y hay otras teorías. De «Mayrit» salió, con los siglos, «Madrid».</div></div>
+  </section>
+
+  <section class="block" id="tiempo">
+    <h2>Línea de tiempo</h2>
+    <p class="hint">Unos dos siglos como fortaleza de al-Ándalus.</p>
+    <div class="timeline">
+      <div class="ev"><span class="dot">s. IX</span><span class="when">Hacia 860-880</span>
+        <p>El emir <b>Muhammad I</b> de Córdoba manda construir una fortaleza en el cerro. Su misión: vigilar el camino hacia Toledo frente a los reinos cristianos del norte.</p></div>
+      <div class="ev"><span class="dot">s. X</span><span class="when">Frontera del califato</span>
+        <p>Mayrit es una plaza de la frontera del califato de Córdoba. Hacia el 932 la ataca el rey Ramiro II de León, y Abderramán III refuerza sus defensas.</p></div>
+      <div class="ev"><span class="dot">s. XI</span><span class="when">Hacia 1085</span>
+        <p>El rey <b>Alfonso VI</b> de Castilla conquista Toledo, y con ella Mayrit pasa a manos castellanas.</p></div>
+      <div class="ev"><span class="dot">hoy</span><span class="when">Y hoy</span>
+        <p>Aún se conserva un trozo de la muralla andalusí. Y el nombre de la Almudena, la patrona de Madrid, viene de <i>al-mudayna</i>, la ciudadela.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="paseo">
+    <h2>Si vives en Madrid, ve a verlo</h2>
+    <p class="hint">Un paseo corto, todo muy cerca, por lo que queda del Mayrit. Ve con alguien mayor y lleva este plano en la cabeza.</p>
+    <div class="walk">
+      <div class="stop"><h3>Cuesta de la Vega</h3><p>Baja por la cuesta junto a la catedral. A un lado verás un muro de piedra antiguo: es la muralla de Mayrit, del siglo IX. Es el tramo más importante que se conserva.</p></div>
+      <div class="stop"><h3>Parque Emir Mohamed I</h3><p>Un pequeño parque junto a esos restos. Lleva el nombre del emir que fundó la ciudad. Busca cómo está hecha la muralla: grandes piedras y bloques de sílex.</p></div>
+      <div class="stop"><h3>Catedral de la Almudena</h3><p>Su nombre viene de <i>al-mudayna</i>, la ciudadela. Está dentro de lo que era el recinto amurallado. Mira hacia la cuesta e imagina la puerta de la Vega.</p></div>
+      <div class="stop"><h3>Palacio Real</h3><p>Está donde se alzaba el alcázar andalusí, en el punto más alto del cerro. Fíjate en lo alto que está: desde aquí se vigilaba el valle del Manzanares.</p></div>
+    </div>
+  </section>
+
+  <section class="block" id="reto">
+    <h2>Mini reto</h2>
+    <p class="hint">Cinco preguntas. Elige una respuesta en cada una y pulsa «Corregir».</p>
+    <div id="quiz"></div>
+    <div class="row"><button type="button" class="b" id="corregir">Corregir</button><button type="button" class="b ghost" id="reiniciar">Empezar de nuevo</button><span class="total" id="total" aria-live="polite"></span></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const el = (tag, attrs, parent) => { const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  const svg = document.getElementById('svg-map');
+
+  /* decoración: casas y torres */
+  const rnd = (s => () => (s = (s * 9301 + 49297) % 233280) / 233280)(7);
+  const ca = document.getElementById('casas-arrabal');
+  for (let y = 192; y < 400; y += 26) for (let x = 552; x < 712; x += 30) {
+    if (rnd() < .25) continue;
+    el('rect', { x: x + rnd() * 6, y: y + rnd() * 6, width: 18 + rnd() * 6, height: 14 + rnd() * 5, fill: ['#D9A15F', '#C98A4B', '#E2B47A'][Math.floor(rnd() * 3)], stroke: '#8A5A2B', 'stroke-width': 1 }, ca);
+  }
+  const cd = document.getElementById('casas-dentro');
+  [[352, 140], [380, 132], [404, 150], [352, 214], [380, 206], [356, 300], [386, 316], [412, 340], [420, 306], [270, 236], [256, 266], [282, 300], [300, 340], [340, 360], [440, 200]]
+    .forEach(([x, y]) => el('rect', { x, y, width: 20, height: 15, fill: '#E2B47A', stroke: '#8A5A2B', 'stroke-width': 1 }, cd));
+  const pts = [[230,120],[330,96],[430,108],[480,180],[492,280],[462,370],[370,410],[270,395],[215,320],[205,210]];
+  const tw = document.getElementById('torres');
+  pts.forEach(([x, y], i) => { const [x2, y2] = pts[(i + 1) % pts.length];
+    [[x, y], [(x + x2) / 2, (y + y2) / 2]].forEach(([a, b]) => el('rect', { x: a - 7, y: b - 7, width: 14, height: 14 }, tw)); });
+
+  /* datos */
+  const OLD = {
+    almudaina: { name: 'La almudaina (la ciudadela)', lbl: 'Almudaina', at: [300, 250, 300, 250], noline: true,
+      text: 'Era el recinto amurallado de lo alto del cerro: la ciudadela, en árabe <i>al-mudayna</i>. Dentro estaban el alcázar, la mezquita y las casas de quienes vivían en la fortaleza.',
+      extra: 'De <i>al-mudayna</i> viene el nombre de la Almudena.' },
+    alcazar: { name: 'Alcázar', lbl: 'Alcázar', at: [290, 106, 290, 132],
+      text: 'La fortaleza principal, en el punto más alto y junto al barranco del río. Allí vivía quien gobernaba Mayrit y estaba la guarnición de soldados. Desde arriba se dominaba todo el valle.',
+      extra: 'Hoy, en ese sitio, está el Palacio Real.' },
+    mezquita: { name: 'Mezquita', lbl: 'Mezquita', at: [432, 214, 432, 236],
+      text: 'La mezquita principal de Mayrit, donde se reunían los musulmanes para rezar, sobre todo los viernes. Probablemente estaba cerca de la puerta del este.',
+      extra: 'Tras la conquista castellana se convirtió en la iglesia de Santa María, que ya no existe.' },
+    muralla: { name: 'Muralla', lbl: 'Muralla', at: [180, 160, 214, 168],
+      text: 'Rodeaba la almudaina y tenía torres cada pocos metros. Se hizo con piedra y sílex, la piedra que da chispas, abundante en la zona. Era la protección de la fortaleza frente a los ataques del norte.',
+      extra: 'Un trozo sigue en pie en la Cuesta de la Vega.' },
+    pvega: { name: 'Puerta de la Vega', lbl: 'Puerta de la Vega', at: [262, 450, 243, 366],
+      text: 'Se abría hacia el oeste y bajaba hacia el río y la vega, las tierras llanas con huertas a la orilla del Manzanares.' },
+    psantamaria: { name: 'Puerta de Santa María', lbl: 'Puerta de Santa María', at: [600, 140, 494, 268],
+      text: 'Se abría hacia el este, cerca de la mezquita, y comunicaba con los barrios de fuera. El nombre se lo dieron después los cristianos, por la iglesia de Santa María. Por ahí pasa hoy la calle Mayor.' },
+    psagra: { name: 'Puerta de la Sagra', lbl: 'Puerta de la Sagra', at: [560, 82, 462, 140],
+      text: 'Se abría hacia el norte, hacia los campos y huertas de ese lado.' },
+    arrabal: { name: 'Arrabal', lbl: 'Arrabal', at: [632, 438, 632, 420],
+      text: 'Fuera de la muralla fueron creciendo barrios: los arrabales. Allí vivía gente que trabajaba en los campos, en los talleres o en el comercio. Si había peligro, podían refugiarse dentro de la muralla.' },
+    rio: { name: 'Río Manzanares', lbl: 'Manzanares', at: [100, 470, 100, 470], noline: true,
+      text: 'Corre al pie del cerro. Daba agua para las huertas de la vega y, además, era una defensa natural: el cerro era muy empinado por ese lado.' }
+  };
+  const NOW = {
+    palacio: { name: 'Palacio Real', lbl: 'Palacio Real', at: [290, 96, 290, 112],
+      text: 'Está justo donde estaba el alcázar andalusí. Después de la conquista, los reyes de Castilla usaron y ampliaron aquel alcázar durante siglos. El palacio actual se construyó en el siglo XVIII, después de que el viejo alcázar ardiera.' },
+    catedral: { name: 'Catedral de la Almudena', lbl: 'Catedral de la Almudena', at: [316, 222, 316, 238],
+      text: 'Está dentro de lo que era la almudaina. Su nombre viene de <i>al-mudayna</i>, la ciudadela.',
+      extra: 'Cuenta una leyenda que, cuando Alfonso VI conquistó la ciudad, apareció una imagen de la Virgen escondida en la muralla. Por eso se llamó Virgen de la Almudena.' },
+    mayor: { name: 'Calle Mayor', lbl: 'Calle Mayor', at: [660, 238, 660, 266],
+      text: 'Sale hacia el este desde donde estaba la puerta de Santa María. Ya en época andalusí, por aquí se salía de la fortaleza hacia los barrios de fuera.' },
+    cuesta: { name: 'Cuesta de la Vega', lbl: 'Cuesta de la Vega', at: [200, 470, 200, 392],
+      text: 'Baja desde la catedral hacia el río, más o menos por donde se salía por la puerta de la Vega. Su nombre recuerda aquella puerta.' },
+    restos: { name: 'Restos de la muralla · Parque Emir Mohamed I', lbl: 'Muralla de Mayrit', at: [400, 470, 330, 404],
+      text: 'El tramo más importante que se conserva de la muralla andalusí, junto a la Cuesta de la Vega. Alrededor está el Parque Emir Mohamed I, con el nombre del fundador de la ciudad. Se puede ver desde la calle.' },
+    santamaria: { name: 'Aquí estuvo Santa María', lbl: 'Santa María', at: [520, 214, 446, 248],
+      text: 'En este punto, junto a la calle Mayor, estuvo la iglesia de Santa María, que probablemente se levantó sobre la vieja mezquita. Se derribó en el siglo XIX y hoy no queda nada.' }
+  };
+
+  const info = document.querySelector('#plano .info');
+  const parts = {}, labels = {};
+  svg.querySelectorAll('.part').forEach(p => { parts[p.dataset.id] = p; });
+  function addLabels(data, layerId, cls) {
+    const layer = el('g', { id: layerId }, svg);
+    for (const id in data) {
+      const d = data[id], [lx, ly, ax, ay] = d.at;
+      const g = el('g', { class: 'lbl ' + cls, 'data-for': id }, layer);
+      if (!d.noline) { el('line', { x1: lx, y1: ly, x2: ax, y2: ay }, g); el('circle', { cx: ax, cy: ay, r: 3 }, g); }
+      const r = el('rect', { rx: 8 }, g);
+      const tx = el('text', { x: lx, y: ly + 5.2, 'text-anchor': 'middle' }, g); tx.textContent = d.lbl;
+      const w = tx.getComputedTextLength() + 16;
+      r.setAttribute('x', lx - w / 2); r.setAttribute('y', ly - 13); r.setAttribute('width', w); r.setAttribute('height', 26);
+      labels[id] = g; g.addEventListener('click', () => show(id));
+    }
+  }
+  const ALL = Object.assign({}, OLD, NOW);
+  function show(id) {
+    const d = ALL[id];
+    Object.values(parts).forEach(p => p.classList.remove('on')); Object.values(labels).forEach(l => l.classList.remove('on'));
+    parts[id].classList.add('on'); labels[id].classList.add('on');
+    info.innerHTML = `<h3>${d.name}</h3><p>${d.text}</p>` + (d.extra ? `<p class="extra">${d.extra}</p>` : '');
+  }
+  Object.entries(parts).forEach(([id, p]) => p.addEventListener('click', () => show(id)));
+  addLabels(OLD, 'old-labels', '');
+  addLabels(NOW, 'now-labels', 'today');
+
+  document.querySelectorAll('#plano [data-era]').forEach(b => b.addEventListener('click', () => {
+    const now = b.dataset.era === 'now';
+    document.querySelectorAll('#plano [data-era]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    svg.classList.toggle('is-now', now);
+    Object.values(parts).forEach(p => p.classList.remove('on')); Object.values(labels).forEach(l => l.classList.remove('on'));
+    info.innerHTML = now
+      ? '<h3>El Madrid de hoy</h3><p>En color, lo que hay ahora. Debajo, en transparente, el Mayrit de hace mil años. Pulsa cada sitio.</p>'
+      : '<h3>Mayrit</h3><p>Así era la fortaleza hacia el siglo X. Pulsa cada parte.</p>';
+  }));
+
+  /* mini reto */
+  const Q = [
+    { q: '¿Quién fundó Mayrit?', o: ['Abderramán III', 'El emir Muhammad I', 'Alfonso VI', 'Almanzor'], a: 1,
+      w: 'Fue el emir Muhammad I de Córdoba, en la segunda mitad del siglo IX.' },
+    { q: '¿Para qué se construyó?', o: ['Para ser la capital de al-Ándalus', 'Para vigilar el camino hacia Toledo frente a los reinos cristianos', 'Para comerciar por el río', 'Para construir una gran mezquita'], a: 1,
+      w: 'Era una fortaleza de frontera: vigilaba el paso hacia Toledo.' },
+    { q: '¿Qué hay hoy donde estaba el alcázar?', o: ['La Puerta del Sol', 'La Plaza Mayor', 'El Palacio Real', 'La Catedral de la Almudena'], a: 2,
+      w: 'El Palacio Real ocupa el sitio del alcázar, en lo alto del cerro.' },
+    { q: '¿Cuándo pasó Mayrit a Castilla?', o: ['Hacia 1085, con Alfonso VI', 'En 711, con la llegada de los musulmanes', 'En 1492, con los Reyes Católicos', 'En el siglo IX'], a: 0,
+      w: 'Hacia 1085, cuando Alfonso VI conquistó Toledo.' },
+    { q: '¿De dónde viene el nombre de la Almudena?', o: ['De un río', 'De <i>al-mudayna</i>, la ciudadela', 'De una reina castellana', 'Del latín «muralla»'], a: 1,
+      w: '<i>Al-mudayna</i> era la ciudadela amurallada de Mayrit.' }
+  ];
+  const quiz = document.getElementById('quiz'), total = document.getElementById('total');
+  const KEY = 'lab.mayrit.reto';
+  let picks = store.get(KEY, {});
+  function render() {
+    quiz.innerHTML = '';
+    Q.forEach((it, i) => {
+      const box = document.createElement('div'); box.className = 'quizq';
+      box.innerHTML = `<h3>${i + 1}. ${it.q}</h3><div class="opts">${it.o.map((o, j) => `<button type="button" class="chip${picks[i] === j ? ' sel' : ''}" data-j="${j}"><span>${o}</span></button>`).join('')}</div><p class="fbq" hidden></p>`;
+      box.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+        picks[i] = +b.dataset.j; store.set(KEY, picks);
+        box.querySelectorAll('.chip').forEach(x => x.classList.remove('sel', 'ok', 'ko')); b.classList.add('sel');
+        box.querySelector('.fbq').hidden = true; total.textContent = '';
+      }));
+      quiz.appendChild(box);
+    });
+  }
+  render();
+  document.getElementById('corregir').addEventListener('click', () => {
+    let ok = 0, answered = 0;
+    quiz.querySelectorAll('.quizq').forEach((box, i) => {
+      const fb = box.querySelector('.fbq'), p = picks[i];
+      box.querySelectorAll('.chip').forEach(x => x.classList.remove('ok', 'ko'));
+      if (p === undefined) { fb.hidden = false; fb.innerHTML = 'Te falta esta.'; return; }
+      answered++;
+      const chosen = box.querySelector(`.chip[data-j="${p}"]`);
+      if (p === Q[i].a) { ok++; chosen.classList.add('ok'); fb.innerHTML = '<span class="okt">¡Bien!</span> ' + Q[i].w; }
+      else { chosen.classList.add('ko'); box.querySelector(`.chip[data-j="${Q[i].a}"]`).classList.add('ok'); fb.innerHTML = '<span class="kot">No es esa.</span> ' + Q[i].w; }
+      fb.hidden = false;
+    });
+    total.textContent = answered < Q.length ? `${ok} de ${Q.length}. Te quedan preguntas por contestar.`
+      : ok === Q.length ? `¡${ok} de ${Q.length}! Mayrit no tiene secretos para ti.` : `${ok} de ${Q.length}. Mira las verdes y vuelve a intentarlo.`;
+  });
+  document.getElementById('reiniciar').addEventListener('click', () => { picks = {}; store.set(KEY, picks); total.textContent = ''; render(); });
+})();
+</script>
+</body>
+</html>
