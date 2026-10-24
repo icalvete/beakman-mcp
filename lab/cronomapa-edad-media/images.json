@@ -844,5 +844,41 @@
   "link": "https://commons.wikimedia.org/wiki/File:F._de_Madrazo_-_1840,_Don_Pelayo_reconoce_a_Don_Rodrigo_tras_la_Batalla_de_Guadalete_(Valencia,_colecci%C3%B3n_particular,_25_x_32_cm).jpg",
   "file": "F. de Madrazo - 1840, Don Pelayo reconoce a Don Rodrigo tras la Batalla de Guadalete (Valencia, colección particular, 25 x 32 cm).jpg",
   "article": "Rodrigo rey visigodo Madrazo"
+ },
+ "poitiers": {
+  "src": "img/poitiers.jpg",
+  "alt": "Carlos Martel en la batalla de Poitiers",
+  "credit": "Charles de Steuben",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Steuben_-_Bataille_de_Poitiers.png",
+  "file": "Steuben_-_Bataille_de_Poitiers.png",
+  "article": "Batalla de Poitiers (732)"
+ },
+ "lotario": {
+  "src": "img/lotario.jpg",
+  "alt": "Lotario I, nieto de Carlomagno",
+  "credit": "Autor desconocido",
+  "license": "Public domain",
+  "link": "https://commons.wikimedia.org/wiki/File:Lothar_I.jpg",
+  "file": "Lothar_I.jpg",
+  "article": "Lotario I"
+ },
+ "mayrit": {
+  "src": "img/mayrit.jpg",
+  "alt": "Restos de la muralla árabe de Madrid",
+  "credit": "Luis García from Madrid (Spain).",
+  "license": "CC BY-SA 2.0",
+  "link": "https://commons.wikimedia.org/wiki/File:Muralla_%C3%A1rabe_de_Madrid_01.jpg",
+  "file": "Muralla_árabe_de_Madrid_01.jpg",
+  "article": "Muralla musulmana de Madrid"
+ },
+ "noria": {
+  "src": "img/noria.jpg",
+  "alt": "Una gran noria para regar, en Alcantarilla (Murcia)",
+  "credit": "Francisco Martinez",
+  "license": "CC BY 3.0",
+  "link": "https://commons.wikimedia.org/wiki/File:La_Noria_de_La_%C3%91ora-Murcia_(Spain)_-_panoramio.jpg",
+  "file": "La Noria de La Ñora-Murcia (Spain) - panoramio.jpg",
+  "article": "Noria de la Ñora Murcia"
  }
 }

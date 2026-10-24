@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué dicen las palabras? · El laboratorio de Beakman</title>
+<meta name="description" content="Un juego con las palabras que el español heredó del árabe: descubre cuáles vienen de al-Ándalus, clasifícalas y saca conclusiones sobre su legado.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* Parte 1: una tarjeta cada vez */
+.quiz { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.flash { background: #fff; border: 2px solid var(--ink); border-radius: 18px; padding: 22px 22px 20px; text-align: center; display: grid; gap: 14px; min-height: 290px; align-content: start; }
+.flash .count { font-weight: 800; font-size: .9rem; color: var(--muted); }
+.flash .word { font: 600 3rem/1.1 var(--display); color: var(--ink); letter-spacing: .01em; }
+.flash .ask { font-weight: 700; }
+.flash .row { justify-content: center; }
+.flash .b.big { font-size: 1.05rem; padding: 10px 18px; }
+.verdict { border-radius: 12px; padding: 10px 14px; text-align: left; border: 2px solid var(--line); }
+.verdict b { font-family: var(--display); font-weight: 600; font-size: 1.05rem; }
+.score { display: grid; gap: 10px; }
+.bar { height: 14px; border-radius: 999px; background: var(--line); overflow: hidden; border: 1.5px solid var(--ink); }
+.bar span { display: block; height: 100%; background: var(--lime); width: 0; transition: width .3s; }
+.missed { margin: 0; padding-left: 20px; font-size: .95rem; }
+.missed li { margin-bottom: 4px; }
+.tally { display: flex; gap: 14px; font-weight: 800; }
+
+/* Parte 2: cajas por ámbitos */
+.pool { min-height: 64px; background: #fff; border: 2px dashed var(--line); border-radius: 14px; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.pool.over, .zone.over { border-color: var(--ink); background: var(--lime-soft); }
+.zones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.zone { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px 12px; min-height: 130px; cursor: pointer; }
+.zone h3 { font-size: 1.05rem; margin-bottom: 2px; }
+.zone .sub { font-size: .82rem; color: var(--muted); margin-bottom: 8px; }
+.zone .in { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip.sm { padding: 5px 9px; font-size: .92rem; }
+.chip[draggable="true"] { cursor: grab; }
+.etym { margin-top: 14px; }
+.etym summary { font-weight: 800; cursor: pointer; }
+.etym .cols { columns: 2; column-gap: 28px; margin-top: 10px; font-size: .93rem; }
+.etym .cols h4 { font: 600 1rem/1.2 var(--display); color: var(--ink); margin: 0 0 4px; break-after: avoid; }
+.etym .cols p { margin-bottom: 4px; break-inside: avoid; }
+.etym .cols .grp { break-inside: avoid; margin-bottom: 12px; }
+
+/* Parte 3 */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.sun { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; font-size: .95rem; }
+.sun th, .sun td { border: 1.5px solid var(--line); padding: 6px 10px; text-align: left; }
+.sun th { background: var(--lime-soft); font-family: var(--display); font-weight: 600; color: var(--ink); }
+.al-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.al-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 6px 8px 6px 12px; }
+.al-item .w { font-weight: 800; }
+.al-item .why2 { grid-column: 1 / -1; font-size: .85rem; color: var(--muted); }
+.al-wrap { display: grid; gap: 4px; }
+.seg { display: inline-flex; border: 2px solid var(--line); border-radius: 999px; overflow: hidden; flex: none; }
+.seg button { border: 0; background: #fff; padding: 4px 10px; font: 800 .85rem/1 var(--body); cursor: pointer; color: var(--muted); }
+.seg button + button { border-left: 2px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--lime-soft); color: var(--ink); }
+.msg { font-weight: 700; margin-top: 10px; }
+.translit { font-size: .85rem; color: var(--muted); margin-top: 10px; }
+
+/* Conclusión */
+.concl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 14px 0; }
+.concl .soft h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.concl .soft p { font-size: .95rem; }
+.concl .soft .ex { font-style: italic; color: var(--muted); margin-top: 6px; }
+
+@media (max-width: 860px) {
+  .quiz, .two, .concl { grid-template-columns: 1fr; }
+  .zones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .etym .cols { columns: 1; }
+}
+@media (max-width: 520px) { .zones, .al-list { grid-template-columns: 1fr; } .flash .word { font-size: 2.3rem; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>¿Qué dicen <em>las palabras</em>?</h1>
+    <p class="lead">Dices «ojalá», duermes en una almohada y riegas con una acequia. Esas palabras llegaron del árabe hace más de mil años.
+      Vamos a investigarlas como pistas: ¿qué nos cuentan de lo que trajo al-Ándalus?</p>
+  </div>
+
+  <nav class="tabs" aria-label="Partes">
+    <a href="#parte-1">1 · ¿Viene del árabe?</a>
+    <a href="#parte-2">2 · Por ámbitos</a>
+    <a href="#parte-3">3 · Pista: el al-</a>
+    <a href="#conclusion">Lo que nos dicen</a>
+  </nav>
+
+  <section class="block" id="parte-1">
+    <h2>Parte 1 · ¿Viene del árabe?</h2>
+    <p class="hint">Te enseño una palabra. Tú decides si viene del árabe o no. Cuidado: algunas parecen árabes y no lo son.</p>
+    <div class="quiz">
+      <div class="flash" id="flash" aria-live="polite"></div>
+      <div class="score">
+        <div class="tally"><span class="okt">Aciertos: <span id="nOk">0</span></span><span class="kot">Fallos: <span id="nKo">0</span></span></div>
+        <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+        <div class="beak"><img src="../../../../media/beakman.jpg" alt="">
+          <div><b>Pista de Beakman</b>Que empiece por «al» no lo demuestra todo. Y que suene raro tampoco. Piensa en qué es la cosa y cuándo pudo llegar.</div></div>
+        <p class="translit">Las palabras árabes van escritas con nuestras letras, de forma aproximada. Los orígenes son los del Diccionario de la lengua española (RAE).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="parte-2">
+    <h2>Parte 2 · Por ámbitos</h2>
+    <p class="hint">Arrastra cada palabra a su caja. También vale pulsar la palabra y luego la caja. Cuando acabes, pulsa «Comprobar».</p>
+    <div class="pool" id="pool" data-zone="pool" aria-label="Palabras sin colocar"></div>
+    <div class="zones" id="zones"></div>
+    <div class="row" style="margin-top:14px">
+      <button class="b" id="check2">Comprobar</button>
+      <button class="b ghost" id="reset2">Empezar de nuevo</button>
+      <button class="b ghost" id="solve2">Ver la solución</button>
+    </div>
+    <p class="msg" id="msg2" aria-live="polite"></p>
+    <details class="etym">
+      <summary>Lo que significa cada palabra en árabe</summary>
+      <div class="cols" id="etymList"></div>
+    </details>
+  </section>
+
+  <section class="block" id="parte-3">
+    <h2>Parte 3 · Pista: el al-</h2>
+    <p class="hint">Habrás visto que muchas empiezan igual. Tiene explicación.</p>
+    <div class="two">
+      <div style="display:grid; gap:12px">
+        <p><b>Al</b> es el artículo en árabe: significa «el» o «la». <i>Al-qutún</i> es «el algodón»; <i>al-majzán</i>, «el almacén».</p>
+        <p>Quienes hablaban romance oían siempre la palabra con su artículo delante. Así que se la quedaron entera, pegada: no decían «el qutún», decían <b>algodón</b>. Por eso, cuando decimos «el algodón», sin darnos cuenta usamos dos artículos: el nuestro y el árabe.</p>
+        <p>A veces la <b>l</b> no se oye. Delante de algunas letras (t, d, s, z, r, n…) el árabe la cambia por la letra que viene detrás. Por eso hay arabismos que empiezan por <b>a-</b>, <b>ac-</b>, <b>ad-</b>, <b>ar-</b> o <b>az-</b>:</p>
+        <table class="sun">
+          <thead><tr><th>Se escribe</th><th>Se dice</th><th>En español</th></tr></thead>
+          <tbody>
+            <tr><td>al-súkkar</td><td>as-súkkar</td><td>azúcar</td></tr>
+            <tr><td>al-rúzz</td><td>ar-rúzz</td><td>arroz</td></tr>
+            <tr><td>al-diwán</td><td>ad-diwán</td><td>aduana</td></tr>
+            <tr><td>al-zaytúna</td><td>az-zaytúna</td><td>aceituna</td></tr>
+          </tbody>
+        </table>
+        <p>El inglés tomó muchas de estas palabras por otro camino, sin el artículo. Compara: <i>cotton</i> y <b>algodón</b>, <i>sugar</i> y <b>azúcar</b>.</p>
+      </div>
+      <div>
+        <h3 style="font-size:1.15rem; margin-bottom:6px">Mini reto: ¿qué «al» es el artículo árabe?</h3>
+        <p class="hint" style="color:var(--muted); margin-bottom:10px">Todas empiezan por «al». Marca si ese «al» es el artículo árabe o una casualidad.</p>
+        <div class="al-list" id="alList"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="b" id="check3">Comprobar</button>
+          <button class="b ghost" id="reset3">Borrar</button>
+        </div>
+        <p class="msg" id="msg3" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="conclusion">
+    <h2>Lo que nos dicen las palabras</h2>
+    <p class="hint">El reto del tema pregunta qué dicen las palabras sobre nuestro legado andalusí. Mira en qué cajas se amontonan.</p>
+    <div class="concl">
+      <div class="soft"><h3>Agua y campo</h3>
+        <p>La caja más llena. Los andalusíes extendieron el regadío y trajeron cultivos nuevos. Cuando llega una cosa nueva, llega con su nombre.</p>
+        <p class="ex">acequia, noria, aljibe, alberca · arroz, azúcar, algodón, azafrán, berenjena</p></div>
+      <div class="soft"><h3>Ciudad y comercio</h3>
+        <p>Las ciudades de al-Ándalus vivían del zoco y del comercio con Oriente, África y Europa. Hacía falta guardar, cobrar, vigilar y gobernar.</p>
+        <p class="ex">zoco, almacén, aduana, tarifa, alcalde</p></div>
+      <div class="soft"><h3>Ciencia</h3>
+        <p>Por al-Ándalus entraron en Europa los números que usamos (con el cero) y el álgebra. Los sabios árabes conservaron y mejoraron saberes de Grecia y de la India.</p>
+        <p class="ex">cero, cifra, álgebra, algoritmo, alquimia</p></div>
+    </div>
+    <div class="beak"><img src="../../../../media/beakman.jpg" alt="">
+      <div><b>La conclusión de Beakman</b>
+        Las palabras son fósiles que siguen vivos. Si un pueblo te deja la palabra para la acequia, el almacén y el cero,
+        es que te dejó también la acequia, el almacén y el cero. Al-Ándalus duró casi ochocientos años (711-1492) y su huella
+        está en lo que comes, en cómo riegas, en cómo cuentas y hasta en el mapa: Guadalquivir, Alcalá, Medina… y quizá en Madrid.
+        En el examen, si te preguntan por el legado andalusí, piensa en tres palabras: <strong>regadío, comercio y ciencia</strong>.</div></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const $ = (s, r = document) => r.querySelector(s);
+  const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const shuffle = (a) => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+
+  /* ---------- Parte 1 ---------- */
+  const P1 = [
+    ["acequia", true, "Del árabe as-sáqiya, «la que riega». Un canal para llevar el agua a los campos."],
+    ["aceituna", true, "Del árabe az-zaytúna. «Aceite» sale de la misma raíz: zayt."],
+    ["almohada", true, "Del árabe al-mujádda, de jadd, «mejilla»: donde apoyas la mejilla."],
+    ["alcalde", true, "Del árabe al-qádi, «el juez». En al-Ándalus, el cadí juzgaba según la ley islámica."],
+    ["aduana", true, "Del árabe ad-diwán, «el registro»: la oficina donde se apuntaban y cobraban las mercancías."],
+    ["azúcar", true, "Del árabe as-súkkar. Los andalusíes cultivaron la caña de azúcar en la Península."],
+    ["ojalá", true, "Del árabe law sha Allah, «si Dios quiere»."],
+    ["noria", true, "Del árabe na'úra: la rueda que sube el agua del pozo con vasijas de barro."],
+    ["aljibe", true, "Del árabe al-yubb, «el pozo». Un depósito, casi siempre bajo tierra, para guardar agua de lluvia."],
+    ["azafrán", true, "Del árabe az-za'farán. Una especia muy cara que los andalusíes cultivaban."],
+    ["albañil", true, "Del árabe al-banní, «el constructor»."],
+    ["almacén", true, "Del árabe al-majzán, «el depósito»."],
+    ["zanahoria", true, "Del árabe hispánico safunnárya. No empieza por al-, pero es árabe."],
+    ["alcoba", true, "Del árabe al-qúbba, «la cúpula», y de ahí la habitación pequeña."],
+    ["tarea", true, "Del árabe taríha: lo que se le encarga a alguien. Sí, tus deberes tienen nombre árabe."],
+    ["algodón", true, "Del árabe al-qutún. El algodón fue uno de los cultivos que llegaron con al-Ándalus."],
+    ["naranja", true, "Del árabe naránya, que a su vez viene del persa. Los andalusíes plantaron naranjos (de naranja amarga)."],
+    ["ajedrez", true, "Del árabe ash-shatranch, que viene de una palabra de la India. El juego entró en Europa también por al-Ándalus."],
+    ["azotea", true, "Del árabe as-sutáyha, «la terracita»: el tejado plano donde se puede caminar."],
+    ["taza", true, "Del árabe tássa, un recipiente para beber."],
+    ["alma", false, "Viene del latín anima. Ese «al» es pura casualidad."],
+    ["almendra", false, "Viene del latín amygdala, que a su vez viene del griego. Parece árabe, pero no lo es."],
+    ["alfabeto", false, "Viene del latín alphabetum: alfa y beta, las dos primeras letras griegas."],
+    ["alumno", false, "Viene del latín alumnus."],
+    ["altar", false, "Viene del latín altare."],
+    ["jabón", false, "Viene del latín sapo, saponis. Suena árabe por la jota, pero es latín."],
+    ["tomate", false, "Viene del náhuatl tomatl. Llegó de América en el siglo XVI, mucho después de al-Ándalus."],
+    ["ajo", false, "Viene del latín allium."]
+  ];
+  let deck = [], pos = 0, ok = 0, ko = 0, missed = [], answered = false;
+  const flash = $("#flash");
+  function startQuiz() { deck = shuffle(P1); pos = 0; ok = 0; ko = 0; missed = []; renderCard(); }
+  function tally() {
+    $("#nOk").textContent = ok; $("#nKo").textContent = ko;
+    $("#bar").style.width = (100 * (ok + ko) / deck.length) + "%";
+  }
+  function renderCard() {
+    answered = false; tally(); flash.innerHTML = "";
+    if (pos >= deck.length) return renderEnd();
+    const [w] = deck[pos];
+    flash.append(el("div", "count", `Palabra ${pos + 1} de ${deck.length}`), el("div", "word", w), el("div", "ask", "¿Viene del árabe?"));
+    const r = el("div", "row");
+    const yes = el("button", "b big", "Sí, del árabe"), no = el("button", "b ghost big", "No");
+    yes.addEventListener("click", () => answer(true)); no.addEventListener("click", () => answer(false));
+    r.append(yes, no); flash.append(r);
+  }
+  function answer(v) {
+    if (answered) return; answered = true;
+    const [w, isAr, why] = deck[pos];
+    const right = v === isAr; if (right) ok++; else { ko++; missed.push(deck[pos]); }
+    flash.querySelectorAll(".flash .row button").forEach(b => b.disabled = true);
+    const d = el("div", "verdict " + (right ? "ok" : "ko"));
+    d.append(el("b", null, right ? "¡Bien visto! " : "Esta vez no. "), document.createTextNode(`${w}: ${why}`));
+    const nx = el("button", "b", pos + 1 < deck.length ? "Siguiente →" : "Ver el resultado");
+    nx.addEventListener("click", () => { pos++; renderCard(); });
+    const r = el("div", "row"); r.append(nx);
+    flash.append(d, r); tally(); nx.focus();
+  }
+  function renderEnd() {
+    const best = Math.max(store.get("beakman.palabras.best", 0), ok); store.set("beakman.palabras.best", best);
+    flash.append(el("div", "count", "Resultado"), el("div", "word", `${ok} de ${deck.length}`));
+    const msg = ok === deck.length ? "Perfecto. Tienes un oído finísimo para las palabras." :
+      ok >= deck.length * .75 ? "Muy bien. Ya distingues casi todas las trampas." :
+      ok >= deck.length * .5 ? "Vas bien. Repasa las que fallaste y vuelve a probar." :
+      "Buen intento: las trampas estaban bien escondidas. Repasa y repite.";
+    flash.append(el("p", null, msg));
+    if (best > 0) flash.append(el("p", "count", `Tu mejor marca en este ordenador: ${best} de ${deck.length}`));
+    if (missed.length) {
+      const ul = el("ul", "missed"); ul.style.textAlign = "left";
+      missed.forEach(([w, , why]) => { const li = el("li"); li.append(el("b", null, w + ": "), document.createTextNode(why)); ul.append(li); });
+      const box = el("div", "verdict"); box.append(el("b", null, "Las que fallaste"), ul); flash.append(box);
+    }
+    const again = el("button", "b", "Otra vez, en otro orden"); again.addEventListener("click", startQuiz);
+    const r = el("div", "row"); r.append(again); flash.append(r);
+  }
+  startQuiz();
+
+  /* ---------- Parte 2 ---------- */
+  const ZONES = [
+    { id: "campo", name: "Campo y agua", sub: "regar, cultivar, guardar el agua" },
+    { id: "casa", name: "La casa", sub: "dentro de la vivienda" },
+    { id: "gob", name: "Gobierno y comercio", sub: "mandar, vender, cobrar" },
+    { id: "ciencia", name: "Ciencia", sub: "números y saberes" },
+    { id: "lugar", name: "Lugares", sub: "nombres del mapa" },
+    { id: "expr", name: "Expresiones", sub: "palabras de todos los días" }
+  ];
+  const P2 = [
+    ["acequia", "campo", "as-sáqiya, «la que riega»"],
+    ["noria", "campo", "na'úra, la rueda que sube el agua"],
+    ["aljibe", "campo", "al-yubb, «el pozo»: depósito de agua de lluvia"],
+    ["alberca", "campo", "al-birka, «el estanque»: depósito de agua al aire libre para regar"],
+    ["arroz", "campo", "ar-rúzz, que a su vez viene del griego"],
+    ["aceituna", "campo", "az-zaytúna; zayt es «aceite»"],
+    ["azúcar", "campo", "as-súkkar"],
+    ["algodón", "campo", "al-qutún"],
+    ["azafrán", "campo", "az-za'farán"],
+    ["berenjena", "campo", "badinyána, que viene del persa"],
+    ["almohada", "casa", "al-mujádda, donde se apoya la mejilla"],
+    ["alfombra", "casa", "del árabe hispánico; empieza por al-, el artículo"],
+    ["azulejo", "casa", "az-zuláych. No viene de «azul», aunque lo parezca"],
+    ["alcoba", "casa", "al-qúbba, «la cúpula»"],
+    ["alcalde", "gob", "al-qádi, «el juez»"],
+    ["aduana", "gob", "ad-diwán, «el registro»"],
+    ["almacén", "gob", "al-majzán, «el depósito»"],
+    ["tarifa", "gob", "ta'rífa, «aviso, lista»: la lista de precios que hay que pagar"],
+    ["zoco", "gob", "súq, «mercado»"],
+    ["cero", "ciencia", "sifr, «vacío». Llegó al español a través del italiano zero"],
+    ["cifra", "ciencia", "sifr, «vacío»: al principio, «cifra» quería decir «cero»"],
+    ["álgebra", "ciencia", "al-yabr, «la reducción», del título de un libro de matemáticas del siglo IX"],
+    ["algoritmo", "ciencia", "según la explicación más extendida, del nombre del matemático al-Juarismi (siglo IX), a través del latín"],
+    ["alquimia", "ciencia", "al-kímiya, que viene del griego. La alquimia es la abuela de la química"],
+    ["Guadalquivir", "lugar", "wadi al-kabir, «el río grande». Wadi («río») está en muchos ríos: Guadiana, Guadarrama…"],
+    ["Guadalajara", "lugar", "wadi al-hiyara, «el río de las piedras»"],
+    ["Alcalá", "lugar", "al-qal'a, «el castillo, la fortaleza»"],
+    ["Medina", "lugar", "madína, «ciudad»: Medina del Campo, Medinaceli, Medina Sidonia…"],
+    ["Madrid", "lugar", "los andalusíes la llamaron Mayrit. Muchos estudiosos lo relacionan con mayra, «cauce de agua», por sus arroyos; el origen exacto aún se discute"],
+    ["ojalá", "expr", "law sha Allah, «si Dios quiere»"],
+    ["hasta", "expr", "hatta, «hasta»"],
+    ["fulano", "expr", "fulán, «tal persona», alguien cuyo nombre no se dice"]
+  ];
+  const zonesBox = $("#zones"), pool = $("#pool");
+  ZONES.forEach(z => {
+    const d = el("div", "zone"); d.dataset.zone = z.id; d.tabIndex = 0; d.setAttribute("role", "button");
+    d.setAttribute("aria-label", "Caja " + z.name);
+    d.append(el("h3", null, z.name), el("div", "sub", z.sub), el("div", "in"));
+    zonesBox.append(d);
+  });
+  let selected = null;
+  function makeChip([w, zone, ety]) {
+    const c = el("span", "chip sm", w); c.draggable = true; c.dataset.word = w; c.dataset.zone = zone; c.title = ety; c.tabIndex = 0;
+    c.addEventListener("click", (e) => { e.stopPropagation(); select(c === selected ? null : c); });
+    c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.click(); } });
+    c.addEventListener("dragstart", (e) => { e.dataTransfer.setData("text/plain", w); select(c); });
+    return c;
+  }
+  function select(c) { if (selected) selected.classList.remove("sel"); selected = c; if (c) c.classList.add("sel"); }
+  function target(z) { return z === pool ? pool : z.querySelector(".in"); }
+  function moveTo(z, chip) { if (!chip) return; chip.classList.remove("ok", "ko"); target(z).append(chip); select(null); $("#msg2").textContent = ""; }
+  [pool, ...zonesBox.querySelectorAll(".zone")].forEach(z => {
+    z.addEventListener("click", () => { if (selected) moveTo(z, selected); });
+    z.addEventListener("keydown", (e) => { if ((e.key === "Enter" || e.key === " ") && e.target === z) { e.preventDefault(); if (selected) moveTo(z, selected); } });
+    z.addEventListener("dragover", (e) => { e.preventDefault(); z.classList.add("over"); });
+    z.addEventListener("dragleave", () => z.classList.remove("over"));
+    z.addEventListener("drop", (e) => {
+      e.preventDefault(); z.classList.remove("over");
+      const w = e.dataTransfer.getData("text/plain");
+      moveTo(z, document.querySelector(`.chip[data-word="${CSS.escape(w)}"]`));
+    });
+  });
+  function reset2() { pool.innerHTML = ""; zonesBox.querySelectorAll(".in").forEach(i => i.innerHTML = ""); shuffle(P2).forEach(p => pool.append(makeChip(p))); select(null); $("#msg2").textContent = ""; }
+  $("#reset2").addEventListener("click", reset2);
+  $("#check2").addEventListener("click", () => {
+    let good = 0, bad = 0;
+    zonesBox.querySelectorAll(".zone").forEach(z => z.querySelectorAll(".chip").forEach(c => {
+      const right = c.dataset.zone === z.dataset.zone; c.classList.toggle("ok", right); c.classList.toggle("ko", !right); right ? good++ : bad++;
+    }));
+    const left = pool.querySelectorAll(".chip").length;
+    $("#msg2").textContent = good === P2.length ? "¡Todas en su sitio! Mira cuál es la caja más llena: ahí hay una pista." :
+      `${good} bien colocadas, ${bad} en otra caja${left ? ` y ${left} sin colocar` : ""}. Las rojas, muévelas y vuelve a comprobar. Pasa el ratón por encima de una palabra para ver su origen.`;
+  });
+  $("#solve2").addEventListener("click", () => {
+    document.querySelectorAll("#parte-2 .chip").forEach(c => { target(zonesBox.querySelector(`.zone[data-zone="${c.dataset.zone}"]`)).append(c); c.classList.remove("ko"); c.classList.add("ok"); });
+    select(null); $("#msg2").textContent = "Esta es la solución. Abre «Lo que significa cada palabra» para ver su origen.";
+  });
+  const list = $("#etymList");
+  ZONES.forEach(z => {
+    const g = el("div", "grp"); g.append(el("h4", null, z.name));
+    P2.filter(p => p[1] === z.id).forEach(([w, , ety]) => { const p = el("p"); p.append(el("b", null, w + ": "), document.createTextNode(ety + ".")); g.append(p); });
+    list.append(g);
+  });
+  reset2();
+
+  /* ---------- Parte 3 ---------- */
+  const P3 = [
+    ["alcalde", true, "al-qádi, «el juez»"], ["alma", false, "latín anima"],
+    ["almacén", true, "al-majzán, «el depósito»"], ["almendra", false, "latín amygdala"],
+    ["algodón", true, "al-qutún"], ["altura", false, "de «alto», latín altus"],
+    ["alcoba", true, "al-qúbba, «la cúpula»"], ["alegría", false, "de «alegre», latín alacer"],
+    ["albañil", true, "al-banní, «el constructor»"], ["altar", false, "latín altare"]
+  ];
+  const alList = $("#alList"), picks = {};
+  P3.forEach(([w, ar, why]) => {
+    const wrap = el("div", "al-wrap");
+    const it = el("div", "al-item"); it.dataset.word = w;
+    const seg = el("div", "seg");
+    [["ar", "árabe"], ["no", "casualidad"]].forEach(([v, t]) => {
+      const b = el("button", null, t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", () => { picks[w] = v; seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); it.classList.remove("ok", "ko"); wrap.querySelector(".why2").textContent = ""; });
+      seg.append(b);
+    });
+    it.append(el("span", "w", w), seg);
+    wrap.append(it, el("div", "why2"));
+    wrap.dataset.ar = ar; wrap.dataset.why = why; wrap.dataset.word = w;
+    alList.append(wrap);
+  });
+  $("#check3").addEventListener("click", () => {
+    let good = 0, done = 0;
+    alList.querySelectorAll(".al-wrap").forEach(wr => {
+      const w = wr.dataset.word, p = picks[w], it = wr.querySelector(".al-item");
+      if (!p) return; done++;
+      const right = (p === "ar") === (wr.dataset.ar === "true"); if (right) good++;
+      it.classList.toggle("ok", right); it.classList.toggle("ko", !right);
+      wr.querySelector(".why2").textContent = (wr.dataset.ar === "true" ? "Árabe: " : "No es árabe: ") + wr.dataset.why;
+    });
+    $("#msg3").textContent = done < P3.length ? `Llevas ${good} de ${done}. Te faltan ${P3.length - done} por marcar.` :
+      good === P3.length ? "¡Diez de diez! Ya sabes que «al» es una pista, no una prueba." : `${good} de ${P3.length}. Mira el origen debajo de cada una.`;
+  });
+  $("#reset3").addEventListener("click", () => {
+    for (const k in picks) delete picks[k];
+    alList.querySelectorAll(".al-item").forEach(i => i.classList.remove("ok", "ko"));
+    alList.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", "false"));
+    alList.querySelectorAll(".why2").forEach(x => x.textContent = "");
+    $("#msg3").textContent = "";
+  });
+})();
+</script>
+</body>
+</html>

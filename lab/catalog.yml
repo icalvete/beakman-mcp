@@ -27,6 +27,24 @@ asignaturas:
     en: {slug: language, nombre: Language and Literature, lema: "Understand what you read, say what you think."}
 
 recursos:
+  - id: ponte-a-prueba-tema-1
+    asignatura: historia
+    curso: 2eso
+    imagen: ponte-a-prueba-tema-1.jpg
+    solo_pc: true
+    es:
+      titulo: "Ponte a prueba: el inicio de la Edad Media"
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        Repaso para el examen: las 12 preguntas del tema, conceptos, ordenar los hechos, causas y cuadros
+        para completar, con las respuestas de Beakman y un simulacro de examen para hacer con él en Claude.
+      objetivo: >-
+        Fijar el tema recordando sin mirar, que es lo que de verdad se queda, y saber qué partes faltan por
+        repasar antes del examen.
+      metodo: >-
+        Práctica de recuperación: primero contestas tú y luego comparas. Marcas cada pregunta como sabida, a
+        medias o no sabida, y vuelves solo a las que fallan. Sigue el Tema 1 de Vicens Vives (Madrid).
+
   - id: cronomapa-edad-media
     asignatura: historia
     curso: 2eso
@@ -34,7 +52,7 @@ recursos:
     solo_pc: true
     es:
       titulo: Cronomapa de la Edad Media
-      temas: Temas 4 a 14
+      temas: Toda la Edad Media
       descripcion: >-
         Mueve la barra del 476 al 1492 y mira qué reinos, ciudades y batallas coincidieron en el tiempo.
         Cada acontecimiento cuenta qué cambió, al poco y a la larga.
@@ -45,3 +63,57 @@ recursos:
         Aprender explorando: el tiempo lo mueves tú. En diez paradas Beakman te hace una pregunta para pensar
         antes de ver la pista. Cada acontecimiento explica sus consecuencias en la gente, la política, el arte y la
         cultura, y las palabras difíciles tienen su explicación al pasar el ratón.
+
+  - id: mapas-al-andalus
+    asignatura: historia
+    curso: 2eso
+    imagen: mapas-al-andalus.jpg
+    solo_pc: true
+    es:
+      titulo: Los mapas de al-Ándalus
+      temas: Tema 1 · Al-Ándalus
+      descripcion: >-
+        Casi 800 años en seis mapas: la conquista, el emirato, el califato, los taifas, almorávides y almohades,
+        y el reino nazarí de Granada.
+      objetivo: >-
+        Entender cómo se formó y cómo fue encogiendo al-Ándalus, y qué causas explican cada cambio.
+      metodo: >-
+        Antes de pasar de un mapa al siguiente, Beakman pregunta qué pasó entre los dos. Al final, un juego:
+        reconocer cada etapa en un mapa sin nombres.
+
+  - id: palabras-del-arabe
+    asignatura: historia
+    curso: 2eso
+    imagen: palabras-del-arabe.jpg
+    solo_pc: true
+    es:
+      titulo: ¿Qué dicen las palabras?
+      temas: Tema 1 · El legado de al-Ándalus
+      descripcion: >-
+        Un juego con las palabras que el español heredó del árabe: descubre cuáles vienen de al-Ándalus y
+        cuáles solo lo parecen, clasifícalas por ámbitos y averigua por qué tantas empiezan por «al».
+      objetivo: >-
+        Resolver el reto del tema («¿Qué dicen las palabras sobre nuestro legado andalusí?») y saber explicar
+        el legado de al-Ándalus: regadío y cultivos nuevos, comercio y ciencia.
+      metodo: >-
+        Tarjetas de sí o no con el origen de cada palabra, clasificación con corrección, un mini reto sobre el
+        artículo «al» y la conclusión de Beakman.
+
+  - id: me-pongo-en-su-mentalidad
+    asignatura: historia
+    curso: 2eso
+    imagen: me-pongo-en-su-mentalidad.jpg
+    solo_pc: true
+    es:
+      titulo: Me pongo en su mentalidad
+      temas: Tema 1 · Del fin de Roma al Califato de Córdoba
+      descripcion: >-
+        Seis personas del inicio de la Edad Media: un artesano que huye al campo, una comerciante de
+        Constantinopla, un monje copista, una vecina de Toledo en el 711, un mercader del zoco de Córdoba y
+        una campesina de una alquería. Elige una y escribe en su piel.
+      objetivo: >-
+        Practicar la actividad «Me pongo en su mentalidad» del libro: usar datos ciertos de la época para
+        imaginar qué veía, qué temía y qué le importaba a alguien que vivió entonces.
+      metodo: >-
+        Situación, tres preguntas guía y una chuleta de datos; el texto se guarda en el ordenador y un botón lo
+        copia para que Beakman lo revise en Claude, con una persona adulta al lado.

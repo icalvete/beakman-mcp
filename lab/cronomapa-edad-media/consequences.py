@@ -88,6 +88,27 @@ C = {
         "largo": [("politica", "Ese reino crecerá hacia el sur: de él saldrán el reino de León y, más tarde, Castilla.")],
         "hoy": ("El heredero del trono de España lleva el título de Príncipe o Princesa de Asturias por aquel reino.", None),
     },
+    "e732": {
+        "corto": [("politica", "Carlos Martel gana prestigio; su hijo Pipino será rey y fundará la dinastía carolingia.")],
+        "largo": [("politica", "La frontera entre el islam y la Europa cristiana se queda en los Pirineos.")],
+        "hoy": ("Los historiadores aún discuten si fue tan decisiva: quizá los musulmanes ya no podían mantenerse tan al norte.", None),
+    },
+    "e843": {
+        "corto": [("politica", "El imperio se parte en tres reinos, uno para cada nieto.")],
+        "largo": [("politica", "Del reino de Carlos saldrá Francia, y del de Luis, Alemania.")],
+        "hoy": ("Francia y Alemania se disputaron durante siglos las tierras del medio; hoy son dos pilares de la Unión Europea.", None),
+    },
+    "e865": {
+        "corto": [("politica", "Mayrit vigila la frontera de Al-Ándalus entre Toledo y los pasos de la sierra."),
+                  ("gente", "Alrededor de la fortaleza se instala gente: nace un pequeño núcleo con mezquita, muralla y arrabales.")],
+        "largo": [("politica", "Hacia 1085 pasa a Castilla con Alfonso VI. En 1561, Felipe II llevará allí la corte.")],
+        "hoy": ("En la Cuesta de la Vega se ven restos de la muralla árabe. La Almudena debe el nombre a al-mudayna, la ciudadela.", None),
+    },
+    "e950": {
+        "corto": [("economia", "Hay más cosechas: más comida, más gente y más comercio en los zocos.")],
+        "largo": [("economia", "Las huertas de Valencia, Murcia o Granada se siguen regando con acequias de origen andalusí.")],
+        "hoy": ("El Tribunal de las Aguas de Valencia, que reparte el agua de la huerta, es Patrimonio Inmaterial de la Humanidad.", "Ciencias"),
+    },
     "e750": {
         "corto": [("politica", "Casi toda la familia omeya es asesinada; uno de ellos escapa a Al-Ándalus."),
                   ("politica", "El centro del poder pasa de Siria a Irak, donde fundarán Bagdad.")],

@@ -885,7 +885,7 @@ body::before { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 
         const li2 = document.createElement("li");
         const b = document.createElement("button");
         b.setAttribute("aria-pressed", state.hl === p.id);
-        b.innerHTML = `<span class="sw" style="background:var(--r-${p.pal})"></span><span class="nm"></span><span class="tm">Tema ${p.tema}</span>`;
+        b.innerHTML = `<span class="sw" style="background:var(--r-${p.pal})"></span><span class="nm"></span><span class="tm">${TEMAS[p.tema] || ""}</span>`;
         b.querySelector(".nm").textContent = p.name;
         b.title = "Resaltar en el mapa";
         b.addEventListener("click", () => toggleHl(p.id));
@@ -1115,7 +1115,7 @@ body::before { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 
       const p = document.createElement("p"); p.className = "txt"; enrich(p, e.text, seen); box.appendChild(p);
       consBox(e.cons, box, seen);
       const meta = document.createElement("div"); meta.className = "meta";
-      meta.innerHTML = `<span class="tag">Tema ${e.tema} · ${TEMAS[e.tema] || ""}</span>`;
+      meta.innerHTML = `<span class="tag">${TEMAS[e.tema] || ""}</span>`;
       if (e.fuera) { const t = document.createElement("span"); t.className = "tag out"; t.textContent = `Fuera del tema: ${e.fuera}`; meta.appendChild(t); }
       box.appendChild(meta);
     }

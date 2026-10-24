@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los mapas de al-Ándalus · El laboratorio de Beakman</title>
+<meta name="description" content="Al-Ándalus en seis mapas, de la conquista del 711 al reino nazarí de Granada: qué cambió entre uno y otro y por qué.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.steps { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.steps button { font: 800 .9rem/1.15 var(--body); background: #fff; color: var(--ink); border: 2px solid var(--line); border-radius: 12px;
+  padding: 7px 12px; cursor: pointer; text-align: left; }
+.steps button small { display: block; font-weight: 700; color: var(--muted); font-size: .78rem; }
+.steps button[aria-current="true"] { border-color: var(--ink); background: var(--lime); box-shadow: 2px 2px 0 var(--ink); }
+.stage { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .stage { grid-template-columns: 1fr; } }
+.map { background: #C9DCE1; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; position: relative; }
+.map svg { display: block; width: 100%; height: auto; }
+.map .land { fill: #ECEBDD; stroke: #6F7A5A; stroke-width: .35; }
+.map .rivers { fill: none; stroke: #6AA6C8; stroke-width: .45; opacity: .8; }
+.map .realm { stroke: rgba(31, 42, 23, .55); stroke-width: .4; fill-opacity: .85; transition: fill-opacity .3s; }
+.map .realm.andalus { stroke: #1F3A0B; stroke-width: .9; }
+.map .realm.far { fill-opacity: .28; filter: saturate(.35); }
+.map .lbl { font: 600 5.2px/1 "Fredoka", sans-serif; fill: #1F2A17; text-anchor: middle; paint-order: stroke; stroke: rgba(255,255,255,.9); stroke-width: 1.4px; stroke-linejoin: round; pointer-events: none; }
+.map .lbl.big { font-size: 6.4px; }
+.map .city circle { fill: #fff; stroke: #1F2A17; stroke-width: .5; }
+.map .city text { font: 700 4.3px/1 "Nunito", sans-serif; fill: #1F2A17; paint-order: stroke; stroke: rgba(255,255,255,.9); stroke-width: 1px; }
+.map .year { position: absolute; left: 10px; top: 8px; background: rgba(255,255,255,.9); border: 2px solid var(--ink); border-radius: 12px;
+  padding: 2px 10px 4px; font: 600 1.6rem/1.1 var(--display); color: var(--ink); }
+.map .year small { display: block; font: 800 .7rem/1 var(--body); color: #4F6B0A; letter-spacing: .04em; }
+.info h3 { font-size: 1.5rem; }
+.info .years { font-weight: 800; color: #4F6B0A; margin: 2px 0 8px; }
+.info ul { margin: 8px 0 12px; padding-left: 1.2em; }
+.info li + li { margin-top: 4px; }
+.size { margin: 10px 0 14px; }
+.size .bar { height: 14px; background: #fff; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.size .bar span { display: block; height: 100%; background: #2f8a58; transition: width .4s; }
+.size small { color: var(--muted); font-weight: 700; }
+.next { margin-top: 12px; }
+.next .ans { margin-top: 8px; }
+.quizmap { max-width: 560px; }
+.qopts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Los mapas de <em>al-Ándalus</em></h1>
+    <p class="lead">Casi 800 años en seis mapas. Mira cómo cambia el verde y, antes de pasar al siguiente, intenta contestar: ¿qué pasó entre este mapa y el otro? Eso es entender la historia, no solo saberse los años.</p>
+    <p class="meta"><span class="tag">Tema 1 · apartado 8: Al-Ándalus, ¿cómo se originó y evolucionó?</span></p>
+  </div>
+
+  <section class="block" id="mapas">
+    <div class="steps" id="steps" role="tablist" aria-label="Etapas"></div>
+    <div class="stage">
+      <div class="map" id="map"></div>
+      <div class="info" id="info"></div>
+    </div>
+  </section>
+
+  <section class="block" id="prueba">
+    <h2>Ponte a prueba: ¿qué mapa es?</h2>
+    <p class="hint">Te enseño un mapa sin nombres. ¿A qué etapa corresponde? Fíjate en el tamaño del verde y en los reinos del norte.</p>
+    <div id="quiz"></div>
+  </section>
+
+  <p class="credit">Fronteras simplificadas; costa y ríos reales (Natural Earth). Los mismos mapas del <a href="../cronomapa-edad-media/">cronomapa de la Edad Media</a>.</p>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = (s) => document.querySelector(s);
+  const el = (t, c, h) => { const n = document.createElement(t); if (c) n.className = c; if (h != null) n.innerHTML = h; return n; };
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  const T = [
+    { name: "La conquista", years: "711-722 (mapa del 720)", tab: "711-722",
+      what: [
+        "En el <b>711</b>, Tariq cruza el estrecho y vence al rey visigodo Rodrigo en <b>Guadalete</b>.",
+        "Aprovechan la debilidad del reino visigodo (crisis y nobles enfrentados): en pocos años dominan casi toda la Península.",
+        "Solo resiste una franja del norte: en <b>Covadonga (722)</b> nace el <b>reino de Asturias</b>.",
+        "Al-Ándalus es un <b>emirato dependiente</b> del califa de Damasco, con capital en <b>Córdoba</b>."],
+      q: "¿Qué pasó en el 750, muy lejos de aquí, que cambió al-Ándalus?",
+      a: "En Damasco, los <b>Abasíes</b> derrocan a los <b>Omeyas</b> y se llevan la capital a Bagdad. Un Omeya que sobrevive, <b>Abd al-Rahman I</b>, huye a al-Ándalus y en el <b>756</b> se proclama emir independiente." },
+    { name: "El emirato independiente", years: "756-929 (mapa del 800)", tab: "756-929",
+      what: [
+        "<b>Abd al-Rahman I</b> gobierna sin obedecer a Bagdad en la política, aunque respeta la autoridad religiosa del califa.",
+        "Córdoba crece: empieza la construcción de su gran <b>mezquita</b> (785).",
+        "Al norte sigue el reino de Asturias. Al noreste, Carlomagno crea la <b>Marca Hispánica</b> para frenar a los musulmanes."],
+      q: "¿Qué dio un paso más en el 929?",
+      a: "<b>Abd al-Rahman III</b> se proclama <b>califa</b>: ahora al-Ándalus tampoco depende de Bagdad en lo religioso. Lo hace para reforzar su poder sobre los grupos rivales de dentro." },
+    { name: "El califato de Córdoba", years: "929-1031 (mapa del 1000)", tab: "929-1031",
+      what: [
+        "La época de <b>mayor esplendor</b> cultural y económico: al-Ándalus controla el comercio entre Oriente y Europa.",
+        "<b>Córdoba</b> es la ciudad más poblada de Europa. Junto a ella se levanta <b>Medina Azahara</b>.",
+        "<b>Almanzor</b> ataca a los reinos cristianos (razias) y les cobra impuestos a cambio de paz (<b>parias</b>).",
+        "Al norte: el reino de León, el condado de Castilla, Navarra y los condados catalanes."],
+      q: "¿Por qué se rompió el califato?",
+      a: "El <b>ejército costaba muchísimo</b> y los <b>nobles y militares</b> luchaban por escapar del control del califa. Tras años de guerra civil, en el <b>1031</b> el califato desaparece." },
+    { name: "Los reinos de taifas", years: "desde 1031 (mapa del 1050)", tab: "1031-1086",
+      what: [
+        "Al-Ándalus se parte en <b>más de 25 reinos</b> independientes, las <b>taifas</b> (Toledo, Sevilla, Zaragoza, Badajoz, Granada…).",
+        "Son ricos pero <b>débiles y rivales</b>: pagan <b>parias</b> a los reinos cristianos para que los dejen en paz.",
+        "Los cristianos avanzan: en el <b>1085</b> Alfonso VI conquista <b>Toledo</b>."],
+      q: "Asustadas, ¿a quién pidieron ayuda las taifas?",
+      a: "A los <b>almorávides</b>, un imperio del norte de África. Llegan en el <b>1086</b>, y más tarde (<b>1147</b>) los sustituyen los <b>almohades</b>." },
+    { name: "Almorávides y almohades", years: "1086-1212 (mapa del 1150)", tab: "1086-1212",
+      what: [
+        "Dos imperios del <b>norte de África</b> vuelven a unir al-Ándalus y frenan durante un tiempo a los cristianos.",
+        "Al norte ya están el reino de <b>Portugal</b>, Castilla y León, Navarra y la <b>Corona de Aragón</b>."],
+      q: "¿Qué batalla lo cambió todo en el 1212?",
+      a: "Las <b>Navas de Tolosa</b>: los reinos cristianos derrotan a los almohades. En pocos años conquistan casi todo al-Ándalus: Córdoba (1236), Valencia (1238), Sevilla (1248)…" },
+    { name: "El reino nazarí de Granada", years: "1238-1492 (mapa del 1450)", tab: "1238-1492",
+      what: [
+        "El <b>último</b> reino musulmán de la Península, fundado en el <b>1238</b> por la dinastía nazarí.",
+        "Vive más de dos siglos de prosperidad gracias a sus <b>puertos comerciales</b> (Málaga, Almería) y su agricultura, y es un gran centro cultural: la <b>Alhambra</b>.",
+        "Paga fuertes impuestos a Castilla."],
+      q: "¿Cómo terminó?",
+      a: "En el <b>1492</b>, los <b>Reyes Católicos</b> conquistan Granada y Boabdil, el último rey nazarí, la entrega. Se acaban casi <b>800 años</b> de al-Ándalus." },
+  ];
+
+  const [bx, by, bw, bh] = D.box;
+  const maxA = Math.max(...D.steps.map((s) => (s.pieces.find((p) => p.id === "andalus") || { a: 0 }).a));
+  function drawMap(holder, s, opts = {}) {
+    holder.textContent = "";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", `${bx} ${by} ${bw} ${bh}`);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", opts.label || "Mapa de la Península Ibérica");
+    const add = (tag, attrs, parent = svg) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent.appendChild(n); return n; };
+    add("path", { d: D.land, class: "land" });
+    s.pieces.forEach((p) => add("path", { d: D.paths[p.p], class: "realm " + p.id + (p.show ? "" : " far"), fill: p.c }));
+    add("path", { d: D.rivers, class: "rivers" });
+    if (!opts.noLabels) {
+      s.cities.forEach((c) => { const g = add("g", { class: "city" }); add("circle", { cx: c.x, cy: c.y, r: 1.1 }, g);
+        const t = add("text", { x: c.x + 1.8, y: c.y + 1.2 }, g); t.textContent = c.n; });
+      s.pieces.filter((p) => p.show).forEach((p) => { const t = add("text", { x: p.lx, y: p.ly, class: "lbl" + (p.id === "andalus" ? " big" : "") }); t.textContent = p.name; });
+    }
+    holder.appendChild(svg);
+  }
+
+  let cur = 0;
+  const steps = $("#steps");
+  T.forEach((t, i) => {
+    const b = el("button", null, `${t.name}<small>${t.tab}</small>`); b.type = "button"; b.setAttribute("role", "tab");
+    b.addEventListener("click", () => show(i));
+    steps.appendChild(b);
+  });
+  function show(i) {
+    cur = i;
+    steps.querySelectorAll("button").forEach((b, k) => b.setAttribute("aria-current", k === i ? "true" : "false"));
+    const s = D.steps[i], t = T[i];
+    const map = $("#map");
+    drawMap(map, s, { label: `Mapa de la Península hacia el año ${s.year}` });
+    map.appendChild(el("div", "year", `${s.year}<small>${t.name.toUpperCase()}</small>`));
+    const a = (s.pieces.find((p) => p.id === "andalus") || { a: 0 }).a;
+    const pct = Math.round(100 * a / maxA);
+    const info = $("#info");
+    info.innerHTML = `<h3>${t.name}</h3><p class="years">${t.years}</p><ul>${t.what.map((x) => `<li>${x}</li>`).join("")}</ul>
+      <div class="size"><small>Tamaño de al-Ándalus, comparado con el mapa más grande</small><div class="bar"><span style="width:${pct}%"></span></div></div>
+      <div class="beak next"><img src="../../../../media/beakman.jpg" alt=""><div><b>Antes de pasar al siguiente mapa…</b>${t.q}
+      <div class="row" style="margin-top:8px"><button class="b small" type="button" id="reveal">Ver la respuesta</button>
+      ${i < T.length - 1 ? '<button class="b ghost small" type="button" id="go">Siguiente mapa →</button>' : ""}</div>
+      <p class="ans" id="ans" hidden>${t.a}</p></div></div>`;
+    $("#reveal").addEventListener("click", () => { $("#ans").hidden = false; });
+    const go = $("#go"); if (go) go.addEventListener("click", () => show(i + 1));
+  }
+  show(0);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest && e.target.closest("input, textarea, select")) return;
+    if (e.key === "ArrowRight" && cur < T.length - 1) show(cur + 1);
+    if (e.key === "ArrowLeft" && cur > 0) show(cur - 1);
+  });
+
+  // Ponte a prueba
+  const quiz = $("#quiz");
+  let order = shuffle(T.map((_, i) => i)), qi = 0, ok = 0;
+  function ask() {
+    quiz.textContent = "";
+    if (qi >= order.length) {
+      quiz.appendChild(el("p", null, `<b>Has acertado ${ok} de ${order.length}.</b> ` + (ok === order.length ? "¡Lo tienes! Ya sabes leer la historia en un mapa." : "Repasa los mapas de arriba y vuelve a intentarlo.")));
+      const again = el("button", "b", "Otra vez"); again.type = "button";
+      again.addEventListener("click", () => { order = shuffle(T.map((_, i) => i)); qi = 0; ok = 0; ask(); });
+      quiz.appendChild(again); return;
+    }
+    const i = order[qi];
+    quiz.appendChild(el("p", "hint", `Mapa ${qi + 1} de ${order.length}`));
+    const m = el("div", "map quizmap"); quiz.appendChild(m);
+    drawMap(m, D.steps[i], { noLabels: true, label: "Mapa sin nombres de la Península" });
+    const opts = el("div", "qopts"); const fb = el("p");
+    T.forEach((t, k) => {
+      const c = el("button", "chip", t.name); c.type = "button";
+      c.addEventListener("click", () => {
+        if (opts.dataset.done) return; opts.dataset.done = "1";
+        const right = k === i; if (right) ok++;
+        c.classList.add(right ? "ok" : "ko");
+        opts.children[i].classList.add("ok");
+        fb.innerHTML = (right ? '<span class="okt">¡Eso es!</span> ' : `<span class="kot">Era «${T[i].name}».</span> `) + `(${T[i].years.replace(/ \(.*\)/, "")})`;
+        const n = el("button", "b small", "Siguiente →"); n.type = "button"; n.addEventListener("click", () => { qi++; ask(); });
+        fb.appendChild(document.createTextNode(" ")); fb.appendChild(n);
+      });
+      opts.appendChild(c);
+    });
+    quiz.append(opts, fb);
+  }
+  ask();
+})();
+</script>
+</body>
+</html>

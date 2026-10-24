@@ -1,0 +1,77 @@
+/* Piezas comunes de las páginas de recurso del laboratorio (además de lab.css).
+   Bata verde lima, papel cuadriculado, Fredoka y Nunito. Solo claro, como la web de Beakman. */
+
+/* cabecera de recurso */
+.rtop { display: flex; align-items: center; justify-content: space-between; gap: 10px 18px; flex-wrap: wrap; padding-block: 14px 6px; }
+.rtop .brand b { font-size: 1.05rem; }
+.rtop .crumb a { font-weight: 700; }
+.rhead { padding-block: 10px 18px; display: grid; gap: 8px; max-width: 820px; }
+.rhead h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.rhead h1 em { font-style: normal; background: linear-gradient(transparent 60%, rgba(166, 212, 30, .75) 60%, rgba(166, 212, 30, .75) 92%, transparent 92%); }
+.rhead .lead { font-size: 1.1rem; }
+.rhead .meta { margin-top: 2px; }
+
+/* bloques */
+.block { background: var(--card); border: 2px solid var(--ink); border-radius: 18px; box-shadow: 4px 4px 0 var(--lime);
+  padding: 18px 20px 20px; margin-bottom: 24px; }
+.block > h2 { font-size: 1.45rem; margin-bottom: 4px; }
+.block > .hint { color: var(--muted); margin-bottom: 14px; }
+.soft { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.note { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 12px; padding: 12px 16px; }
+.beak { display: flex; gap: 12px; align-items: flex-start; background: var(--note); border: 1.5px solid var(--note-line);
+  border-radius: 14px; padding: 12px 14px; }
+.beak img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; object-position: center 22%; border: 2px solid var(--lime); flex: none; }
+.beak b { display: block; font: 600 1rem/1.2 var(--display); color: var(--ink); margin-bottom: 2px; }
+
+/* botones */
+.b { display: inline-flex; align-items: center; gap: 6px; font: 800 .95rem/1 var(--body); color: var(--ink); background: var(--lime);
+  border: 2px solid var(--ink); border-radius: 999px; padding: 8px 14px; box-shadow: 2px 2px 0 var(--ink); cursor: pointer;
+  transition: transform .1s, box-shadow .1s; }
+.b:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); }
+.b.ghost { background: #fff; }
+.b.small { font-size: .85rem; padding: 5px 10px; }
+.b:disabled { opacity: .5; cursor: default; transform: none; box-shadow: none; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* fichas para pulsar, arrastrar u ordenar */
+.chip { display: inline-flex; align-items: center; gap: 6px; background: #fff; border: 2px solid var(--line); border-radius: 12px;
+  padding: 8px 12px; font-weight: 700; cursor: pointer; user-select: none; }
+.chip:hover { border-color: var(--ink); }
+.chip.sel { border-color: var(--ink); background: var(--lime-soft); box-shadow: 2px 2px 0 var(--lime); }
+.ok { border-color: #2E7D32 !important; background: #E3F3DF !important; }
+.ko { border-color: #B23B2E !important; background: #FBE5E1 !important; }
+.okt { color: #2E7D32; font-weight: 800; }
+.kot { color: #B23B2E; font-weight: 800; }
+
+/* respuestas escritas */
+textarea.answer { width: 100%; min-height: 84px; border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px;
+  font: 400 1rem/1.5 var(--body); color: var(--text); background: #fff; resize: vertical; }
+textarea.answer:focus { outline: none; border-color: var(--ink); }
+.model { border-left: 5px solid var(--lime); background: #fff; border-radius: 0 12px 12px 0; padding: 10px 14px; }
+
+/* marcador ✓ ~ ✗ */
+.mark { display: inline-flex; border: 2px solid var(--line); border-radius: 999px; overflow: hidden; }
+.mark button { border: 0; background: #fff; padding: 5px 11px; font: 800 .95rem/1 var(--body); cursor: pointer; color: var(--muted); }
+.mark button + button { border-left: 2px solid var(--line); }
+.mark button[aria-pressed="true"][data-v="2"] { background: #E3F3DF; color: #2E7D32; }
+.mark button[aria-pressed="true"][data-v="1"] { background: var(--note); color: #8A6D00; }
+.mark button[aria-pressed="true"][data-v="0"] { background: #FBE5E1; color: #B23B2E; }
+
+/* índice de secciones dentro de un recurso */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 22px; }
+.tabs a { text-decoration: none; font-weight: 800; font-size: .92rem; background: #fff; border: 2px solid var(--line); border-radius: 999px; padding: 5px 12px; color: var(--ink); }
+.tabs a:hover { border-color: var(--ink); }
+
+/* créditos de imágenes */
+.credit { font-size: .75rem; color: var(--muted); }
+.credit a { color: inherit; }
+
+/* aviso para móviles: estas páginas están pensadas para ordenador */
+.phone-note { display: none; }
+@media (max-width: 700px) and (pointer: coarse) { .phone-note { display: block; margin-bottom: 14px; } }
+
+@media print {
+  body { background: #fff; border-top: 0; }
+  .rtop, .tabs, footer, .noprint { display: none !important; }
+  .block { box-shadow: none; }
+}

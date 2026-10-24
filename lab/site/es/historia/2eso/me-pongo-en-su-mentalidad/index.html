@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Me pongo en su mentalidad · El laboratorio de Beakman</title>
+<meta name="description" content="Seis personajes del inicio de la Edad Media: imagina cómo vivían, escribe en su piel y pide a Beakman que revise si tu texto cuadra con la época.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
+.steps .soft b { font: 600 1.05rem/1.2 var(--display); color: var(--ink); display: block; margin-bottom: 2px; }
+.steps .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); border: 2px solid var(--ink);
+  font: 700 .9rem/1 var(--display); margin-right: 6px; }
+.adult { display: flex; gap: 10px; align-items: flex-start; }
+.adult strong { white-space: nowrap; }
+
+.sit { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.who { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.who .tag { font-size: .82rem; }
+.scene { margin-bottom: 10px; }
+.qs { margin: 0 0 12px; padding-left: 22px; }
+.qs li { margin-bottom: 4px; }
+.qs li::marker { font-weight: 800; color: var(--ink); }
+.facts { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.facts[open] { border-color: var(--ink); }
+.facts summary { font-weight: 800; cursor: pointer; color: var(--ink); }
+.facts ul { margin: 8px 0 4px; padding-left: 20px; font-size: .95rem; }
+.facts li { margin-bottom: 5px; }
+.write { display: grid; gap: 8px; }
+.write label { font: 600 1.05rem/1.2 var(--display); color: var(--ink); }
+.write textarea.answer { min-height: 230px; }
+.wmeta { display: flex; justify-content: space-between; gap: 10px; font-size: .85rem; color: var(--muted); }
+.status { font-weight: 700; font-size: .92rem; min-height: 1.4em; }
+.status.okt, .status.kot { font-weight: 800; }
+.tips { margin: 0; padding-left: 20px; }
+.tips li { margin-bottom: 3px; }
+@media (max-width: 860px) { .sit, .steps { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Me pongo en <em>su mentalidad</em></h1>
+    <p class="lead">Un historiador no solo se aprende fechas: intenta ver el mundo con los ojos de quien lo vivió.
+      Aquí tienes seis personas del inicio de la Edad Media. Elige una, métete en su piel y escribe.</p>
+  </div>
+
+  <section class="block" id="como">
+    <h2>Cómo funciona</h2>
+    <div class="steps">
+      <div class="soft"><b><span class="n">1</span>Lee y piensa</b>Lee la situación y las tres preguntas. Abre la chuleta: tiene datos ciertos que puedes usar.</div>
+      <div class="soft"><b><span class="n">2</span>Escribe en primera persona</b>Diez o quince líneas, como si fueras ese personaje. Se guarda solo en este ordenador.</div>
+      <div class="soft"><b><span class="n">3</span>Pide a Beakman que lo revise</b>Pulsa «Copiar para Beakman» y pégalo en Claude con el conector de Beakman. Te dirá qué cuadra y qué no, sin reescribírtelo.</div>
+    </div>
+    <div class="note adult"><p><strong>Claude es para mayores de 18 años.</strong>
+      Usa el paso 3 con tu madre o tu padre al lado, en su cuenta. Los pasos 1 y 2 los puedes hacer por tu cuenta.</p></div>
+    <div class="beak" style="margin-top:14px"><img src="../../../../media/beakman.jpg" alt="">
+      <div><b>Truco de Beakman para que suene a época</b>
+        <ul class="tips">
+          <li>Habla de lo que esa persona podía saber. Un campesino del año 450 no sabe que «empieza la Edad Media»: ese nombre lo pusieron los historiadores mucho después.</li>
+          <li>Nada de cosas que aún no existían: ni patatas, ni tomates, ni relojes de bolsillo.</li>
+          <li>Usa al menos dos datos de la chuleta, pero contados con tus palabras.</li>
+        </ul></div></div>
+  </section>
+
+  <nav class="tabs" aria-label="Personajes" id="tabs"></nav>
+  <div id="sits"></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script type="application/json" id="data">
+[
+  {
+    "id": "huida-al-campo",
+    "corto": "Huyo de la ciudad",
+    "titulo": "Un artesano que huye al campo",
+    "quien": "un artesano de una ciudad de Hispania",
+    "donde": "Hispania, hacia el año 450",
+    "tags": ["Hispania", "hacia el 450", "apartado 3"],
+    "escena": "Eres alfarero en una ciudad romana de Hispania. Desde que entraron los pueblos germánicos, los caminos ya no son seguros y casi nadie viene a comprarte. Has decidido irte con tu familia a la villa de un gran propietario y pedirle que te acoja.",
+    "preguntas": [
+      "¿Qué ves cuando miras tu ciudad antes de irte? ¿Qué ha cambiado en estos años?",
+      "¿Qué temes: del camino, del señor, del futuro de tus hijos?",
+      "¿Qué le ofreces al señor a cambio de su protección y qué te importa conseguir de él?"
+    ],
+    "datos": [
+      "En el año 409 suevos, vándalos y alanos entraron en Hispania. Después llegaron los visigodos, aliados de Roma.",
+      "Los saqueos crearon inseguridad: el comercio se hundió y muchas ciudades se fueron quedando vacías.",
+      "Mucha gente buscó protección en las villas de los grandes propietarios. A cambio, trabajaba sus tierras.",
+      "La agricultura pasó a ser la actividad principal. Cada aldea intentaba producir casi todo lo que necesitaba.",
+      "El Imperio romano de Occidente desapareció en el año 476, cuando Odoacro depuso al último emperador, Rómulo Augústulo."
+    ]
+  },
+  {
+    "id": "constantinopla",
+    "corto": "Comerciante en Constantinopla",
+    "titulo": "Una comerciante de Constantinopla",
+    "quien": "una comerciante de sedas",
+    "donde": "Constantinopla, hacia el año 550, en tiempos del emperador Justiniano",
+    "tags": ["Imperio bizantino", "hacia el 550", "apartado 2"],
+    "escena": "Tienes un puesto de telas cerca del gran mercado de Constantinopla. Por tu ciudad pasan barcos y caravanas de medio mundo. El emperador Justiniano quiere recuperar las tierras del antiguo Imperio romano, y eso se nota en los impuestos y en las noticias que llegan del puerto.",
+    "preguntas": [
+      "¿Qué ves desde tu puesto: quién compra, qué productos llegan, qué edificios te rodean?",
+      "¿Qué temes: la guerra, los impuestos, una epidemia, una revuelta?",
+      "¿Qué opinas de tu emperador y qué te importa más para que tu negocio vaya bien?"
+    ],
+    "datos": [
+      "Justiniano gobernó del 527 al 565. Recuperó parte de Italia, el norte de África y el sur de Hispania.",
+      "Constantinopla estaba entre Europa y Asia, junto al Bósforo, protegida por murallas. Era un gran cruce comercial entre Oriente y Occidente: especias, seda, perlas, trigo…",
+      "Justiniano mandó reunir las leyes romanas en una gran recopilación: el Código de Justiniano.",
+      "La basílica de Santa Sofía se terminó en el año 537.",
+      "En el 541-542 una gran epidemia de peste golpeó Constantinopla. En la calle se hablaba sobre todo griego, aunque las leyes de Justiniano se escribieron en latín."
+    ]
+  },
+  {
+    "id": "monje-copista",
+    "corto": "Monje copista",
+    "titulo": "Un monje copista",
+    "quien": "un monje copista",
+    "donde": "un monasterio del reino visigodo, cerca de Toledo, hacia el año 620",
+    "tags": ["Reino visigodo", "hacia el 620", "apartado 4"],
+    "escena": "Vives en un monasterio y tu trabajo es copiar libros a mano, letra a letra. Fuera, casi nadie sabe leer. Te han encargado copiar una obra del obispo Isidoro de Sevilla, que todo el reino admira.",
+    "preguntas": [
+      "¿Qué ves en la sala donde copias: con qué escribes, sobre qué, con qué luz?",
+      "¿Qué temes: equivocarte, que el libro se pierda, que el saber desaparezca?",
+      "¿Por qué crees que es importante tu trabajo? ¿Para quién copias?"
+    ],
+    "datos": [
+      "Tras la caída de Roma, la mayoría de la gente no sabía leer. Los monasterios se convirtieron en refugio de la cultura.",
+      "Los libros se copiaban a mano sobre pergamino (piel de animal preparada), con pluma y tinta. Copiar un libro podía llevar meses.",
+      "El latín era la lengua de la Iglesia y de la cultura escrita.",
+      "El reino visigodo tenía su capital en Toledo. El rey Recaredo se hizo católico (587) y el III Concilio de Toledo (589) llevó a todo el reino al catolicismo.",
+      "San Isidoro de Sevilla (hacia 560-636) escribió las Etimologías, una especie de enciclopedia con el saber de su tiempo."
+    ]
+  },
+  {
+    "id": "llegada-711",
+    "corto": "711: llegan los musulmanes",
+    "titulo": "Una vecina de Toledo en el 711",
+    "quien": "una vecina de Toledo",
+    "donde": "Toledo, capital del reino visigodo, en el año 711",
+    "tags": ["Reino visigodo", "711", "apartado 8"],
+    "escena": "Llegan noticias del sur: un ejército ha cruzado el estrecho desde África y el rey Rodrigo ha sido derrotado. Los nobles llevan años peleándose por el trono. Ahora el ejército vencedor se acerca a Toledo y en tu calle todos hablan de qué va a pasar.",
+    "preguntas": [
+      "¿Qué ves y oyes en Toledo estos días: quién se va, quién se queda, qué se dice?",
+      "¿Qué temes perder: tu casa, tu religión, tu familia?",
+      "Si los recién llegados ofrecen un pacto, ¿qué te importaría que incluyera?"
+    ],
+    "datos": [
+      "En el 711 un ejército musulmán dirigido por Tariq, un bereber, cruzó el estrecho de Gibraltar y venció al rey visigodo Rodrigo en la batalla de Guadalete.",
+      "El reino visigodo estaba debilitado: crisis económica y luchas entre nobles por el trono.",
+      "En pocos años los musulmanes controlaron casi toda la Península, menos la franja montañosa del norte.",
+      "Muchas ciudades pactaron: conservaban sus bienes y su religión a cambio de pagar impuestos. Un ejemplo es el pacto de Teodomiro, en la zona de Murcia (713).",
+      "Cristianos y judíos podían seguir con su fe si pagaban un impuesto especial. Al territorio musulmán de la Península se le llamó al-Ándalus."
+    ]
+  },
+  {
+    "id": "zoco-cordoba",
+    "corto": "Mercader en el zoco de Córdoba",
+    "titulo": "Un mercader del zoco de Córdoba",
+    "quien": "un mercader del zoco",
+    "donde": "Córdoba, hacia el año 950, en tiempos del califa Abd al-Rahman III",
+    "tags": ["Califato de Córdoba", "hacia el 950", "apartado 9"],
+    "escena": "Tienes una tienda en el zoco de Córdoba, la capital del califato. Cada calle es de un oficio: los perfumistas, los del cuero, los alfareros. Hoy ha llegado un cargamento de especias de Oriente y tienes clientes de lugares muy distintos.",
+    "preguntas": [
+      "¿Qué ves, hueles y oyes en el zoco? ¿Quién compra y quién vende?",
+      "¿Qué temes: que te engañen con el peso, que el inspector te multe, que se pierda un cargamento?",
+      "¿Qué te importa de vivir en Córdoba y no en otra ciudad?"
+    ],
+    "datos": [
+      "Abd al-Rahman III se proclamó califa en el año 929. Con el califato, al-Ándalus vivió su época de mayor esplendor.",
+      "Córdoba era una de las ciudades más grandes y ricas de Europa. Los artesanos se agrupaban por oficios en barrios.",
+      "De Europa llegaban metales y madera; de África, oro y marfil; de Oriente, especias y objetos de lujo. Al-Ándalus vendía productos del campo y artesanía: cerámica, cuero, tejidos.",
+      "Se pagaba con el dinar de oro y el dírham de plata, monedas muy valoradas.",
+      "En la ciudad convivían musulmanes, cristianos (mozárabes) y judíos. Un inspector, el almotacén, vigilaba pesos, medidas y precios en el zoco."
+    ]
+  },
+  {
+    "id": "alqueria",
+    "corto": "Campesina de una alquería",
+    "titulo": "Una campesina de una alquería",
+    "quien": "una campesina de una alquería",
+    "donde": "una alquería de la vega de Valencia, hacia el año 1000",
+    "tags": ["al-Ándalus", "hacia el 1000", "apartado 9"],
+    "escena": "Vives en una alquería, una pequeña aldea rodeada de huertas. Tu familia cultiva una parcela que se riega con el agua de la acequia. Hoy os toca el turno de riego y la noria no para de girar.",
+    "preguntas": [
+      "¿Qué ves a tu alrededor: qué se cultiva, cómo llega el agua, cómo es tu casa?",
+      "¿Qué temes: la sequía, una avería en la noria, perder tu turno de agua?",
+      "¿Qué te importa más: la cosecha, venderla en el zoco de la ciudad, tu familia?"
+    ],
+    "datos": [
+      "La alquería era una pequeña aldea rural. Sus tierras de regadío se dividían en parcelas pequeñas.",
+      "La noria subía el agua de un pozo o de un río con vasijas de barro atadas a una rueda. Podía moverla un animal o la propia corriente.",
+      "Las acequias llevaban el agua a los campos; los aljibes y las albercas la guardaban.",
+      "Con el regadío llegaron cultivos nuevos: arroz, berenjena, espinaca, naranja amarga, caña de azúcar, algodón y azafrán.",
+      "Lo que sobraba se vendía en el zoco de la ciudad más cercana."
+    ]
+  }
+]
+</script>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const el = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+  const DATA = JSON.parse(document.getElementById("data").textContent);
+  const tabs = document.getElementById("tabs"), box = document.getElementById("sits");
+
+  async function copyText(t) {
+    try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(t); return true; } } catch (e) {}
+    try {
+      const ta = document.createElement("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.append(ta); ta.select(); const ok = document.execCommand("copy"); ta.remove(); return ok;
+    } catch (e) { return false; }
+  }
+  const message = (s, txt) => `Soy de 2º de la ESO. He escrito esto poniéndome en la mentalidad de ${s.quien} en ${s.donde}. ` +
+    `Dime qué está bien, qué no cuadra con la época y una idea para mejorarlo, sin reescribírmelo:\n\n${txt}`;
+
+  DATA.forEach((s, i) => {
+    const a = el("a", null, `${i + 1} · ${s.corto}`); a.href = "#" + s.id; tabs.append(a);
+    const sec = el("section", "block"); sec.id = s.id;
+    sec.append(el("h2", null, `${i + 1}. ${s.titulo}`));
+    const grid = el("div", "sit");
+
+    const left = el("div");
+    const who = el("div", "who"); s.tags.forEach(t => who.append(el("span", "tag", t)));
+    left.append(who, el("p", "scene", s.escena));
+    const ol = el("ol", "qs"); s.preguntas.forEach(q => ol.append(el("li", null, q))); left.append(ol);
+    const det = el("details", "facts"); det.append(el("summary", null, "Chuleta de datos (ciertos, úsalos)"));
+    const ul = el("ul"); s.datos.forEach(d => ul.append(el("li", null, d))); det.append(ul); left.append(det);
+
+    const right = el("div", "write");
+    const key = "beakman.mentalidad." + s.id;
+    const lab = el("label", null, `Escribe como ${s.quien}`); lab.htmlFor = "t-" + s.id;
+    const ta = el("textarea", "answer"); ta.id = "t-" + s.id; ta.placeholder = "Empieza en primera persona: «Hoy…»"; ta.value = store.get(key, "");
+    const meta = el("div", "wmeta"); const words = el("span"); const saved = el("span");
+    const count = () => { const n = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0; words.textContent = `${n} palabras`; };
+    let tmr; ta.addEventListener("input", () => { count(); clearTimeout(tmr); tmr = setTimeout(() => { store.set(key, ta.value); saved.textContent = "Guardado en este ordenador"; }, 400); });
+    count(); if (ta.value) saved.textContent = "Guardado en este ordenador";
+    meta.append(words, saved);
+    const row = el("div", "row");
+    const cp = el("button", "b", "Copiar para Beakman"); cp.type = "button";
+    const clr = el("button", "b ghost small", "Borrar"); clr.type = "button";
+    const st = el("p", "status"); st.setAttribute("aria-live", "polite");
+    cp.addEventListener("click", async () => {
+      const txt = ta.value.trim();
+      if (txt.split(/\s+/).length < 15) { st.className = "status kot"; st.textContent = "Escribe un poco más (al menos unas líneas) antes de pedir la revisión."; return; }
+      const ok = await copyText(message(s, txt));
+      st.className = "status " + (ok ? "okt" : "kot");
+      st.textContent = ok ? "Copiado. Ahora, con tu madre o tu padre, pégalo en Claude con el conector de Beakman." :
+        "No he podido copiar. Selecciona tu texto y cópialo a mano.";
+    });
+    clr.addEventListener("click", () => {
+      if (ta.value && !confirm("¿Seguro que quieres borrar tu texto?")) return;
+      ta.value = ""; store.set(key, ""); count(); saved.textContent = ""; st.textContent = "";
+    });
+    row.append(cp, clr);
+    right.append(lab, ta, meta, row, st);
+
+    grid.append(left, right); sec.append(grid); box.append(sec);
+  });
+})();
+</script>
+</body>
+</html>

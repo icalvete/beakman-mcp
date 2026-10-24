@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponte a prueba: el inicio de la Edad Media · El laboratorio de Beakman</title>
+<meta name="description" content="Repaso activo del inicio de la Edad Media (2º ESO): las 12 preguntas del tema, conceptos, orden de los hechos, causas y cuadros, con pistas de Beakman.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.score { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 4px; }
+.score span { background: #fff; border: 2px solid var(--line); border-radius: 999px; padding: 4px 12px; font-weight: 800; }
+.q { border-top: 1.5px dashed var(--line); padding-top: 16px; margin-top: 16px; display: grid; gap: 10px; }
+.q:first-of-type { border-top: 0; margin-top: 4px; padding-top: 4px; }
+.q h3 { font-size: 1.15rem; }
+.q h3 small { font: 700 .8rem/1 var(--body); color: var(--muted); margin-left: 6px; }
+.q.hide { display: none; }
+.model ul { margin: 4px 0 0; padding-left: 1.2em; }
+.model li + li { margin-top: 3px; }
+.model .warn { font-size: .85rem; color: #8A6D00; margin-top: 6px; }
+.mcq { display: grid; gap: 8px; }
+.mcq[hidden], .q[hidden], .model[hidden] { display: none; }
+.mcq .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.mcq .why { font-size: .95rem; }
+.mcq .hint { margin: 0; font-size: .85rem; color: var(--muted); font-weight: 700; }
+.mcq > .b { justify-self: start; }
+.order { list-style: none; margin: 10px 0; padding: 0; display: grid; gap: 6px; max-width: 640px; }
+.order li { display: flex; align-items: center; gap: 10px; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 7px 10px; cursor: grab; }
+.order li.drag { opacity: .45; }
+.order li .n { font: 600 1rem/1 var(--display); color: var(--muted); width: 1.4em; }
+.order li .t { flex: 1; font-weight: 700; }
+.order li .y { font-weight: 800; color: #2E7D32; min-width: 3.2em; text-align: right; }
+.order li button { border: 1.5px solid var(--line); background: var(--card); border-radius: 8px; width: 30px; height: 28px; cursor: pointer; font-weight: 800; }
+.cause { display: grid; gap: 8px; }
+.cause + .cause { border-top: 1.5px dashed var(--line); padding-top: 14px; margin-top: 14px; }
+.cause label { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; cursor: pointer; }
+.cause input { margin-top: 4px; accent-color: #7FA80F; width: 18px; height: 18px; }
+table.grid { border-collapse: separate; border-spacing: 0; width: 100%; background: #fff; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; }
+table.grid th, table.grid td { padding: 8px 10px; border-bottom: 1.5px solid var(--line); text-align: left; vertical-align: top; }
+table.grid tr:last-child td { border-bottom: 0; }
+table.grid th { background: var(--lime-soft); font: 600 .95rem/1.2 var(--display); color: var(--ink); }
+table.grid td:first-child { font-weight: 800; color: var(--ink); white-space: nowrap; }
+table.grid select { width: 100%; font: 600 .92rem/1.2 var(--body); padding: 6px 8px; border: 2px solid var(--line); border-radius: 8px; background: #fff; color: var(--text); }
+.tablewrap + .tablewrap { margin-top: 18px; }
+.tablewrap h3 { margin-bottom: 8px; font-size: 1.1rem; }
+.copybox { background: #fff; border: 2px dashed var(--line); border-radius: 12px; padding: 12px 14px; font-size: .95rem; }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Historia · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Historia</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Ponte a prueba: <em>el inicio de la Edad Media</em></h1>
+    <p class="lead">Aquí no se relee: se recuerda. Intenta cada cosa sin mirar el libro, equivócate tranquila y luego comprueba. Lo que te cuesta sacar de la cabeza es lo que se queda.</p>
+    <p class="meta"><span class="tag">Sigue el Tema 1 de Vicens Vives (Madrid), «La huella andalusí»</span></p>
+  </div>
+
+  <nav class="tabs noprint" aria-label="Partes">
+    <a href="#preguntas">1 · Las 12 preguntas</a>
+    <a href="#conceptos">2 · Conceptos</a>
+    <a href="#orden">3 · ¿Qué fue antes?</a>
+    <a href="#causas">4 · ¿Por qué pasó?</a>
+    <a href="#cuadros">5 · Cuadros</a>
+    <a href="#beakman">6 · Simulacro con Beakman</a>
+  </nav>
+
+  <section class="block" id="preguntas">
+    <h2>1 · Las 12 preguntas del tema</h2>
+    <p class="hint">Son los títulos de los apartados de tu libro. Escribe tu respuesta (o dila en voz alta), luego abre la de Beakman y marca cómo te ha salido: <b>✓</b> la sé, <b>~</b> más o menos, <b>✗</b> no me sale. Se guarda en este ordenador.</p>
+    <div class="score" id="qscore"></div>
+    <div class="row noprint" style="margin-bottom:6px">
+      <button class="b ghost small" id="onlyweak" type="button">Ver solo las ~ y las ✗</button>
+      <button class="b ghost small" id="showall" type="button">Ver todas</button>
+    </div>
+    <div id="qlist"></div>
+  </section>
+
+  <section class="block" id="conceptos">
+    <h2>2 · Conceptos: ¿cómo se llama?</h2>
+    <p class="hint">Lee la definición y elige la palabra. Si fallas, te cuento la diferencia: casi siempre es un despiste entre dos palabras parecidas.</p>
+    <div class="score" id="cscore"></div>
+    <div id="clist"></div>
+    <div class="row noprint" style="margin-top:14px"><button class="b ghost small" id="creset" type="button">Empezar otra vez</button></div>
+  </section>
+
+  <section class="block" id="orden">
+    <h2>3 · ¿Qué fue antes?</h2>
+    <p class="hint">Ordena los hechos del más antiguo al más reciente. Arrástralos o usa las flechas. Cuando lo tengas, pulsa «Comprobar»: te enseño los años.</p>
+    <div id="olist"></div>
+  </section>
+
+  <section class="block" id="causas">
+    <h2>4 · ¿Por qué pasó?</h2>
+    <p class="hint">En Historia casi nada pasa por una sola razón. Marca <b>todas</b> las causas que sean ciertas y luego comprueba. Ojo, que hay trampas.</p>
+    <div id="causelist"></div>
+  </section>
+
+  <section class="block" id="cuadros">
+    <h2>5 · Cuadros para completar</h2>
+    <p class="hint">Como los de las actividades de tu libro. Elige en cada casilla y pulsa «Comprobar».</p>
+    <div id="tables"></div>
+  </section>
+
+  <section class="block" id="beakman">
+    <h2>6 · Simulacro de examen con Beakman</h2>
+    <p class="hint">Para cuando ya hayas hecho lo de arriba. En Claude, con el conector de Beakman, y con tu madre o tu padre al lado (Claude es para mayores de 18). Copia esto y pégalo en un chat nuevo de «Beakman de Historia»:</p>
+    <div class="copybox" id="prompt">Estoy en 2º de la ESO. Mi libro es el de Vicens Vives de Madrid y el lunes tengo examen del Tema 1, «La huella andalusí» (del final del Imperio romano al reino nazarí de Granada). Ponme un examen de 6 preguntas como los de clase: 2 de definir conceptos, 2 de explicar causas, 1 de situar hechos en el tiempo y 1 de comparar (por ejemplo, el Imperio bizantino y el de Carlomagno). Hazme las preguntas de una en una y no me des la respuesta hasta que lo intente. Al final, corrígeme, dime qué tengo que repasar y ponme una nota del 1 al 10.</div>
+    <div class="row noprint" style="margin-top:10px"><button class="b" id="copy" type="button">Copiar para Beakman</button><span id="copied" class="okt"></span></div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script>
+(() => {
+  const KEY = "lab:ponte-a-prueba-tema-1";
+  const store = { get(d) { try { return JSON.parse(localStorage.getItem(KEY)) || d; } catch (e) { return d; } },
+                  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} } };
+  const state = store.get({ marks: {}, answers: {} });
+  const save = () => store.set(state);
+  const $ = (s, r = document) => r.querySelector(s);
+  const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  // ---------- 1. Las 12 preguntas
+  const Q = [
+    { t: "¿Cómo se inició la Edad Media?", a: [
+      "El Imperio romano unía todo el Mediterráneo (el <i>Mare Nostrum</i>): misma ley, lengua (latín), moneda, ciudades y calzadas. En el 395 se dividió en Imperio de Oriente y de Occidente.",
+      "En el siglo V los <b>hunos</b> de Atila empujaron a los <b>pueblos germánicos</b> (visigodos, ostrogodos, francos, suevos, vándalos, alanos…), que entraron en el Imperio de Occidente.",
+      "En el <b>476</b> Odoacro depuso al último emperador, Rómulo Augústulo: fin del Imperio de Occidente y comienzo de la Edad Media.",
+      "Duró unos mil años: termina en el <b>1453</b> (los turcos toman Constantinopla) o en el <b>1492</b> (Colón llega a América), según los historiadores.",
+      "El Mediterráneo quedó repartido entre <b>tres civilizaciones</b>: los reinos germánicos, el Imperio bizantino y, desde el siglo VII, el islam."] },
+    { t: "¿Fue el Imperio bizantino una continuidad del romano?", a: [
+      "Fue el Imperio romano de Oriente, que sobrevivió del siglo V al XV. Capital: <b>Constantinopla</b> (la antigua Bizancio).",
+      "<b>Continuidad</b>: el emperador <b>Justiniano</b> (527-565) quiso restaurar el Imperio: reconquistó Italia, el norte de África y el sur de Hispania, y recopiló las leyes romanas en el <b>Código de Justiniano</b>. Mantuvo el Senado y tradiciones romanas.",
+      "<b>Alejamiento</b>: se impuso el <b>griego</b> en lugar del latín, el emperador se llamó <b>basileus</b> y tenía un poder absoluto (político, militar y religioso), y en el <b>1054</b> su Iglesia se separó de la de Roma (<b>Cisma de Oriente</b>): nació la Iglesia ortodoxa.",
+      "Se hizo rica por su posición entre Oriente y Occidente (comercio de especias, seda…). Cayó en el <b>1453</b> ante los turcos otomanos."] },
+    { t: "¿Cómo transformaron Europa los reinos germánicos?", a: [
+      "Europa occidental se partió en <b>reinos independientes y rivales</b>: visigodos (Hispania), suevos (Galicia), francos (Galia), anglosajones (Britania), ostrogodos (Italia), vándalos (norte de África)…",
+      "Adoptaron parte de lo romano: el <b>latín</b>, muchas <b>leyes romanas</b> y el <b>cristianismo</b>.",
+      "Con las razias y saqueos hubo <b>inseguridad</b>: el comercio y las <b>ciudades decayeron</b> y la gente se fue al <b>campo</b>, a las villas de los grandes propietarios, que daban protección. La <b>agricultura</b> pasó a ser la actividad principal.",
+      "La cultura quedó en manos de clérigos y monjes: los <b>monasterios</b> guardaron los libros y el saber."] },
+    { t: "Un pueblo germánico asentado en Hispania: los visigodos", a: [
+      "Entraron como aliados de Roma. Tras perder contra los francos en <b>Vouillé (507)</b>, se quedaron en Hispania con capital en <b>Toledo</b>.",
+      "<b>Monarquía</b> fuerte que quería ser hereditaria. El rey se apoyaba en el <b>Aula Regia</b> (nobles y clérigos) y en los <b>Concilios de Toledo</b> (asambleas de obispos que trataban temas religiosos y de gobierno).",
+      "Controlaron toda la Península: expulsaron a los <b>suevos (585)</b> y a los <b>bizantinos (624)</b>.",
+      "Unieron a visigodos e hispanorromanos: misma religión (<b>Recaredo</b> se hace católico en 587; III Concilio de Toledo, 589) y misma ley (<b>Liber Iudiciorum</b>, de Recesvinto, 654).",
+      "En lo que hoy es Madrid: territorio casi vacío, con poblados rurales junto al Manzanares y el Jarama (como la Cabilda de Hoyo de Manzanares) y núcleos como <b>Complutum</b> (Alcalá), sede de un obispo."] },
+    { t: "¿Consiguió Carlomagno crear un gran imperio cristiano?", a: [
+      "Los <b>francos</b>: Carlos Martel frenó a los musulmanes en <b>Poitiers (732)</b> y su hijo Pipino el Breve fundó la dinastía carolingia.",
+      "<b>Carlomagno</b> conquistó gran parte de Europa occidental, frenó al islam (la Marca Hispánica) y extendió el cristianismo. El papa León III lo coronó emperador en el <b>800</b>. Capital: <b>Aquisgrán</b>. Impulsó un renacimiento cultural.",
+      "Lo organizó en <b>condados</b> (con condes), <b>marcas</b> fronterizas (con marqueses) y lo vigilaba con los <b>missi dominici</b>; sus leyes eran las <b>capitulares</b>. Todo se basaba en relaciones de fidelidad: el germen del feudalismo.",
+      "Sí, pero <b>duró poco</b>: tras su hijo Luis el Piadoso, sus nietos se lo repartieron en el <b>Tratado de Verdún (843)</b>."] },
+    { t: "¿Cómo fue el arte cristiano en Oriente y Occidente?", warn: true, a: [
+      "<b>Oriente (arte bizantino)</b>: iglesias con grandes <b>cúpulas</b>, interiores cubiertos de <b>mosaicos</b> dorados e <b>iconos</b>. La obra cumbre es <b>Santa Sofía</b> de Constantinopla; en Rávena, San Vital.",
+      "En el templo ortodoxo, el <b>iconostasio</b> (una mampara con imágenes) oculta el altar.",
+      "<b>Occidente</b>: arte más sencillo. En Hispania, iglesias visigodas pequeñas de piedra con <b>arco de herradura</b>; en el imperio de Carlomagno, la capilla palatina de <b>Aquisgrán</b>; y libros copiados e iluminados en los monasterios."] },
+    { t: "¿Cómo surgió y se expandió el islam?", a: [
+      "Arabia, siglo VII: tribus politeístas de comerciantes y pastores; <b>La Meca</b> era el gran mercado de caravanas.",
+      "<b>Mahoma</b> (nacido hacia 570) predicó una religión <b>monoteísta</b>, el islam. En el <b>622</b> huyó a Medina: la <b>Hégira</b>, inicio del calendario musulmán. Volvió y conquistó La Meca; al morir (<b>632</b>) Arabia estaba unificada.",
+      "Lo siguieron los <b>califas</b>, jefes religiosos, jueces y generales.",
+      "Se expandió por <b>conquistas militares</b>, aprovechando la debilidad de los imperios vecinos (bizantino y persa), para difundir su fe y con <b>pactos</b> con las poblaciones: de la Península Ibérica a la India.",
+      "Etapas: primeros califas (632-661), <b>Omeyas</b> con capital en Damasco (661-750) y <b>Abasíes</b> en Bagdad (750-1258).",
+      "Libro sagrado: el <b>Corán</b>. Normas: los <b>cinco deberes</b> (fe, oración, ayuno en Ramadán, limosna, peregrinación a La Meca)."] },
+    { t: "Al-Ándalus: ¿cómo se originó y evolucionó?", a: [
+      "<b>711</b>: Tariq cruza el estrecho y vence al rey visigodo Rodrigo en <b>Guadalete</b>. Aprovechan la debilidad visigoda (crisis, nobles enfrentados). En 722 controlan casi todo, salvo el norte (<b>Covadonga</b>, reino de Asturias).",
+      "<b>Emirato dependiente</b> del califa de Damasco (hasta 756), con capital en Córdoba.",
+      "<b>Emirato independiente</b> (756-929): Abd al-Rahman I, un Omeya que huyó de los Abasíes, se hace emir independiente en lo político.",
+      "<b>Califato de Córdoba</b> (929-1031): Abd al-Rahman III se proclama califa, también independiente en lo religioso. Época de mayor esplendor; Córdoba, la ciudad más poblada de Europa. Almanzor ataca a los cristianos (razias) y cobra tributos (parias).",
+      "<b>Reinos de taifas</b> (desde 1031): el califato se rompe en más de 25 reinos débiles. Llegan <b>almorávides</b> (1086) y <b>almohades</b> (1147) desde el norte de África; derrota musulmana en las <b>Navas de Tolosa (1212)</b>.",
+      "<b>Reino nazarí de Granada</b> (1238-1492): el último. Los Reyes Católicos lo conquistan en 1492: casi 800 años de al-Ándalus."] },
+    { t: "¿De dónde provenía la prosperidad económica?", a: [
+      "<b>Agricultura</b>: trajeron <b>nuevos cultivos</b> (arroz, berenjena, espinaca, naranja amarga, limón, sandía, azafrán, caña de azúcar, algodón) y <b>regadío</b>: norias, ruedas hidráulicas, <b>acequias</b> y aljibes. Más cosecha, más población, más comercio. La unidad rural era la <b>alquería</b>.",
+      "<b>Artesanía y comercio</b> en las ciudades, en los <b>zocos</b>; los artesanos se agrupaban por oficios en barrios.",
+      "<b>Comercio internacional</b> (Córdoba, Sevilla, Toledo): llegaban metales, madera, esclavos, oro, marfil y especias; salían productos del campo y de los artesanos.",
+      "Moneda muy estable y valorada: el <b>dinar de oro</b> y el <b>dírham de plata</b>."] },
+    { t: "¿Cómo se vivía en la ciudad andalusí?", warn: true, a: [
+      "La <b>medina</b> estaba rodeada de murallas con puertas. En el centro, la <b>mezquita mayor</b> y, a su lado, el <b>zoco</b>.",
+      "La <b>alcazaba</b> era la fortaleza y el <b>alcázar</b>, el palacio del gobernante. Fuera de la muralla crecían los barrios o <b>arrabales</b>.",
+      "Calles estrechas y torcidas, muchas sin salida (adarves). Casas cerradas a la calle, con un <b>patio</b> interior.",
+      "Había <b>baños públicos</b>, y los cementerios estaban fuera de la ciudad."] },
+    { t: "¿Cómo era Mayrit en época de al-Ándalus?", warn: true, a: [
+      "<b>Mayrit</b> fue una fortaleza que mandó levantar el emir <b>Muhammad I</b> en la segunda mitad del siglo IX, junto al <b>Manzanares</b>, para defender Toledo y vigilar los caminos frente a los cristianos del norte.",
+      "Tenía una ciudadela (la <b>almudaina</b>) con el alcázar, donde hoy está el Palacio Real, y una mezquita; alrededor, la muralla y los arrabales.",
+      "Hoy se conservan <b>restos de la muralla</b> en la Cuesta de la Vega. Pasó a Castilla con <b>Alfonso VI</b>, hacia 1085."] },
+    { t: "¿Por qué seguimos admirando el arte andalusí?", warn: true, a: [
+      "Rasgos: <b>arco de herradura</b> y arcos lobulados, columnas, decoración <b>geométrica</b>, vegetal y con letras (caligrafía), materiales sencillos (ladrillo, yeso, madera) muy decorados, agua y jardines.",
+      "Obras: la <b>Mezquita de Córdoba</b>, <b>Medina Azahara</b>, la <b>Giralda</b> de Sevilla y la <b>Alhambra</b> de Granada.",
+      "Lo admiramos por su belleza y su técnica, porque es <b>patrimonio</b> de todos (varias obras son Patrimonio de la Humanidad) y porque influyó en el arte posterior, como el <b>mudéjar</b>."] },
+  ];
+  const qlist = $("#qlist");
+  const MARKS = [["2", "✓"], ["1", "~"], ["0", "✗"]];
+  function qScore() {
+    const v = Object.values(state.marks);
+    $("#qscore").innerHTML = `<span>✓ ${v.filter((x) => x === "2").length}</span><span>~ ${v.filter((x) => x === "1").length}</span><span>✗ ${v.filter((x) => x === "0").length}</span><span>sin marcar ${Q.length - v.length}</span>`;
+  }
+  Q.forEach((q, i) => {
+    const box = el("div", "q");
+    box.dataset.i = i;
+    box.appendChild(el("h3", null, `${i + 1}. ${q.t}`));
+    const ta = el("textarea", "answer");
+    ta.placeholder = "Escribe aquí lo que recuerdes, sin mirar…";
+    ta.value = state.answers[i] || "";
+    ta.addEventListener("input", () => { state.answers[i] = ta.value; save(); });
+    box.appendChild(ta);
+    const row = el("div", "row");
+    const show = el("button", "b ghost small", "Ver la respuesta de Beakman");
+    show.type = "button";
+    const mark = el("div", "mark");
+    mark.setAttribute("role", "group");
+    mark.setAttribute("aria-label", "¿Cómo te ha salido?");
+    MARKS.forEach(([v, s]) => {
+      const b = el("button", null, s);
+      b.type = "button"; b.dataset.v = v;
+      b.setAttribute("aria-pressed", state.marks[i] === v ? "true" : "false");
+      b.addEventListener("click", () => {
+        state.marks[i] = v; save(); qScore();
+        mark.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      });
+      mark.appendChild(b);
+    });
+    row.append(show, el("span", null, "¿Cómo te ha salido?"), mark);
+    box.appendChild(row);
+    const model = el("div", "model");
+    model.hidden = true;
+    model.innerHTML = "<b>Lo que no debería faltar:</b><ul>" + q.a.map((x) => `<li>${x}</li>`).join("") + "</ul>" +
+      (q.warn ? '<p class="warn">Este apartado no lo he visto en tu libro: compara con él y quédate con lo que diga tu libro.</p>' : "");
+    show.addEventListener("click", () => { model.hidden = !model.hidden; show.textContent = model.hidden ? "Ver la respuesta de Beakman" : "Ocultar la respuesta"; });
+    box.appendChild(model);
+    qlist.appendChild(box);
+  });
+  qScore();
+  $("#onlyweak").addEventListener("click", () => {
+    qlist.querySelectorAll(".q").forEach((b) => b.classList.toggle("hide", state.marks[b.dataset.i] === "2" || state.marks[b.dataset.i] === undefined));
+  });
+  $("#showall").addEventListener("click", () => qlist.querySelectorAll(".q").forEach((b) => b.classList.remove("hide")));
+
+  // ---------- 2. Conceptos
+  const C = [
+    ["Huida de Mahoma de La Meca a Medina en el 622; marca el inicio del calendario musulmán.", "Hégira", ["Umma", "Sharia", "Califato"], "La Hégira es la huida a Medina; la umma es la comunidad de creyentes."],
+    ["Jefe de todos los musulmanes: a la vez jefe religioso, juez supremo y general.", "Califa", ["Emir", "Imán", "Basileus"], "El emir gobierna un territorio; el califa es el jefe político y religioso de todos. Abd al-Rahman III pasó de emir a califa en el 929."],
+    ["Gobernador de un territorio musulmán, como al-Ándalus en el siglo VIII.", "Emir", ["Califa", "Cadí", "Marqués"], "Abd al-Rahman I fue emir independiente (756); el título de califa llegó en el 929."],
+    ["Pequeños reinos en que se dividió al-Ándalus a partir del 1031.", "Taifas", ["Marcas", "Condados", "Alquerías"], "Taifas: más de 25 reinos rivales tras el fin del califato."],
+    ["Tributos que pagaban los reinos musulmanes a los cristianos a cambio de paz.", "Parias", ["Razias", "Diezmos", "Capitulares"], "Parias son pagos por la paz; las razias son ataques para saquear."],
+    ["Ataques rápidos para saquear el territorio enemigo, como los de Almanzor.", "Razias", ["Parias", "Cruzadas", "Concilios"], "Razia = ataque y saqueo. Almanzor hizo muchas contra los reinos cristianos."],
+    ["Inspectores de Carlomagno que vigilaban a condes y marqueses.", "Missi dominici", ["Capitulares", "Basileus", "Ulemas"], "Missi dominici significa «enviados del señor»."],
+    ["Territorio fronterizo del imperio carolingio gobernado por un jefe militar.", "Marca", ["Condado", "Taifa", "Califato"], "En las marcas mandaba un marqués; en los condados, un conde. La Marca Hispánica estaba en el actual Pirineo catalán."],
+    ["Leyes aprobadas en la corte de Carlomagno, que se escribían y conservaban.", "Capitulares", ["Liber Iudiciorum", "Código de Justiniano", "Sharia"], "Capitulares: leyes de Carlomagno. El Liber Iudiciorum es la ley visigoda y el Código de Justiniano, la bizantina."],
+    ["Ley común para visigodos e hispanorromanos, promulgada por Recesvinto en el 654.", "Liber Iudiciorum", ["Capitulares", "Código de Justiniano", "Corán"], "Con ella todos los habitantes del reino visigodo tenían la misma ley."],
+    ["Asambleas de obispos convocadas por el rey visigodo en las que se decidían asuntos religiosos y de gobierno.", "Concilios de Toledo", ["Aula Regia", "Senado", "Cortes"], "El Aula Regia la formaban nobles y clérigos que aconsejaban al rey; los Concilios eran asambleas de obispos."],
+    ["Título del emperador bizantino, que en griego significa «rey».", "Basileus", ["Califa", "Patriarca", "Emir"], "El patriarca era la máxima autoridad religiosa de Constantinopla, nombrado por el emperador."],
+    ["Separación, en el 1054, de la Iglesia de Oriente y la de Roma.", "Cisma de Oriente", ["Hégira", "Tratado de Verdún", "Reconquista"], "Desde entonces, la Iglesia de Oriente es la ortodoxa («creencia correcta»)."],
+    ["Mampara con imágenes religiosas que oculta el altar en los templos ortodoxos.", "Iconostasio", ["Mihrab", "Mimbar", "Ábside"], "El iconostasio es cristiano ortodoxo; el mihrab y el mimbar están en las mezquitas."],
+    ["Nicho en el muro de la quibla de una mezquita.", "Mihrab", ["Mimbar", "Minarete", "Iconostasio"], "La quibla es el muro orientado a La Meca; el mihrab es el nicho en ese muro. El mimbar es el púlpito."],
+    ["Torre de la mezquita desde la que se llama a la oración.", "Minarete", ["Mihrab", "Quibla", "Alcazaba"], "También se llama alminar."],
+    ["Comunidad de todos los creyentes musulmanes.", "Umma", ["Hégira", "Sunna", "Medina"], "La Sunna recoge las costumbres del profeta; junto al Corán forma la Sharia."],
+    ["Mercado de la ciudad andalusí.", "Zoco", ["Alcazaba", "Alquería", "Medina"], "La alcazaba es la fortaleza; la medina, la ciudad amurallada."],
+    ["Granja o pequeño núcleo rural de regadío en al-Ándalus.", "Alquería", ["Alcazaba", "Zoco", "Villa"], "En la alquería había huertos, frutales, norias, acequias y albercas."],
+    ["Moneda de oro de al-Ándalus, muy estable y valorada.", "Dinar", ["Dírham", "Denario", "Sueldo"], "El dinar era de oro; el dírham, de plata."],
+  ];
+  const clist = $("#clist");
+  let cOk = 0, cDone = 0;
+  const cScore = () => { $("#cscore").innerHTML = `<span>Aciertos ${cOk} de ${cDone}</span><span>Quedan ${C.length - cDone}</span>`; };
+  function renderConcepts() {
+    clist.textContent = ""; cOk = 0; cDone = 0; cScore();
+    const deck = shuffle(C);
+    deck.forEach(([def, good, bad, why], k) => {
+      const box = el("div", "mcq");
+      box.hidden = k > 0;
+      box.appendChild(el("p", "hint", `Concepto ${k + 1} de ${deck.length}`));
+      box.appendChild(el("p", null, `<b>${def}</b>`));
+      const opts = el("div", "opts");
+      const fb = el("p", "why"); fb.hidden = true;
+      shuffle([good, ...bad]).forEach((o) => {
+        const c = el("button", "chip", o); c.type = "button";
+        c.addEventListener("click", () => {
+          if (box.dataset.done) return;
+          box.dataset.done = "1"; cDone++;
+          const right = o === good;
+          if (right) cOk++;
+          c.classList.add(right ? "ok" : "ko");
+          opts.querySelectorAll(".chip").forEach((x) => { if (x.textContent === good) x.classList.add("ok"); });
+          fb.innerHTML = (right ? '<span class="okt">¡Eso es!</span> ' : `<span class="kot">Era «${good}».</span> `) + why;
+          fb.hidden = false; cScore();
+          const next = el("button", "b small", k < deck.length - 1 ? "Siguiente →" : "Ver mi resultado"); next.type = "button";
+          next.addEventListener("click", () => {
+            box.hidden = true;
+            if (box.nextElementSibling) box.nextElementSibling.hidden = false;
+            else { const end = el("p", null, `<b>Has acertado ${cOk} de ${cDone}.</b> ` + (cOk === cDone ? "¡Impecable!" : "Vuelve a empezar dentro de un rato: las que fallaste saldrán mezcladas con las demás.")); clist.appendChild(end); }
+          });
+          box.appendChild(next);
+        });
+        opts.appendChild(c);
+      });
+      box.append(opts, fb);
+      clist.appendChild(box);
+    });
+  }
+  renderConcepts();
+  $("#creset").addEventListener("click", renderConcepts);
+
+  // ---------- 3. ¿Qué fue antes?
+  const ROUNDS = [
+    { name: "Primera ronda: de Roma a Carlomagno", items: [
+      [395, "El Imperio romano se divide en Oriente y Occidente"], [476, "Odoacro depone a Rómulo Augústulo"],
+      [507, "Los francos vencen a los visigodos en Vouillé"], [587, "Recaredo se hace católico"],
+      [622, "La Hégira: Mahoma huye a Medina"], [711, "Batalla de Guadalete"], [722, "Batalla de Covadonga"],
+      [732, "Batalla de Poitiers"], [756, "Abd al-Rahman I, emir independiente"], [800, "Carlomagno, coronado emperador"]] },
+    { name: "Segunda ronda: después de Carlomagno", items: [
+      [843, "Tratado de Verdún"], [929, "Abd al-Rahman III se proclama califa"], [1031, "Fin del califato: reinos de taifas"],
+      [1054, "Cisma de Oriente"], [1086, "Llegan los almorávides"], [1212, "Batalla de las Navas de Tolosa"],
+      [1238, "Nace el reino nazarí de Granada"], [1453, "Los turcos toman Constantinopla"], [1492, "Los Reyes Católicos conquistan Granada"]] },
+  ];
+  const olist = $("#olist");
+  ROUNDS.forEach((r) => {
+    const wrap = el("div", "soft"); wrap.style.marginBottom = "14px";
+    wrap.appendChild(el("h3", null, r.name));
+    const ul = el("ol", "order");
+    let order = shuffle(r.items);
+    let dragged = null;
+    const draw = (reveal) => {
+      ul.textContent = "";
+      order.forEach((it, i) => {
+        const li = el("li"); li.draggable = !reveal;
+        li.append(el("span", "n", String(i + 1)), el("span", "t", it[1]));
+        if (reveal) {
+          const sorted = r.items.slice().sort((a, b) => a[0] - b[0]);
+          li.classList.add(sorted[i] === it ? "ok" : "ko");
+          li.appendChild(el("span", "y", String(it[0])));
+        } else {
+          const up = el("button", null, "↑"); up.type = "button"; up.setAttribute("aria-label", "Subir");
+          const dn = el("button", null, "↓"); dn.type = "button"; dn.setAttribute("aria-label", "Bajar");
+          up.addEventListener("click", () => { if (i > 0) { [order[i - 1], order[i]] = [order[i], order[i - 1]]; draw(); } });
+          dn.addEventListener("click", () => { if (i < order.length - 1) { [order[i + 1], order[i]] = [order[i], order[i + 1]]; draw(); } });
+          li.append(up, dn);
+          li.addEventListener("dragstart", () => { dragged = i; li.classList.add("drag"); });
+          li.addEventListener("dragend", () => li.classList.remove("drag"));
+          li.addEventListener("dragover", (e) => e.preventDefault());
+          li.addEventListener("drop", (e) => { e.preventDefault(); if (dragged === null || dragged === i) return; const [m] = order.splice(dragged, 1); order.splice(i, 0, m); dragged = null; draw(); });
+        }
+        ul.appendChild(li);
+      });
+    };
+    draw();
+    const fb = el("p");
+    const row = el("div", "row noprint");
+    const check = el("button", "b", "Comprobar"); check.type = "button";
+    const again = el("button", "b ghost", "Otra vez"); again.type = "button";
+    check.addEventListener("click", () => {
+      const sorted = r.items.slice().sort((a, b) => a[0] - b[0]);
+      const good = order.filter((it, i) => sorted[i] === it).length;
+      draw(true);
+      fb.innerHTML = good === order.length ? '<span class="okt">¡Perfecto! Todo en su sitio.</span>'
+        : `<b>${good} de ${order.length}</b> en su sitio. Mira los años de los que están en rojo y vuelve a intentarlo dentro de un rato.`;
+    });
+    again.addEventListener("click", () => { order = shuffle(r.items); fb.textContent = ""; draw(); });
+    row.append(check, again);
+    wrap.append(ul, row, fb);
+    olist.appendChild(wrap);
+  });
+
+  // ---------- 4. ¿Por qué pasó?
+  const CA = [
+    { q: "¿Por qué fue tan rápida la conquista musulmana de la Hispania visigoda (711-722)?", o: [
+      ["El reino visigodo estaba en crisis económica y los nobles estaban enfrentados entre sí.", true],
+      ["En Guadalete el rey Rodrigo fue derrotado y el ejército visigodo quedó deshecho.", true],
+      ["Los musulmanes pactaban con la población que se sometía y respetaban su religión a cambio de impuestos.", true],
+      ["Carlomagno ayudó a los musulmanes a cruzar los Pirineos.", false],
+      ["La Península estaba vacía porque los visigodos se habían ido a Italia.", false]] },
+    { q: "¿Qué factores facilitaron la expansión del islam?", o: [
+      ["Los imperios vecinos, el bizantino y el persa, estaban debilitados.", true],
+      ["Arabia se había unificado bajo una misma religión y un mismo jefe, el califa.", true],
+      ["Querían difundir su fe.", true],
+      ["Hacían pactos con las poblaciones que conquistaban.", true],
+      ["Tenían armas de fuego que nadie más conocía.", false]] },
+    { q: "¿Por qué se debilitó el Califato de Córdoba?", o: [
+      ["El ejército costaba muchísimo dinero.", true],
+      ["Nobles y militares luchaban entre ellos por escapar del control del califa.", true],
+      ["Carlomagno conquistó Córdoba.", false],
+      ["Una gran epidemia de peste.", false]] },
+    { q: "¿Por qué pudieron avanzar los reinos cristianos y acabar con el reino nazarí?", o: [
+      ["Al-Ándalus se dividió en reinos de taifas, débiles y rivales.", true],
+      ["Los almohades fueron derrotados en las Navas de Tolosa (1212).", true],
+      ["Castilla y Aragón se unieron con los Reyes Católicos.", true],
+      ["Los nazaríes se convirtieron al cristianismo.", false]] },
+    { q: "¿Por qué mucha gente dejó las ciudades y se fue al campo tras las invasiones germánicas?", o: [
+      ["Las razias y los saqueos creaban inseguridad.", true],
+      ["El comercio decayó y en las ciudades faltaba comida.", true],
+      ["En el campo, los grandes propietarios ofrecían protección y trabajo.", true],
+      ["En el campo había más escuelas.", false]] },
+  ];
+  const causelist = $("#causelist");
+  CA.forEach((c) => {
+    const box = el("div", "cause");
+    box.appendChild(el("h3", null, c.q));
+    const inputs = [];
+    shuffle(c.o).forEach(([txt, ok]) => {
+      const lab = el("label"); const inp = el("input"); inp.type = "checkbox";
+      inputs.push([inp, ok, lab]);
+      lab.append(inp, el("span", null, txt));
+      box.appendChild(lab);
+    });
+    const fb = el("p");
+    const b = el("button", "b small", "Comprobar"); b.type = "button";
+    b.addEventListener("click", () => {
+      let good = 0;
+      inputs.forEach(([inp, ok, lab]) => {
+        lab.classList.remove("ok", "ko");
+        if (inp.checked === ok) good++;
+        if (ok) lab.classList.add("ok"); else if (inp.checked) lab.classList.add("ko");
+      });
+      fb.innerHTML = good === inputs.length ? '<span class="okt">¡Todas bien! Así se explica un hecho: con varias causas.</span>'
+        : '<span class="kot">Casi.</span> En verde, las causas ciertas; en rojo, las trampas que marcaste.';
+    });
+    const row = el("div", "row noprint"); row.appendChild(b);
+    box.append(row, fb);
+    causelist.appendChild(box);
+  });
+
+  // ---------- 5. Cuadros
+  const TABLES = [
+    { title: "Los dos imperios cristianos (actividad 30 de tu libro)", cols: ["Localización", "Capital", "Religión", "Inicio y fin"], rows: [
+      ["Oriente (bizantino)", ["Mediterráneo oriental: Grecia, Anatolia, Egipto…", "Constantinopla", "Cristiana; desde 1054, ortodoxa", "Del 395 (o 476) al 1453"]],
+      ["Occidente (carolingio)", ["Europa occidental: Francia, Alemania, norte de Italia…", "Aquisgrán", "Cristiana, unida al papa de Roma", "Del 800 al 843 (Verdún)"]]] },
+    { title: "La expansión islámica (actividad 40 de tu libro)", cols: ["Cronología", "Territorios"], rows: [
+      ["A la muerte de Mahoma", ["632", "La península arábiga"]],
+      ["Primeros califas", ["632-661", "Siria, Palestina, Egipto y Persia"]],
+      ["Omeyas", ["661-750", "Norte de África, Península Ibérica y hasta el río Indo"]],
+      ["Abasíes", ["750-1258", "Capital en Bagdad; esplendor cultural, sin al-Ándalus"]]] },
+    { title: "Las etapas de al-Ándalus", cols: ["Años", "Quién o qué la marca"], rows: [
+      ["Emirato dependiente", ["711-756", "Depende del califa de Damasco"]],
+      ["Emirato independiente", ["756-929", "Abd al-Rahman I"]],
+      ["Califato de Córdoba", ["929-1031", "Abd al-Rahman III; esplendor; Almanzor"]],
+      ["Reinos de taifas", ["1031-1238", "Más de 25 reinos; almorávides y almohades"]],
+      ["Reino nazarí de Granada", ["1238-1492", "Último reino; lo conquistan los Reyes Católicos"]]] },
+  ];
+  const tables = $("#tables");
+  TABLES.forEach((t) => {
+    const wrap = el("div", "tablewrap");
+    wrap.appendChild(el("h3", null, t.title));
+    const tb = el("table", "grid");
+    tb.innerHTML = "<thead><tr><th></th>" + t.cols.map((c) => `<th>${c}</th>`).join("") + "</tr></thead>";
+    const body = el("tbody");
+    const sels = [];
+    t.rows.forEach(([name, vals]) => {
+      const tr = el("tr"); tr.appendChild(el("td", null, name));
+      vals.forEach((v, ci) => {
+        const td = el("td"); const s = el("select");
+        const opts = shuffle(t.rows.map((r) => r[1][ci]));
+        s.innerHTML = '<option value="">Elige…</option>' + opts.map((o) => `<option>${o}</option>`).join("");
+        sels.push([s, v, td]); td.appendChild(s); tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    tb.appendChild(body);
+    const fb = el("p");
+    const b = el("button", "b small", "Comprobar"); b.type = "button";
+    b.addEventListener("click", () => {
+      let good = 0;
+      sels.forEach(([s, v, td]) => { const ok = s.value === v; if (ok) good++; s.classList.toggle("ok", ok); s.classList.toggle("ko", !ok); });
+      fb.innerHTML = good === sels.length ? '<span class="okt">¡Cuadro perfecto!</span>' : `<b>${good} de ${sels.length}</b> casillas bien. Corrige las rojas.`;
+    });
+    const row = el("div", "row noprint"); row.style.marginTop = "8px"; row.appendChild(b);
+    wrap.append(tb, row, fb);
+    tables.appendChild(wrap);
+  });
+
+  // ---------- 6. Copiar para Beakman
+  $("#copy").addEventListener("click", async () => {
+    const txt = $("#prompt").textContent;
+    try { await navigator.clipboard.writeText(txt); $("#copied").textContent = "¡Copiado! Pégalo en Claude."; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($("#prompt")); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      $("#copied").textContent = "Está seleccionado: pulsa Ctrl+C."; }
+  });
+})();
+</script>
+</body>
+</html>

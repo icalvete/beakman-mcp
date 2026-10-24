@@ -12,6 +12,7 @@ CITIES = [
     ("estambul", "Estambul", 28.97, 41.01, 1453, 1493, "Capital otomana"),
     ("ravena", "Rávena", 12.2, 44.42, 476, 1493, ""),
     ("toledo", "Toledo", -4.02, 39.86, 476, 1493, ""),
+    ("madrid", "Madrid", -3.71, 40.42, 865, 1493, "Mayrit, fortaleza de Córdoba"),
     ("cordoba", "Córdoba", -4.78, 37.88, 476, 1493, ""),
     ("sevilla", "Sevilla", -5.99, 37.39, 476, 1493, ""),
     ("granada", "Granada", -3.6, 37.18, 476, 1493, ""),
@@ -87,6 +88,9 @@ EVENTS = [
     ("e722", "batalla", "Covadonga", -5.05, 43.31, 722, None, 10,
      "Según la tradición, Pelayo vence a los musulmanes en las montañas de Asturias. Nace un pequeño reino "
      "cristiano en el norte: mira el hilo de color pegado al Cantábrico.", {}),
+    ("e732", "batalla", "Batalla de Poitiers", 0.34, 46.58, 732, None, 8,
+     "Carlos Martel, jefe de los francos, frena cerca de Poitiers a un ejército musulmán que venía de Al-Ándalus. "
+     "Los musulmanes ya no avanzarán al norte de los Pirineos.", {}),
     ("e750", "hecho", "Los abasíes toman el poder", 44.36, 33.31, 750, None, 6,
      "Una nueva dinastía, la abasí, sustituye a los omeyas. En el 762 fundarán Bagdad, que será un gran "
      "centro de sabiduría.", {}),
@@ -108,6 +112,15 @@ EVENTS = [
     ("e830", "cultura", "El Camino de Santiago", -8.54, 42.88, 830, None, 10,
      "Se encuentra en Galicia el que se cree sepulcro del apóstol Santiago. Empieza una ruta de "
      "peregrinos que unirá la Península con el resto de Europa.", {"aprox": True, "fuera": "fecha"}),
+    ("e843", "hecho", "Tratado de Verdún", 5.38, 49.16, 843, None, 8,
+     "Los nietos de Carlomagno, Lotario, Luis y Carlos, se reparten el imperio. El gran imperio cristiano "
+     "ha durado muy poco: cada trozo irá por su lado.", {}),
+    ("e865", "hecho", "Nace Mayrit", -3.71, 40.42, 865, None, 7,
+     "El emir Muhammad I manda levantar una fortaleza junto al río Manzanares para vigilar el camino de Toledo "
+     "frente a los cristianos del norte. Se llama Mayrit: es el origen de Madrid.", {"aprox": True}),
+    ("e950", "cultura", "Norias, acequias y cultivos nuevos", -0.37, 39.47, 950, None, 7,
+     "En Al-Ándalus se extiende el regadío: norias que suben el agua, acequias que la reparten y cultivos nuevos "
+     "como el arroz, la berenjena, la naranja amarga o el azafrán. Por eso Al-Ándalus es tan rico.", {"aprox": True}),
     ("e910", "cultura", "Monasterio de Cluny", 4.66, 46.43, 910, None, 8,
      "Se funda Cluny, un monasterio que dirigirá cientos de monasterios por Europa. Sus monjes copian "
      "libros antiguos en el scriptorium.", {"fuera": "año 910"}),
@@ -251,6 +264,7 @@ ERAS = [(476, 1000, "Alta Edad Media"), (1000, 1300, "Plena Edad Media"), (1300,
 
 # Imágenes de cada acontecimiento (claves de images.json): personaje, monumento o lugar que menciona.
 EVENT_IMAGES = {
+    "e732": ["poitiers"], "e843": ["lotario"], "e865": ["mayrit"], "e950": ["noria"],
     "e476": ["romulo"], "e507": ["clodoveo"], "e527": ["justiniano"], "e537": ["santasofia"], "e547": ["sanvital"],
     "e554": ["spania"], "e570": ["kaaba"], "e585": ["leovigildo"], "e589": ["recaredo"], "e622": ["mezquitaprofeta"],
     "e632": ["mezquitaprofeta"], "e661": ["omeyasdamasco"], "e711": ["guadalete", "rodrigo"], "e722": ["pelayo"],
@@ -267,4 +281,4 @@ EVENT_IMAGES = {
     "e1450": ["gutenberg"], "e1453": ["caidaconstantinopla", "mehmed2"], "e1469": ["reyescatolicos"],
     "e1478": ["inquisicion"], "e1492": ["tomagranada"], "e1492b": ["colon"],
 }
-CITY_IMAGES = {"estambul": "santasofia"}   # el resto: "c_" + id
+CITY_IMAGES = {"estambul": "santasofia", "madrid": "mayrit"}   # el resto: "c_" + id

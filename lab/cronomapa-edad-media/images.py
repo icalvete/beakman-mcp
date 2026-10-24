@@ -94,6 +94,10 @@ WANT = {
     "c_kairuan": ("Cairuán", "Cairuán"), "c_aquisgran": ("Aquisgrán", "Aquisgrán"), "c_paris": ("París", "París"),
     "c_venecia": ("Venecia", "Venecia"), "c_genova": ("Génova", "Génova"), "c_florencia": ("Florencia", "Florencia"),
     "c_londres": ("Londres", "Londres"), "c_tolosa": ("Toulouse", "Tolosa"),
+    # añadidos para el libro de Madrid (Tema 1 de Vicens Vives)
+    "poitiers": ("Batalla de Poitiers (732)", "Carlos Martel en la batalla de Poitiers"),
+    "lotario": ("Lotario I", "Lotario I, nieto de Carlomagno"),
+    "mayrit": ("Muralla árabe de Madrid", "Restos de la muralla árabe de Madrid"),
 }
 
 
@@ -114,6 +118,7 @@ def strip(s):
 
 
 SEARCH = {
+    "noria": ("Noria de la Ñora Murcia", "Una gran noria para regar, en Alcantarilla (Murcia)"),
     # clave: (búsqueda en Commons, texto alternativo)
     "clodoveo": ("Master of Saint Giles Baptism of Clovis", "El bautismo de Clodoveo"),
     "abderraman3": ("Baixeras Abderraman III embajada", "Abderramán III recibe a un embajador"),
