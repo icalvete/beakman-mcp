@@ -16,6 +16,8 @@ HEAD = """<!doctype html>
 <meta name="description" content="Mapa de la Edad Media con una barra de años: qué reinos, ciudades y acontecimientos
 coincidieron en el tiempo. Historia de 2º de la ESO, con Beakman.">
 <link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
 {boot}</head>
 <body>
 """

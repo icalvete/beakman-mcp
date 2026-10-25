@@ -51,6 +51,8 @@ def page(t, lang, title, desc, up, path, body, langs):
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{BASE}/{lang}/{path}">
 {alts}<link rel="icon" href="{up}media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{up}media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="{up}media/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
