@@ -3,6 +3,7 @@
 # Cada recurso lleva, por idioma: título, temas, descripción, objetivo (para qué sirve) y método (cómo lo hace).
 # Un recurso nuevo: su carpeta en lab/<id>/ (código) y su página en site/<idioma>/<asignatura>/<curso>/<id>/,
 # más una entrada aquí. Los textos van por idioma; un recurso sin un idioma no sale en ese idioma.
+# tipo (opcional): resumen. Lleva su pastilla y sale el primero de su curso, porque es lo primero que se lee de un tema.
 
 idiomas: [es]          # idiomas publicados; el primero es el de por defecto
 
@@ -32,6 +33,24 @@ asignaturas:
     en: {slug: language, nombre: Language and Literature, lema: "Understand what you read, say what you think."}
 
 recursos:
+  - id: resumen-tema-1
+    asignatura: historia
+    curso: 2eso
+    tipo: resumen
+    imagen: resumen-tema-1.jpg
+    es:
+      titulo: El Tema 1 contado como una historia
+      temas: Tema 1 · La huella andalusí
+      descripcion: >-
+        El tema entero en una lectura: del fin de Roma al reino nazarí de Granada, apartado por apartado, contado
+        como una cadena de qué provocó qué.
+      objetivo: >-
+        Entender las causas antes de memorizar: cómo se relacionan la economía, la política, la religión y la cultura,
+        y por qué pasó cada cosa.
+      metodo: >-
+        Cada apartado termina con la idea que hay que guardar y enlaza al recurso del lab para practicarlo. Al final,
+        las cinco relaciones que responden casi cualquier «¿por qué…?» del examen.
+
   - id: ponte-a-prueba-tema-1
     asignatura: historia
     curso: 2eso

@@ -17,6 +17,9 @@ recurso_n: "{n} recursos"
 proximamente: Próximamente
 sin_recursos: "Todavía no hay recursos de {curso}. Están en el horno."
 solo_pc: Para ordenador
+tipos: {resumen: Resumen}
+resumenes: "Empieza por aquí: los resúmenes"
+resumenes_lead: Cada tema en una lectura, contado como una cadena de qué provocó qué. Léelo antes de ponerte con los recursos.
 objetivo: Para qué sirve
 metodo: Cómo lo hace
 abrir: Abrir

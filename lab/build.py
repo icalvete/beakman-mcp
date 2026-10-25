@@ -76,10 +76,11 @@ def resource_card(t, r, s, lang, up, prefix):
     """`s` es la asignatura del recurso: su nombre y su color van en la etiqueta."""
     tx = r[lang]
     pc = f'<span class="pc">{LAPTOP}{e(t["solo_pc"])}</span>' if r.get("solo_pc") else ""
+    kind = f'<span class="kind">{e(t["tipos"][r["tipo"]])}</span>' if r.get("tipo") else ""
     return f"""  <a class="resource" href="{prefix}{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
     <img src="{up}media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span><span class="tag">{e(tx["temas"])}</span>{pc}</div>
+      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span>{kind}<span class="tag">{e(tx["temas"])}</span>{pc}</div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
       <dl class="why">
@@ -91,13 +92,28 @@ def resource_card(t, r, s, lang, up, prefix):
 """
 
 
+def summary_card(t, r, s, lang):
+    """Tarjeta corta de un resumen, para la cabecera de la página de su asignatura."""
+    tx = r[lang]
+    return f"""  <a class="summary" href="{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
+    <img src="../../media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
+    <div class="body">
+      <div class="meta"><span class="kind">{e(t["tipos"][r["tipo"]])}</span><span class="tag">{e(t["cursos"][r["curso"]])} · {e(tx["temas"])}</span></div>
+      <h3>{e(tx["titulo"])}</h3>
+      <p>{e(tx["descripcion"])}</p>
+    </div>
+  </a>
+"""
+
+
 def build():
     cat = load("catalog.yml")
     langs = cat["idiomas"]
     subjects = {s["id"]: s for s in cat["asignaturas"]}
     for lang in langs:
         t = T[lang]
-        res = [r for r in cat["recursos"] if lang in r]
+        # Los resúmenes, primero; los demás, en el orden del catálogo.
+        res = sorted((r for r in cat["recursos"] if lang in r), key=lambda r: r.get("tipo") != "resumen")
         # Portada del idioma: asignaturas y todos los recursos.
         cards = []
         for s in cat["asignaturas"]:
@@ -133,9 +149,14 @@ def build():
             st, mine = s[lang], [r for r in res if r["asignatura"] == s["id"]]
             if not mine:
                 continue
+            # Los resúmenes van arriba, en su propia sección; debajo, el resto por cursos.
+            summaries = [r for r in mine if r.get("tipo") == "resumen"]
             parts = []
+            if summaries:
+                parts.append(f'<section class="summaries"><h2>{e(t["resumenes"])}</h2><p class="hint">{e(t["resumenes_lead"])}</p>\n'
+                             f'<div class="summary-list">\n{"".join(summary_card(t, r, s, lang) for r in summaries)}</div></section>')
             for c in cat["cursos"]:
-                rc = [r for r in mine if r["curso"] == c]
+                rc = [r for r in mine if r["curso"] == c and r.get("tipo") != "resumen"]
                 inner = (f'<div class="resources">\n{"".join(resource_card(t, r, s, lang, "../../", "") for r in rc)}</div>' if rc
                          else f'<p class="empty">{e(t["sin_recursos"].format(curso=t["cursos"][c]))}</p>')
                 parts.append(f'<section><h2>{e(t["cursos"][c])}</h2>\n{inner}</section>')
