@@ -11,7 +11,7 @@ COPY mcp/beakman_mcp ./beakman_mcp
 COPY docs ./site
 COPY lab/site ./lab
 
-RUN useradd --system --uid 10001 beakman
+RUN useradd --system --uid 10001 beakman && mkdir /data && chown beakman /data
 USER beakman
 EXPOSE 8000
 HEALTHCHECK --interval=60s --timeout=5s --start-period=20s \

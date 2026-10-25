@@ -204,3 +204,144 @@ if os.path.isdir(LAB_DIR):
 SITE_DIR = os.environ.get("BEAKMAN_SITE_DIR", "/app/site")
 if os.path.isdir(SITE_DIR):
     app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
+
+
+# ---- la entrada con OAuth, en prueba ------------------------------------------
+# Un segundo servidor MCP, con entrada (ver entrada.py), en su propio nombre: BEAKMAN_PRUEBA_URL, p. ej.
+# https://prueba.beakman.kademy.net. Las rutas de OAuth van en la raíz del nombre, así que no se mezclan con las del
+# conector de siempre, que no cambia. Sin BEAKMAN_PRUEBA_URL no se monta nada.
+PRUEBA_URL = os.environ.get("BEAKMAN_PRUEBA_URL", "").rstrip("/")
+prueba_app = None
+if PRUEBA_URL:
+    from contextlib import asynccontextmanager
+    from datetime import datetime, timezone
+    from urllib.parse import urlparse
+
+    from mcp.server.auth.middleware.auth_context import get_access_token
+    from mcp.server.auth.settings import AuthSettings, ClientRegistrationOptions, RevocationOptions
+
+    from .entrada import CURSOS, Entrada, _comunidad_valida, _curso_valido, curso_escolar
+
+    entrada = Entrada(PRUEBA_URL, os.environ.get("BEAKMAN_DB", "/data/beakman.sqlite"))
+    prueba = MCPServer(
+        name="beakman",
+        title="Mi mundo de Beakman",
+        description="Tutores de Historia, Matemáticas, Ciencias y Lengua para 1º y 2º de la ESO.",
+        instructions=INSTRUCTIONS + """
+4. Este conector sabe quién es el estudiante: `empezar_clase` trae su nombre, su curso y su comunidad, así que no
+   los preguntes. Si dice que ha cambiado de curso, de comunidad o de nombre, usa `cambiar_datos` y confírmalo con
+   lo que devuelva. Si pregunta qué sabes de él, usa `que_sabes_de_mi`. Si pide que le olvides, usa `olvidame`.
+""",
+        website_url="https://icalvete.github.io/beakman-mcp/",
+        auth_server_provider=entrada,
+        auth=AuthSettings(
+            issuer_url=PRUEBA_URL,
+            resource_server_url=f"{PRUEBA_URL}/mcp",
+            validate_token_resource=False,
+            client_registration_options=ClientRegistrationOptions(enabled=True),
+            revocation_options=RevocationOptions(enabled=True),
+        ),
+    )
+
+    def _persona() -> tuple[str, dict]:
+        token = get_access_token()
+        pid = token.subject if token else None
+        ficha = entrada.db.ficha(pid) if pid else None
+        if not ficha:
+            raise ValueError("No encuentro tus datos: desconecta y vuelve a conectar el conector de Beakman.")
+        return pid, ficha
+
+    def _describe(f: dict) -> str:
+        return (f"Se llama {f['nombre']}. Curso: {CURSOS.get(f['curso'], f['curso'])} (curso escolar "
+                f"{f['curso_escolar']}). Comunidad autónoma: {f['comunidad']}. Los avisos van a {f['correo']}.")
+
+    @prueba.tool(name="empezar_clase", title="Empezar una clase con Beakman")
+    def empezar_clase_con_datos(asignatura: str, curso: str | None = None) -> str:
+        """Carga las instrucciones de Beakman para una asignatura, la lista de temas y los datos del estudiante.
+
+        Llámala antes de explicar nada. asignatura: Historia, Matemáticas, Ciencias o Lengua.
+        curso: déjalo vacío para usar el guardado del estudiante.
+        """
+        _pid, f = _persona()
+        if not curso and f["curso"] not in COURSES:
+            return (f"DATOS DEL ESTUDIANTE: {_describe(f)}\nBeakman todavía no tiene temario de "
+                    f"{CURSOS.get(f['curso'], f['curso'])}. Díselo con cariño y ofrécele repasar 1º o 2º; si acepta, "
+                    "vuelve a llamar a esta herramienta con ese curso.")
+        texto = empezar_clase(asignatura, curso or CURSOS[f["curso"]])
+        aviso = ""
+        if f["curso_escolar"] != curso_escolar():
+            aviso = ("\nEs un curso escolar nuevo: antes de empezar, pregúntale si ha cambiado de curso y, si es así, "
+                     "usa `cambiar_datos`.")
+        return f"DATOS DEL ESTUDIANTE: {_describe(f)}{aviso}\nSalúdale por su nombre.\n\n{texto}"
+
+    prueba.add_tool(mapa_del_curso, title="Mapa del curso")
+    prueba.add_tool(leer_tema, title="Leer un tema")
+    prueba.add_tool(buscar_en_temario, title="Buscar en el temario")
+
+    @prueba.tool(title="¿Qué sabes de mí?")
+    def que_sabes_de_mi() -> str:
+        """Todo lo que Beakman guarda del estudiante. Úsala si pregunta qué sabes de él o para comprobar sus datos."""
+        _pid, f = _persona()
+        return (f"{_describe(f)} Aceptó guardarlos el {f['consentimiento_fecha'][:10]}. No se guarda nada más: ni "
+                "apellidos, ni edad, ni colegio, ni lo que escribe en Claude. Para borrarlo todo, que diga «olvídame».")
+
+    @prueba.tool(title="Cambiar mis datos")
+    def cambiar_datos(curso: str | None = None, comunidad: str | None = None, nombre: str | None = None) -> str:
+        """Cambia el curso (1º a 4º ESO), la comunidad autónoma o el nombre para el saludo del estudiante.
+
+        Úsala cuando diga que ha cambiado de curso, de comunidad o que le llames de otra forma. Pasa solo lo que cambia.
+        Confirma después con el resultado que devuelve.
+        """
+        pid, _f = _persona()
+        hoy = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        if curso:
+            entrada.db.q("UPDATE progreso SET curso = ?, curso_escolar = ?, actualizado = ? WHERE persona_id = ?",
+                         _curso_valido(curso), curso_escolar(), hoy, pid)
+        if comunidad:
+            entrada.db.q("UPDATE progreso SET comunidad = ?, actualizado = ? WHERE persona_id = ?",
+                         _comunidad_valida(comunidad), hoy, pid)
+        if nombre and nombre.strip():
+            entrada.db.q("UPDATE contactos SET nombre = ? WHERE persona_id = ?", " ".join(nombre.split())[:40], pid)
+        if not (curso or comunidad or nombre):
+            # sin cambios, pero confirma el curso escolar (la pregunta de septiembre)
+            entrada.db.q("UPDATE progreso SET curso_escolar = ?, actualizado = ? WHERE persona_id = ?",
+                         curso_escolar(), hoy, pid)
+        f = entrada.db.ficha(pid)
+        nota = "" if f["curso"] in COURSES else " Beakman todavía no tiene temario de ese curso: avísale con cariño."
+        return "Apuntado. " + _describe(f) + nota
+
+    @prueba.tool(title="Olvídame")
+    def olvidame(confirmado: bool = False) -> str:
+        """Borra todo lo que Beakman guarda del estudiante y desconecta el conector.
+
+        Antes de llamarla con confirmado=true, pregunta si está seguro: no se puede deshacer.
+        """
+        pid, _f = _persona()
+        if not confirmado:
+            return "Pregúntale si está seguro: se borrará todo y no se puede deshacer. Si dice que sí, llama con confirmado=true."
+        entrada.db.olvidar(pid)
+        return ("Hecho: he borrado su nombre, su correo, su curso y su comunidad, y he desconectado el conector. "
+                "Si quiere volver, que lo conecte otra vez.")
+
+    PRUEBA_HOST = urlparse(PRUEBA_URL).netloc
+    prueba.custom_route("/entrada", methods=["GET"])(entrada.pagina)
+    prueba.custom_route("/entrada", methods=["POST"])(entrada.enviar)
+    prueba.custom_route("/entrada/estado", methods=["GET"])(entrada.estado)
+    prueba.custom_route("/entrada/confirmar", methods=["GET"])(entrada.confirmar)
+    prueba_app = prueba.streamable_http_app(
+        stateless_http=True,
+        json_response=True,
+        host="0.0.0.0",
+        transport_security=TransportSecuritySettings(allowed_hosts=[PRUEBA_HOST]),
+    )
+    app.router.routes.insert(0, Host(PRUEBA_HOST.split(":")[0], app=prueba_app, name="prueba"))
+
+    # Starlette no arranca el lifespan de una app montada: el de la prueba se arranca con el principal.
+    _main_lifespan, _prueba_lifespan = app.router.lifespan_context, prueba_app.router.lifespan_context
+
+    @asynccontextmanager
+    async def _both(a):
+        async with _main_lifespan(a), _prueba_lifespan(prueba_app):
+            yield
+
+    app.router.lifespan_context = _both
