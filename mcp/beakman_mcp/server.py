@@ -369,8 +369,11 @@ if ENTRADA_URL:
     servidor.custom_route("/entrada/confirmar", methods=["GET"])(entrada.confirmar)
     servidor.custom_route("/entrada/presentarse", methods=["GET"])(entrada.presentarse)
     servidor.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
-    servidor.custom_route("/entrada/borrar", methods=["POST"])(entrada.borrar)
-    servidor.custom_route("/admin/correo", methods=["POST"], include_in_schema=False)(entrada.admin_correo)
+    # «Mis datos»: entrar con un enlace mágico para ver, cambiar o borrar lo guardado.
+    servidor.custom_route("/cuenta", methods=["GET"])(entrada.cuenta)
+    servidor.custom_route("/cuenta", methods=["POST"])(entrada.pedir_enlace)
+    servidor.custom_route("/cuenta/entrar", methods=["GET"])(entrada.entrar)
+    servidor.custom_route("/cuenta/cambiar", methods=["POST"])(entrada.cambiar)
     entrada_app = servidor.streamable_http_app(
         stateless_http=True,
         json_response=True,

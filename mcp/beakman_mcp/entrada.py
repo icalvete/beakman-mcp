@@ -79,6 +79,15 @@ def _hash(token: str) -> str:
     return hashlib.sha256(token.encode()).hexdigest()
 
 
+def _buzon(correo: str) -> str:
+    """El buzón real, para los límites: sin +sufijo, y en Gmail sin puntos («a.b+x@gmail.com» = «ab@gmail.com»)."""
+    local, _, dominio = correo.partition("@")
+    local = local.split("+", 1)[0]
+    if dominio in ("gmail.com", "googlemail.com"):
+        local, dominio = local.replace(".", ""), "gmail.com"
+    return f"{local}@{dominio}"
+
+
 def _normaliza_correo(correo: str) -> str:
     return correo.strip().lower()
 
@@ -119,6 +128,10 @@ CREATE TABLE IF NOT EXISTS solicitudes (
   creada REAL NOT NULL, datos TEXT, confirmacion TEXT, redirect TEXT);
 -- enlaces de «preséntate» que da Beakman desde el chat, de un solo uso
 CREATE TABLE IF NOT EXISTS enlaces (hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, caduca REAL NOT NULL);
+-- «Mis datos»: enlaces mágicos (un solo uso, 15 min) y sesiones (1 hora), siempre como hash
+CREATE TABLE IF NOT EXISTS accesos (hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, caduca REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS sesiones (
+  hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, csrf TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS codigos (code TEXT PRIMARY KEY, datos TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS tokens (
   hash TEXT PRIMARY KEY, tipo TEXT NOT NULL, client_id TEXT NOT NULL, persona_id TEXT NOT NULL,
@@ -155,6 +168,8 @@ class Almacen:
         self.q("DELETE FROM codigos WHERE caduca < ?", now)
         self.q("DELETE FROM tokens WHERE caduca < ?", int(now))
         self.q("DELETE FROM enlaces WHERE caduca < ?", now)
+        self.q("DELETE FROM accesos WHERE caduca < ?", now)
+        self.q("DELETE FROM sesiones WHERE caduca < ?", now)
         # Entradas sin datos que ya no usa nadie (se desconectó el conector y caducaron sus tokens).
         self.q("DELETE FROM personas WHERE id NOT IN (SELECT persona_id FROM contactos) "
                "AND id NOT IN (SELECT persona_id FROM tokens) "
@@ -216,6 +231,8 @@ class Almacen:
 
     def olvidar(self, pid: str):
         self.q("DELETE FROM tokens WHERE persona_id = ?", pid)
+        self.q("DELETE FROM sesiones WHERE persona_id = ?", pid)
+        self.q("DELETE FROM accesos WHERE persona_id = ?", pid)
         self.q("DELETE FROM personas WHERE id = ?", pid)  # contactos y progreso caen en cascada
 
 
@@ -265,8 +282,6 @@ class Entrada:
         self.permitidos = {_normaliza_correo(c) for c in os.environ.get("BEAKMAN_ENTRADA_CORREOS", "").split(",")
                            if c.strip()}
         self.smtp = {k: os.environ.get(f"BEAKMAN_SMTP_{k.upper()}", "") for k in ("host", "port", "user", "password")}
-        # Clave del administrador (/admin/...). Vacía = no hay administración.
-        self.admin_token = os.environ.get("BEAKMAN_ADMIN_TOKEN", "")
 
     # clientes (registro dinámico: Claude se da de alta solo)
     async def get_client(self, client_id: str) -> OAuthClientInformationFull | None:
@@ -414,7 +429,7 @@ class Entrada:
             errores.append("Ahora mismo la entrada solo admite unos correos concretos.")
         if not errores and not self.limites.permite(f"ip:{ip}", 10, 3600):
             errores.append("Demasiados intentos. Espera un rato y vuelve a probar.")
-        if not errores and not sin_datos and not self.limites.permite(f"correo:{datos['correo']}", 3, 3600):
+        if not errores and not sin_datos and not self.limites.permite(f"correo:{_buzon(datos['correo'])}", 3, 3600):
             errores.append("Demasiados intentos con ese correo. Espera un rato y vuelve a probar.")
         if errores:
             return _html("Antes de empezar, preséntate",
@@ -431,7 +446,7 @@ class Entrada:
         if sol:
             self.db.q("UPDATE solicitudes SET datos = ?, confirmacion = ? WHERE id = ?",
                       json.dumps(datos), _hash(confirmacion), sid)
-            self._correo(datos["correo"], datos["nombre"], "Confirma tu entrada al laboratorio de Beakman",
+            self._correo(datos["correo"], None, "Confirma tu entrada al laboratorio de Beakman",
                          "Confirma tu entrada", "Para entrar en el laboratorio, pulsa el botón. La ventana de Claude "
                          "se conectará sola.", "Confirmar mi entrada", enlace)
             return _html("Mira tu correo", _esperando(sid, datos["correo"]))
@@ -439,7 +454,7 @@ class Entrada:
                   secrets.token_urlsafe(24), "presentarse", pid_enlace, time.time(), json.dumps(datos),
                   _hash(confirmacion))
         self.db.q("DELETE FROM enlaces WHERE hash = ?", _hash(e))
-        self._correo(datos["correo"], datos["nombre"], "Confirma tus datos en el laboratorio de Beakman",
+        self._correo(datos["correo"], None, "Confirma tus datos en el laboratorio de Beakman",
                      "Confirma tus datos", "Pulsa el botón y Beakman ya sabrá cómo saludarte y a quién escribir.",
                      "Confirmar mis datos", enlace)
         return _html("Mira tu correo", f"<p class='lead'>Te he mandado un correo a <b>{html.escape(datos['correo'])}"
@@ -481,68 +496,146 @@ class Entrada:
         return _html("¡Hecho!", "<p class='lead'>Ya estás dentro del laboratorio. Vuelve a la ventana de Claude: "
                                 "se conecta sola en unos segundos.</p><p>Puedes cerrar esta pestaña.</p>")
 
-    # ---- administración -----------------------------------------------------------
+    # ---- «Mis datos»: entrar con un enlace mágico ------------------------------------------
+    # Solo para quien ya tiene entrada con datos: aquí no se crea nada. El enlace solo se manda a correos que ya
+    # están, y la respuesta es la misma estén o no, para que nadie pueda averiguar quién usa el laboratorio.
 
-    def _es_admin(self, request: Request) -> bool:
-        dado = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
-        return bool(self.admin_token) and secrets.compare_digest(dado, self.admin_token)
+    COOKIE = "beakman_sesion"
+    SESION_TTL = 3600
+    ACCESO_TTL = 15 * 60
 
-    async def admin_correo(self, request: Request) -> Response:
-        """Cambia el correo de una entrada, por encargo de su familia: {"antes": "...", "despues": "..."}.
+    def _sesion(self, request: Request):
+        token = request.cookies.get(self.COOKIE, "")
+        row = self.db.one("SELECT * FROM sesiones WHERE hash = ? AND caduca > ?", _hash(token), time.time()) \
+            if token else None
+        return row if row and self.db.ficha(row["persona_id"]) else None
 
-        Solo con la clave del administrador (cabecera Authorization: Bearer). Sin clave configurada, no existe.
-        """
-        if not self._es_admin(request) or not self.limites.permite("admin", 20, 3600):
-            return JSONResponse({"error": "no"}, status_code=404)
-        datos = await request.json()
-        antes, despues = _normaliza_correo(datos.get("antes", "")), _normaliza_correo(datos.get("despues", ""))
-        if "@" not in despues:
-            return JSONResponse({"error": "el correo nuevo no parece válido"}, status_code=400)
-        pid = self.db.persona_por_correo(antes)
-        if not pid:
-            return JSONResponse({"error": "no hay ninguna entrada con ese correo"}, status_code=404)
-        if self.db.persona_por_correo(despues):
-            return JSONResponse({"error": "el correo nuevo ya está en otra entrada"}, status_code=409)
-        self.db.q("UPDATE contactos SET correo = ? WHERE persona_id = ?", despues, pid)
-        log.info("administración: correo cambiado en una entrada")
-        return JSONResponse({"ok": True})
+    def _con_cookie(self, resp: Response, token: str | None) -> Response:
+        resp.set_cookie(self.COOKIE, token or "", max_age=self.SESION_TTL if token else 0, path="/cuenta",
+                        httponly=True, secure=self.base.startswith("https://"), samesite="lax")
+        return resp
 
-    async def borrar_pagina(self, request: Request) -> Response:
-        return _html("Borrar mis datos", _form_borrar(self.turnstile_site))
+    async def cuenta(self, request: Request) -> Response:
+        ses = self._sesion(request)
+        if not ses:
+            return _html("Mis datos", _form_cuenta(self.turnstile_site))
+        aviso = request.query_params.get("ok", "")
+        return _html("Mis datos", _panel(self.db.ficha(ses["persona_id"]), ses["csrf"], AVISOS.get(aviso, "")))
 
-    async def borrar(self, request: Request) -> Response:
-        """Borrar desde fuera del chat: llega un enlace al correo y, al pulsarlo, se borra todo."""
+    async def pedir_enlace(self, request: Request) -> Response:
         form = await request.form()
         correo = _normaliza_correo(str(form.get("correo", "")))[:120]
         ip = self._ip(request)
-        if "@" not in correo:
-            return _html("Borrar mis datos", _form_borrar(self.turnstile_site, "El correo no parece válido."), 400)
+        if "@" not in correo or "." not in correo.split("@")[-1]:
+            return _html("Mis datos", _form_cuenta(self.turnstile_site, "El correo no parece válido."), 400)
         if not await turnstile_ok(self.turnstile_secret, str(form.get("cf-turnstile-response", "")), ip):
-            return _html("Borrar mis datos", _form_borrar(self.turnstile_site, "No he podido comprobar que no eres "
-                                                          "un robot. Inténtalo otra vez."), 400)
-        # La respuesta es la misma esté o no el correo: así no se puede averiguar quién usa el laboratorio.
-        if (self.db.persona_por_correo(correo) and self.limites.permite(f"ip:{ip}", 10, 3600)
-                and self.limites.permite(f"correo:{correo}", 3, 3600)):
-            confirmacion = secrets.token_urlsafe(24)
-            self.db.q("INSERT INTO solicitudes (id, tipo, creada, datos, confirmacion) VALUES (?, ?, ?, ?, ?)",
-                      secrets.token_urlsafe(24), "borrar", time.time(), json.dumps({"correo": correo}),
-                      _hash(confirmacion))
-            self._correo(correo, None, "Borrar tus datos del laboratorio de Beakman", "Borrar tus datos",
-                         "Has pedido borrar todo lo que el laboratorio guarda de este correo. Pulsa el botón para "
-                         "hacerlo; no se puede deshacer.", "Borrar mis datos",
-                         f"{self.base}/entrada/confirmar?t={confirmacion}")
-        return _html("Mira tu correo", "<p class='lead'>Si ese correo está en el laboratorio, te llega un enlace para "
-                                       "borrarlo todo. Caduca en media hora.</p>")
+            return _html("Mis datos", _form_cuenta(self.turnstile_site, "No he podido comprobar que no eres un robot. "
+                                                   "Inténtalo otra vez."), 400)
+        if not self.limites.permite(f"cuenta-ip:{ip}", 5, 3600):
+            return _html("Mis datos", _form_cuenta(self.turnstile_site, "Demasiados intentos. Espera un rato."), 429)
+        pid = self.db.persona_por_correo(correo)
+        if pid and self.limites.permite(f"cuenta-correo:{_buzon(correo)}", 3, 3600):
+            self.db.limpiar()
+            token = secrets.token_urlsafe(32)
+            self.db.q("INSERT INTO accesos VALUES (?, ?, ?)", _hash(token), pid, time.time() + self.ACCESO_TTL)
+            nombre = self.db.ficha(pid)["nombre"]
+            self._correo(correo, nombre, "Tu enlace para entrar en «Mis datos»", "Entra en «Mis datos»",
+                         "Pulsa el botón para ver, cambiar o borrar lo que el laboratorio guarda de ti. Sirve una "
+                         "sola vez y caduca en 15 minutos.", "Entrar en mis datos",
+                         f"{self.base}/cuenta/entrar?t={token}", caduca="15 minutos")
+        return _html("Mira tu correo", "<p class='lead'>Si ese correo tiene entrada en el laboratorio, te llega un "
+                                       "enlace para entrar. Sirve una vez y caduca en 15 minutos.</p>" + AYUDA)
+
+    async def entrar(self, request: Request) -> Response:
+        t = request.query_params.get("t", "")
+        row = self.db.one("SELECT * FROM accesos WHERE hash = ? AND caduca > ?", _hash(t), time.time()) if t else None
+        if not row:
+            return _html("Este enlace ya no sirve", "<p class='lead'>Este enlace ya se ha usado o ha caducado.</p>"
+                         "<p><a href='/cuenta'>Pide otro en «Mis datos»</a>.</p>", 400)
+        self.db.q("DELETE FROM accesos WHERE hash = ?", _hash(t))  # un solo uso
+        token, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(16)
+        self.db.q("INSERT INTO sesiones VALUES (?, ?, ?, ?)", _hash(token), row["persona_id"], csrf,
+                  time.time() + self.SESION_TTL)
+        return self._con_cookie(RedirectResponse("/cuenta", status_code=303), token)
+
+    async def cambiar(self, request: Request) -> Response:
+        """Los botones del panel. Cada uno lleva el token anti-falsificación de la sesión."""
+        ses = self._sesion(request)
+        form = await request.form()
+        if not ses or not secrets.compare_digest(str(form.get("csrf", "")), ses["csrf"]):
+            return RedirectResponse("/cuenta", status_code=303)
+        pid, accion, f = ses["persona_id"], str(form.get("accion", "")), self.db.ficha(ses["persona_id"])
+        error = ""
+        if accion == "datos":
+            try:
+                curso = _curso_valido(str(form.get("curso", ""))) if form.get("curso") else None
+                comunidad = _comunidad_valida(str(form.get("comunidad", ""))) if form.get("comunidad") else None
+                self.db.guardar_progreso(pid, curso, comunidad)
+                nombre = " ".join(str(form.get("nombre", "")).split())[:40]
+                if nombre and f["correo"]:
+                    self.db.q("UPDATE contactos SET nombre = ? WHERE persona_id = ?", nombre, pid)
+                return RedirectResponse("/cuenta?ok=datos", status_code=303)
+            except ValueError as exc:
+                error = str(exc)
+        elif accion == "correo":
+            nuevo = _normaliza_correo(str(form.get("correo", "")))[:120]
+            if "@" not in nuevo or "." not in nuevo.split("@")[-1]:
+                error = "El correo nuevo no parece válido."
+            elif nuevo == f["correo"]:
+                error = "Ese ya es tu correo."
+            elif self.db.persona_por_correo(nuevo):
+                error = "Ese correo ya está en otra entrada del laboratorio."
+            elif not self.limites.permite(f"cuenta-cambio:{pid}", 3, 3600):
+                error = "Demasiados cambios seguidos. Espera un rato."
+            else:
+                confirmacion = secrets.token_urlsafe(24)
+                datos = {"correo": nuevo, "nombre": f["nombre"], "curso": f["curso"], "comunidad": f["comunidad"]}
+                self.db.q("INSERT INTO solicitudes (id, tipo, persona_id, creada, datos, confirmacion) "
+                          "VALUES (?, ?, ?, ?, ?, ?)", secrets.token_urlsafe(24), "presentarse", pid, time.time(),
+                          json.dumps(datos), _hash(confirmacion))
+                self._correo(nuevo, None, "Confirma tu correo nuevo en el laboratorio de Beakman",
+                             "Confirma tu correo nuevo", "Has pedido que el laboratorio use este correo. Pulsa el "
+                             "botón para confirmarlo; hasta entonces seguimos con el de antes.", "Confirmar este correo",
+                             f"{self.base}/entrada/confirmar?t={confirmacion}")
+                return RedirectResponse("/cuenta?ok=correo", status_code=303)
+        elif accion == "sin-correos":
+            self.db.quitar_contacto(pid)
+            self.db.q("DELETE FROM sesiones WHERE persona_id = ?", pid)
+            return self._con_cookie(_html("Hecho", "<p class='lead'>He borrado tu nombre y tu correo. Beakman sigue "
+                                          "funcionando en Claude, sin datos, y no te escribiré más.</p>" + AYUDA), None)
+        elif accion == "borrar":
+            if form.get("seguro") != "si":
+                error = "Marca la casilla para confirmar que quieres borrarlo todo."
+            else:
+                self.db.olvidar(pid)
+                return self._con_cookie(_html("Borrado", "<p class='lead'>He borrado todo lo que el laboratorio "
+                                              "guardaba de ti. Si Beakman sigue conectado en Claude, ya no sabe quién "
+                                              "eres.</p>" + AYUDA), None)
+        elif accion == "salir":
+            self.db.q("DELETE FROM sesiones WHERE hash = ?", _hash(request.cookies.get(self.COOKIE, "")))
+            return self._con_cookie(RedirectResponse("/cuenta", status_code=303), None)
+        return _html("Mis datos", _panel(self.db.ficha(pid), ses["csrf"], error=error), 400 if error else 200)
+
+    async def borrar_pagina(self, request: Request) -> Response:
+        """La página vieja de borrar: ahora se borra desde «Mis datos»."""
+        return RedirectResponse("/cuenta", status_code=303)
 
     # ---- correo -------------------------------------------------------------------
 
-    def _correo(self, correo: str, nombre: str | None, asunto: str, titulo: str, intro: str, boton: str, enlace: str):
+    def _correo(self, correo: str, nombre: str | None, asunto: str, titulo: str, intro: str, boton: str, enlace: str,
+                caduca: str = "media hora"):
+        """Correo de Beakman, con textos fijos. `nombre` solo para direcciones ya confirmadas: a una sin confirmar no
+        va nada escrito por quien rellenó el formulario, para que nadie pueda usarnos para mandar su texto a otros."""
+        # Tope para todo el servidor, además de los límites por IP y por correo: nunca correos a lo loco.
+        if not self.limites.permite("correos-servidor", 60, 3600):
+            log.error("tope de correos del servidor alcanzado: no se envía «%s»", asunto)
+            return
         hola = f"¡Hola, {nombre}!" if nombre else "¡Hola!"
-        texto = (f"{hola}\n\n{intro}\n{enlace}\n\nEl enlace caduca en media hora. Si no has sido tú, no hagas nada.\n\n"
+        texto = (f"{hola}\n\n{intro}\n{enlace}\n\nEl enlace caduca en {caduca}. Si no has sido tú, no hagas nada.\n\n"
                  "Un abrazo con la bata puesta,\nBeakman")
         cuerpo = (MAIL_HTML.replace("{hola}", html.escape(hola)).replace("{titulo}", html.escape(titulo))
                   .replace("{intro}", html.escape(intro)).replace("{boton}", html.escape(boton))
-                  .replace("{enlace}", html.escape(enlace)))
+                  .replace("{enlace}", html.escape(enlace)).replace("{caduca}", html.escape(caduca)))
         if not self.smtp["password"]:
             log.warning("SMTP sin contraseña: no se envía. Enlace: %s", enlace)
             return
@@ -602,6 +695,12 @@ input:focus, select:focus { outline: none; border-color: var(--ink); }
 a { color: var(--ink); text-decoration-color: var(--lime); text-decoration-thickness: 2px; }
 .btn { display: inline-flex; margin-top: 18px; background: var(--lime); color: var(--ink); font: 800 1rem "Nunito", sans-serif;
   border: 2px solid var(--ink); border-radius: 999px; padding: 10px 20px; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
+.ok { background: var(--lime-soft); border: 1.5px solid var(--lime); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; color: var(--ink); }
+.ok p { margin: 0; }
+h2 { font: 600 1.2rem/1.2 "Fredoka", sans-serif; color: var(--ink); margin: 6px 0 6px; }
+.card h2:not(:first-child) { margin-top: 16px; }
+.card ol, .card ul { margin: 0; padding-left: 20px; font-size: .95rem; }
+.card li { margin-bottom: 6px; }
 .errores { background: #FBE5E1; border: 1.5px solid #E7A89F; border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; color: #7A2A20; }
 .errores p { margin: 0; }
 .note { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 12px; padding: 12px 14px; font-size: .92rem; margin-top: 18px; }
@@ -632,7 +731,7 @@ MAIL_HTML = """<!doctype html><html lang="es"><head><meta charset="utf-8"><meta 
 <p style="margin:0 0 14px;">{hola}</p>
 <p style="margin:0 0 18px;">{intro}</p>
 <p style="margin:0 0 22px;"><a href="{enlace}" style="display:inline-block;background:#A6D41E;color:#1F3A0B;font-weight:800;text-decoration:none;border:2px solid #1F3A0B;border-radius:999px;padding:10px 20px;">{boton}</a></p>
-<p style="margin:0 0 14px;color:#4E5A45;font-size:14px;">El enlace caduca en media hora. Si no has sido tú, no hagas nada: sin confirmar no cambia nada.</p>
+<p style="margin:0 0 14px;color:#4E5A45;font-size:14px;">El enlace caduca en {caduca}. Si no has sido tú, no hagas nada: sin confirmar no cambia nada.</p>
 <p style="margin:0 0 4px;">Un abrazo con la bata puesta,</p>
 <p style="margin:0 0 20px;font-size:20px;font-weight:800;color:#1F3A0B;">Beakman</p></td></tr>
 </table></td></tr></table></body></html>
@@ -651,7 +750,7 @@ ENLACE_USADO = ("<p class='lead'>Este enlace ya se ha usado o ha caducado.</p><p
 CAMBIAR = ("<p class='note'>¿Quieres cambiar de opción más adelante? En Claude, ve a Ajustes → Conectores, desconecta "
            "Beakman y vuelve a conectarlo: esta página saldrá otra vez. También puedes pedírselo a Beakman en el chat "
            "(«quiero presentarme», «olvídame»). Y si ya diste tus datos y quieres borrarlos sin entrar en Claude: "
-           "<a href='/entrada/borrar'>borrar mis datos</a>.</p>")
+           "<a href='/cuenta'>Mis datos</a>.</p>")
 
 
 def _turnstile(site_key: str) -> str:
@@ -698,17 +797,88 @@ escribís en Claude. Para verlo, pregúntale a Beakman «¿qué sabes de mí?»;
 {CAMBIAR if anonima else ""}"""
 
 
-def _form_borrar(site_key: str, error: str = "") -> str:
+CONECTAR = """<h2>¿Aún no tienes Beakman en Claude?</h2>
+<ol>
+<li>En claude.ai, ve a <b>Ajustes → Conectores → Agregar conector personalizado</b>.</li>
+<li>Nombre: <b>beakman</b>. Dirección: <b>https://beakman.kademy.net/mcp</b>. Deja lo que Claude marca solo («Iniciar
+sesión ahora» y «Registrar automáticamente») y pulsa <b>Agregar</b>, y luego <b>Conectar</b>.</li>
+<li>Se abre mi página: entra <b>con datos</b> (nombre, correo, curso y comunidad) o <b>sin datos</b>.</li>
+<li>En un chat nuevo: «Quiero estudiar historia con Beakman».</li>
+</ol>"""
+CAMBIOS = """<h2>¿Quieres cambiar de opción?</h2>
+<ul>
+<li><b>Entraste sin datos y ahora quieres darlos:</b> en Claude, dile a Beakman «quiero presentarme» y te da un enlace.
+O en <b>Ajustes → Conectores → beakman</b>, pulsa Desconectar y Conectar, y elige «Entrar al laboratorio».</li>
+<li><b>Quieres dejar de dar datos:</b> aquí mismo, «No quiero más correos» (sigues usando Beakman, sin datos) o
+«Borrar todo». También en el chat: «no quiero más correos» u «olvídame».</li>
+<li><b>Desconectar no borra:</b> quitar el conector en Claude no borra tus datos. Para borrarlos, usa esta página o
+«olvídame».</li>
+</ul>"""
+AYUDA = f"<div class='card' style='margin-top:18px'>{CONECTAR}{CAMBIOS}</div>"
+AVISOS = {"datos": "Guardado.", "correo": "Te he mandado un correo a tu dirección nueva: confírmalo desde allí. "
+                                            "Hasta entonces seguimos con la de antes."}
+
+
+def _form_cuenta(site_key: str, error: str = "") -> str:
     err = f"<div class='errores'><p>{html.escape(error)}</p></div>" if error else ""
-    return f"""<h1>Borrar mis datos</h1>
-<p class="lead">Escribe el correo que diste al entrar. Te llegará un enlace; al pulsarlo, se borra todo lo que el
-laboratorio guarda de ese correo.</p>
-{err}<form class="card" method="post" action="/entrada/borrar">
+    return f"""<h1>Mis datos</h1>
+<p class="lead">Escribe el correo con el que entraste en el laboratorio. Te llega un enlace para ver, cambiar o borrar
+lo que guardo de ti. Sin contraseñas.</p>
+{err}<form class="card" method="post" action="/cuenta">
 <label for="correo">Correo</label>
 <input type="email" id="correo" name="correo" maxlength="120" required autocomplete="email">
 {_turnstile(site_key)}
-<button class="btn" type="submit">Mandarme el enlace</button>
-</form>"""
+<button class="btn" type="submit">Mándame el enlace</button>
+</form>
+<p class="note">Solo sirve si entraste <b>con datos</b>. Si entraste sin datos, no tengo ningún correo tuyo: gestiónalo
+desde el chat. Pedir el enlace no guarda nada.</p>
+{AYUDA}"""
+
+
+def _panel(f: dict, csrf: str, aviso: str = "", error: str = "") -> str:
+    def opt(valor, texto, actual):
+        return f'<option value="{html.escape(valor)}"{" selected" if valor == actual else ""}>{html.escape(texto)}</option>'
+    cursos = "".join(opt(k, n, f["curso"] or "") for k, n in CURSOS.items())
+    comunidades = "".join(opt(c, c, f["comunidad"] or "") for c in COMUNIDADES)
+    oculto = f'<input type="hidden" name="csrf" value="{html.escape(csrf)}">'
+    msg = (f"<div class='ok'><p>{html.escape(aviso)}</p></div>" if aviso else "") + \
+          (f"<div class='errores'><p>{html.escape(error)}</p></div>" if error else "")
+    escolar = f" (curso {html.escape(f['curso_escolar'])})" if f["curso_escolar"] else ""
+    return f"""<h1>Mis datos</h1>
+<p class="lead">Esto es todo lo que el laboratorio guarda de ti. Nada más: ni apellidos, ni edad, ni colegio, ni lo que
+escribes en Claude.</p>
+{msg}<form class="card" method="post" action="/cuenta/cambiar">{oculto}<input type="hidden" name="accion" value="datos">
+<label for="nombre">Nombre para el saludo</label>
+<input type="text" id="nombre" name="nombre" maxlength="40" value="{html.escape(f['nombre'] or '')}">
+<label for="curso">Curso{escolar}</label>
+<select id="curso" name="curso"><option value="">Sin indicar</option>{cursos}</select>
+<label for="comunidad">Comunidad autónoma</label>
+<select id="comunidad" name="comunidad"><option value="">Sin indicar</option>{comunidades}</select>
+<p class="hint">Aceptaste guardarlos el {html.escape((f['consentimiento_fecha'] or '')[:10])}.</p>
+<button class="btn" type="submit">Guardar cambios</button>
+</form>
+<form class="card" method="post" action="/cuenta/cambiar" style="margin-top:16px">{oculto}<input type="hidden" name="accion" value="correo">
+<label for="correo">Correo</label>
+<p class="hint" style="margin:0 0 6px">Ahora: <b>{html.escape(f['correo'] or '')}</b>. Para cambiarlo, escribe el nuevo y
+confírmalo desde allí.</p>
+<input type="email" id="correo" name="correo" maxlength="120" required autocomplete="email">
+<button class="btn ghost" type="submit">Cambiar el correo</button>
+</form>
+<form class="card" method="post" action="/cuenta/cambiar" style="margin-top:16px">{oculto}<input type="hidden" name="accion" value="sin-correos">
+<b>No quiero más correos</b>
+<p class="hint">Borra tu nombre y tu correo. Beakman sigue funcionando en Claude, sin datos.</p>
+<button class="btn ghost" type="submit">Borrar nombre y correo</button>
+</form>
+<form class="card" method="post" action="/cuenta/cambiar" style="margin-top:16px">{oculto}<input type="hidden" name="accion" value="borrar">
+<b>Borrar todo</b>
+<p class="hint">Borra todo lo que el laboratorio guarda de ti y desconecta Beakman en Claude. No se puede deshacer.</p>
+<label class="check"><input type="checkbox" name="seguro" value="si"><span>Sí, quiero borrarlo todo.</span></label>
+<button class="btn ghost" type="submit">Borrarlo todo</button>
+</form>
+<form method="post" action="/cuenta/cambiar" style="margin-top:16px">{oculto}<input type="hidden" name="accion" value="salir">
+<button class="btn ghost" type="submit">Salir</button>
+</form>
+{AYUDA}"""
 
 
 def _esperando(sid: str, correo: str) -> str:
