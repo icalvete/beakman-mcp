@@ -145,3 +145,8 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: s
   .summary { grid-template-columns: 1fr; }
   .summary img { height: auto; aspect-ratio: 800 / 423; border-right: 0; border-bottom: 2px solid var(--ink); }
 }
+/* los resúmenes, en una franja propia: se leen antes de practicar con los recursos */
+.summaries { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 22px; padding: 20px 22px 24px; margin-bottom: 30px; }
+.summaries > h2 { margin-bottom: 2px; }
+h3.course { font-size: 1.3rem; margin: 6px 0 14px; }
+h3.course:not(:first-of-type) { margin-top: 28px; }

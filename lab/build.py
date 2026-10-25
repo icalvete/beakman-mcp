@@ -5,6 +5,7 @@ con recursos y el 404. Las páginas de cada recurso las genera su propio proyect
 
     python3 lab/build.py
 """
+import hashlib
 import html
 import os
 
@@ -19,6 +20,9 @@ LAPTOP = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H4zM2 
           'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>')
 
 e = html.escape
+# Huella de lab.css en su URL: el servidor no manda reglas de caché y el navegador se quedaba con la versión vieja.
+with open(os.path.join(SITE, "lab.css"), "rb") as _f:
+    CSS_V = hashlib.md5(_f.read()).hexdigest()[:8]
 
 
 def load(path):
@@ -50,7 +54,7 @@ def page(t, lang, title, desc, up, path, body, langs):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="{up}lab.css">
+<link rel="stylesheet" href="{up}lab.css?v={CSS_V}">
 </head>
 <body>
 <header class="wrap top">
@@ -92,13 +96,13 @@ def resource_card(t, r, s, lang, up, prefix):
 """
 
 
-def summary_card(t, r, s, lang):
-    """Tarjeta corta de un resumen, para la cabecera de la página de su asignatura."""
+def summary_card(t, r, s, lang, up, prefix):
+    """Tarjeta corta de un resumen: en su sección, aparte de los recursos."""
     tx = r[lang]
-    return f"""  <a class="summary" href="{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
-    <img src="../../media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
+    return f"""  <a class="summary" href="{prefix}{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
+    <img src="{up}media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="kind">{e(t["tipos"][r["tipo"]])}</span><span class="tag">{e(t["cursos"][r["curso"]])} · {e(tx["temas"])}</span></div>
+      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span><span class="tag">{e(t["cursos"][r["curso"]])} · {e(tx["temas"])}</span></div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
     </div>
@@ -112,15 +116,17 @@ def build():
     subjects = {s["id"]: s for s in cat["asignaturas"]}
     for lang in langs:
         t = T[lang]
-        # Los resúmenes, primero; los demás, en el orden del catálogo.
-        res = sorted((r for r in cat["recursos"] if lang in r), key=lambda r: r.get("tipo") != "resumen")
+        res = [r for r in cat["recursos"] if lang in r]
+        # Los resúmenes no son recursos: van en su propia sección, antes que ellos.
+        is_summary = lambda r: r.get("tipo") == "resumen"
+        slug = lambda r: subjects[r["asignatura"]][lang]["slug"] + "/"
         # Portada del idioma: asignaturas y todos los recursos.
         cards = []
         for s in cat["asignaturas"]:
             st, mine = s[lang], [r for r in res if r["asignatura"] == s["id"]]
             if mine:
                 courses = sorted({r["curso"] for r in mine}, key=cat["cursos"].index)
-                tag = f'{count(t, len(mine))} · {" · ".join(t["cursos"][c] for c in courses)}'
+                tag = f'{count(t, sum(not is_summary(r) for r in mine))} ·{" · ".join(t["cursos"][c] for c in courses)}'
                 cards.append(f"""  <a class="subject {s["id"]}" href="{st["slug"]}/" style="--subj: {s["color"]}">
     <img src="../media/{s["foto"]}" alt="" loading="lazy">
     <div class="body"><h3>{e(st["nombre"])}</h3><p>{e(st["lema"])}</p><span class="tag">{e(tag)}</span></div>
@@ -132,13 +138,17 @@ def build():
     <div class="body"><h3>{e(st["nombre"])}</h3><p>{e(st["lema"])}</p><span class="tag soon">{e(t["proximamente"])}</span></div>
   </div>
 """)
-        every = "".join(resource_card(t, r, subjects[r["asignatura"]], lang, "../", subjects[r["asignatura"]][lang]["slug"] + "/")
-                        for r in res)
+        every = "".join(resource_card(t, r, subjects[r["asignatura"]], lang, "../", slug(r)) for r in res if not is_summary(r))
+        sums = [r for r in res if is_summary(r)]
+        sums_html = (f'<section class="summaries"><h2>{e(t["resumenes"])}</h2><p class="hint">{e(t["resumenes_lead"])}</p>\n'
+                     f'<div class="summary-list">\n'
+                     f'{"".join(summary_card(t, r, subjects[r["asignatura"]], lang, "../", slug(r)) for r in sums)}</div></section>\n'
+                     if sums else "")
         body = f"""<div class="hero"><h1>{e(t["portada_titulo"])}</h1><p class="lead">{e(t["portada_lead"])}</p></div>
 <section><h2>{e(t["asignaturas"])}</h2>
 <div class="subjects">
 {"".join(cards)}</div></section>
-<section><h2>{e(t["todos"])}</h2>
+{sums_html}<section><h2>{e(t["todos"])}</h2>
 <div class="resources">
 {every}</div></section>
 <section><div class="tutors"><p>{e(t["tutores_texto"])}</p><a class="btn" href="{e(t["tutores_url"])}">{e(t["tutores"])}</a></div></section>"""
@@ -150,16 +160,18 @@ def build():
             if not mine:
                 continue
             # Los resúmenes van arriba, en su propia sección; debajo, el resto por cursos.
-            summaries = [r for r in mine if r.get("tipo") == "resumen"]
+            summaries = [r for r in mine if is_summary(r)]
             parts = []
             if summaries:
                 parts.append(f'<section class="summaries"><h2>{e(t["resumenes"])}</h2><p class="hint">{e(t["resumenes_lead"])}</p>\n'
-                             f'<div class="summary-list">\n{"".join(summary_card(t, r, s, lang) for r in summaries)}</div></section>')
+                             f'<div class="summary-list">\n{"".join(summary_card(t, r, s, lang, "../../", "") for r in summaries)}</div></section>')
+            courses = []
             for c in cat["cursos"]:
-                rc = [r for r in mine if r["curso"] == c and r.get("tipo") != "resumen"]
+                rc = [r for r in mine if r["curso"] == c and not is_summary(r)]
                 inner = (f'<div class="resources">\n{"".join(resource_card(t, r, s, lang, "../../", "") for r in rc)}</div>' if rc
                          else f'<p class="empty">{e(t["sin_recursos"].format(curso=t["cursos"][c]))}</p>')
-                parts.append(f'<section><h2>{e(t["cursos"][c])}</h2>\n{inner}</section>')
+                courses.append(f'<h3 class="course">{e(t["cursos"][c])}</h3>\n{inner}')
+            parts.append(f'<section class="all-resources"><h2>{e(t["recursos"])}</h2>\n{chr(10).join(courses)}</section>')
             body = f"""<p class="crumb"><a href="../">← {e(t["volver"])}</a></p>
 <div class="subject-head"><div class="polaroid"><img src="../../media/{s["foto"]}" alt=""></div>
   <div><h1>{e(st["nombre"])}</h1><p>{e(st["lema"])}</p></div></div>
