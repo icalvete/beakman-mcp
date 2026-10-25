@@ -72,13 +72,14 @@ def count(t, n):
     return t["recurso_1"] if n == 1 else t["recurso_n"].format(n=n)
 
 
-def resource_card(t, r, lang, up, prefix):
+def resource_card(t, r, s, lang, up, prefix):
+    """`s` es la asignatura del recurso: su nombre y su color van en la etiqueta."""
     tx = r[lang]
     pc = f'<span class="pc">{LAPTOP}{e(t["solo_pc"])}</span>' if r.get("solo_pc") else ""
-    return f"""  <a class="resource" href="{prefix}{r["curso"]}/{r["id"]}/">
+    return f"""  <a class="resource" href="{prefix}{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
     <img src="{up}media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="tag">{e(tx["temas"])}</span>{pc}</div>
+      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span><span class="tag">{e(tx["temas"])}</span>{pc}</div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
       <dl class="why">
@@ -104,7 +105,7 @@ def build():
             if mine:
                 courses = sorted({r["curso"] for r in mine}, key=cat["cursos"].index)
                 tag = f'{count(t, len(mine))} · {" · ".join(t["cursos"][c] for c in courses)}'
-                cards.append(f"""  <a class="subject {s["id"]}" href="{st["slug"]}/">
+                cards.append(f"""  <a class="subject {s["id"]}" href="{st["slug"]}/" style="--subj: {s["color"]}">
     <img src="../media/{s["foto"]}" alt="" loading="lazy">
     <div class="body"><h3>{e(st["nombre"])}</h3><p>{e(st["lema"])}</p><span class="tag">{e(tag)}</span></div>
   </a>
@@ -115,7 +116,8 @@ def build():
     <div class="body"><h3>{e(st["nombre"])}</h3><p>{e(st["lema"])}</p><span class="tag soon">{e(t["proximamente"])}</span></div>
   </div>
 """)
-        every = "".join(resource_card(t, r, lang, "../", subjects[r["asignatura"]][lang]["slug"] + "/") for r in res)
+        every = "".join(resource_card(t, r, subjects[r["asignatura"]], lang, "../", subjects[r["asignatura"]][lang]["slug"] + "/")
+                        for r in res)
         body = f"""<div class="hero"><h1>{e(t["portada_titulo"])}</h1><p class="lead">{e(t["portada_lead"])}</p></div>
 <section><h2>{e(t["asignaturas"])}</h2>
 <div class="subjects">
@@ -134,7 +136,7 @@ def build():
             parts = []
             for c in cat["cursos"]:
                 rc = [r for r in mine if r["curso"] == c]
-                inner = (f'<div class="resources">\n{"".join(resource_card(t, r, lang, "../../", "") for r in rc)}</div>' if rc
+                inner = (f'<div class="resources">\n{"".join(resource_card(t, r, s, lang, "../../", "") for r in rc)}</div>' if rc
                          else f'<p class="empty">{e(t["sin_recursos"].format(curso=t["cursos"][c]))}</p>')
                 parts.append(f'<section><h2>{e(t["cursos"][c])}</h2>\n{inner}</section>')
             body = f"""<p class="crumb"><a href="../">← {e(t["volver"])}</a></p>

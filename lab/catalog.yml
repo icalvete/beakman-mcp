@@ -9,20 +9,25 @@ idiomas: [es]          # idiomas publicados; el primero es el de por defecto
 cursos: [1eso, 2eso]
 
 asignaturas:
+  # color: la etiqueta de la asignatura en cada recurso y la sombra de su tarjeta. Tonos claros: el texto va en tinta oscura.
   - id: historia
     foto: historia.jpg
+    color: "#FFD43B"
     es: {slug: historia, nombre: Historia, lema: "Cuándo y dónde, sí. Pero sobre todo por qué pasó, a quién le cambió la vida y qué queda hoy."}
     en: {slug: history, nombre: History, lema: "When and where, yes. But above all why it happened, whose lives it changed and what is left today."}
   - id: matematicas
     foto: matematicas.jpg
+    color: "#74C0FC"
     es: {slug: matematicas, nombre: Matemáticas, lema: "El porqué de cada paso."}
     en: {slug: maths, nombre: Maths, lema: "The why behind every step."}
   - id: ciencias
     foto: ciencias.webp
+    color: "#69DB7C"
     es: {slug: ciencias, nombre: Ciencias, lema: "Mirar el mundo y preguntarle cosas."}
     en: {slug: science, nombre: Science, lema: "Look at the world and ask it questions."}
   - id: lengua
     foto: lengua.webp
+    color: "#FF8787"
     es: {slug: lengua, nombre: Lengua y Literatura, lema: "Entender lo que lees y decir lo que piensas."}
     en: {slug: language, nombre: Language and Literature, lema: "Understand what you read, say what you think."}
 

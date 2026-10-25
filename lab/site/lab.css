@@ -58,6 +58,9 @@ section > h2 { font-size: 1.7rem; margin-bottom: 18px; }
 .subject { display: flex; flex-direction: column; background: var(--card); border: 2px solid var(--ink); border-radius: 18px; overflow: hidden;
   box-shadow: 4px 4px 0 var(--lime); text-decoration: none; color: var(--text); transition: transform .1s, box-shadow .1s; }
 a.subject:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--lime); }
+/* el color de cada asignatura (catalog.yml) llega como --subj */
+a.subject { box-shadow: 4px 4px 0 var(--subj, var(--lime)); }
+a.subject:hover { box-shadow: 5px 5px 0 var(--subj, var(--lime)); }
 .subject img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 22%; border-bottom: 2px solid var(--ink); }
 .subject.ciencias img { object-position: 75% 30%; }
 .subject .body { padding: 14px 16px 16px; display: grid; gap: 6px; }
@@ -74,6 +77,8 @@ a.subject:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--
 .resource { display: flex; flex-direction: column; background: var(--card); border: 2px solid var(--ink); border-radius: 18px; overflow: hidden;
   box-shadow: 4px 4px 0 var(--lime); text-decoration: none; color: var(--text); transition: transform .1s, box-shadow .1s; }
 .resource:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--lime); }
+.resource { box-shadow: 4px 4px 0 var(--subj, var(--lime)); }
+.resource:hover { box-shadow: 5px 5px 0 var(--subj, var(--lime)); }
 .resource img { display: block; width: 100%; height: auto; aspect-ratio: 800 / 423; object-fit: cover; object-position: left top; border-bottom: 2px solid var(--ink); }
 .resource .body { padding: 14px 16px 16px; display: grid; gap: 8px; }
 .resource h3 { font-size: 1.25rem; }
@@ -83,6 +88,8 @@ a.subject:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--
 .why dt:not(:first-child) { margin-top: 8px; }
 .why dd { margin: 0; font-size: .93rem; line-height: 1.5; color: var(--text); }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.subj { font-size: .85rem; font-weight: 800; color: var(--ink); background: var(--subj, var(--lime)); border: 1.5px solid var(--ink);
+  border-radius: 999px; padding: 1px 10px; }
 .pc { display: inline-flex; align-items: center; gap: 5px; font-size: .8rem; font-weight: 700; color: var(--muted);
   border: 1.5px solid var(--line); border-radius: 999px; padding: 1px 8px; }
 .pc svg { width: 16px; height: 16px; }
