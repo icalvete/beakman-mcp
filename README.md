@@ -33,6 +33,8 @@ Es un homenaje a Beakman, el científico apasionado de *El mundo de Beakman* (19
 3. Se abre la página de Beakman. Un adulto pone un nombre para saludar, su correo, el curso y la comunidad, y lo confirma desde el correo que le llega. O pulsa «Entrar sin datos». Claude se conecta solo.
 4. En un chat nuevo, escribe «Quiero estudiar historia con Beakman» (o mates, ciencias o lengua).
 
+**Un consejo:** crea en Claude un proyecto «Beakman» y pon en sus instrucciones «Usa siempre el conector de Beakman para estudiar» y tu curso. Cada chat del proyecto empieza ya con Beakman. La guía cuenta esto y otros ajustes, como la memoria de Claude: [Saca más partido a Claude](https://icalvete.github.io/beakman-mcp/guia/usarlo.html#partido).
+
 La cuenta gratuita de Claude basta (admite un conector propio). Claude exige ser mayor de 18 años.
 
 **¿Lo tenías conectado de antes?** Ahora pide entrar: vuelve a conectarlo una vez en Ajustes → Conectores → Beakman → Conectar. Si no sale el botón, quita el conector y añádelo otra vez con la misma URL.
@@ -41,10 +43,10 @@ La [guía de uso](https://icalvete.github.io/beakman-mcp/guia/usarlo.html) tiene
 
 ## Tus datos
 
-- **Qué guarda:** el curso y la comunidad y, si se entra con datos, un nombre para saludar y el correo de un adulto. Ni apellidos, ni edad, ni colegio, ni lo que se escribe en Claude.
+- **Qué guarda:** el curso y la comunidad (si se eligen) y, si se entra con datos, un nombre para saludar y el correo de un adulto. Ni apellidos, ni edad, ni colegio, ni lo que se escribe en Claude.
 - **Para qué:** para seguir tu temario, saludarte y, si diste correo, escribiros (resúmenes, recordatorios y avisos del laboratorio).
 - **¿Por qué dar el correo?** Beakman te reconoce aunque cambies de ordenador o vuelvas a conectarlo (mismo correo, mismo nombre y curso), puedes gestionar tus datos en [Mis datos](https://beakman.kademy.net/cuenta) sin pasar por Claude, y puede escribiros. Sin correo, cada conexión nueva empieza de cero.
-- **Cómo cambiarlo o borrarlo:** en el chat («ahora estoy en 3º», «quiero presentarme», «no quiero más correos», «olvídame», «¿qué sabe Beakman de mí?»), desconectando y conectando otra vez el conector, o en [Mis datos](https://beakman.kademy.net/cuenta), entrando con un enlace que llega al correo.
+- **Cómo cambiarlo o borrarlo:** en el chat («ahora estoy en 3º», «quiero presentarme», «no quiero más correos», «olvídame», «¿qué sabe Beakman de mí?»), o en [Mis datos](https://beakman.kademy.net/cuenta), entrando con un enlace que llega al correo. Desconectar y volver a conectar el conector deja elegir de nuevo cómo entrar, pero no borra nada.
 
 Todo, en la [página de privacidad](https://icalvete.github.io/beakman-mcp/privacidad.html).
 
@@ -79,7 +81,7 @@ Si eres profe o quieres tu propio temario, la [guía para montarlo](https://ical
 
 ## Contribuir
 
-¿Un error en un tema o una mejora? Abre una [incidencia](https://github.com/icalvete/beakman-mcp/issues) o un pull request. Antes, lee [CLAUDE.md](CLAUDE.md): tiene las reglas del contenido.
+¿Una duda? Escribe a [beakman@kademy.net](mailto:beakman@kademy.net) o responde a cualquier correo de Beakman. ¿Un error en un tema o una mejora? Abre una [incidencia](https://github.com/icalvete/beakman-mcp/issues) o un pull request. Antes, lee [CLAUDE.md](CLAUDE.md): tiene las reglas del contenido.
 
 ## Apoya el proyecto
 
