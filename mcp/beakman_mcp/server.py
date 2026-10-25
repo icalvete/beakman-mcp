@@ -322,9 +322,12 @@ if ENTRADA_URL:
 
     @servidor.tool(title="Presentarme")
     def presentarme() -> str:
-        """Para dar nombre y correo (y recibir resúmenes y avisos). Devuelve un enlace para que lo abra un adulto.
+        """Para dar nombre y correo. Devuelve un enlace para que lo abra un adulto.
 
-        Úsala si quiere que le escribas, que le saludes por su nombre o que le mandes resúmenes.
+        Úsala si quiere que le escribas, que le saludes por su nombre o que le mandes resúmenes. Si pregunta para qué
+        sirve el correo: le reconoces aunque cambie de ordenador o vuelva a conectar (mismo correo, mismo nombre y
+        curso); puede ver, cambiar o borrar sus datos en «Mis datos» (beakman.kademy.net/cuenta) sin pasar por Claude;
+        y puedes escribir al adulto resúmenes, recordatorios y novedades, con baja cuando quiera.
         """
         pid, f = _persona()
         enlace = f"{ENTRADA_URL}/entrada/presentarse?e={entrada.db.enlace_presentarse(pid)}"

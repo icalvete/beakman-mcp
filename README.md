@@ -43,6 +43,7 @@ La [guía de uso](https://icalvete.github.io/beakman-mcp/guia/usarlo.html) tiene
 
 - **Qué guarda:** el curso y la comunidad y, si se entra con datos, un nombre para saludar y el correo de un adulto. Ni apellidos, ni edad, ni colegio, ni lo que se escribe en Claude.
 - **Para qué:** para seguir tu temario, saludarte y, si diste correo, escribiros (resúmenes, recordatorios y avisos del laboratorio).
+- **¿Por qué dar el correo?** Beakman te reconoce aunque cambies de ordenador o vuelvas a conectarlo (mismo correo, mismo nombre y curso), puedes gestionar tus datos en [Mis datos](https://beakman.kademy.net/cuenta) sin pasar por Claude, y puede escribiros. Sin correo, cada conexión nueva empieza de cero.
 - **Cómo cambiarlo o borrarlo:** en el chat («ahora estoy en 3º», «quiero presentarme», «no quiero más correos», «olvídame», «¿qué sabe Beakman de mí?»), desconectando y conectando otra vez el conector, o en [Mis datos](https://beakman.kademy.net/cuenta), entrando con un enlace que llega al correo.
 
 Todo, en la [página de privacidad](https://icalvete.github.io/beakman-mcp/privacidad.html).

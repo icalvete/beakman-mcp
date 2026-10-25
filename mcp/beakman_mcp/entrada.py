@@ -689,6 +689,9 @@ input:focus, select:focus { outline: none; border-color: var(--ink); }
 .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .92rem; color: var(--text);
   background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-top: 16px; }
 .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+.why { background: var(--lime-soft); border: 1.5px solid var(--lime); border-radius: 14px; padding: 12px 16px; margin: 0 0 16px; font-size: .93rem; }
+.why ul { margin: 6px 0 0; padding-left: 20px; }
+.why li { margin-bottom: 5px; }
 .alt { margin-top: 22px; padding-top: 16px; border-top: 1.5px dashed var(--line); }
 .alt p { font-size: .92rem; color: var(--muted); margin: 4px 0 0; }
 .btn.ghost { background: #fff; }
@@ -769,12 +772,14 @@ def _formulario(oculto: str, valor: str, site_key: str, errores: list[str] | Non
                           for c in COMUNIDADES)
     err = ("<div class='errores'>" + "".join(f"<p>{html.escape(e)}</p>" for e in errores) + "</div>") if errores else ""
     sin_datos = """<div class="alt"><b>¿Prefieres no dar datos?</b>
-<p>Entra sin datos: Beakman no sabrá tu nombre ni podrá escribiros. El curso y la comunidad, si los eliges arriba, sí
-se guardan (no dicen quién eres). Podrás presentarte cuando quieras.</p>
+<p>Entra sin datos: Beakman no sabrá tu nombre ni podrá escribiros, no podrás usar «Mis datos» y, si vuelves a
+conectar, empezarás de cero. El curso y la comunidad, si los eliges arriba, sí se guardan (no dicen quién eres). Podrás
+presentarte cuando quieras.</p>
 <button class="btn ghost" type="submit" name="modo" value="sin-datos" formnovalidate>Entrar sin datos</button></div>""" \
         if anonima else ""
     return f"""<h1>¡Hola! Antes de empezar, preséntate</h1>
 <p class="lead">Lo rellena un adulto. Solo necesito un nombre para saludar y un correo para comunicarme con vosotros.</p>
+{POR_QUE_CORREO}
 {err}<form class="card" method="post" action="/entrada">
 <input type="hidden" name="{oculto}" value="{html.escape(valor)}">
 <label for="nombre">Nombre para el saludo</label>
@@ -797,6 +802,16 @@ escribís en Claude. Para verlo, pregúntale a Beakman «¿qué sabes de mí?»;
 {CAMBIAR if anonima else ""}"""
 
 
+# Por qué merece la pena dar el correo. Solo lo que es verdad hoy (ver guardar_persona y «Mis datos»).
+POR_QUE_CORREO = """<div class="why"><b>¿Para qué el correo?</b>
+<ul>
+<li><b>Te reconozco en cualquier sitio.</b> Si cambias de ordenador o vuelves a conectar Beakman, entras con el mismo
+correo y sigo sabiendo tu nombre y tu curso. Sin correo, cada conexión nueva empieza de cero.</li>
+<li><b>Tus datos, siempre a mano.</b> Con el correo entras en «Mis datos» para verlos, cambiarlos o borrarlos, sin pasar
+por Claude. Sin correo, solo puedes hacerlo desde el chat.</li>
+<li><b>Puedo escribiros.</b> Resúmenes de los temas, recordatorios de repaso y novedades del laboratorio, siempre al
+correo de un adulto y con baja en cualquier momento.</li>
+</ul></div>"""
 CONECTAR = """<h2>¿Aún no tienes Beakman en Claude?</h2>
 <ol>
 <li>En claude.ai, ve a <b>Ajustes → Conectores → Agregar conector personalizado</b>.</li>
@@ -831,7 +846,7 @@ lo que guardo de ti. Sin contraseñas.</p>
 <button class="btn" type="submit">Mándame el enlace</button>
 </form>
 <p class="note">Solo sirve si entraste <b>con datos</b>. Si entraste sin datos, no tengo ningún correo tuyo: gestiónalo
-desde el chat. Pedir el enlace no guarda nada.</p>
+desde el chat, o preséntate («quiero presentarme») para poder usar esta página. Pedir el enlace no guarda nada.</p>
 {AYUDA}"""
 
 
