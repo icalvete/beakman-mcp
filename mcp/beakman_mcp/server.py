@@ -370,6 +370,7 @@ if ENTRADA_URL:
     servidor.custom_route("/entrada/presentarse", methods=["GET"])(entrada.presentarse)
     servidor.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
     servidor.custom_route("/entrada/borrar", methods=["POST"])(entrada.borrar)
+    servidor.custom_route("/admin/correo", methods=["POST"], include_in_schema=False)(entrada.admin_correo)
     entrada_app = servidor.streamable_http_app(
         stateless_http=True,
         json_response=True,

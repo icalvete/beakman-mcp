@@ -265,6 +265,8 @@ class Entrada:
         self.permitidos = {_normaliza_correo(c) for c in os.environ.get("BEAKMAN_ENTRADA_CORREOS", "").split(",")
                            if c.strip()}
         self.smtp = {k: os.environ.get(f"BEAKMAN_SMTP_{k.upper()}", "") for k in ("host", "port", "user", "password")}
+        # Clave del administrador (/admin/...). Vacía = no hay administración.
+        self.admin_token = os.environ.get("BEAKMAN_ADMIN_TOKEN", "")
 
     # clientes (registro dinámico: Claude se da de alta solo)
     async def get_client(self, client_id: str) -> OAuthClientInformationFull | None:
@@ -478,6 +480,32 @@ class Entrada:
             self._codigo(sol, self.db.guardar_persona(datos))
         return _html("¡Hecho!", "<p class='lead'>Ya estás dentro del laboratorio. Vuelve a la ventana de Claude: "
                                 "se conecta sola en unos segundos.</p><p>Puedes cerrar esta pestaña.</p>")
+
+    # ---- administración -----------------------------------------------------------
+
+    def _es_admin(self, request: Request) -> bool:
+        dado = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
+        return bool(self.admin_token) and secrets.compare_digest(dado, self.admin_token)
+
+    async def admin_correo(self, request: Request) -> Response:
+        """Cambia el correo de una entrada, por encargo de su familia: {"antes": "...", "despues": "..."}.
+
+        Solo con la clave del administrador (cabecera Authorization: Bearer). Sin clave configurada, no existe.
+        """
+        if not self._es_admin(request) or not self.limites.permite("admin", 20, 3600):
+            return JSONResponse({"error": "no"}, status_code=404)
+        datos = await request.json()
+        antes, despues = _normaliza_correo(datos.get("antes", "")), _normaliza_correo(datos.get("despues", ""))
+        if "@" not in despues:
+            return JSONResponse({"error": "el correo nuevo no parece válido"}, status_code=400)
+        pid = self.db.persona_por_correo(antes)
+        if not pid:
+            return JSONResponse({"error": "no hay ninguna entrada con ese correo"}, status_code=404)
+        if self.db.persona_por_correo(despues):
+            return JSONResponse({"error": "el correo nuevo ya está en otra entrada"}, status_code=409)
+        self.db.q("UPDATE contactos SET correo = ? WHERE persona_id = ?", despues, pid)
+        log.info("administración: correo cambiado en una entrada")
+        return JSONResponse({"ok": True})
 
     async def borrar_pagina(self, request: Request) -> Response:
         return _html("Borrar mis datos", _form_borrar(self.turnstile_site))
