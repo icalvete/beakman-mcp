@@ -206,13 +206,14 @@ if os.path.isdir(SITE_DIR):
     app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
 
 
-# ---- la entrada con OAuth, en prueba ------------------------------------------
-# Un segundo servidor MCP, con entrada (ver entrada.py), en su propio nombre: BEAKMAN_PRUEBA_URL, p. ej.
-# https://prueba.beakman.kademy.net. Las rutas de OAuth van en la raíz del nombre, así que no se mezclan con las del
-# conector de siempre, que no cambia. Sin BEAKMAN_PRUEBA_URL no se monta nada.
-PRUEBA_URL = os.environ.get("BEAKMAN_PRUEBA_URL", "").rstrip("/")
-prueba_app = None
-if PRUEBA_URL:
+# ---- la entrada con OAuth ---------------------------------------------------------
+# El servidor MCP con entrada (ver entrada.py) en el nombre de BEAKMAN_ENTRADA_URL. Si es el del conector
+# (https://beakman.kademy.net), ese nombre entero pasa a este servidor: /mcp pide entrar, y /up y la web siguen igual.
+# Si es otro (p. ej. https://prueba.beakman.kademy.net), es una prueba y el conector de siempre no cambia. Las rutas de
+# OAuth van en la raíz del nombre. Sin BEAKMAN_ENTRADA_URL no se monta nada.
+ENTRADA_URL = os.environ.get("BEAKMAN_ENTRADA_URL", "").rstrip("/")
+entrada_app = None
+if ENTRADA_URL:
     from contextlib import asynccontextmanager
     from urllib.parse import urlparse
 
@@ -221,8 +222,8 @@ if PRUEBA_URL:
 
     from .entrada import CURSOS, Entrada, _comunidad_valida, _curso_valido, curso_escolar
 
-    entrada = Entrada(PRUEBA_URL, os.environ.get("BEAKMAN_DB", "/data/beakman.sqlite"))
-    prueba = MCPServer(
+    entrada = Entrada(ENTRADA_URL, os.environ.get("BEAKMAN_DB", "/data/beakman.sqlite"))
+    servidor = MCPServer(
         name="beakman",
         title="Mi mundo de Beakman",
         description="Tutores de Historia, Matemáticas, Ciencias y Lengua para 1º y 2º de la ESO.",
@@ -236,8 +237,8 @@ if PRUEBA_URL:
         website_url="https://icalvete.github.io/beakman-mcp/",
         auth_server_provider=entrada,
         auth=AuthSettings(
-            issuer_url=PRUEBA_URL,
-            resource_server_url=f"{PRUEBA_URL}/mcp",
+            issuer_url=ENTRADA_URL,
+            resource_server_url=f"{ENTRADA_URL}/mcp",
             validate_token_resource=False,
             client_registration_options=ClientRegistrationOptions(enabled=True),
             revocation_options=RevocationOptions(enabled=True),
@@ -260,7 +261,7 @@ if PRUEBA_URL:
         comunidad = f"Comunidad autónoma: {f['comunidad']}." if f["comunidad"] else "Comunidad autónoma: sin indicar."
         return f"{quien} {curso} {comunidad}"
 
-    @prueba.tool(name="empezar_clase", title="Empezar una clase con Beakman")
+    @servidor.tool(name="empezar_clase", title="Empezar una clase con Beakman")
     def empezar_clase_con_datos(asignatura: str, curso: str | None = None) -> str:
         """Carga las instrucciones de Beakman para una asignatura, la lista de temas y lo que se sabe del estudiante.
 
@@ -283,11 +284,11 @@ if PRUEBA_URL:
         notas.append("Salúdale por su nombre." if f["nombre"] else "No sabes su nombre: no se lo pidas.")
         return f"{datos}\n" + "\n".join(notas) + f"\n\n{texto}"
 
-    prueba.add_tool(mapa_del_curso, title="Mapa del curso")
-    prueba.add_tool(leer_tema, title="Leer un tema")
-    prueba.add_tool(buscar_en_temario, title="Buscar en el temario")
+    servidor.add_tool(mapa_del_curso, title="Mapa del curso")
+    servidor.add_tool(leer_tema, title="Leer un tema")
+    servidor.add_tool(buscar_en_temario, title="Buscar en el temario")
 
-    @prueba.tool(title="¿Qué sabes de mí?")
+    @servidor.tool(title="¿Qué sabes de mí?")
     def que_sabes_de_mi() -> str:
         """Todo lo que Beakman guarda del estudiante. Úsala si pregunta qué sabes de él o para comprobar sus datos."""
         _pid, f = _persona()
@@ -295,7 +296,7 @@ if PRUEBA_URL:
         return (f"{_describe(f)}{acepto} No se guarda nada más: ni apellidos, ni edad, ni colegio, ni lo que escribe "
                 "en Claude. Para borrarlo todo, que diga «olvídame».")
 
-    @prueba.tool(title="Cambiar mis datos")
+    @servidor.tool(title="Cambiar mis datos")
     def cambiar_datos(curso: str | None = None, comunidad: str | None = None, nombre: str | None = None) -> str:
         """Cambia el curso (1º a 4º ESO), la comunidad autónoma o el nombre para el saludo del estudiante.
 
@@ -319,20 +320,20 @@ if PRUEBA_URL:
             nota += " Beakman todavía no tiene temario de ese curso: avísale con cariño."
         return "Apuntado. " + _describe(f) + nota
 
-    @prueba.tool(title="Presentarme")
+    @servidor.tool(title="Presentarme")
     def presentarme() -> str:
         """Para dar nombre y correo (y recibir resúmenes y avisos). Devuelve un enlace para que lo abra un adulto.
 
         Úsala si quiere que le escribas, que le saludes por su nombre o que le mandes resúmenes.
         """
         pid, f = _persona()
-        enlace = f"{PRUEBA_URL}/entrada/presentarse?e={entrada.db.enlace_presentarse(pid)}"
+        enlace = f"{ENTRADA_URL}/entrada/presentarse?e={entrada.db.enlace_presentarse(pid)}"
         ya = (f" Ahora mismo se llama {f['nombre']} y los avisos van a {f['correo']}; el enlace sirve para cambiarlo."
               if f["correo"] else "")
         return (f"Dale este enlace para que lo abra un adulto (caduca en media hora): {enlace}\nAllí escribe un nombre y "
                 f"un correo, y lo confirma desde el correo.{ya}")
 
-    @prueba.tool(title="No escribirme")
+    @servidor.tool(title="No escribirme")
     def no_escribirme(confirmado: bool = False) -> str:
         """Borra el nombre y el correo, para no recibir más correos. Beakman sigue funcionando, sin datos.
 
@@ -347,7 +348,7 @@ if PRUEBA_URL:
         entrada.db.quitar_contacto(pid)
         return "Hecho: he borrado su nombre y su correo. Beakman sigue funcionando, sin datos. " + _describe(entrada.db.ficha(pid))
 
-    @prueba.tool(title="Olvídame")
+    @servidor.tool(title="Olvídame")
     def olvidame(confirmado: bool = False) -> str:
         """Borra todo lo que Beakman guarda del estudiante y desconecta el conector.
 
@@ -360,28 +361,34 @@ if PRUEBA_URL:
         return ("Hecho: lo he borrado todo y he desconectado el conector. Si quiere volver, que lo conecte otra vez en "
                 "Ajustes → Conectores.")
 
-    PRUEBA_HOST = urlparse(PRUEBA_URL).netloc
-    prueba.custom_route("/entrada", methods=["GET"])(entrada.pagina)
-    prueba.custom_route("/entrada", methods=["POST"])(entrada.enviar)
-    prueba.custom_route("/entrada/estado", methods=["GET"])(entrada.estado)
-    prueba.custom_route("/entrada/confirmar", methods=["GET"])(entrada.confirmar)
-    prueba.custom_route("/entrada/presentarse", methods=["GET"])(entrada.presentarse)
-    prueba.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
-    prueba.custom_route("/entrada/borrar", methods=["POST"])(entrada.borrar)
-    prueba_app = prueba.streamable_http_app(
+    ENTRADA_HOST = urlparse(ENTRADA_URL).netloc
+    servidor.custom_route("/up", methods=["GET"])(up)
+    servidor.custom_route("/entrada", methods=["GET"])(entrada.pagina)
+    servidor.custom_route("/entrada", methods=["POST"])(entrada.enviar)
+    servidor.custom_route("/entrada/estado", methods=["GET"])(entrada.estado)
+    servidor.custom_route("/entrada/confirmar", methods=["GET"])(entrada.confirmar)
+    servidor.custom_route("/entrada/presentarse", methods=["GET"])(entrada.presentarse)
+    servidor.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
+    servidor.custom_route("/entrada/borrar", methods=["POST"])(entrada.borrar)
+    entrada_app = servidor.streamable_http_app(
         stateless_http=True,
         json_response=True,
         host="0.0.0.0",
-        transport_security=TransportSecuritySettings(allowed_hosts=[PRUEBA_HOST]),
+        transport_security=TransportSecuritySettings(allowed_hosts=[ENTRADA_HOST]),
     )
-    app.router.routes.insert(0, Host(PRUEBA_HOST.split(":")[0], app=prueba_app, name="prueba"))
+    if ENTRADA_HOST in ALLOWED_HOSTS and os.path.isdir(SITE_DIR):
+        # Es el nombre del conector: la web de los tutores sigue en el resto de rutas.
+        entrada_app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
+    # Delante de todo salvo el laboratorio, que tiene su propio nombre.
+    app.router.routes.insert(1 if os.path.isdir(LAB_DIR) else 0,
+                             Host(ENTRADA_HOST.split(":")[0], app=entrada_app, name="entrada"))
 
-    # Starlette no arranca el lifespan de una app montada: el de la prueba se arranca con el principal.
-    _main_lifespan, _prueba_lifespan = app.router.lifespan_context, prueba_app.router.lifespan_context
+    # Starlette no arranca el lifespan de una app montada: el de la entrada se arranca con el principal.
+    _main_lifespan, _entrada_lifespan = app.router.lifespan_context, entrada_app.router.lifespan_context
 
     @asynccontextmanager
     async def _both(a):
-        async with _main_lifespan(a), _prueba_lifespan(prueba_app):
+        async with _main_lifespan(a), _entrada_lifespan(entrada_app):
             yield
 
     app.router.lifespan_context = _both

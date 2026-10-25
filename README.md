@@ -28,14 +28,24 @@ Es un homenaje a Beakman, el científico apasionado de *El mundo de Beakman* (19
 
 ## Cómo se usa
 
-En [claude.ai → Ajustes → Conectores](https://claude.ai/settings/connectors), añade un conector personalizado:
+1. En [claude.ai → Ajustes → Conectores](https://claude.ai/settings/connectors), pulsa «Agregar conector personalizado». Nombre: `Beakman`. URL: `https://beakman.kademy.net/mcp`.
+2. Deja lo que viene marcado («Iniciar sesión ahora» y «Registrar automáticamente»). Pulsa **Agregar** y luego **Conectar**.
+3. Se abre la página de Beakman. Un adulto pone un nombre para saludar, su correo, el curso y la comunidad, y lo confirma desde el correo que le llega. O pulsa «Entrar sin datos». Claude se conecta solo.
+4. En un chat nuevo, escribe «Quiero estudiar historia con Beakman» (o mates, ciencias o lengua).
 
-- Nombre: `Beakman`
-- URL: `https://beakman.kademy.net/mcp`
+La cuenta gratuita de Claude basta (admite un conector propio). Claude exige ser mayor de 18 años.
 
-En un chat nuevo, escribe «Quiero estudiar Historia de 2º con Beakman», o pulsa **+** y elige el arranque de la asignatura. La cuenta gratuita de Claude basta (admite un conector propio). Claude exige ser mayor de 18 años.
+**¿Lo tenías conectado de antes?** Ahora pide entrar: vuelve a conectarlo una vez en Ajustes → Conectores → Beakman → Conectar. Si no sale el botón, quita el conector y añádelo otra vez con la misma URL.
 
 La [guía de uso](https://icalvete.github.io/beakman-mcp/guia/usarlo.html) tiene ideas para cada situación.
+
+## Tus datos
+
+- **Qué guarda:** el curso y la comunidad y, si se entra con datos, un nombre para saludar y el correo de un adulto. Ni apellidos, ni edad, ni colegio, ni lo que se escribe en Claude.
+- **Para qué:** para seguir tu temario, saludarte y, si diste correo, escribiros (resúmenes, recordatorios y avisos del laboratorio).
+- **Cómo cambiarlo o borrarlo:** en el chat («ahora estoy en 3º», «quiero presentarme», «no quiero más correos», «olvídame», «¿qué sabe Beakman de mí?»), desconectando y conectando otra vez el conector, o en [beakman.kademy.net/entrada/borrar](https://beakman.kademy.net/entrada/borrar).
+
+Todo, en la [página de privacidad](https://icalvete.github.io/beakman-mcp/privacidad.html).
 
 ## Cómo funciona
 
@@ -43,9 +53,9 @@ La [guía de uso](https://icalvete.github.io/beakman-mcp/guia/usarlo.html) tiene
 GitHub (este repo) ──cada 5 min──> servidor MCP (beakman.kademy.net) ──conector──> Claude
 ```
 
-- El **servidor MCP** ([mcp/](mcp/)) no ejecuta ningún modelo: entrega a Claude las instrucciones de Beakman y el temario, con cuatro herramientas (`empezar_clase`, `mapa_del_curso`, `leer_tema`, `buscar_en_temario`) y un arranque por asignatura. La IA corre en la cuenta de quien estudia.
+- El **servidor MCP** ([mcp/](mcp/)) no ejecuta ningún modelo: entrega a Claude las instrucciones de Beakman y el temario, con herramientas para la clase (`empezar_clase`, `mapa_del_curso`, `leer_tema`, `buscar_en_temario`) y para los datos de quien estudia (ver, cambiar, presentarse, no escribirme, olvídame). La IA corre en la cuenta de quien estudia.
 - Lee el contenido de este repositorio y comprueba cada cinco minutos si hay commits nuevos. **Un push basta**: nadie copia nada a mano y no hay que redesplegar.
-- No ve las conversaciones ni guarda datos de nadie.
+- Pide entrar con OAuth ([entrada.py](mcp/beakman_mcp/entrada.py)): con datos o sin datos. Guarda solo lo de la página de entrada, en SQLite, y no ve las conversaciones.
 - La imagen la publica [mcp-image.yml](.github/workflows/mcp-image.yml) en `ghcr.io/icalvete/beakman-mcp`. Se despliega en alala, el servidor de kademy, desde el repo de kademy.
 
 ```
@@ -64,7 +74,7 @@ Para probar el servidor en local: `BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.ser
 
 ## Monta el tuyo
 
-Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-mcp/guia/montar-el-tuyo.html) explica cada paso: fork, el contenedor del servidor, HTTPS y la conexión con Claude. Unos 20 minutos.
+Si eres profe o quieres tu propio temario, la [guía para montarlo](https://icalvete.github.io/beakman-mcp/guia/montar-el-tuyo.html) explica cada paso: fork, el contenedor del servidor, HTTPS, la entrada (opcional) y la conexión con Claude. Unos 20 minutos.
 
 ## Contribuir
 

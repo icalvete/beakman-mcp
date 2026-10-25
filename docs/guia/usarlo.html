@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cómo usar Beakman · Mi mundo de Beakman</title>
-<meta name="description" content="Cómo usar Beakman en Claude: conectar el servidor, empezar una clase, qué pedirle en cada situación y sus límites.">
+<meta name="description" content="Cómo usar Beakman en Claude: conectarlo, entrar con o sin datos, empezar una clase, qué pedirle, cómo cambiar o borrar tus datos y sus límites.">
 <link rel="canonical" href="https://icalvete.github.io/beakman-mcp/guia/usarlo.html">
 <meta name="theme-color" content="#A6D41E">
 <meta name="color-scheme" content="light">
@@ -38,6 +38,7 @@
       <li><a href="#conectar">Conectar Beakman a Claude</a></li>
       <li><a href="#clase">Empezar una clase</a></li>
       <li><a href="#pedir">Qué pedirle en cada situación</a></li>
+      <li><a href="#datos">Tus datos: verlos, cambiarlos o borrarlos</a></li>
       <li><a href="#acompanar">Si estudias con un estudiante</a></li>
       <li><a href="#profes">Para profesorado</a></li>
       <li><a href="#limites">Límites que conviene conocer</a></li>
@@ -48,21 +49,43 @@
   <p>Se hace una sola vez, desde la web de Claude. Después funciona también en la app del móvil y en la de escritorio.</p>
   <ol class="big">
     <li>Entra en <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>.</li>
-    <li>Pulsa <strong>Añadir conector personalizado</strong>.</li>
-    <li>Nombre: <code>Beakman</code>. URL: <code>https://beakman.kademy.net/mcp</code>. No pide usuario ni contraseña.</li>
-    <li>Pulsa <strong>Añadir</strong>. En la lista de conectores tiene que aparecer Beakman con sus cuatro herramientas.</li>
+    <li>Pulsa <strong>Agregar conector personalizado</strong>.</li>
+    <li>Nombre: <code>Beakman</code>. URL: <code>https://beakman.kademy.net/mcp</code>.</li>
+    <li>Claude verá que Beakman pide entrar y dejará marcado «Iniciar sesión ahora» y «Registrar automáticamente». Déjalo así y pulsa <strong>Agregar</strong>. Luego pulsa <strong>Conectar</strong>.</li>
+    <li>Se abre la página de Beakman: «¡Hola! Antes de empezar, preséntate». Elige una de las dos formas de entrar (las tienes justo debajo).</li>
+    <li>Cuando termines, la ventana de Claude se conecta sola. En la lista de conectores aparece Beakman con sus herramientas.</li>
   </ol>
+
+  <h3>Las dos formas de entrar</h3>
+  <ul class="cases">
+    <li><b>Entrar al laboratorio</b>Lo rellena un adulto. Un nombre para saludar (el de pila o un mote, sin apellidos), el correo del adulto, el curso (de 1º a 4º de la ESO) y la comunidad autónoma. Marca la casilla de consentimiento y pulsa el botón. Te llega un correo de Beakman: ábrelo y confirma. Listo.</li>
+    <li><b>Entrar sin datos</b>Un clic y ya está. Beakman no sabrá tu nombre ni podrá escribiros. El curso y la comunidad solo se guardan si los eliges, y no dicen quién eres. En la primera clase te preguntará el curso.</li>
+  </ul>
+  <p>Puedes empezar sin datos y presentarte más tarde. Lo cuenta el <a href="#datos">apartado 4</a>.</p>
+
+  <div class="warn">
+    <p><strong>¿Ya lo tenías conectado de antes?</strong> Ahora Beakman pide entrar, así que hay que volver a conectarlo una vez. Ve a Ajustes → Conectores → Beakman y pulsa <strong>Conectar</strong>. Si no sale ese botón, quita el conector y vuelve a añadirlo con la misma URL.</p>
+  </div>
+
+  <h3>Los permisos</h3>
+  <p>La primera vez, Claude pide permiso cada vez que Beakman usa una herramienta. Para no tener que aprobarlo todo el rato:</p>
+  <ol>
+    <li>Ve a Ajustes → Conectores → Beakman.</li>
+    <li>En el desplegable de arriba, elige <strong>Permitir siempre</strong> para todas.</li>
+    <li>Vuelve a poner <strong>Requiere aprobación</strong> solo en las que tocan tus datos: <em>Cambiar mis datos</em>, <em>Presentarme</em>, <em>No escribirme</em> y <em>Olvídame</em>.</li>
+  </ol>
+
   <div class="warn">
     <p><strong>¿Qué cuenta necesito?</strong> Con la gratuita basta: admite un conector propio, y Beakman es uno solo para las cuatro asignaturas. Tiene un límite de mensajes cada pocas horas; si se queda corto, el plan Pro lo amplía. Claude exige ser mayor de 18 años.</p>
   </div>
 
   <h2 id="clase">2. Empezar una clase</h2>
-  <p>Abre un chat nuevo y elige una de estas dos formas:</p>
+  <p>Abre un chat nuevo y escribe sin más:</p>
   <ul>
-    <li>Pulsa <strong>+</strong>, entra en Beakman y elige <strong>Beakman de Historia</strong> (o Matemáticas, Ciencias o Lengua).</li>
-    <li>O escribe sin más: «Quiero estudiar Historia de 2º con Beakman».</li>
+    <li>«Quiero estudiar historia con Beakman».</li>
+    <li>O «quiero estudiar mates con Beakman», o ciencias, o lengua.</li>
   </ul>
-  <p>Claude cargará las instrucciones de Beakman y el temario del curso, saludará como Beakman y preguntará por dónde vas. En Ciencias de 2º preguntará si toca Física y Química o Biología y Geología.</p>
+  <p>Claude cargará las instrucciones de Beakman y el temario de tu curso, y saludará como Beakman. Si entraste con datos, ya sabe tu nombre y tu curso. Si no, te preguntará el curso. En Ciencias de 2º preguntará si toca Física y Química o Biología y Geología.</p>
   <p>Si en algún momento Claude responde con su estilo de siempre y no como Beakman, dile: «Sigue como Beakman».</p>
 
   <h2 id="pedir">3. Qué pedirle en cada situación</h2>
@@ -78,23 +101,48 @@
     <p><strong>Un truco.</strong> Cuando creas que ya lo tienes, explícaselo tú a Beakman con tus palabras y pídele que te diga si es correcto. Explicar algo es la mejor forma de comprobar que lo entiendes.</p>
   </div>
 
-  <h2 id="acompanar">4. Si estudias con un estudiante</h2>
+  <h2 id="datos">4. Tus datos: verlos, cambiarlos o borrarlos</h2>
+  <p>Beakman guarda solo lo que se da al entrar. Con datos: un nombre para saludar, el correo de un adulto, el curso y la comunidad. Sin datos: el curso y la comunidad, si los eliges. Nada más: ni apellidos, ni edad, ni colegio, ni lo que escribís en Claude. Los detalles, en <a href="../privacidad.html">privacidad</a>.</p>
+
+  <h3>Desde el chat</h3>
+  <ul class="cases">
+    <li><b>Ha cambiado algo</b>Díselo tal cual: <q>Ahora estoy en 3º</q>, <q>Me he mudado a Andalucía</q> o <q>Llámame Lu</q>.</li>
+    <li><b>Quiero presentarme</b>Si entraste sin datos, Beakman te da un enlace de un solo uso para poner nombre y correo. También sirve para cambiar el correo.</li>
+    <li><b>No quiero más correos</b>Borra el nombre y el correo. Beakman sigue funcionando, sin datos.</li>
+    <li><b>Olvídame</b>Lo borra todo y desconecta.</li>
+    <li><b>¿Qué sabe Beakman de mí?</b>Te enseña todo lo que guarda.</li>
+  </ul>
+  <div class="warn">
+    <p><strong>Nombra a Beakman.</strong> Si escribes solo «¿qué sabes de mí?» fuera de una clase, puede contestar Claude hablando de sí mismo. Di «Beakman» en la frase o pregúntalo dentro de una clase.</p>
+  </div>
+
+  <h3>Desde los conectores</h3>
+  <p>En Ajustes → Conectores, pulsa <strong>Desconectar</strong> en Beakman y luego <strong>Conectar</strong>. Sale otra vez la página de entrada y puedes elegir de nuevo. Ojo: desconectar solo no borra nada.</p>
+
+  <h3>Desde la web, sin entrar en Claude</h3>
+  <p>Entra en <a href="https://beakman.kademy.net/entrada/borrar">beakman.kademy.net/entrada/borrar</a> y escribe el correo. Te llega un enlace. Al pulsarlo, se borra todo.</p>
+
+  <h3>Cada septiembre</h3>
+  <p>Al empezar el curso, Beakman pregunta una vez si has cambiado de curso. No lo sube él solo.</p>
+
+  <h2 id="acompanar">5. Si estudias con un estudiante</h2>
   <ul>
     <li><strong>Sentaos juntos.</strong> Que pregunte él o ella, en voz alta, y tú escribes. Así aprendéis los dos.</li>
     <li><strong>Que os lo cuente.</strong> Al terminar, pídele que te explique lo que ha aprendido. Si sabe explicarlo, ha servido.</li>
     <li><strong>Pistas, no soluciones.</strong> Si veis que Beakman da una solución completa, pedidle que vuelva atrás y guíe paso a paso.</li>
-    <li><strong>Sin datos personales.</strong> Ni nombre completo, ni colegio, ni dirección. Para estudiar no hacen falta.</li>
+    <li><strong>La página de entrada la rellena el adulto.</strong> Si preferís no dar datos, entrad sin datos.</li>
+    <li><strong>Sin datos personales en el chat.</strong> Ni nombre completo, ni colegio, ni dirección. Para estudiar no hacen falta.</li>
     <li><strong>Si algo no cuadra con el libro, manda el libro.</strong> Beakman puede equivocarse.</li>
   </ul>
 
-  <h2 id="profes">5. Para profesorado</h2>
+  <h2 id="profes">6. Para profesorado</h2>
   <ul>
     <li><strong>Sigue un temario general de la LOMLOE.</strong> Si tu programación es distinta, Beakman ayuda igual, pero avisa cuando algo no está en su temario.</li>
     <li><strong>Puedes adaptarlo.</strong> El contenido tiene licencia CC BY-SA 4.0. Con la <a href="montar-el-tuyo.html">guía para montarlo</a> tienes tu propio servidor con tu temario.</li>
     <li><strong>Si ves un error en el temario,</strong> <a href="https://github.com/icalvete/beakman-mcp/issues">abre una incidencia</a>. Se corrige en el repositorio y llega a todos en minutos.</li>
   </ul>
 
-  <h2 id="limites">6. Límites que conviene conocer</h2>
+  <h2 id="limites">7. Límites que conviene conocer</h2>
   <ul>
     <li><strong>Es una IA.</strong> Puede equivocarse, inventar un dato o, con mucha insistencia, dar más de lo que debe.</li>
     <li><strong>Claude exige ser mayor de 18 años.</strong></li>

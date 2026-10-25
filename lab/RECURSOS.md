@@ -18,8 +18,8 @@ Guía para escribir un recurso nuevo en `lab/site/es/<asignatura>/<curso>/<id>/i
 - Lo que la persona marca (respuestas, aciertos) puede guardarse en `localStorage`, siempre en `try/catch`, y la
   página tiene que funcionar sin él.
 - Datos históricos: solo hechos aceptados. Si una fecha es aproximada, dilo ("hacia el 865").
-- Libro de referencia de la probadora: Vicens Vives, Geografía e Historia 2º ESO, Comunidad de Madrid, Tema 1
-  "La huella andalusí". No copiar texto del libro: se puede citar el título de un apartado; las explicaciones son nuestras.
+- Referencia: el Tema 1 de Geografía e Historia de 2º ESO de la Comunidad de Madrid, "La huella andalusí". No se
+  nombra la editorial. No copiar texto del libro: se puede citar el título de un apartado; las explicaciones son nuestras.
 
 ## Esqueleto
 Ver `lab/_modelo.html`. Copiarlo a `lab/site/es/<asignatura>/<curso>/<id>/index.html` y rellenar (las rutas relativas ya cuentan con esa profundidad).

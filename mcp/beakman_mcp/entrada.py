@@ -1,4 +1,4 @@
-"""La entrada al laboratorio: OAuth propio para el conector de Beakman, de momento solo en el nombre de prueba.
+"""La entrada al laboratorio: OAuth propio para el conector de Beakman.
 
 Al conectar el conector, Claude abre /entrada. Un adulto escribe un nombre para el saludo, un correo, el curso y
 la comunidad autónoma, y marca la casilla de consentimiento. Le llega un correo de Beakman; al confirmarlo, la
@@ -262,7 +262,7 @@ class Entrada:
         self.limites = Limites()
         self.turnstile_site = os.environ.get("TURNSTILE_SITE_KEY", "")
         self.turnstile_secret = os.environ.get("TURNSTILE_SECRET_KEY", "")
-        self.permitidos = {_normaliza_correo(c) for c in os.environ.get("BEAKMAN_PRUEBA_CORREOS", "").split(",")
+        self.permitidos = {_normaliza_correo(c) for c in os.environ.get("BEAKMAN_ENTRADA_CORREOS", "").split(",")
                            if c.strip()}
         self.smtp = {k: os.environ.get(f"BEAKMAN_SMTP_{k.upper()}", "") for k in ("host", "port", "user", "password")}
 
@@ -409,7 +409,7 @@ class Entrada:
             errores.append("No he podido comprobar que no eres un robot. Inténtalo otra vez.")
         # Lista cerrada: vacía no entra nadie; "*" abre la entrada a cualquiera. Sin datos no se manda ningún correo.
         if not errores and not sin_datos and "*" not in self.permitidos and datos["correo"] not in self.permitidos:
-            errores.append("Esta entrada es de prueba y solo admite unos correos concretos.")
+            errores.append("Ahora mismo la entrada solo admite unos correos concretos.")
         if not errores and not self.limites.permite(f"ip:{ip}", 10, 3600):
             errores.append("Demasiados intentos. Espera un rato y vuelve a probar.")
         if not errores and not sin_datos and not self.limites.permite(f"correo:{datos['correo']}", 3, 3600):
@@ -454,7 +454,7 @@ class Entrada:
         t = request.query_params.get("t", "")
         sol = self.db.one("SELECT * FROM solicitudes WHERE confirmacion = ?", _hash(t)) if t else None
         if not sol or sol["creada"] < time.time() - SOLICITUD_TTL:
-            return _html("El enlace ha caducado", CADUCADA, 400)
+            return _html("Este enlace ya no sirve", ENLACE_USADO, 400)
         datos = json.loads(sol["datos"])
         if sol["tipo"] == "borrar":
             pid = self.db.persona_por_correo(datos["correo"])
@@ -617,6 +617,9 @@ def _html(titulo: str, cuerpo: str, status: int = 200, head: str = "") -> HTMLRe
 
 
 CADUCADA = "<p>Vuelve a Claude y pulsa otra vez <b>Conectar</b>.</p>"
+# Los enlaces de los correos son de un solo uso y caducan a la media hora: pulsarlo otra vez no es un error.
+ENLACE_USADO = ("<p class='lead'>Este enlace ya se ha usado o ha caducado.</p><p>Si ya estás conectado en Claude, no "
+                "tienes que hacer nada. Si no, vuelve a Claude y pulsa <b>Conectar</b>.</p>")
 CAMBIAR = ("<p class='note'>¿Quieres cambiar de opción más adelante? En Claude, ve a Ajustes → Conectores, desconecta "
            "Beakman y vuelve a conectarlo: esta página saldrá otra vez. También puedes pedírselo a Beakman en el chat "
            "(«quiero presentarme», «olvídame»). Y si ya diste tus datos y quieres borrarlos sin entrar en Claude: "

@@ -78,6 +78,19 @@
     <tr><td><code>BEAKMAN_ALLOWED_HOSTS</code></td><td>Los dominios con los que se puede llamar al servidor, separados por comas. Protege contra ataques de <em>DNS rebinding</em>.</td></tr>
     <tr><td><code>BEAKMAN_REFRESH_SECONDS</code></td><td>Cada cuánto mira si hay cambios. Por defecto, 300.</td></tr>
   </table>
+
+  <h3 id="entrada">Opcional: la entrada</h3>
+  <p>Sin estas variables, el servidor no pide entrar y no guarda nada de nadie. Con <code>BEAKMAN_ENTRADA_URL</code>, Claude abre la página «Preséntate» al conectar, como en beakman.kademy.net. Monta un volumen en <code>/data</code> para que la base de datos no se pierda (<code>-v beakman-data:/data</code>).</p>
+  <table>
+    <tr><th>Variable</th><th>Para qué</th></tr>
+    <tr><td><code>BEAKMAN_ENTRADA_URL</code></td><td>La URL base del servidor con entrada, por ejemplo <code>https://beakman.tudominio.com</code>. Sin ella, no hay entrada.</td></tr>
+    <tr><td><code>BEAKMAN_DB</code></td><td>Dónde va la base de datos SQLite. Por defecto, <code>/data/beakman.sqlite</code>.</td></tr>
+    <tr><td><code>BEAKMAN_ENTRADA_CORREOS</code></td><td>Los correos que pueden entrar con datos, separados por comas. Vacía, no entra nadie con datos. Con <code>*</code>, cualquiera. Entrar sin datos funciona siempre.</td></tr>
+    <tr><td><code>BEAKMAN_SMTP_HOST</code>, <code>_PORT</code>, <code>_USER</code>, <code>_PASSWORD</code></td><td>El servidor de correo para mandar las confirmaciones y los enlaces.</td></tr>
+    <tr><td><code>BEAKMAN_MAIL_FROM</code></td><td>El remitente de los correos.</td></tr>
+    <tr><td><code>TURNSTILE_SITE_KEY</code>, <code>TURNSTILE_SECRET_KEY</code></td><td>Las claves de Cloudflare Turnstile, la comprobación contra robots de la página de entrada. Sin ellas, no se comprueba (solo para probar en local).</td></tr>
+  </table>
+  <p>Si guardas datos de familias, cuenta en tu web qué guardas y cómo se borra, como hace la <a href="../privacidad.html">página de privacidad</a> de Beakman.</p>
   <p>Para probar en local con una copia del repositorio, sin GitHub: <code>BEAKMAN_REPO_DIR=$PWD uvicorn beakman_mcp.server:app --app-dir mcp</code>.</p>
 
   <h2 id="https">3. Ponlo detrás de HTTPS</h2>
@@ -88,7 +101,7 @@
   <p>Crea en tu DNS un registro <code>A</code> para <code>beakman.tudominio.com</code> con la IP del servidor.</p>
 
   <h2 id="claude">4. Conéctalo a Claude</h2>
-  <p>En <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>, pulsa <strong>Añadir conector personalizado</strong> con la URL <code>https://beakman.tudominio.com/mcp</code>. En un chat nuevo, escribe «Quiero estudiar Historia de 2º con Beakman».</p>
+  <p>En <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>, pulsa <strong>Agregar conector personalizado</strong> con la URL <code>https://beakman.tudominio.com/mcp</code>. Si usas la entrada, deja lo que viene marcado, pulsa <strong>Agregar</strong> y luego <strong>Conectar</strong>. En un chat nuevo, escribe «Quiero estudiar historia con Beakman».</p>
   <p>Sirve cualquier cliente MCP que admita servidores remotos por HTTP. Hoy, desde España, el que lo permite en cuentas personales es Claude.</p>
 
   <h2 id="editar">5. Edita y listo</h2>
@@ -108,7 +121,7 @@
     <tr><td><code>/up</code> da error al arrancar</td><td>No ha podido leer el repositorio. Comprueba que el fork es público y el nombre de <code>BEAKMAN_GITHUB_REPO</code>.</td></tr>
     <tr><td>El servidor responde 400</td><td>El dominio no está en <code>BEAKMAN_ALLOWED_HOSTS</code>.</td></tr>
     <tr><td>Claude no consigue conectar</td><td>La URL tiene que ser pública, con HTTPS y acabar en <code>/mcp</code>.</td></tr>
-    <tr><td>Claude no habla como Beakman</td><td>Pídele que empiece la clase con Beakman, o usa el arranque de la asignatura desde el botón <strong>+</strong>.</td></tr>
+    <tr><td>Claude no habla como Beakman</td><td>Pídele que empiece la clase con Beakman: «Quiero estudiar historia con Beakman».</td></tr>
     <tr><td>Un cambio no aparece</td><td>Espera cinco minutos y abre un chat nuevo. <code>/up</code> dice qué commit está usando.</td></tr>
   </table>
 

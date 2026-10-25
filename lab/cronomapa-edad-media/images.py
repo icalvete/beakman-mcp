@@ -94,7 +94,7 @@ WANT = {
     "c_kairuan": ("Cairuán", "Cairuán"), "c_aquisgran": ("Aquisgrán", "Aquisgrán"), "c_paris": ("París", "París"),
     "c_venecia": ("Venecia", "Venecia"), "c_genova": ("Génova", "Génova"), "c_florencia": ("Florencia", "Florencia"),
     "c_londres": ("Londres", "Londres"), "c_tolosa": ("Toulouse", "Tolosa"),
-    # añadidos para el libro de Madrid (Tema 1 de Vicens Vives)
+    # añadidos para el libro de Madrid (Tema 1 de 2º de la Comunidad de Madrid)
     "poitiers": ("Batalla de Poitiers (732)", "Carlos Martel en la batalla de Poitiers"),
     "lotario": ("Lotario I", "Lotario I, nieto de Carlomagno"),
     "mayrit": ("Muralla árabe de Madrid", "Restos de la muralla árabe de Madrid"),

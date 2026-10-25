@@ -31,7 +31,7 @@
   {"@type": "Question", "name": "¿Cuánto cuesta?", "acceptedAnswer": {"@type": "Answer", "text": "Beakman es gratis. Se usa dentro de Claude: la cuenta gratuita admite un conector propio, con un límite de mensajes; el plan Pro lo amplía."}},
   {"@type": "Question", "name": "¿Le va a hacer los deberes?", "acceptedAnswer": {"@type": "Answer", "text": "Está instruido para no hacerlo: guía paso a paso para que se llegue a la respuesta. Es una IA y no es infalible."}},
   {"@type": "Question", "name": "¿Puedo ver qué instrucciones tiene?", "acceptedAnswer": {"@type": "Answer", "text": "Sí. Las instrucciones y el temario completos son públicos en GitHub."}},
-  {"@type": "Question", "name": "¿Qué datos ve?", "acceptedAnswer": {"@type": "Answer", "text": "El servidor de Beakman solo recibe qué asignatura, curso o tema se pide. Las conversaciones las trata Anthropic con la cuenta de quien estudia."}}
+  {"@type": "Question", "name": "¿Qué datos guarda?", "acceptedAnswer": {"@type": "Answer", "text": "Lo justo: el curso y la comunidad autónoma y, si un adulto los da, un nombre para saludar y su correo. Se puede entrar sin datos. No ve las conversaciones: esas las trata Anthropic con la cuenta de quien estudia."}}
  ]
 }
 </script>
@@ -52,6 +52,7 @@
     <a href="https://lab.beakman.kademy.net/">Laboratorio</a>
     <a href="guia/usarlo.html">Cómo se usa</a>
     <a href="guia/montar-el-tuyo.html">Monta el tuyo</a>
+    <a class="hide-sm" href="#datos">Tus datos</a>
     <a class="hide-sm" href="#preguntas">Preguntas</a>
     <a class="hide-sm" href="#homenaje">Homenaje</a>
     <a class="nav-sponsor" href="https://github.com/sponsors/icalvete">♥ Apoya</a>
@@ -188,14 +189,17 @@
   <section id="como-se-usa" class="tint">
     <div class="wrap">
       <div class="head">
-        <h2>Cómo se usa</h2>
+        <h2>Cómo conectarlo</h2>
         <p>Beakman funciona dentro de Claude como un conector. Se añade una vez y sirve para las cuatro asignaturas.</p>
       </div>
       <ol class="steps">
-        <li><strong>Añade el conector</strong>En <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>, pulsa «Añadir conector personalizado». Nombre: <code>Beakman</code>. URL: <code>https://beakman.kademy.net/mcp</code></li>
-        <li><strong>Empieza una clase</strong>En un chat nuevo, pulsa <b>+</b> y elige «Beakman de Historia» (o la asignatura que toque). O escribe: «Quiero estudiar Historia de 2º con Beakman».</li>
-        <li><strong>Pregunta lo que quieras</strong>«Mañana tengo examen de fracciones.» «No entiendo el feudalismo.» O escribe «Ayuda» y te guía.</li>
+        <li><strong>Añade el conector</strong>En <a href="https://claude.ai/settings/connectors">claude.ai → Ajustes → Conectores</a>, pulsa «Agregar conector personalizado». Nombre: <code>Beakman</code>. URL: <code>https://beakman.kademy.net/mcp</code>. Deja lo que viene marcado, pulsa <b>Agregar</b> y después <b>Conectar</b>.</li>
+        <li><strong>Preséntate</strong>Se abre una página de Beakman. Un adulto pone un nombre para saludar, su correo, el curso y la comunidad, y lo confirma desde el correo que le llega. O pulsa «Entrar sin datos». Claude se conecta solo.</li>
+        <li><strong>Empieza una clase</strong>En un chat nuevo, escribe «Quiero estudiar historia con Beakman» (o mates, ciencias o lengua). Luego pregunta lo que quieras: «Mañana tengo examen de fracciones».</li>
       </ol>
+      <div class="note">
+        <p><strong>¿Ya lo tenías conectado de antes?</strong> Ahora Beakman pide entrar, así que hay que volver a conectarlo una vez. Ve a Ajustes → Conectores → Beakman y pulsa <b>Conectar</b>. Si no sale ese botón, quita el conector y vuelve a añadirlo con la misma URL.</p>
+      </div>
       <div class="note">
         <p><strong>Lo que necesitas.</strong> Una cuenta de Claude. Con la gratuita basta, porque permite un conector propio, aunque tiene un límite de mensajes cada pocas horas. El plan Pro lo amplía. Claude exige ser mayor de 18 años: pensado para que un adulto estudie o repase, también acompañando a un estudiante.</p>
       </div>
@@ -321,6 +325,39 @@
     </div>
   </section>
 
+  <section id="datos">
+    <div class="wrap">
+      <div class="head">
+        <h2>Tus datos</h2>
+        <p>Beakman guarda lo justo para dar la clase. Y lo puedes ver, cambiar o borrar cuando quieras.</p>
+      </div>
+      <div class="split">
+        <div class="box">
+          <h3>Qué guarda y para qué</h3>
+          <ul>
+            <li><strong>El curso y la comunidad autónoma.</strong> Así sigue tu temario. No dicen quién eres.</li>
+            <li><strong>Un nombre para saludar y el correo de un adulto,</strong> solo si se dan al entrar. Sirven para saludarte y para escribiros: resúmenes, recordatorios y avisos del laboratorio.</li>
+            <li><strong>Nada más.</strong> Ni apellidos, ni edad, ni colegio, ni lo que escribís en Claude.</li>
+            <li>Si entras sin datos, no sabe tu nombre ni puede escribiros. Te preguntará el curso en la primera clase.</li>
+          </ul>
+        </div>
+        <div class="box">
+          <h3>Cómo cambiarlo o borrarlo</h3>
+          <ul>
+            <li>Díselo en el chat: «ahora estoy en 3º», «llámame Lu» o «quiero presentarme».</li>
+            <li>«¿Qué sabe Beakman de mí?» te enseña todo lo que guarda.</li>
+            <li>«No quiero más correos» borra el nombre y el correo. Beakman sigue funcionando.</li>
+            <li>«Olvídame» lo borra todo y desconecta.</li>
+            <li>Sin entrar en Claude: en <a href="https://beakman.kademy.net/entrada/borrar">beakman.kademy.net/entrada/borrar</a> escribes el correo y te llega un enlace para borrarlo todo.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note">
+        <p><strong>Todos los detalles,</strong> en la <a href="privacidad.html">página de privacidad</a> y en la <a href="guia/usarlo.html#datos">guía de uso</a>.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="como-funciona">
     <div class="wrap">
       <div class="head">
@@ -383,7 +420,7 @@
             <li><code>beakman/base.md</code> es la personalidad y el método, comunes a las cuatro asignaturas. Cada asignatura añade lo suyo en su <code>asignatura.md</code>, y los temas van en <code>1eso/</code> y <code>2eso/</code>.</li>
             <li>El servidor de Beakman lee el repositorio cada cinco minutos. Si se corrige un tema, la siguiente clase ya lo tiene.</li>
             <li>Claude se conecta al servidor con <a href="https://modelcontextprotocol.io/">MCP</a>, el estándar abierto para conectar herramientas a una IA. Al empezar, carga las instrucciones de Beakman y el temario del curso.</li>
-            <li>La IA corre en la cuenta de Claude de quien estudia. El servidor no ve las conversaciones: solo qué tema se pide.</li>
+            <li>La IA corre en la cuenta de Claude de quien estudia. El servidor no ve las conversaciones. Solo sabe qué tema se pide y lo que se dio al entrar: <a href="#datos">tus datos</a>.</li>
           </ol>
           <p>¿Quieres tu propio Beakman, con tu temario? <a href="guia/montar-el-tuyo.html">Aquí tienes la guía</a>.</p>
         </div>
@@ -400,7 +437,8 @@
         <details><summary>¿Cuánto cuesta?</summary><p>Beakman es gratis. Lo que se usa es Claude: con la cuenta gratuita basta, porque admite un conector propio, pero tiene un límite de mensajes cada pocas horas. Si se queda corto, el plan Pro cuesta unos 20 $ al mes más IVA. Lo paga quien lo usa, no el proyecto.</p></details>
         <details><summary>¿Le va a hacer los deberes?</summary><p>Está instruido para no hacerlo. Si le piden la respuesta de un ejercicio, guía paso a paso para que se llegue a ella.</p><p>Es una IA y no es infalible: con insistencia puede acabar dando más de la cuenta.</p></details>
         <details><summary>¿Puedo ver qué instrucciones tiene?</summary><p>Sí, y es una de las razones del proyecto. <a href="https://github.com/icalvete/beakman-mcp/blob/main/beakman/base.md">Las instrucciones comunes</a>, las de cada asignatura y todo el temario son públicos en GitHub.</p></details>
-        <details><summary>¿Qué datos ve?</summary><p>El servidor de Beakman solo recibe qué asignatura, curso o tema se pide. No ve las conversaciones: esas las trata Anthropic, la empresa de Claude, con la cuenta de quien estudia. Más detalles en <a href="privacidad.html">privacidad</a>.</p></details>
+        <details><summary>¿Qué datos guarda?</summary><p>Lo justo: el curso y la comunidad autónoma. Si un adulto los da al entrar, también un nombre para saludar y su correo. Se puede entrar sin datos.</p><p>No ve las conversaciones: esas las trata Anthropic, la empresa de Claude, con la cuenta de quien estudia. Más detalles en <a href="#datos">tus datos</a> y en <a href="privacidad.html">privacidad</a>.</p></details>
+        <details><summary>Ya lo tenía conectado y ahora no va</summary><p>Ahora Beakman pide entrar. Hay que volver a conectarlo una vez: Ajustes → Conectores → Beakman → <b>Conectar</b>. Si no sale ese botón, quita el conector y añádelo otra vez con la misma URL.</p></details>
         <details><summary>¿Qué edad hace falta?</summary><p>Claude exige ser mayor de 18 años. Beakman sigue el temario de 1º y 2º de la ESO, así que está pensado para adultos que quieren aprender o repasar ese nivel, también estudiando junto a un estudiante.</p></details>
         <details><summary>¿Por qué Claude y no ChatGPT o Gemini?</summary><p>Beakman empezó como GPTs de ChatGPT. OpenAI los retira el 11 de diciembre de 2026, y los Gems de Gemini desaparecen en noviembre de 2026. Los conectores MCP sí duran, porque son un estándar abierto, pero hoy, desde España, solo Claude deja añadir uno propio. Cuando ChatGPT o Gemini lo permitan, el mismo servidor les valdrá.</p></details>
         <details><summary>¿Sirve para 2º de la ESO?</summary><p>Sí. Las cuatro asignaturas tienen ya el temario de 2º, en borrador: sigue el currículo general de la LOMLOE y se está ajustando a los libros de clase. En Ciencias tiene Física y Química y Biología y Geología, porque depende de la comunidad autónoma.</p></details>
