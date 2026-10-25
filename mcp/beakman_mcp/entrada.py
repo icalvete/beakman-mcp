@@ -40,7 +40,7 @@ from mcp.server.auth.provider import (
 )
 from mcp.shared.auth import OAuthClientInformationFull, OAuthToken
 from starlette.requests import Request
-from starlette.responses import HTMLResponse, JSONResponse, Response
+from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse, Response
 
 from .content import normalize
 
@@ -69,6 +69,10 @@ def curso_escolar(ahora: datetime | None = None) -> str:
     d = ahora or datetime.now(timezone.utc)
     y = d.year if d.month >= 9 else d.year - 1
     return f"{y}-{str(y + 1)[2:]}"
+
+
+def _hoy() -> str:
+    return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
 def _hash(token: str) -> str:
@@ -107,11 +111,14 @@ CREATE TABLE IF NOT EXISTS contactos (
   consentimiento TEXT NOT NULL, consentimiento_fecha TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS progreso (
   persona_id TEXT PRIMARY KEY REFERENCES personas(id) ON DELETE CASCADE,
-  curso TEXT NOT NULL, curso_escolar TEXT NOT NULL, comunidad TEXT NOT NULL, actualizado TEXT NOT NULL);
+  curso TEXT, curso_escolar TEXT, comunidad TEXT, actualizado TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS clientes (client_id TEXT PRIMARY KEY, info TEXT NOT NULL, creado TEXT NOT NULL);
+-- tipo: entrar (la ventana de Claude), presentarse (dar nombre y correo a una entrada sin datos) o borrar.
 CREATE TABLE IF NOT EXISTS solicitudes (
-  id TEXT PRIMARY KEY, client_id TEXT NOT NULL, params TEXT NOT NULL, creada REAL NOT NULL,
-  datos TEXT, confirmacion TEXT, redirect TEXT);
+  id TEXT PRIMARY KEY, tipo TEXT NOT NULL DEFAULT 'entrar', client_id TEXT, params TEXT, persona_id TEXT,
+  creada REAL NOT NULL, datos TEXT, confirmacion TEXT, redirect TEXT);
+-- enlaces de «preséntate» que da Beakman desde el chat, de un solo uso
+CREATE TABLE IF NOT EXISTS enlaces (hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS codigos (code TEXT PRIMARY KEY, datos TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS tokens (
   hash TEXT PRIMARY KEY, tipo TEXT NOT NULL, client_id TEXT NOT NULL, persona_id TEXT NOT NULL,
@@ -126,7 +133,12 @@ class Almacen:
         self.db.row_factory = sqlite3.Row
         self.db.execute("PRAGMA foreign_keys = ON")
         self.db.execute("PRAGMA journal_mode = WAL")
+        if self.db.execute("PRAGMA user_version").fetchone()[0] < 2:
+            # Versión 2 (entrada sin datos): progreso admite huecos y solicitudes tiene tipo. La 1 solo existió en
+            # la prueba, sin datos de nadie, así que estas dos tablas se rehacen.
+            self.db.executescript("DROP TABLE IF EXISTS progreso; DROP TABLE IF EXISTS solicitudes;")
         self.db.executescript(SCHEMA)
+        self.db.execute("PRAGMA user_version = 2")
         self.lock = threading.Lock()
 
     def q(self, sql: str, *args):
@@ -142,35 +154,65 @@ class Almacen:
         self.q("DELETE FROM solicitudes WHERE creada < ?", now - SOLICITUD_TTL)
         self.q("DELETE FROM codigos WHERE caduca < ?", now)
         self.q("DELETE FROM tokens WHERE caduca < ?", int(now))
+        self.q("DELETE FROM enlaces WHERE caduca < ?", now)
+        # Entradas sin datos que ya no usa nadie (se desconectó el conector y caducaron sus tokens).
+        self.q("DELETE FROM personas WHERE id NOT IN (SELECT persona_id FROM contactos) "
+               "AND id NOT IN (SELECT persona_id FROM tokens) "
+               "AND id NOT IN (SELECT json_extract(datos, '$.subject') FROM codigos)")
 
     # personas
     def persona_por_correo(self, correo: str) -> str | None:
         row = self.one("SELECT persona_id FROM contactos WHERE correo = ?", correo)
         return row["persona_id"] if row else None
 
-    def guardar_persona(self, datos: dict) -> str:
-        """Crea la persona, o la reutiliza si ese correo ya entró antes (conserva su progreso)."""
-        hoy = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        pid = self.persona_por_correo(datos["correo"])
-        if not pid:
-            pid = secrets.token_hex(16)
-            self.q("INSERT INTO personas (id, creada) VALUES (?, ?)", pid, hoy)
+    def nueva_persona(self) -> str:
+        pid = secrets.token_hex(16)
+        self.q("INSERT INTO personas (id, creada) VALUES (?, ?)", pid, _hoy())
+        return pid
+
+    def guardar_progreso(self, pid: str, curso: str | None = None, comunidad: str | None = None):
+        """Solo cambia lo que llega; el curso siempre con su curso escolar."""
+        self.q("INSERT INTO progreso (persona_id, actualizado) VALUES (?, ?) ON CONFLICT(persona_id) DO NOTHING",
+               pid, _hoy())
+        if curso:
+            self.q("UPDATE progreso SET curso = ?, curso_escolar = ?, actualizado = ? WHERE persona_id = ?",
+                   curso, curso_escolar(), _hoy(), pid)
+        if comunidad:
+            self.q("UPDATE progreso SET comunidad = ?, actualizado = ? WHERE persona_id = ?", comunidad, _hoy(), pid)
+
+    def guardar_contacto(self, pid: str, correo: str, nombre: str):
+        otra = self.persona_por_correo(correo)
+        if otra and otra != pid:
+            raise ValueError("Ese correo ya está en otra entrada del laboratorio.")
         self.q("INSERT INTO contactos VALUES (?, ?, ?, ?, ?) ON CONFLICT(persona_id) DO UPDATE SET "
-               "nombre = excluded.nombre, consentimiento = excluded.consentimiento, "
+               "correo = excluded.correo, nombre = excluded.nombre, consentimiento = excluded.consentimiento, "
                "consentimiento_fecha = excluded.consentimiento_fecha",
-               pid, datos["correo"], datos["nombre"], CONSENTIMIENTO, hoy)
-        self.q("INSERT INTO progreso VALUES (?, ?, ?, ?, ?) ON CONFLICT(persona_id) DO UPDATE SET "
-               "curso = excluded.curso, curso_escolar = excluded.curso_escolar, "
-               "comunidad = excluded.comunidad, actualizado = excluded.actualizado",
-               pid, datos["curso"], curso_escolar(), datos["comunidad"], hoy)
+               pid, correo, nombre, CONSENTIMIENTO, _hoy())
+
+    def guardar_persona(self, datos: dict) -> str:
+        """Entrada con datos: crea la persona, o la reutiliza si ese correo ya entró antes (conserva su progreso)."""
+        pid = self.persona_por_correo(datos["correo"]) or self.nueva_persona()
+        self.guardar_contacto(pid, datos["correo"], datos["nombre"])
+        self.guardar_progreso(pid, datos["curso"], datos["comunidad"])
         return pid
 
     def ficha(self, pid: str) -> dict | None:
+        """Lo que se sabe de la persona. `correo` y `nombre` faltan si entró sin datos."""
+        if not self.one("SELECT id FROM personas WHERE id = ?", pid):
+            return None
         c = self.one("SELECT correo, nombre, consentimiento_fecha FROM contactos WHERE persona_id = ?", pid)
         p = self.one("SELECT curso, curso_escolar, comunidad FROM progreso WHERE persona_id = ?", pid)
-        if not c:
-            return None
-        return {**dict(c), **(dict(p) if p else {})}
+        return {"correo": None, "nombre": None, "curso": None, "curso_escolar": None, "comunidad": None,
+                **(dict(c) if c else {}), **(dict(p) if p else {})}
+
+    def quitar_contacto(self, pid: str):
+        """Borra nombre y correo; la entrada sigue, sin datos."""
+        self.q("DELETE FROM contactos WHERE persona_id = ?", pid)
+
+    def enlace_presentarse(self, pid: str) -> str:
+        token = secrets.token_urlsafe(24)
+        self.q("INSERT INTO enlaces VALUES (?, ?, ?)", _hash(token), pid, time.time() + SOLICITUD_TTL)
+        return token
 
     def olvidar(self, pid: str):
         self.q("DELETE FROM tokens WHERE persona_id = ?", pid)
@@ -301,49 +343,105 @@ class Entrada:
             return None
         return row
 
+    def _ip(self, request: Request) -> str:
+        return request.headers.get("x-forwarded-for", request.client.host if request.client else "").split(",")[0]
+
+    def _enlace(self, token: str) -> str | None:
+        row = self.db.one("SELECT persona_id FROM enlaces WHERE hash = ? AND caduca > ?", _hash(token or ""), time.time())
+        return row["persona_id"] if row else None
+
+    def _codigo(self, sol, pid: str) -> str:
+        """El código de un solo uso para Claude, y la dirección de vuelta a su ventana."""
+        params = AuthorizationParams.model_validate_json(sol["params"])
+        code = AuthorizationCode(
+            code=secrets.token_urlsafe(32), scopes=params.scopes or [], expires_at=time.time() + CODIGO_TTL,
+            client_id=sol["client_id"], code_challenge=params.code_challenge, redirect_uri=params.redirect_uri,
+            redirect_uri_provided_explicitly=params.redirect_uri_provided_explicitly, resource=params.resource,
+            subject=pid)
+        self.db.q("INSERT INTO codigos VALUES (?, ?, ?)", code.code, code.model_dump_json(), code.expires_at)
+        redirect = construct_redirect_uri(str(params.redirect_uri), code=code.code, state=params.state)
+        self.db.q("UPDATE solicitudes SET redirect = ? WHERE id = ?", redirect, sol["id"])
+        return redirect
+
     async def pagina(self, request: Request) -> Response:
+        """La ventana que abre Claude al conectar: con datos o sin datos."""
         sid = request.query_params.get("s", "")
         if not self._solicitud(sid):
-            return _html("La entrada ha caducado", "<p>Vuelve a Claude y pulsa otra vez <b>Conectar</b>.</p>", 400)
-        return _html("Antes de empezar, preséntate", _formulario(sid, self.turnstile_site))
+            return _html("La entrada ha caducado", CADUCADA, 400)
+        return _html("Antes de empezar, preséntate", _formulario("s", sid, self.turnstile_site))
+
+    async def presentarse(self, request: Request) -> Response:
+        """El enlace que da Beakman desde el chat a una entrada sin datos."""
+        e = request.query_params.get("e", "")
+        if not self._enlace(e):
+            return _html("El enlace ha caducado", "<p>Pídele a Beakman otro: «quiero presentarme».</p>", 400)
+        return _html("Preséntate", _formulario("e", e, self.turnstile_site, anonima=False))
 
     async def enviar(self, request: Request) -> Response:
         form = await request.form()
-        sid = str(form.get("s", ""))
-        sol = self._solicitud(sid)
-        if not sol:
-            return _html("La entrada ha caducado", "<p>Vuelve a Claude y pulsa otra vez <b>Conectar</b>.</p>", 400)
-        ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "").split(",")[0]
+        sid, e = str(form.get("s", "")), str(form.get("e", ""))
+        sol = self._solicitud(sid) if sid else None
+        pid_enlace = self._enlace(e) if e else None
+        if not sol and not pid_enlace:
+            return _html("La entrada ha caducado", CADUCADA, 400)
+        oculto = ("s", sid) if sol else ("e", e)
+        ip = self._ip(request)
+        sin_datos = sol is not None and form.get("modo") == "sin-datos"
+
         errores, datos = [], {}
-        try:
+        if not sin_datos:
             datos["nombre"] = " ".join(str(form.get("nombre", "")).split())[:40]
             if not datos["nombre"]:
                 errores.append("Falta un nombre para el saludo.")
             datos["correo"] = _normaliza_correo(str(form.get("correo", "")))[:120]
             if "@" not in datos["correo"] or "." not in datos["correo"].split("@")[-1]:
                 errores.append("El correo no parece válido.")
-            datos["curso"] = _curso_valido(str(form.get("curso", "")))
-            datos["comunidad"] = _comunidad_valida(str(form.get("comunidad", "")))
-        except ValueError as exc:
-            errores.append(str(exc))
-        if form.get("acepto") != "si":
-            errores.append("Hace falta marcar la casilla de consentimiento.")
+            if form.get("acepto") != "si":
+                errores.append("Hace falta marcar la casilla de consentimiento.")
+        for campo, valida in (("curso", _curso_valido), ("comunidad", _comunidad_valida)):
+            try:
+                datos[campo] = valida(str(form.get(campo, "")))
+            except ValueError as exc:
+                datos[campo] = None
+                if not sin_datos:  # sin datos, el curso y la comunidad son opcionales
+                    errores.append(str(exc))
         if not errores and not await turnstile_ok(self.turnstile_secret, str(form.get("cf-turnstile-response", "")), ip):
             errores.append("No he podido comprobar que no eres un robot. Inténtalo otra vez.")
-        # Lista cerrada: vacía no entra nadie; "*" abre la entrada a cualquiera.
-        if not errores and "*" not in self.permitidos and datos["correo"] not in self.permitidos:
+        # Lista cerrada: vacía no entra nadie; "*" abre la entrada a cualquiera. Sin datos no se manda ningún correo.
+        if not errores and not sin_datos and "*" not in self.permitidos and datos["correo"] not in self.permitidos:
             errores.append("Esta entrada es de prueba y solo admite unos correos concretos.")
-        if not errores and not (self.limites.permite(f"ip:{ip}", 10, 3600)
-                                and self.limites.permite(f"correo:{datos['correo']}", 3, 3600)):
+        if not errores and not self.limites.permite(f"ip:{ip}", 10, 3600):
             errores.append("Demasiados intentos. Espera un rato y vuelve a probar.")
+        if not errores and not sin_datos and not self.limites.permite(f"correo:{datos['correo']}", 3, 3600):
+            errores.append("Demasiados intentos con ese correo. Espera un rato y vuelve a probar.")
         if errores:
-            return _html("Antes de empezar, preséntate", _formulario(sid, self.turnstile_site, errores, form), 400)
+            return _html("Antes de empezar, preséntate",
+                         _formulario(*oculto, self.turnstile_site, errores, form, anonima=sol is not None), 400)
+
+        if sin_datos:
+            # Entrada sin datos: ni correo ni confirmación. Claude recibe su token al momento.
+            pid = self.db.nueva_persona()
+            self.db.guardar_progreso(pid, datos["curso"], datos["comunidad"])
+            return RedirectResponse(self._codigo(sol, pid), status_code=303)
 
         confirmacion = secrets.token_urlsafe(24)
-        self.db.q("UPDATE solicitudes SET datos = ?, confirmacion = ? WHERE id = ?",
-                  json.dumps(datos), _hash(confirmacion), sid)
-        self._correo_confirmacion(datos, f"{self.base}/entrada/confirmar?t={confirmacion}")
-        return _html("Mira tu correo", _esperando(sid, datos["correo"]))
+        enlace = f"{self.base}/entrada/confirmar?t={confirmacion}"
+        if sol:
+            self.db.q("UPDATE solicitudes SET datos = ?, confirmacion = ? WHERE id = ?",
+                      json.dumps(datos), _hash(confirmacion), sid)
+            self._correo(datos["correo"], datos["nombre"], "Confirma tu entrada al laboratorio de Beakman",
+                         "Confirma tu entrada", "Para entrar en el laboratorio, pulsa el botón. La ventana de Claude "
+                         "se conectará sola.", "Confirmar mi entrada", enlace)
+            return _html("Mira tu correo", _esperando(sid, datos["correo"]))
+        self.db.q("INSERT INTO solicitudes (id, tipo, persona_id, creada, datos, confirmacion) VALUES (?, ?, ?, ?, ?, ?)",
+                  secrets.token_urlsafe(24), "presentarse", pid_enlace, time.time(), json.dumps(datos),
+                  _hash(confirmacion))
+        self.db.q("DELETE FROM enlaces WHERE hash = ?", _hash(e))
+        self._correo(datos["correo"], datos["nombre"], "Confirma tus datos en el laboratorio de Beakman",
+                     "Confirma tus datos", "Pulsa el botón y Beakman ya sabrá cómo saludarte y a quién escribir.",
+                     "Confirmar mis datos", enlace)
+        return _html("Mira tu correo", f"<p class='lead'>Te he mandado un correo a <b>{html.escape(datos['correo'])}"
+                                       "</b>. Pulsa el botón que trae y listo.</p>")
 
     async def estado(self, request: Request) -> Response:
         sol = self._solicitud(request.query_params.get("s", ""))
@@ -356,36 +454,74 @@ class Entrada:
         t = request.query_params.get("t", "")
         sol = self.db.one("SELECT * FROM solicitudes WHERE confirmacion = ?", _hash(t)) if t else None
         if not sol or sol["creada"] < time.time() - SOLICITUD_TTL:
-            return _html("El enlace ha caducado", "<p>Vuelve a Claude y pulsa otra vez <b>Conectar</b>.</p>", 400)
+            return _html("El enlace ha caducado", CADUCADA, 400)
+        datos = json.loads(sol["datos"])
+        if sol["tipo"] == "borrar":
+            pid = self.db.persona_por_correo(datos["correo"])
+            if pid:
+                self.db.olvidar(pid)
+            self.db.q("DELETE FROM solicitudes WHERE id = ?", sol["id"])
+            return _html("Borrado", "<p class='lead'>He borrado todo lo que el laboratorio guardaba de ese correo. "
+                                    "Si Beakman sigue conectado en Claude, ya no sabe quién eres.</p>")
+        if sol["tipo"] == "presentarse":
+            try:
+                self.db.guardar_contacto(sol["persona_id"], datos["correo"], datos["nombre"])
+            except ValueError as exc:
+                return _html("No ha podido ser", f"<p>{html.escape(str(exc))} Para usar ese correo, en Claude ve a "
+                                                 "Ajustes → Conectores, desconecta Beakman y vuelve a conectarlo.</p>",
+                             400)
+            self.db.guardar_progreso(sol["persona_id"], datos.get("curso"), datos.get("comunidad"))
+            self.db.q("DELETE FROM solicitudes WHERE id = ?", sol["id"])
+            return _html("¡Hecho!", f"<p class='lead'>Encantado, {html.escape(datos['nombre'])}. Vuelve a Claude: "
+                                    "Beakman ya sabe cómo saludarte.</p>")
         if not sol["redirect"]:
-            pid = self.db.guardar_persona(json.loads(sol["datos"]))
-            params = AuthorizationParams.model_validate_json(sol["params"])
-            code = AuthorizationCode(
-                code=secrets.token_urlsafe(32), scopes=params.scopes or [], expires_at=time.time() + CODIGO_TTL,
-                client_id=sol["client_id"], code_challenge=params.code_challenge, redirect_uri=params.redirect_uri,
-                redirect_uri_provided_explicitly=params.redirect_uri_provided_explicitly, resource=params.resource,
-                subject=pid)
-            self.db.q("INSERT INTO codigos VALUES (?, ?, ?)", code.code, code.model_dump_json(), code.expires_at)
-            redirect = construct_redirect_uri(str(params.redirect_uri), code=code.code, state=params.state)
-            self.db.q("UPDATE solicitudes SET redirect = ? WHERE id = ?", redirect, sol["id"])
+            self._codigo(sol, self.db.guardar_persona(datos))
         return _html("¡Hecho!", "<p class='lead'>Ya estás dentro del laboratorio. Vuelve a la ventana de Claude: "
                                 "se conecta sola en unos segundos.</p><p>Puedes cerrar esta pestaña.</p>")
 
+    async def borrar_pagina(self, request: Request) -> Response:
+        return _html("Borrar mis datos", _form_borrar(self.turnstile_site))
+
+    async def borrar(self, request: Request) -> Response:
+        """Borrar desde fuera del chat: llega un enlace al correo y, al pulsarlo, se borra todo."""
+        form = await request.form()
+        correo = _normaliza_correo(str(form.get("correo", "")))[:120]
+        ip = self._ip(request)
+        if "@" not in correo:
+            return _html("Borrar mis datos", _form_borrar(self.turnstile_site, "El correo no parece válido."), 400)
+        if not await turnstile_ok(self.turnstile_secret, str(form.get("cf-turnstile-response", "")), ip):
+            return _html("Borrar mis datos", _form_borrar(self.turnstile_site, "No he podido comprobar que no eres "
+                                                          "un robot. Inténtalo otra vez."), 400)
+        # La respuesta es la misma esté o no el correo: así no se puede averiguar quién usa el laboratorio.
+        if (self.db.persona_por_correo(correo) and self.limites.permite(f"ip:{ip}", 10, 3600)
+                and self.limites.permite(f"correo:{correo}", 3, 3600)):
+            confirmacion = secrets.token_urlsafe(24)
+            self.db.q("INSERT INTO solicitudes (id, tipo, creada, datos, confirmacion) VALUES (?, ?, ?, ?, ?)",
+                      secrets.token_urlsafe(24), "borrar", time.time(), json.dumps({"correo": correo}),
+                      _hash(confirmacion))
+            self._correo(correo, None, "Borrar tus datos del laboratorio de Beakman", "Borrar tus datos",
+                         "Has pedido borrar todo lo que el laboratorio guarda de este correo. Pulsa el botón para "
+                         "hacerlo; no se puede deshacer.", "Borrar mis datos",
+                         f"{self.base}/entrada/confirmar?t={confirmacion}")
+        return _html("Mira tu correo", "<p class='lead'>Si ese correo está en el laboratorio, te llega un enlace para "
+                                       "borrarlo todo. Caduca en media hora.</p>")
+
     # ---- correo -------------------------------------------------------------------
 
-    def _correo_confirmacion(self, datos: dict, enlace: str):
-        nombre = html.escape(datos["nombre"])
-        texto = (f"¡Hola, {datos['nombre']}!\n\nPara entrar en el laboratorio de Beakman, confirma aquí:\n{enlace}\n\n"
-                 "El enlace caduca en media hora. Si no has sido tú, no hagas nada: sin confirmar no se guarda nada.\n\n"
+    def _correo(self, correo: str, nombre: str | None, asunto: str, titulo: str, intro: str, boton: str, enlace: str):
+        hola = f"¡Hola, {nombre}!" if nombre else "¡Hola!"
+        texto = (f"{hola}\n\n{intro}\n{enlace}\n\nEl enlace caduca en media hora. Si no has sido tú, no hagas nada.\n\n"
                  "Un abrazo con la bata puesta,\nBeakman")
-        cuerpo = MAIL_HTML.replace("{nombre}", nombre).replace("{enlace}", html.escape(enlace))
+        cuerpo = (MAIL_HTML.replace("{hola}", html.escape(hola)).replace("{titulo}", html.escape(titulo))
+                  .replace("{intro}", html.escape(intro)).replace("{boton}", html.escape(boton))
+                  .replace("{enlace}", html.escape(enlace)))
         if not self.smtp["password"]:
-            log.warning("SMTP sin contraseña: no se envía. Enlace de confirmación: %s", enlace)
+            log.warning("SMTP sin contraseña: no se envía. Enlace: %s", enlace)
             return
         msg = EmailMessage()
         msg["From"] = formataddr(("Beakman", os.environ.get("BEAKMAN_MAIL_FROM", "beakman@kademy.net")))
-        msg["To"] = datos["correo"]
-        msg["Subject"] = "Confirma tu entrada al laboratorio de Beakman"
+        msg["To"] = correo
+        msg["Subject"] = asunto
         msg["Message-ID"] = make_msgid(domain="kademy.net")
         msg.set_content(texto)
         msg.add_alternative(cuerpo, subtype="html")
@@ -393,7 +529,7 @@ class Entrada:
             s.starttls()
             s.login(self.smtp["user"] or "root@kademy.net", self.smtp["password"])
             s.send_message(msg)
-        log.info("correo de confirmación enviado")
+        log.info("correo enviado: %s", asunto)
 
 
 # ---- HTML ---------------------------------------------------------------------------
@@ -432,6 +568,10 @@ input:focus, select:focus { outline: none; border-color: var(--ink); }
 .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .92rem; color: var(--text);
   background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-top: 16px; }
 .check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+.alt { margin-top: 22px; padding-top: 16px; border-top: 1.5px dashed var(--line); }
+.alt p { font-size: .92rem; color: var(--muted); margin: 4px 0 0; }
+.btn.ghost { background: #fff; }
+a { color: var(--ink); text-decoration-color: var(--lime); text-decoration-thickness: 2px; }
 .btn { display: inline-flex; margin-top: 18px; background: var(--lime); color: var(--ink); font: 800 1rem "Nunito", sans-serif;
   border: 2px solid var(--ink); border-radius: 999px; padding: 10px 20px; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
 .errores { background: #FBE5E1; border: 1.5px solid #E7A89F; border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; color: #7A2A20; }
@@ -459,12 +599,12 @@ MAIL_HTML = """<!doctype html><html lang="es"><head><meta charset="utf-8"><meta 
 <tr><td style="padding:22px 26px 6px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
 <td style="vertical-align:middle;padding-right:14px;"><img src="https://lab.beakman.kademy.net/media/beakman.jpg" width="60" height="60" alt="Beakman" style="display:block;width:60px;height:60px;border-radius:50%;border:3px solid #A6D41E;object-fit:cover;"></td>
 <td style="vertical-align:middle;"><div style="font-size:13px;font-weight:700;color:#4F6B0A;">El laboratorio de Beakman</div>
-<div style="font-size:22px;line-height:1.2;font-weight:800;color:#1F3A0B;">Confirma tu entrada</div></td></tr></table></td></tr>
+<div style="font-size:22px;line-height:1.2;font-weight:800;color:#1F3A0B;">{titulo}</div></td></tr></table></td></tr>
 <tr><td style="padding:12px 26px 0;font-size:16px;line-height:1.6;">
-<p style="margin:0 0 14px;">¡Hola, {nombre}!</p>
-<p style="margin:0 0 18px;">Para entrar en el laboratorio, pulsa el botón. La ventana de Claude se conectará sola.</p>
-<p style="margin:0 0 22px;"><a href="{enlace}" style="display:inline-block;background:#A6D41E;color:#1F3A0B;font-weight:800;text-decoration:none;border:2px solid #1F3A0B;border-radius:999px;padding:10px 20px;">Confirmar mi entrada</a></p>
-<p style="margin:0 0 14px;color:#4E5A45;font-size:14px;">El enlace caduca en media hora. Si no has sido tú, no hagas nada: sin confirmar no se guarda nada.</p>
+<p style="margin:0 0 14px;">{hola}</p>
+<p style="margin:0 0 18px;">{intro}</p>
+<p style="margin:0 0 22px;"><a href="{enlace}" style="display:inline-block;background:#A6D41E;color:#1F3A0B;font-weight:800;text-decoration:none;border:2px solid #1F3A0B;border-radius:999px;padding:10px 20px;">{boton}</a></p>
+<p style="margin:0 0 14px;color:#4E5A45;font-size:14px;">El enlace caduca en media hora. Si no has sido tú, no hagas nada: sin confirmar no cambia nada.</p>
 <p style="margin:0 0 4px;">Un abrazo con la bata puesta,</p>
 <p style="margin:0 0 20px;font-size:20px;font-weight:800;color:#1F3A0B;">Beakman</p></td></tr>
 </table></td></tr></table></body></html>
@@ -476,19 +616,37 @@ def _html(titulo: str, cuerpo: str, status: int = 200, head: str = "") -> HTMLRe
     return HTMLResponse(page, status_code=status, headers={"Cache-Control": "no-store", "X-Frame-Options": "DENY"})
 
 
-def _formulario(sid: str, site_key: str, errores: list[str] | None = None, form=None) -> str:
+CADUCADA = "<p>Vuelve a Claude y pulsa otra vez <b>Conectar</b>.</p>"
+CAMBIAR = ("<p class='note'>¿Quieres cambiar de opción más adelante? En Claude, ve a Ajustes → Conectores, desconecta "
+           "Beakman y vuelve a conectarlo: esta página saldrá otra vez. También puedes pedírselo a Beakman en el chat "
+           "(«quiero presentarme», «olvídame»). Y si ya diste tus datos y quieres borrarlos sin entrar en Claude: "
+           "<a href='/entrada/borrar'>borrar mis datos</a>.</p>")
+
+
+def _turnstile(site_key: str) -> str:
+    return (f'<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>'
+            f'<div class="cf-turnstile" data-sitekey="{html.escape(site_key)}" data-language="es" style="margin-top:14px">'
+            f'</div>' if site_key else "")
+
+
+def _formulario(oculto: str, valor: str, site_key: str, errores: list[str] | None = None, form=None,
+                anonima: bool = True) -> str:
+    """El formulario de la entrada. `oculto` es "s" (la ventana de Claude) o "e" (el enlace «preséntate»).
+    Con `anonima`, además el botón «Entrar sin datos»."""
     v = (lambda k: html.escape(str(form.get(k, "")))) if form else (lambda k: "")
     cursos = "".join(f'<option value="{k}"{" selected" if v("curso") == k else ""}>{n}</option>' for k, n in CURSOS.items())
     comunidades = "".join(f'<option{" selected" if v("comunidad") == html.escape(c) else ""}>{html.escape(c)}</option>'
                           for c in COMUNIDADES)
     err = ("<div class='errores'>" + "".join(f"<p>{html.escape(e)}</p>" for e in errores) + "</div>") if errores else ""
-    ts = (f'<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>'
-          f'<div class="cf-turnstile" data-sitekey="{html.escape(site_key)}" data-language="es" style="margin-top:14px"></div>'
-          if site_key else "")
+    sin_datos = """<div class="alt"><b>¿Prefieres no dar datos?</b>
+<p>Entra sin datos: Beakman no sabrá tu nombre ni podrá escribiros. El curso y la comunidad, si los eliges arriba, sí
+se guardan (no dicen quién eres). Podrás presentarte cuando quieras.</p>
+<button class="btn ghost" type="submit" name="modo" value="sin-datos" formnovalidate>Entrar sin datos</button></div>""" \
+        if anonima else ""
     return f"""<h1>¡Hola! Antes de empezar, preséntate</h1>
 <p class="lead">Lo rellena un adulto. Solo necesito un nombre para saludar y un correo para comunicarme con vosotros.</p>
 {err}<form class="card" method="post" action="/entrada">
-<input type="hidden" name="s" value="{html.escape(sid)}">
+<input type="hidden" name="{oculto}" value="{html.escape(valor)}">
 <label for="nombre">Nombre para el saludo</label>
 <input type="text" id="nombre" name="nombre" maxlength="40" required autocomplete="given-name" value="{v('nombre')}">
 <p class="hint">El nombre de pila o un mote. No hace falta el apellido.</p>
@@ -500,11 +658,26 @@ def _formulario(sid: str, site_key: str, errores: list[str] | None = None, form=
 <select id="comunidad" name="comunidad" required><option value="">Elige…</option>{comunidades}</select>
 <p class="hint">Cada comunidad da el temario a su manera: así Beakman sigue el tuyo.</p>
 <label class="check"><input type="checkbox" name="acepto" value="si" required><span>{html.escape(CONSENTIMIENTO)}</span></label>
-{ts}
-<button class="btn" type="submit">Entrar al laboratorio</button>
+{_turnstile(site_key)}
+<button class="btn" type="submit" name="modo" value="datos">Entrar al laboratorio</button>
+{sin_datos}
 </form>
 <p class="note">Qué guardamos: lo que ves en este formulario y nada más. No guardamos apellidos, edad, colegio ni lo que
-escribís en Claude. Para verlo, pregúntale a Beakman «¿qué sabes de mí?»; para borrarlo todo, «olvídame».</p>"""
+escribís en Claude. Para verlo, pregúntale a Beakman «¿qué sabes de mí?»; para borrarlo todo, «olvídame».</p>
+{CAMBIAR if anonima else ""}"""
+
+
+def _form_borrar(site_key: str, error: str = "") -> str:
+    err = f"<div class='errores'><p>{html.escape(error)}</p></div>" if error else ""
+    return f"""<h1>Borrar mis datos</h1>
+<p class="lead">Escribe el correo que diste al entrar. Te llegará un enlace; al pulsarlo, se borra todo lo que el
+laboratorio guarda de ese correo.</p>
+{err}<form class="card" method="post" action="/entrada/borrar">
+<label for="correo">Correo</label>
+<input type="email" id="correo" name="correo" maxlength="120" required autocomplete="email">
+{_turnstile(site_key)}
+<button class="btn" type="submit">Mandarme el enlace</button>
+</form>"""
 
 
 def _esperando(sid: str, correo: str) -> str:

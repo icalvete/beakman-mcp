@@ -214,7 +214,6 @@ PRUEBA_URL = os.environ.get("BEAKMAN_PRUEBA_URL", "").rstrip("/")
 prueba_app = None
 if PRUEBA_URL:
     from contextlib import asynccontextmanager
-    from datetime import datetime, timezone
     from urllib.parse import urlparse
 
     from mcp.server.auth.middleware.auth_context import get_access_token
@@ -228,9 +227,11 @@ if PRUEBA_URL:
         title="Mi mundo de Beakman",
         description="Tutores de Historia, Matemáticas, Ciencias y Lengua para 1º y 2º de la ESO.",
         instructions=INSTRUCTIONS + """
-4. Este conector sabe quién es el estudiante: `empezar_clase` trae su nombre, su curso y su comunidad, así que no
-   los preguntes. Si dice que ha cambiado de curso, de comunidad o de nombre, usa `cambiar_datos` y confírmalo con
-   lo que devuelva. Si pregunta qué sabes de él, usa `que_sabes_de_mi`. Si pide que le olvides, usa `olvidame`.
+4. Este conector puede saber quién es el estudiante: `empezar_clase` trae lo que haya (nombre, curso, comunidad).
+   Lo que traiga, no lo preguntes; lo que falte, pregúntalo y guárdalo con `cambiar_datos`. Si dice que ha cambiado
+   de curso, de comunidad o de nombre, usa `cambiar_datos` y confírmalo con lo que devuelva. Si pregunta qué sabes de
+   él, `que_sabes_de_mi`. Si quiere que le escribas (resúmenes, avisos), `presentarme`. Si no quiere más correos,
+   `no_escribirme`. Si pide que le olvides, `olvidame`.
 """,
         website_url="https://icalvete.github.io/beakman-mcp/",
         auth_server_provider=entrada,
@@ -248,31 +249,39 @@ if PRUEBA_URL:
         pid = token.subject if token else None
         ficha = entrada.db.ficha(pid) if pid else None
         if not ficha:
-            raise ValueError("No encuentro tus datos: desconecta y vuelve a conectar el conector de Beakman.")
+            raise ValueError("No encuentro tu entrada: desconecta y vuelve a conectar el conector de Beakman.")
         return pid, ficha
 
     def _describe(f: dict) -> str:
-        return (f"Se llama {f['nombre']}. Curso: {CURSOS.get(f['curso'], f['curso'])} (curso escolar "
-                f"{f['curso_escolar']}). Comunidad autónoma: {f['comunidad']}. Los avisos van a {f['correo']}.")
+        quien = (f"Se llama {f['nombre']} y los avisos van a {f['correo']}." if f["correo"] else
+                 "Entró sin datos: no sabemos su nombre ni podemos escribirle.")
+        curso = (f"Curso: {CURSOS.get(f['curso'], f['curso'])} (curso escolar {f['curso_escolar']})." if f["curso"]
+                 else "Curso: sin indicar.")
+        comunidad = f"Comunidad autónoma: {f['comunidad']}." if f["comunidad"] else "Comunidad autónoma: sin indicar."
+        return f"{quien} {curso} {comunidad}"
 
     @prueba.tool(name="empezar_clase", title="Empezar una clase con Beakman")
     def empezar_clase_con_datos(asignatura: str, curso: str | None = None) -> str:
-        """Carga las instrucciones de Beakman para una asignatura, la lista de temas y los datos del estudiante.
+        """Carga las instrucciones de Beakman para una asignatura, la lista de temas y lo que se sabe del estudiante.
 
         Llámala antes de explicar nada. asignatura: Historia, Matemáticas, Ciencias o Lengua.
-        curso: déjalo vacío para usar el guardado del estudiante.
+        curso: déjalo vacío para usar el guardado; si no hay ninguno guardado, pregúntalo y pásalo.
         """
-        _pid, f = _persona()
+        pid, f = _persona()
+        datos = f"DATOS DEL ESTUDIANTE: {_describe(f)}"
+        if not curso and not f["curso"]:
+            return (f"{datos}\nNo sé su curso: pregúntaselo (1º o 2º de la ESO), guárdalo con `cambiar_datos` y vuelve "
+                    "a llamar a esta herramienta.")
         if not curso and f["curso"] not in COURSES:
-            return (f"DATOS DEL ESTUDIANTE: {_describe(f)}\nBeakman todavía no tiene temario de "
-                    f"{CURSOS.get(f['curso'], f['curso'])}. Díselo con cariño y ofrécele repasar 1º o 2º; si acepta, "
-                    "vuelve a llamar a esta herramienta con ese curso.")
+            return (f"{datos}\nBeakman todavía no tiene temario de {CURSOS.get(f['curso'], f['curso'])}. Díselo con "
+                    "cariño y ofrécele repasar 1º o 2º; si acepta, vuelve a llamar a esta herramienta con ese curso.")
         texto = empezar_clase(asignatura, curso or CURSOS[f["curso"]])
-        aviso = ""
-        if f["curso_escolar"] != curso_escolar():
-            aviso = ("\nEs un curso escolar nuevo: antes de empezar, pregúntale si ha cambiado de curso y, si es así, "
-                     "usa `cambiar_datos`.")
-        return f"DATOS DEL ESTUDIANTE: {_describe(f)}{aviso}\nSalúdale por su nombre.\n\n{texto}"
+        notas = []
+        if f["curso"] and f["curso_escolar"] != curso_escolar():
+            notas.append("Es un curso escolar nuevo: antes de empezar, pregúntale si ha cambiado de curso y guárdalo "
+                         "con `cambiar_datos` (sin argumentos si sigue en el mismo).")
+        notas.append("Salúdale por su nombre." if f["nombre"] else "No sabes su nombre: no se lo pidas.")
+        return f"{datos}\n" + "\n".join(notas) + f"\n\n{texto}"
 
     prueba.add_tool(mapa_del_curso, title="Mapa del curso")
     prueba.add_tool(leer_tema, title="Leer un tema")
@@ -282,33 +291,61 @@ if PRUEBA_URL:
     def que_sabes_de_mi() -> str:
         """Todo lo que Beakman guarda del estudiante. Úsala si pregunta qué sabes de él o para comprobar sus datos."""
         _pid, f = _persona()
-        return (f"{_describe(f)} Aceptó guardarlos el {f['consentimiento_fecha'][:10]}. No se guarda nada más: ni "
-                "apellidos, ni edad, ni colegio, ni lo que escribe en Claude. Para borrarlo todo, que diga «olvídame».")
+        acepto = f" Aceptó guardarlos el {f['consentimiento_fecha'][:10]}." if f["correo"] else ""
+        return (f"{_describe(f)}{acepto} No se guarda nada más: ni apellidos, ni edad, ni colegio, ni lo que escribe "
+                "en Claude. Para borrarlo todo, que diga «olvídame».")
 
     @prueba.tool(title="Cambiar mis datos")
     def cambiar_datos(curso: str | None = None, comunidad: str | None = None, nombre: str | None = None) -> str:
         """Cambia el curso (1º a 4º ESO), la comunidad autónoma o el nombre para el saludo del estudiante.
 
-        Úsala cuando diga que ha cambiado de curso, de comunidad o que le llames de otra forma. Pasa solo lo que cambia.
-        Confirma después con el resultado que devuelve.
+        Úsala cuando diga que ha cambiado de curso, de comunidad o que le llames de otra forma. Pasa solo lo que cambia;
+        sin argumentos, confirma que sigue en el mismo curso este curso escolar. Confirma después con lo que devuelve.
         """
-        pid, _f = _persona()
-        hoy = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        if curso:
-            entrada.db.q("UPDATE progreso SET curso = ?, curso_escolar = ?, actualizado = ? WHERE persona_id = ?",
-                         _curso_valido(curso), curso_escolar(), hoy, pid)
-        if comunidad:
-            entrada.db.q("UPDATE progreso SET comunidad = ?, actualizado = ? WHERE persona_id = ?",
-                         _comunidad_valida(comunidad), hoy, pid)
+        pid, f = _persona()
+        nota = ""
+        entrada.db.guardar_progreso(pid, _curso_valido(curso) if curso else None,
+                                    _comunidad_valida(comunidad) if comunidad else None)
         if nombre and nombre.strip():
-            entrada.db.q("UPDATE contactos SET nombre = ? WHERE persona_id = ?", " ".join(nombre.split())[:40], pid)
-        if not (curso or comunidad or nombre):
-            # sin cambios, pero confirma el curso escolar (la pregunta de septiembre)
-            entrada.db.q("UPDATE progreso SET curso_escolar = ?, actualizado = ? WHERE persona_id = ?",
-                         curso_escolar(), hoy, pid)
+            if f["correo"]:
+                entrada.db.q("UPDATE contactos SET nombre = ? WHERE persona_id = ?", " ".join(nombre.split())[:40], pid)
+            else:
+                nota += (" El nombre no se ha guardado: entró sin datos. Si quiere que le saludes por su nombre, ofrécele "
+                         "`presentarme`.")
+        if not (curso or comunidad or nombre) and f["curso"]:
+            entrada.db.guardar_progreso(pid, f["curso"])  # la pregunta de septiembre: sigue en el mismo curso
         f = entrada.db.ficha(pid)
-        nota = "" if f["curso"] in COURSES else " Beakman todavía no tiene temario de ese curso: avísale con cariño."
+        if f["curso"] and f["curso"] not in COURSES:
+            nota += " Beakman todavía no tiene temario de ese curso: avísale con cariño."
         return "Apuntado. " + _describe(f) + nota
+
+    @prueba.tool(title="Presentarme")
+    def presentarme() -> str:
+        """Para dar nombre y correo (y recibir resúmenes y avisos). Devuelve un enlace para que lo abra un adulto.
+
+        Úsala si quiere que le escribas, que le saludes por su nombre o que le mandes resúmenes.
+        """
+        pid, f = _persona()
+        enlace = f"{PRUEBA_URL}/entrada/presentarse?e={entrada.db.enlace_presentarse(pid)}"
+        ya = (f" Ahora mismo se llama {f['nombre']} y los avisos van a {f['correo']}; el enlace sirve para cambiarlo."
+              if f["correo"] else "")
+        return (f"Dale este enlace para que lo abra un adulto (caduca en media hora): {enlace}\nAllí escribe un nombre y "
+                f"un correo, y lo confirma desde el correo.{ya}")
+
+    @prueba.tool(title="No escribirme")
+    def no_escribirme(confirmado: bool = False) -> str:
+        """Borra el nombre y el correo, para no recibir más correos. Beakman sigue funcionando, sin datos.
+
+        Antes de llamarla con confirmado=true, pregunta si está seguro.
+        """
+        pid, f = _persona()
+        if not f["correo"]:
+            return "No hay nombre ni correo guardados: ya entró sin datos y no recibe correos."
+        if not confirmado:
+            return ("Pregúntale si está seguro: se borrarán su nombre y su correo y no recibirá más correos. Si dice "
+                    "que sí, llama con confirmado=true.")
+        entrada.db.quitar_contacto(pid)
+        return "Hecho: he borrado su nombre y su correo. Beakman sigue funcionando, sin datos. " + _describe(entrada.db.ficha(pid))
 
     @prueba.tool(title="Olvídame")
     def olvidame(confirmado: bool = False) -> str:
@@ -320,14 +357,17 @@ if PRUEBA_URL:
         if not confirmado:
             return "Pregúntale si está seguro: se borrará todo y no se puede deshacer. Si dice que sí, llama con confirmado=true."
         entrada.db.olvidar(pid)
-        return ("Hecho: he borrado su nombre, su correo, su curso y su comunidad, y he desconectado el conector. "
-                "Si quiere volver, que lo conecte otra vez.")
+        return ("Hecho: lo he borrado todo y he desconectado el conector. Si quiere volver, que lo conecte otra vez en "
+                "Ajustes → Conectores.")
 
     PRUEBA_HOST = urlparse(PRUEBA_URL).netloc
     prueba.custom_route("/entrada", methods=["GET"])(entrada.pagina)
     prueba.custom_route("/entrada", methods=["POST"])(entrada.enviar)
     prueba.custom_route("/entrada/estado", methods=["GET"])(entrada.estado)
     prueba.custom_route("/entrada/confirmar", methods=["GET"])(entrada.confirmar)
+    prueba.custom_route("/entrada/presentarse", methods=["GET"])(entrada.presentarse)
+    prueba.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
+    prueba.custom_route("/entrada/borrar", methods=["POST"])(entrada.borrar)
     prueba_app = prueba.streamable_http_app(
         stateless_http=True,
         json_response=True,
