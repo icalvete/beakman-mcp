@@ -774,6 +774,27 @@ sin datos. Debajo, lo que ha pasado cada semana.</p>
 cambian de correo. <b>Sin correo:</b> borran nombre y correo. <b>Borran:</b> lo borran todo.<br>
 Clases por asignatura, en estas semanas: {por_asig}.</p>"""
 
+    def _entradas_sin_datos(self) -> str:
+        """Las entradas sin datos: no tienen nada personal, solo cuándo se crearon, el curso y la comunidad elegidos y
+        si siguen conectadas (con un token vivo). Y las solicitudes con correo que nadie ha confirmado todavía."""
+        filas = self.db.q(
+            "SELECT p.creada, pr.curso, pr.comunidad, "
+            "EXISTS (SELECT 1 FROM tokens t WHERE t.persona_id = p.id AND t.caduca > ?) AS conectada "
+            "FROM personas p LEFT JOIN progreso pr ON pr.persona_id = p.id "
+            "WHERE p.id NOT IN (SELECT persona_id FROM contactos) ORDER BY p.creada DESC LIMIT 200", int(time.time()))
+        pend = self.db.one("SELECT COUNT(*) AS n FROM solicitudes WHERE datos IS NOT NULL AND redirect IS NULL "
+                           "AND tipo = 'entrar'")["n"]
+        tabla = "".join(
+            f"<tr><td>{html.escape(f['creada'][:16].replace('T', ' '))}</td>"
+            f"<td>{html.escape(CURSOS.get(f['curso'] or '', '—'))}</td><td>{html.escape(f['comunidad'] or '—')}</td>"
+            f"<td>{'sí' if f['conectada'] else 'no'}</td></tr>" for f in filas)
+        return f"""<h2 style="margin-top:22px">Sin datos</h2>
+<p class="hint">Sin nombre ni correo: solo cuándo se creó (UTC), lo que eligió y si sigue conectada. Para darle datos,
+que diga en Claude «quiero presentarme». Solicitudes con correo sin confirmar ahora mismo: <b>{pend}</b> (caducan a la
+media hora).</p>
+<div class="card" style="overflow-x:auto"><table class="cifras"><tr><th>Creada</th><th>Curso</th><th>Comunidad</th>
+<th>Conectada</th></tr>{tabla or '<tr><td colspan="4">Ninguna.</td></tr>'}</table></div>"""
+
     def _vista_entradas(self, q: str, csrf: str, ok: str) -> str:
         """Las entradas con datos, para dar soporte (cambiar un correo, borrar a petición de la familia)."""
         q = q.strip().lower()[:80]
@@ -808,7 +829,8 @@ que enseñar). Cambiar el correo aquí no pide confirmación: hazlo solo si te l
 <form method="get" action="/admin" style="display:flex;gap:8px;margin-bottom:14px"><input type="hidden" name="v" value="entradas">
 <input type="text" name="q" value="{html.escape(q)}" placeholder="Buscar por nombre o correo" style="flex:1">
 <button class="btn ghost" type="submit" style="margin-top:0">Buscar</button></form>
-{msg}{cuerpo or '<p>No hay ninguna.</p>'}"""
+{msg}{cuerpo or '<p>No hay ninguna.</p>'}
+{self._entradas_sin_datos()}"""
 
     async def borrar_pagina(self, request: Request) -> Response:
         """La página vieja de borrar: ahora se borra desde «Mis datos»."""
