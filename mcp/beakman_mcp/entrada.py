@@ -655,7 +655,8 @@ class Entrada:
 
     # ---- administración: /admin ----------------------------------------------------------
     # Dos llaves: correo + contraseña (huella scrypt en BEAKMAN_ADMIN_HASH) y, después, un enlace a ese correo. Sin la
-    # contraseña no sale ningún correo. Sesión de 1 hora, cookie solo para /admin y SameSite=Strict.
+    # contraseña no sale ningún correo. Sesión de 1 hora, cookie solo para /admin y SameSite=Lax (con Strict, el
+    # navegador no la manda al volver desde el enlace del correo, que viene de otra web, y se entra en bucle).
 
     ADMIN_COOKIE = "beakman_admin"
 
@@ -669,7 +670,7 @@ class Entrada:
 
     def _admin_cookie(self, resp: Response, token: str | None) -> Response:
         resp.set_cookie(self.ADMIN_COOKIE, token or "", max_age=self.SESION_TTL if token else 0, path="/admin",
-                        httponly=True, secure=self.base.startswith("https://"), samesite="strict")
+                        httponly=True, secure=self.base.startswith("https://"), samesite="lax")
         return resp
 
     async def admin(self, request: Request) -> Response:
