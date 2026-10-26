@@ -277,6 +277,7 @@ if ENTRADA_URL:
             return (f"{datos}\nBeakman todavía no tiene temario de {CURSOS.get(f['curso'], f['curso'])}. Díselo con "
                     "cariño y ofrécele repasar 1º o 2º; si acepta, vuelve a llamar a esta herramienta con ese curso.")
         texto = empezar_clase(asignatura, curso or CURSOS[f["curso"]])
+        entrada.db.contar(f"clase:{store.get().subject(asignatura).name}")
         notas = []
         if f["curso"] and f["curso_escolar"] != curso_escolar():
             notas.append("Es un curso escolar nuevo: antes de empezar, pregúntale si ha cambiado de curso y guárdalo "
@@ -374,6 +375,11 @@ if ENTRADA_URL:
     servidor.custom_route("/entrada/borrar", methods=["GET"])(entrada.borrar_pagina)
     # «Mis datos»: entrar con un enlace mágico para ver, cambiar o borrar lo guardado.
     servidor.custom_route("/cuenta", methods=["GET"])(entrada.cuenta)
+    # Administración (cifras y entradas): correo + contraseña + enlace. Sin BEAKMAN_ADMIN_*, no existe.
+    servidor.custom_route("/admin", methods=["GET"], include_in_schema=False)(entrada.admin)
+    servidor.custom_route("/admin", methods=["POST"], include_in_schema=False)(entrada.admin_pedir)
+    servidor.custom_route("/admin/entrar", methods=["GET"], include_in_schema=False)(entrada.admin_entrar)
+    servidor.custom_route("/admin/accion", methods=["POST"], include_in_schema=False)(entrada.admin_accion)
     servidor.custom_route("/cuenta", methods=["POST"])(entrada.pedir_enlace)
     servidor.custom_route("/cuenta/entrar", methods=["GET"])(entrada.entrar)
     servidor.custom_route("/cuenta/cambiar", methods=["POST"])(entrada.cambiar)

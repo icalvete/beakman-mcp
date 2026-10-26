@@ -130,6 +130,12 @@ CREATE TABLE IF NOT EXISTS solicitudes (
 CREATE TABLE IF NOT EXISTS enlaces (hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, caduca REAL NOT NULL);
 -- «Mis datos»: enlaces mágicos (un solo uso, 15 min) y sesiones (1 hora), siempre como hash
 CREATE TABLE IF NOT EXISTS accesos (hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, caduca REAL NOT NULL);
+-- Contadores de uso: cuántas veces pasa algo cada día, nada más. Sin persona, sin IP, sin correo.
+CREATE TABLE IF NOT EXISTS contadores (dia TEXT NOT NULL, clave TEXT NOT NULL, n INTEGER NOT NULL,
+  PRIMARY KEY (dia, clave));
+-- Administración (/admin): enlaces y sesiones aparte de los de «Mis datos», siempre como hash
+CREATE TABLE IF NOT EXISTS admin_accesos (hash TEXT PRIMARY KEY, correo TEXT NOT NULL, caduca REAL NOT NULL);
+CREATE TABLE IF NOT EXISTS admin_sesiones (hash TEXT PRIMARY KEY, csrf TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS sesiones (
   hash TEXT PRIMARY KEY, persona_id TEXT NOT NULL, csrf TEXT NOT NULL, caduca REAL NOT NULL);
 CREATE TABLE IF NOT EXISTS codigos (code TEXT PRIMARY KEY, datos TEXT NOT NULL, caduca REAL NOT NULL);
@@ -170,6 +176,8 @@ class Almacen:
         self.q("DELETE FROM enlaces WHERE caduca < ?", now)
         self.q("DELETE FROM accesos WHERE caduca < ?", now)
         self.q("DELETE FROM sesiones WHERE caduca < ?", now)
+        self.q("DELETE FROM admin_accesos WHERE caduca < ?", now)
+        self.q("DELETE FROM admin_sesiones WHERE caduca < ?", now)
         # Entradas sin datos que ya no usa nadie (se desconectó el conector y caducaron sus tokens).
         self.q("DELETE FROM personas WHERE id NOT IN (SELECT persona_id FROM contactos) "
                "AND id NOT IN (SELECT persona_id FROM tokens) "
@@ -179,6 +187,24 @@ class Almacen:
     def persona_por_correo(self, correo: str) -> str | None:
         row = self.one("SELECT persona_id FROM contactos WHERE correo = ?", correo)
         return row["persona_id"] if row else None
+
+    def contar(self, clave: str):
+        """Suma 1 al contador de hoy (UTC). Es lo único que se apunta del uso: ni quién ni desde dónde."""
+        self.q("INSERT INTO contadores VALUES (?, ?, 1) ON CONFLICT(dia, clave) DO UPDATE SET n = n + 1",
+               datetime.now(timezone.utc).date().isoformat(), clave)
+
+    def cifras(self, semanas: int = 12) -> dict:
+        """Totales por semana ISO de las últimas `semanas`, y las entradas que existen ahora."""
+        from datetime import date
+        por_semana: dict[str, dict[str, int]] = {}
+        for row in self.q("SELECT dia, clave, n FROM contadores ORDER BY dia DESC"):
+            a, s, _ = date.fromisoformat(row["dia"]).isocalendar()
+            por_semana.setdefault(f"{a}-S{s:02d}", {}).setdefault(row["clave"], 0)
+            por_semana[f"{a}-S{s:02d}"][row["clave"]] += row["n"]
+        total = self.one("SELECT COUNT(*) AS n FROM personas")["n"]
+        con = self.one("SELECT COUNT(*) AS n FROM contactos")["n"]
+        return {"semanas": dict(list(sorted(por_semana.items(), reverse=True))[:semanas]),
+                "entradas": {"con_datos": con, "sin_datos": total - con}}
 
     def nueva_persona(self) -> str:
         pid = secrets.token_hex(16)
@@ -223,6 +249,7 @@ class Almacen:
     def quitar_contacto(self, pid: str):
         """Borra nombre y correo; la entrada sigue, sin datos."""
         self.q("DELETE FROM contactos WHERE persona_id = ?", pid)
+        self.contar("sin_correo")
 
     def enlace_presentarse(self, pid: str) -> str:
         token = secrets.token_urlsafe(24)
@@ -230,6 +257,7 @@ class Almacen:
         return token
 
     def olvidar(self, pid: str):
+        self.contar("borrado")
         self.q("DELETE FROM tokens WHERE persona_id = ?", pid)
         self.q("DELETE FROM sesiones WHERE persona_id = ?", pid)
         self.q("DELETE FROM accesos WHERE persona_id = ?", pid)
@@ -279,6 +307,11 @@ class Entrada:
         self.limites = Limites()
         self.turnstile_site = os.environ.get("TURNSTILE_SITE_KEY", "")
         self.turnstile_secret = os.environ.get("TURNSTILE_SECRET_KEY", "")
+        # Administración: correos de los administradores y la huella scrypt de su contraseña (scripts/admin_password.py).
+        # Si falta cualquiera de los dos, /admin no existe.
+        self.admins = {_buzon(_normaliza_correo(c)) for c in os.environ.get("BEAKMAN_ADMIN_CORREOS", "").split(",")
+                       if c.strip()}
+        self.admin_hash = os.environ.get("BEAKMAN_ADMIN_HASH", "")
         self.permitidos = {_normaliza_correo(c) for c in os.environ.get("BEAKMAN_ENTRADA_CORREOS", "").split(",")
                            if c.strip()}
         self.smtp = {k: os.environ.get(f"BEAKMAN_SMTP_{k.upper()}", "") for k in ("host", "port", "user", "password")}
@@ -438,6 +471,7 @@ class Entrada:
         if sin_datos:
             # Entrada sin datos: ni correo ni confirmación. Claude recibe su token al momento.
             pid = self.db.nueva_persona()
+            self.db.contar("entrada_sin_datos")
             self.db.guardar_progreso(pid, datos["curso"], datos["comunidad"])
             return RedirectResponse(self._codigo(sol, pid), status_code=303)
 
@@ -489,10 +523,12 @@ class Entrada:
                              400)
             self.db.guardar_progreso(sol["persona_id"], datos.get("curso"), datos.get("comunidad"))
             self.db.q("DELETE FROM solicitudes WHERE id = ?", sol["id"])
+            self.db.contar("presentado")
             return _html("¡Hecho!", f"<p class='lead'>Encantado, {html.escape(datos['nombre'])}. Vuelve a Claude: "
                                     "Beakman ya sabe cómo saludarte.</p>")
         if not sol["redirect"]:
             self._codigo(sol, self.db.guardar_persona(datos))
+            self.db.contar("entrada_con_datos")
         return _html("¡Hecho!", "<p class='lead'>Ya estás dentro del laboratorio. Vuelve a la ventana de Claude: "
                                 "se conecta sola en unos segundos.</p><p>Puedes cerrar esta pestaña.</p>")
 
@@ -538,6 +574,7 @@ class Entrada:
             self.db.limpiar()
             token = secrets.token_urlsafe(32)
             self.db.q("INSERT INTO accesos VALUES (?, ?, ?)", _hash(token), pid, time.time() + self.ACCESO_TTL)
+            self.db.contar("mis_datos_enlace")
             nombre = self.db.ficha(pid)["nombre"]
             self._correo(correo, nombre, "Tu enlace para entrar en «Mis datos»", "Entra en «Mis datos»",
                          "Pulsa el botón para ver, cambiar o borrar lo que el laboratorio guarda de ti. Sirve una "
@@ -615,6 +652,162 @@ class Entrada:
             self.db.q("DELETE FROM sesiones WHERE hash = ?", _hash(request.cookies.get(self.COOKIE, "")))
             return self._con_cookie(RedirectResponse("/cuenta", status_code=303), None)
         return _html("Mis datos", _panel(self.db.ficha(pid), ses["csrf"], error=error), 400 if error else 200)
+
+    # ---- administración: /admin ----------------------------------------------------------
+    # Dos llaves: correo + contraseña (huella scrypt en BEAKMAN_ADMIN_HASH) y, después, un enlace a ese correo. Sin la
+    # contraseña no sale ningún correo. Sesión de 1 hora, cookie solo para /admin y SameSite=Strict.
+
+    ADMIN_COOKIE = "beakman_admin"
+
+    def _admin_activo(self) -> bool:
+        return bool(self.admins and self.admin_hash)
+
+    def _admin_sesion(self, request: Request):
+        t = request.cookies.get(self.ADMIN_COOKIE, "")
+        return self.db.one("SELECT * FROM admin_sesiones WHERE hash = ? AND caduca > ?", _hash(t), time.time()) \
+            if t else None
+
+    def _admin_cookie(self, resp: Response, token: str | None) -> Response:
+        resp.set_cookie(self.ADMIN_COOKIE, token or "", max_age=self.SESION_TTL if token else 0, path="/admin",
+                        httponly=True, secure=self.base.startswith("https://"), samesite="strict")
+        return resp
+
+    async def admin(self, request: Request) -> Response:
+        if not self._admin_activo():
+            return Response("Not Found", status_code=404)
+        ses = self._admin_sesion(request)
+        if not ses:
+            return _html("Administración", _form_admin(self.turnstile_site))
+        vista = request.query_params.get("v", "cifras")
+        cuerpo = (self._vista_entradas(request.query_params.get("q", ""), ses["csrf"],
+                                       request.query_params.get("ok", ""))
+                  if vista == "entradas" else self._vista_cifras())
+        return _html("Administración", _admin_menu(vista, ses["csrf"]) + cuerpo)
+
+    async def admin_pedir(self, request: Request) -> Response:
+        if not self._admin_activo():
+            return Response("Not Found", status_code=404)
+        form = await request.form()
+        ip = self._ip(request)
+        if not self.limites.permite(f"admin-ip:{ip}", 5, 3600):
+            return _html("Administración", _form_admin(self.turnstile_site, "Demasiados intentos. Espera un rato."), 429)
+        if not await turnstile_ok(self.turnstile_secret, str(form.get("cf-turnstile-response", "")), ip):
+            return _html("Administración", _form_admin(self.turnstile_site, "No he podido comprobar que no eres un "
+                                                       "robot."), 400)
+        correo = _normaliza_correo(str(form.get("correo", "")))
+        bien = _buzon(correo) in self.admins and verificar_clave(str(form.get("clave", "")), self.admin_hash)
+        if not bien:
+            log.warning("administración: intento de entrada fallido")
+            return _html("Administración", _form_admin(self.turnstile_site, "Correo o contraseña incorrectos."), 400)
+        token = secrets.token_urlsafe(32)
+        self.db.q("INSERT INTO admin_accesos VALUES (?, ?, ?)", _hash(token), correo, time.time() + self.ACCESO_TTL)
+        self._correo(correo, None, "Tu enlace de administración de Beakman", "Entrar en la administración",
+                     "Pulsa el botón para terminar de entrar. Sirve una vez y caduca en 15 minutos. Si no has sido tú, "
+                     "alguien conoce tu contraseña: cámbiala.", "Entrar", f"{self.base}/admin/entrar?t={token}",
+                     caduca="15 minutos")
+        return _html("Mira tu correo", "<p class='lead'>Contraseña correcta. Te he mandado un enlace para terminar de "
+                                       "entrar: sirve una vez y caduca en 15 minutos.</p>")
+
+    async def admin_entrar(self, request: Request) -> Response:
+        if not self._admin_activo():
+            return Response("Not Found", status_code=404)
+        t = request.query_params.get("t", "")
+        row = self.db.one("SELECT * FROM admin_accesos WHERE hash = ? AND caduca > ?", _hash(t), time.time()) \
+            if t else None
+        if not row:
+            return _html("Este enlace ya no sirve", "<p class='lead'>Este enlace ya se ha usado o ha caducado.</p>"
+                         "<p><a href='/admin'>Vuelve a entrar</a>.</p>", 400)
+        self.db.q("DELETE FROM admin_accesos WHERE hash = ?", _hash(t))
+        token, csrf = secrets.token_urlsafe(32), secrets.token_urlsafe(16)
+        self.db.q("INSERT INTO admin_sesiones VALUES (?, ?, ?)", _hash(token), csrf, time.time() + self.SESION_TTL)
+        log.info("administración: sesión abierta")
+        return self._admin_cookie(RedirectResponse("/admin", status_code=303), token)
+
+    async def admin_accion(self, request: Request) -> Response:
+        if not self._admin_activo():
+            return Response("Not Found", status_code=404)
+        ses = self._admin_sesion(request)
+        form = await request.form()
+        if not ses or not secrets.compare_digest(str(form.get("csrf", "")), ses["csrf"]):
+            return RedirectResponse("/admin", status_code=303)
+        accion, pid = str(form.get("accion", "")), str(form.get("pid", ""))
+        if accion == "salir":
+            self.db.q("DELETE FROM admin_sesiones WHERE hash = ?", _hash(request.cookies.get(self.ADMIN_COOKIE, "")))
+            return self._admin_cookie(RedirectResponse("/admin", status_code=303), None)
+        if accion == "correo":
+            nuevo = _normaliza_correo(str(form.get("correo", "")))[:120]
+            otra = self.db.persona_por_correo(nuevo)
+            if "@" not in nuevo or (otra and otra != pid) or not self.db.ficha(pid):
+                return RedirectResponse("/admin?v=entradas&ok=error", status_code=303)
+            self.db.q("UPDATE contactos SET correo = ? WHERE persona_id = ?", nuevo, pid)
+            log.info("administración: correo cambiado en una entrada")
+            return RedirectResponse("/admin?v=entradas&ok=correo", status_code=303)
+        if accion == "borrar" and form.get("seguro") == "si" and self.db.ficha(pid):
+            self.db.olvidar(pid)
+            log.info("administración: entrada borrada")
+            return RedirectResponse("/admin?v=entradas&ok=borrada", status_code=303)
+        return RedirectResponse("/admin?v=entradas&ok=error", status_code=303)
+
+    def _vista_cifras(self) -> str:
+        """Cuánto se usa Beakman: contadores por semana, sin nada de nadie."""
+        c = self.db.cifras()
+        cols = [("entrada_con_datos", "Con datos"), ("entrada_sin_datos", "Sin datos"), ("clases", "Clases"),
+                ("presentado", "Correo"), ("sin_correo", "Sin correo"), ("borrado", "Borran")]
+        filas = ""
+        for semana, v in c["semanas"].items():
+            v = dict(v, clases=sum(n for k, n in v.items() if k.startswith("clase:")))
+            filas += f"<tr><td>{semana[5:]} · {semana[:4]}</td>" + "".join(f"<td>{v.get(k, 0)}</td>" for k, _ in cols) + "</tr>"
+        asign = {}
+        for v in c["semanas"].values():
+            for k, n in v.items():
+                if k.startswith("clase:"):
+                    asign[k[6:]] = asign.get(k[6:], 0) + n
+        por_asig = " · ".join(f"{html.escape(k)}: {n}" for k, n in sorted(asign.items(), key=lambda x: -x[1])) or "—"
+        cab = "".join(f"<th>{t}</th>" for _, t in cols)
+        return f"""<h1>Cifras</h1>
+<p class="lead">Ahora mismo hay <b>{c['entradas']['con_datos']}</b> entradas con datos y <b>{c['entradas']['sin_datos']}</b>
+sin datos. Debajo, lo que ha pasado cada semana.</p>
+<div class="card" style="overflow-x:auto"><table class="cifras"><tr><th>Semana</th>{cab}</tr>{filas or
+'<tr><td colspan="7">Aún no hay nada que contar.</td></tr>'}</table></div>
+<p class="hint" style="margin-top:12px"><b>Con datos / Sin datos:</b> entradas nuevas. <b>Correo:</b> se presentan o
+cambian de correo. <b>Sin correo:</b> borran nombre y correo. <b>Borran:</b> lo borran todo.<br>
+Clases por asignatura, en estas semanas: {por_asig}.</p>"""
+
+    def _vista_entradas(self, q: str, csrf: str, ok: str) -> str:
+        """Las entradas con datos, para dar soporte (cambiar un correo, borrar a petición de la familia)."""
+        q = q.strip().lower()[:80]
+        filas = self.db.q("SELECT c.persona_id, c.nombre, c.correo, c.consentimiento_fecha, p.curso, p.comunidad "
+                          "FROM contactos c LEFT JOIN progreso p ON p.persona_id = c.persona_id "
+                          "WHERE ? = '' OR lower(c.correo) LIKE ? OR lower(c.nombre) LIKE ? "
+                          "ORDER BY c.consentimiento_fecha DESC LIMIT 200", q, f"%{q}%", f"%{q}%")
+        sin = self.db.one("SELECT COUNT(*) AS n FROM personas WHERE id NOT IN (SELECT persona_id FROM contactos)")["n"]
+        oculto = f'<input type="hidden" name="csrf" value="{html.escape(csrf)}">'
+        avisos = {"correo": "Correo cambiado.", "borrada": "Entrada borrada.",
+                  "error": "No se ha podido: revisa el correo (¿ya lo usa otra entrada?)."}
+        msg = f"<div class='{'errores' if ok == 'error' else 'ok'}'><p>{avisos[ok]}</p></div>" if ok in avisos else ""
+        cuerpo = ""
+        for f in filas:
+            pid = html.escape(f["persona_id"])
+            cuerpo += f"""<div class="card" style="margin-bottom:12px">
+<b>{html.escape(f['nombre'])}</b> · {html.escape(f['correo'])}<br>
+<span class="hint">{html.escape(CURSOS.get(f['curso'] or '', '') or 'sin curso')} · {html.escape(f['comunidad'] or 'sin comunidad')} ·
+desde el {html.escape((f['consentimiento_fecha'] or '')[:10])}</span>
+<form method="post" action="/admin/accion" style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">{oculto}
+<input type="hidden" name="accion" value="correo"><input type="hidden" name="pid" value="{pid}">
+<input type="email" name="correo" placeholder="Correo nuevo" required style="flex:1;min-width:180px">
+<button class="btn ghost" type="submit" style="margin-top:0">Cambiar correo</button></form>
+<form method="post" action="/admin/accion" style="display:flex;gap:8px;margin-top:8px;align-items:center;flex-wrap:wrap">{oculto}
+<input type="hidden" name="accion" value="borrar"><input type="hidden" name="pid" value="{pid}">
+<label class="check" style="margin:0"><input type="checkbox" name="seguro" value="si" required><span>Borrar todo</span></label>
+<button class="btn ghost" type="submit" style="margin-top:0">Borrar</button></form>
+</div>"""
+        return f"""<h1>Entradas</h1>
+<p class="lead"><b>{len(filas)}</b> con datos{' que coinciden' if q else ''} y <b>{sin}</b> sin datos (de esas no hay nada
+que enseñar). Cambiar el correo aquí no pide confirmación: hazlo solo si te lo pide la familia.</p>
+<form method="get" action="/admin" style="display:flex;gap:8px;margin-bottom:14px"><input type="hidden" name="v" value="entradas">
+<input type="text" name="q" value="{html.escape(q)}" placeholder="Buscar por nombre o correo" style="flex:1">
+<button class="btn ghost" type="submit" style="margin-top:0">Buscar</button></form>
+{msg}{cuerpo or '<p>No hay ninguna.</p>'}"""
 
     async def borrar_pagina(self, request: Request) -> Response:
         """La página vieja de borrar: ahora se borra desde «Mis datos»."""
@@ -707,6 +900,9 @@ h2 { font: 600 1.2rem/1.2 "Fredoka", sans-serif; color: var(--ink); margin: 6px 
 .card h2:not(:first-child) { margin-top: 16px; }
 .card ol, .card ul { margin: 0; padding-left: 20px; font-size: .95rem; }
 .card li { margin-bottom: 6px; }
+.cifras { border-collapse: collapse; width: 100%; font-size: .84rem; }
+.cifras th, .cifras td { white-space: nowrap; padding: 5px 5px; border-bottom: 1px solid var(--line); text-align: right; }
+.cifras th:first-child, .cifras td:first-child { text-align: left; }
 .errores { background: #FBE5E1; border: 1.5px solid #E7A89F; border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; color: #7A2A20; }
 .errores p { margin: 0; }
 .note { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 12px; padding: 12px 14px; font-size: .92rem; margin-top: 18px; }
@@ -757,6 +953,48 @@ CAMBIAR = ("<p class='note'>¿Quieres cambiar de opción más adelante? En Claud
            "Beakman y vuelve a conectarlo: esta página saldrá otra vez. También puedes pedírselo a Beakman en el chat "
            "(«quiero presentarme», «olvídame»). Y si ya diste tus datos y quieres borrarlos sin entrar en Claude: "
            "<a href='/cuenta'>Mis datos</a>.</p>")
+
+
+def huella_clave(clave: str) -> str:
+    """Huella scrypt de una contraseña: «scrypt:n:r:p:sal:huella» (sal y huella en hex)."""
+    sal = secrets.token_bytes(16)
+    n, r, p = 2 ** 15, 8, 1
+    h = hashlib.scrypt(clave.encode(), salt=sal, n=n, r=r, p=p, maxmem=64 * 1024 * 1024)
+    return f"scrypt:{n}:{r}:{p}:{sal.hex()}:{h.hex()}"
+
+
+def verificar_clave(clave: str, huella: str) -> bool:
+    try:
+        _, n, r, p, sal, h = huella.split(":")
+        calc = hashlib.scrypt(clave.encode(), salt=bytes.fromhex(sal), n=int(n), r=int(r), p=int(p),
+                              maxmem=64 * 1024 * 1024)
+        return secrets.compare_digest(calc.hex(), h)
+    except (ValueError, TypeError):
+        return False
+
+
+def _form_admin(site_key: str, error: str = "") -> str:
+    err = f"<div class='errores'><p>{html.escape(error)}</p></div>" if error else ""
+    return f"""<h1>Administración</h1>
+<p class="lead">Correo y contraseña. Después te llega un enlace al correo para terminar de entrar.</p>
+{err}<form class="card" method="post" action="/admin">
+<label for="correo">Correo</label>
+<input type="email" id="correo" name="correo" maxlength="120" required autocomplete="username">
+<label for="clave">Contraseña</label>
+<input type="password" id="clave" name="clave" maxlength="200" required autocomplete="current-password"
+  style="width:100%;font:400 1rem Nunito,sans-serif;padding:9px 12px;border:2px solid var(--line);border-radius:12px">
+{_turnstile(site_key)}
+<button class="btn" type="submit">Entrar</button>
+</form>"""
+
+
+def _admin_menu(vista: str, csrf: str) -> str:
+    def a(v, t):
+        estilo = "font-weight:800;text-decoration-thickness:3px" if v == vista else ""
+        return f'<a href="/admin?v={v}" style="{estilo}">{t}</a>'
+    return f"""<nav style="display:flex;gap:16px;align-items:center;margin-bottom:14px">{a("cifras", "Cifras")}{a("entradas", "Entradas")}
+<form method="post" action="/admin/accion" style="margin-left:auto"><input type="hidden" name="csrf" value="{html.escape(csrf)}">
+<input type="hidden" name="accion" value="salir"><button class="btn ghost" type="submit" style="margin-top:0">Salir</button></form></nav>"""
 
 
 def _turnstile(site_key: str) -> str:

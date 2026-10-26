@@ -62,7 +62,7 @@ def page(t, lang, title, desc, up, path, body, langs):
 <header class="wrap top">
   <a class="brand" href="{up}{lang}/"><span class="face"><img src="{up}media/beakman.jpg" alt="" width="52" height="52"></span>
     <span><b>{e(t["sitio"])}</b><small>lab.beakman.kademy.net</small></span></a>
-  <nav><a href="{e(t["tutores_url"])}">{e(t["tutores"])}</a><a href="{e(t["mis_datos_url"])}">{e(t["mis_datos"])}</a>{switch}</nav>
+  <nav><a href="{e(t["tutores_url"])}">{e(t["tutores"])}</a><a href="{e(t["empieza_url"])}">{e(t["empieza"])}</a><a href="{e(t["mis_datos_url"])}">{e(t["mis_datos"])}</a>{switch}</nav>
 </header>
 <main class="wrap">
 {body}

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Empieza aquí · Mi mundo de Beakman</title>
+<meta name="description" content="Beakman en un minuto: conectarlo en Claude, preparar un proyecto y las primeras frases para empezar a estudiar. Para familias.">
+<link rel="canonical" href="https://icalvete.github.io/beakman-mcp/empieza.html">
+<meta name="theme-color" content="#A6D41E">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Nunito:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="site.css">
+<style>
+/* «Empieza aquí»: pasos en vertical, cada uno con su captura */
+.paso { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 22px; align-items: start;
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin: 0 0 18px; }
+.paso h2 { margin: 0 0 6px; }
+.paso .n { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--lime);
+  color: var(--ink); font-family: var(--display); font-weight: 600; margin-right: 8px; }
+.paso img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; display: block; }
+.paso figure { margin: 0; }
+.paso figcaption { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+.copia { display: flex; gap: 8px; align-items: center; background: #fff; border: 1.5px dashed var(--line); border-radius: 10px;
+  padding: 8px 10px; margin: 8px 0; font-weight: 700; color: var(--ink); }
+.copia span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.copia button { font: 800 .85rem var(--body, "Nunito", sans-serif); border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--lime); color: var(--ink); padding: 4px 10px; cursor: pointer; flex: none; }
+.frases { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; list-style: none;
+  padding: 0; margin: 10px 0 0; }
+.frases li { max-width: none; }
+.frases .copia { margin: 0; height: 100%; }
+@media (max-width: 720px) { .paso { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="wrap top">
+  <a class="brand" href="./"><img src="img/favicon.svg" alt="" width="36" height="36"><span>Mi mundo de Beakman</span></a>
+  <nav aria-label="Principal">
+    <a href="./">Portada</a>
+    <a href="guia/usarlo.html">Cómo se usa</a>
+    <a href="https://lab.beakman.kademy.net/">Laboratorio</a>
+    <a href="https://beakman.kademy.net/cuenta">Mis datos</a>
+  </nav>
+</header>
+
+<main id="main" class="wrap doc prose">
+  <p class="kicker">Empieza aquí</p>
+  <h1>Beakman en un minuto</h1>
+  <p class="lead">Tres pasos y a estudiar. Hazlos con tu hija o tu hijo al lado: Claude es para mayores de 18, así que lo pone en marcha un adulto.</p>
+
+  <section class="paso" id="conectar">
+    <div>
+      <h2><span class="n">1</span>Conecta Beakman en Claude</h2>
+      <p>En <a href="https://claude.ai">claude.ai</a>, ve a <strong>Ajustes → Conectores → Agregar conector personalizado</strong>. Escribe:</p>
+      <div class="copia"><span>beakman</span><button type="button">Copiar</button></div>
+      <div class="copia"><span>https://beakman.kademy.net/mcp</span><button type="button">Copiar</button></div>
+      <p>Claude marca solo «Iniciar sesión ahora» y «Registrar automáticamente». Déjalo así, pulsa <strong>Agregar</strong> y luego <strong>Conectar</strong>.</p>
+    </div>
+    <figure><img src="img/empieza-conector.webp" alt="Las opciones de Autenticación y Cliente OAuth que Claude marca solas al agregar el conector" width="460" height="375" loading="lazy">
+      <figcaption>Las dos opciones que Claude marca solo: déjalas así.</figcaption></figure>
+  </section>
+
+  <section class="paso" id="presentate">
+    <div>
+      <h2><span class="n">2</span>Preséntate</h2>
+      <p>Se abre la página de Beakman. Hay dos caminos:</p>
+      <ul>
+        <li><strong>Entrar al laboratorio:</strong> un nombre para saludar, tu correo, el curso y la comunidad. Te llega un correo: lo confirmas y Claude se conecta solo.</li>
+        <li><strong>Entrar sin datos:</strong> un clic. Beakman no sabrá vuestro nombre ni podrá escribiros.</li>
+      </ul>
+      <p>¿Por qué dar el correo? Beakman te reconoce aunque cambies de ordenador, puedes ver y borrar tus datos en <a href="https://beakman.kademy.net/cuenta">Mis datos</a>, y os puede escribir. Lo cuenta la <a href="guia/usarlo.html#datos">guía</a>.</p>
+    </div>
+    <figure><img src="img/empieza-entrada.webp" alt="La página «Antes de empezar, preséntate» de Beakman, con el formulario" width="460" height="499" loading="lazy">
+      <figcaption>La página de Beakman. Lo rellena un adulto.</figcaption></figure>
+  </section>
+
+  <section class="paso" id="proyecto">
+    <div>
+      <h2><span class="n">3</span>Prepara un proyecto «Beakman»</h2>
+      <p>En Claude, ve a <strong>Proyectos → Nuevo proyecto</strong>, llámalo <strong>Beakman</strong> y pega esto en sus instrucciones, con vuestro curso y vuestra comunidad:</p>
+      <div class="copia"><span>Usa siempre el conector de Beakman para estudiar. Estoy en 2º de la ESO, en la Comunidad de Madrid.</span><button type="button">Copiar</button></div>
+      <p>Así cada chat del proyecto empieza ya con Beakman, sin tener que decírselo.</p>
+      <p>Y para que Claude no pida permiso a cada rato: en <strong>Ajustes → Conectores → beakman</strong>, pon todo en <strong>Permitir siempre</strong> y deja <strong>Requiere aprobación</strong> solo en <em>Cambiar mis datos, Presentarme, No escribirme y Olvídame</em>.</p>
+    </div>
+    <figure><img src="img/empieza-permisos.webp" alt="Los permisos de las herramientas del conector beakman en los ajustes de Claude" width="460" height="365" loading="lazy">
+      <figcaption>Los permisos del conector.</figcaption></figure>
+  </section>
+
+  <h2>Y ahora, a estudiar</h2>
+  <p>Abre un chat en el proyecto y prueba con una de estas:</p>
+  <ul class="frases">
+    <li><div class="copia"><span>Quiero estudiar historia con Beakman.</span><button type="button">Copiar</button></div></li>
+    <li><div class="copia"><span>Explícame este tema desde el principio.</span><button type="button">Copiar</button></div></li>
+    <li><div class="copia"><span>Hazme preguntas de una en una y no me des la respuesta hasta que lo intente.</span><button type="button">Copiar</button></div></li>
+    <li><div class="copia"><span>Ponme un examen de 5 preguntas y corrígemelo.</span><button type="button">Copiar</button></div></li>
+    <li><div class="copia"><span>Ayúdame con este ejercicio sin darme la solución.</span><button type="button">Copiar</button></div></li>
+    <li><div class="copia"><span>¿Qué sabe Beakman de mí?</span><button type="button">Copiar</button></div></li>
+  </ul>
+
+  <div class="note">
+    <p><strong>¿Algo no sale?</strong> La <a href="guia/usarlo.html">guía de uso</a> lo cuenta todo con calma, y las <a href="./#preguntas">preguntas frecuentes</a> resuelven lo habitual. Si no, escríbenos a <a href="mailto:beakman@kademy.net">beakman@kademy.net</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Mi mundo de Beakman · homenaje sin afiliación</span>
+    <nav aria-label="Pie">
+      <a href="./">Portada</a>
+      <a href="guia/usarlo.html">Cómo se usa</a>
+      <a href="privacidad.html">Privacidad</a>
+      <a href="mailto:beakman@kademy.net">Escríbenos</a>
+      <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a>
+    </nav>
+  </div>
+</footer>
+<script>
+document.querySelectorAll(".copia button").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var t = b.previousElementSibling.textContent;
+    var hecho = function () { b.textContent = "¡Copiado!"; setTimeout(function () { b.textContent = "Copiar"; }, 1500); };
+    if (navigator.clipboard) navigator.clipboard.writeText(t).then(hecho, function () {});
+  });
+});
+</script>
+</body>
+</html>
