@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La actividad científica, contada paso a paso · El laboratorio de Beakman</title>
+<meta name="description" content="Resumen de la unidad «La actividad científica» de Física y Química de 2º ESO: método científico, magnitudes, unidades, cambio de unidades, medida y laboratorio.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css?v=2">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* un resumen se lee: columna estrecha y bloques con su número de apartado */
+main.wrap { max-width: 860px; }
+.block { box-shadow: 4px 4px 0 #69DB7C; }
+.block p, .block li { max-width: 72ch; }
+.block p { margin: 0 0 10px; }
+.block ul, .block ol { padding-left: 22px; margin: 6px 0 10px; }
+.block li { margin-bottom: 4px; }
+.num { display: inline-block; background: #69DB7C; color: var(--ink); font-weight: 800; font-size: .85rem; border: 1.5px solid var(--ink);
+  border-radius: 999px; padding: 1px 10px; margin-bottom: 6px; }
+.chain { background: var(--lime-soft); border-radius: 12px; padding: 10px 14px; font-weight: 700; color: var(--ink); }
+.key { border-left: 5px solid var(--lime); background: #fff; border-radius: 0 12px 12px 0; padding: 8px 14px; }
+.idea { background: var(--lime-soft); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 18px; margin-bottom: 24px; }
+.idea b.t, .rels b.t { display: block; font: 600 .85rem/1.2 var(--display); letter-spacing: .04em; margin-bottom: 6px; }
+.rels { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 16px; padding: 14px 18px; margin-bottom: 24px; }
+.rels ol { margin: 6px 0 0; padding-left: 22px; }
+.rels li { margin-bottom: 8px; }
+.more { margin-top: 12px; padding-top: 10px; border-top: 1.5px dashed var(--line); }
+.more span { font-weight: 800; font-size: .9rem; color: var(--muted); margin-right: 4px; }
+.more a { text-decoration: none; }
+table.t { border-collapse: collapse; margin: 6px 0 12px; font-size: .95rem; }
+table.t th, table.t td { border-bottom: 1px solid var(--line); padding: 5px 10px; text-align: left; }
+table.t th { font-family: var(--display); font-weight: 600; color: var(--ink); }
+code { font-family: inherit; font-weight: 800; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 0 5px; }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <div class="rhead">
+    <h1>La actividad científica, <em>paso a paso</em></h1>
+    <p class="lead">La unidad que es la caja de herramientas de todo el curso: cómo trabaja la ciencia, qué se mide, con qué unidades y cómo se mide bien.</p>
+    <div class="meta"><span class="subj" style="--subj:#69DB7C">Ciencias</span><span class="tag">Física y Química · La actividad científica</span></div>
+  </div>
+
+  <nav class="tabs" aria-label="Apartados">
+    <a href="#a1">1 · El método</a><a href="#a2">2 · Magnitudes</a><a href="#a3">3 · El SI</a><a href="#a4">4 · Múltiplos</a>
+    <a href="#a5">5 · Cambiar de unidad</a><a href="#a6">6 · Medir bien</a><a href="#a7">7 · El laboratorio</a><a href="#relaciones">Las 5 claves</a>
+  </nav>
+
+  <div class="idea">
+    <b class="t">✦ LA IDEA EN CINCO LÍNEAS</b>
+    La ciencia no adivina: hace una pregunta, propone una respuesta y la <b>pone a prueba</b> con experimentos. Para eso necesita <b>medir</b>, y medir es comparar con una unidad que todo el mundo use igual: el <b>Sistema Internacional</b>. Una medida siempre lleva <b>número y unidad</b>, se puede escribir en unidades más grandes o más pequeñas, y nunca es perfecta: por eso se mide con cuidado y <b>varias veces</b>.
+  </div>
+
+  <section class="block" id="a1">
+    <span class="num">Apartado 1</span>
+    <h2>El método científico: preguntar y comprobar</h2>
+    <p>La ciencia es una forma de conocer el mundo que solo da por buena una idea cuando se ha comprobado. Sus pasos:</p>
+    <p class="chain">observación → pregunta → hipótesis → experimento → análisis de los datos → conclusión → comunicar</p>
+    <ul>
+      <li>La <b>hipótesis</b> es una respuesta posible a la pregunta, que se puede poner a prueba.</li>
+      <li>En el <b>experimento</b> se cambia una sola cosa cada vez (la variable que cambias) y se mide lo que pasa (la variable que mides). Lo demás se mantiene igual.</li>
+      <li>Los datos se ordenan en <b>tablas</b> y <b>gráficas</b>. Con ellos se ve si la hipótesis se cumple o no.</li>
+      <li>Si no se cumple, no es un fracaso: se aprende algo y se propone otra hipótesis.</li>
+    </ul>
+    <p class="key"><b>Fíjate:</b> lo que distingue a la ciencia no es saber mucho, sino comprobarlo todo. Una idea que no se puede comprobar no es científica.</p>
+    <p class="more"><span>Para practicarlo:</span> el tema del proyecto de investigación lo cuenta paso a paso, con ejemplos para hacer en casa.</p>
+  </section>
+
+  <section class="block" id="a2">
+    <span class="num">Apartado 2</span>
+    <h2>Magnitudes: lo que se puede medir</h2>
+    <p>Una <b>magnitud</b> es una propiedad que se puede medir y expresar con un número y una unidad: la longitud, la masa, el tiempo, la temperatura, el volumen…</p>
+    <ul>
+      <li><b>Medir</b> es comparar una magnitud con otra de la misma clase que tomamos como unidad. «La mesa mide 1,2 m» quiere decir que cabe 1,2 veces el metro.</li>
+      <li>Lo que no se puede medir así (la belleza, el miedo, la simpatía) <b>no es una magnitud</b>.</li>
+      <li>Una medida siempre lleva <b>número y unidad</b>. «5» no dice nada; «5 m», «5 cm» o «5 km» son cosas muy distintas.</li>
+    </ul>
+    <p class="key"><b>La regla de oro:</b> un resultado sin unidad está mal, aunque el número sea el bueno.</p>
+    <p class="more"><span>Para practicarlo:</span> <a class="b small ghost" href="../que-es-una-magnitud/">¿Qué es una magnitud?</a></p>
+  </section>
+
+  <section class="block" id="a3">
+    <span class="num">Apartado 3</span>
+    <h2>El Sistema Internacional: las mismas unidades para todos</h2>
+    <p>Si cada uno midiera con sus palmos, nadie se entendería. Por eso existe el <b>Sistema Internacional de Unidades (SI)</b>: unas unidades comunes en casi todo el mundo.</p>
+    <p>Tiene <b>siete magnitudes básicas</b>. Las cuatro que más usarás este curso:</p>
+    <table class="t">
+      <tr><th>Magnitud</th><th>Unidad</th><th>Símbolo</th><th>Instrumento</th></tr>
+      <tr><td>Longitud</td><td>metro</td><td><code>m</code></td><td>regla, cinta métrica</td></tr>
+      <tr><td>Masa</td><td>kilogramo</td><td><code>kg</code></td><td>balanza</td></tr>
+      <tr><td>Tiempo</td><td>segundo</td><td><code>s</code></td><td>cronómetro</td></tr>
+      <tr><td>Temperatura</td><td>kelvin</td><td><code>K</code></td><td>termómetro</td></tr>
+    </table>
+    <p>Las otras tres son la intensidad de corriente (amperio, A), la cantidad de sustancia (mol) y la intensidad luminosa (candela, cd).</p>
+    <ul>
+      <li>Las <b>magnitudes derivadas</b> salen de las básicas: superficie (m²), volumen (m³), velocidad (m/s), densidad (kg/m³).</li>
+      <li>En la vida diaria usamos también otras unidades: grados Celsius (°C), litros (L), kilómetros por hora (km/h).</li>
+    </ul>
+    <p class="key"><b>Ojo con los símbolos:</b> kg con k minúscula, s y no «seg», K sin «°», y sin punto al final ni plural: 5 kg, no «5 Kgs.».</p>
+    <p class="more"><span>Para practicarlo:</span> <a class="b small ghost" href="../que-es-una-magnitud/#si">Cada magnitud con lo suyo</a></p>
+  </section>
+
+  <section class="block" id="a4">
+    <span class="num">Apartado 4</span>
+    <h2>Múltiplos y submúltiplos: unidades grandes y pequeñas</h2>
+    <p>Medir la distancia a otra ciudad en metros o el grosor de una hoja en metros da números incómodos. Por eso a la unidad se le pone delante un <b>prefijo</b>:</p>
+    <table class="t">
+      <tr><th>Prefijo</th><th>Símbolo</th><th>Vale</th><th>Ejemplo</th></tr>
+      <tr><td>kilo</td><td><code>k</code></td><td>1000</td><td>1 km = 1000 m</td></tr>
+      <tr><td>hecto</td><td><code>h</code></td><td>100</td><td>1 hm = 100 m</td></tr>
+      <tr><td>deca</td><td><code>da</code></td><td>10</td><td>1 dam = 10 m</td></tr>
+      <tr><td>deci</td><td><code>d</code></td><td>0,1</td><td>1 dm = 0,1 m</td></tr>
+      <tr><td>centi</td><td><code>c</code></td><td>0,01</td><td>1 cm = 0,01 m</td></tr>
+      <tr><td>mili</td><td><code>m</code></td><td>0,001</td><td>1 mm = 0,001 m</td></tr>
+    </table>
+    <p>Funcionan igual con gramos (kg, g, mg) y con litros (kL, L, mL). Cada escalón de la escalera es un <b>×10</b> al bajar y un <b>÷10</b> al subir: la coma se mueve un lugar.</p>
+    <p class="key"><b>La trampa:</b> la «m» de metro y la «m» de mili son la misma letra. En «mm», la primera es el prefijo y la segunda la unidad: milímetro.</p>
+    <p class="more"><span>Para practicarlo:</span> <a class="b small ghost" href="../escalera-de-unidades/">La escalera de las unidades</a></p>
+  </section>
+
+  <section class="block" id="a5">
+    <span class="num">Apartado 5</span>
+    <h2>Cambiar de unidad: el factor de conversión</h2>
+    <p>Para pasar de una unidad a otra se multiplica por una <b>fracción que vale 1</b>, con la unidad que quieres quitar <b>abajo</b>. Así se tacha y queda la nueva:</p>
+    <ul>
+      <li>2,5 km · (1000 m / 1 km) = <b>2500 m</b></li>
+      <li>350 g · (1 kg / 1000 g) = <b>0,35 kg</b></li>
+      <li>3 min · (60 s / 1 min) = <b>180 s</b></li>
+      <li>72 km/h · (1000 m / 1 km) · (1 h / 3600 s) = <b>20 m/s</b></li>
+    </ul>
+    <p>Para volumen y capacidad: <b>1 L = 1 dm³ = 1000 cm³</b>, y <b>1 mL = 1 cm³</b>.</p>
+    <p class="key"><b>Comprueba siempre:</b> si pasas a una unidad más pequeña, el número tiene que salir más grande (5 km son 5000 m). Si sale al revés, has dado la vuelta a la fracción.</p>
+    <p class="more"><span>Para practicarlo:</span> <a class="b small ghost" href="../escalera-de-unidades/">El truco del factor de conversión</a></p>
+  </section>
+
+  <section class="block" id="a6">
+    <span class="num">Apartado 6</span>
+    <h2>Medir bien: instrumentos, precisión y errores</h2>
+    <ul>
+      <li>Cada magnitud tiene su <b>instrumento</b>: regla, balanza, probeta, cronómetro, termómetro.</li>
+      <li>La <b>precisión</b> de un instrumento es la división más pequeña que marca. Una regla con milímetros es más precisa que una cinta que solo marca centímetros.</li>
+      <li>Toda medida tiene algo de <b>incertidumbre</b>: nunca es perfecta. Por eso se mide <b>varias veces</b> y se hace la <b>media</b>, que suma los valores y los divide entre cuántos hay.</li>
+      <li>Errores típicos al medir:
+        <ul>
+          <li>mirar el instrumento de lado o desde arriba (hay que poner los ojos a la altura de lo que mides);</li>
+          <li>en la probeta, leer la parte de arriba de la curva del agua (el menisco) en vez de la de abajo;</li>
+          <li>no poner a cero la balanza antes de pesar;</li>
+          <li>escribir el número sin unidad, o con la unidad equivocada.</li>
+        </ul>
+      </li>
+    </ul>
+    <p class="key"><b>Fíjate:</b> repetir una medida corrige los fallos al azar (pulsar el cronómetro un poco tarde o un poco pronto), pero no un fallo que se repite siempre, como una balanza mal puesta a cero.</p>
+    <p class="more"><span>Para practicarlo:</span> <a class="b small ghost" href="../mide-como-en-el-laboratorio/">Mide como en el laboratorio</a></p>
+  </section>
+
+  <section class="block" id="a7">
+    <span class="num">Apartado 7</span>
+    <h2>El laboratorio: material y seguridad</h2>
+    <ul>
+      <li><b>Material de medida:</b> probeta (volumen de líquidos), balanza (masa), termómetro, cronómetro, regla. <b>Material de vidrio para trabajar:</b> vaso de precipitados, matraz, tubo de ensayo, embudo.</li>
+      <li><b>Normas:</b> bata y gafas, pelo recogido, no comer ni beber, no oler ni tocar productos sin permiso, trabajar con orden y avisar al profesor de cualquier accidente.</li>
+      <li><b>Pictogramas de peligro:</b> los rombos con borde rojo y un dibujo de las etiquetas avisan del peligro de cada producto: inflamable, corrosivo, tóxico, peligroso para el medio ambiente… También están en los productos de limpieza de casa.</li>
+    </ul>
+    <p class="key"><b>Por eso en casa nunca se mezclan productos de limpieza:</b> algunas mezclas, como la lejía con el amoniaco o con un producto ácido, sueltan gases tóxicos.</p>
+  </section>
+
+  <div class="rels" id="relaciones">
+    <b class="t">✦ LAS 5 CLAVES QUE TE PEDIRÁN EN EL EXAMEN</b>
+    <ol>
+      <li><b>La ciencia comprueba.</b> Pregunta, hipótesis, experimento y conclusión, cambiando una sola variable cada vez.</li>
+      <li><b>Magnitud = lo que se puede medir.</b> Y una medida es siempre número y unidad.</li>
+      <li><b>El SI pone las unidades comunes.</b> Metro, kilogramo, segundo y kelvin, con sus símbolos bien escritos.</li>
+      <li><b>Cambiar de unidad es multiplicar por 1.</b> Una fracción con la unidad que quitas abajo; comprueba si el número debe crecer o menguar.</li>
+      <li><b>Ninguna medida es perfecta.</b> Se elige el instrumento adecuado, se mide con cuidado y varias veces, y se hace la media.</li>
+    </ol>
+  </div>
+
+  <div class="beak">
+    <img src="../../../../media/beakman.jpg" alt="">
+    <div><b>¿Te lo pregunto yo?</b>Cuando lo hayas leído, practica con los tres recursos de esta unidad. O ven a estudiar conmigo en Claude, con una persona adulta al lado, y escríbeme «quiero estudiar ciencias con Beakman».</div>
+  </div>
+  <p class="credit" style="margin-top:14px">Sigue la unidad «La actividad científica» de Física y Química de 2º ESO.</p>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+</body>
+</html>

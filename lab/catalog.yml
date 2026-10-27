@@ -233,6 +233,24 @@ recursos:
         Una regla que mueves tú corta los tres carriles y te cuenta qué existía en ese año y qué pasó cerca. En papel,
         un A4 apaisado para tenerlo delante al estudiar.
 
+  - id: resumen-actividad-cientifica
+    asignatura: ciencias
+    curso: 2eso
+    tipo: resumen
+    imagen: resumen-actividad-cientifica.jpg
+    es:
+      titulo: La actividad científica, paso a paso
+      temas: Física y Química · La actividad científica
+      descripcion: >-
+        La unidad entera en una lectura: el método científico, las magnitudes, el Sistema Internacional, múltiplos y
+        submúltiplos, el factor de conversión, medir bien y el laboratorio.
+      objetivo: >-
+        Tener claro lo esencial antes de practicar: qué es medir, con qué unidades y cómo se cambia de una a otra, y por
+        qué ninguna medida es perfecta.
+      metodo: >-
+        Siete apartados cortos, cada uno con la idea que hay que guardar y el recurso del lab para practicarlo, y al
+        final las cinco claves del examen.
+
   - id: que-es-una-magnitud
     asignatura: ciencias
     curso: 2eso
