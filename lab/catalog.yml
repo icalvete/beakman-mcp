@@ -1,9 +1,10 @@
 # Catálogo del laboratorio de Beakman (lab.beakman.kademy.net).
 # build.py genera con él la portada de cada idioma y la página de cada asignatura.
-# Cada recurso lleva, por idioma: título, temas, descripción, objetivo (para qué sirve) y método (cómo lo hace).
+# Cada recurso lleva, por idioma: título, unidad, descripción, objetivo (para qué sirve) y método (cómo lo hace).
 # Un recurso nuevo: su carpeta en lab/<id>/ (código) y su página en site/<idioma>/<asignatura>/<curso>/<id>/,
 # más una entrada aquí. Los textos van por idioma; un recurso sin un idioma no sale en ese idioma.
-# unidad: el tema al que pertenece; agrupa los recursos en la página de la asignatura («Para todo el curso» va al final).
+# unidad: el tema al que pertenece; con el curso y la materia forma la etiqueta de cada tarjeta (temas: solo para
+# «Para todo el curso», qué abarca); agrupa los recursos en la página de la asignatura («Para todo el curso» va al final).
 # tipo (opcional): resumen. Lleva su pastilla y sale el primero de su curso, porque es lo primero que se lee de un tema.
 
 idiomas: [es]          # idiomas publicados; el primero es el de por defecto
@@ -11,11 +12,13 @@ idiomas: [es]          # idiomas publicados; el primero es el de por defecto
 cursos: [1eso, 2eso]
 
 asignaturas:
+  # materias: el nombre de la materia en el libro de cada curso; va en la etiqueta de cada recurso.
+  # Un recurso puede llevar la suya (materia:), p. ej. Biología y Geología en 2º, que según la comunidad toca en vez de FyQ.
   # color: la etiqueta de la asignatura en cada recurso y la sombra de su tarjeta. Tonos claros: el texto va en tinta oscura.
   - id: historia
     foto: historia.jpg
     color: "#FFD43B"
-    es: {slug: historia, nombre: Historia, lema: "Cuándo y dónde, sí. Pero sobre todo por qué pasó, a quién le cambió la vida y qué queda hoy."}
+    es: {slug: historia, nombre: Historia, materias: {1eso: Geografía e Historia, 2eso: Geografía e Historia}, lema: "Cuándo y dónde, sí. Pero sobre todo por qué pasó, a quién le cambió la vida y qué queda hoy."}
     en: {slug: history, nombre: History, lema: "When and where, yes. But above all why it happened, whose lives it changed and what is left today."}
   - id: matematicas
     foto: matematicas.jpg
@@ -25,7 +28,7 @@ asignaturas:
   - id: ciencias
     foto: ciencias.webp
     color: "#69DB7C"
-    es: {slug: ciencias, nombre: Ciencias, lema: "Mirar el mundo y preguntarle cosas."}
+    es: {slug: ciencias, nombre: Ciencias, materias: {1eso: Biología y Geología, 2eso: Física y Química}, lema: "Mirar el mundo y preguntarle cosas."}
     en: {slug: science, nombre: Science, lema: "Look at the world and ask it questions."}
   - id: lengua
     foto: lengua.webp
@@ -41,7 +44,6 @@ recursos:
     imagen: resumen-tema-1.jpg
     es:
       titulo: "Resumen del Tema 1: La huella andalusí"
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         El tema entero en una lectura: del fin de Roma al reino nazarí de Granada, apartado por apartado, contado
@@ -60,7 +62,6 @@ recursos:
     solo_pc: true
     es:
       titulo: "Ponte a prueba: el inicio de la Edad Media"
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Repaso para el examen: las 12 preguntas del tema, conceptos, ordenar los hechos, causas y cuadros
@@ -99,7 +100,6 @@ recursos:
     solo_pc: true
     es:
       titulo: Los mapas de al-Ándalus
-      temas: Tema 1 · Al-Ándalus
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Casi 800 años en seis mapas: la conquista, el emirato, el califato, los taifas, almorávides y almohades,
@@ -117,7 +117,6 @@ recursos:
     solo_pc: true
     es:
       titulo: ¿Qué dicen las palabras?
-      temas: Tema 1 · El legado de al-Ándalus
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Un juego con las palabras que el español heredó del árabe: descubre cuáles vienen de al-Ándalus y
@@ -136,7 +135,6 @@ recursos:
     solo_pc: true
     es:
       titulo: Me pongo en su mentalidad
-      temas: Tema 1 · Del fin de Roma al Califato de Córdoba
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Seis personas del inicio de la Edad Media: un artesano que huye al campo, una comerciante de
@@ -156,7 +154,6 @@ recursos:
     solo_pc: true
     es:
       titulo: La mezquita y la alquería por dentro
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Dos dibujos para pulsar: las partes de una mezquita (minarete, patio, fuente, sala de oraciones, quibla,
@@ -176,7 +173,6 @@ recursos:
     solo_pc: true
     es:
       titulo: Mayrit, el Madrid de al-Ándalus
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Un plano para pulsar de la fortaleza andalusí que dio origen a Madrid, con una capa que superpone el Madrid
@@ -195,7 +191,6 @@ recursos:
     solo_pc: true
     es:
       titulo: ¿Quién soy?
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Trece personajes del inicio de la Edad Media te hablan en primera persona: de Rómulo Augústulo a Almanzor.
@@ -214,7 +209,6 @@ recursos:
     solo_pc: true
     es:
       titulo: Vocabulario del Tema 1
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Las 47 palabras clave del tema en tarjetas que giran: de Mare Nostrum y basileus a taifa, alquería y Mayrit,
@@ -233,7 +227,6 @@ recursos:
     solo_pc: true
     es:
       titulo: El Tema 1 en tres carriles
-      temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Una línea del tiempo del 400 al 1500 con tres carriles en paralelo: Imperio bizantino, Europa germánica y
@@ -252,7 +245,6 @@ recursos:
     imagen: resumen-actividad-cientifica.jpg
     es:
       titulo: "Resumen del Tema 1: La actividad científica"
-      temas: Física y Química · Tema 1 · La actividad científica
       unidad: Tema 1 · La actividad científica
       descripcion: >-
         La unidad entera en una lectura: el método científico, las magnitudes, el Sistema Internacional, múltiplos y
@@ -271,7 +263,6 @@ recursos:
     solo_pc: true
     es:
       titulo: ¿Qué es una magnitud?
-      temas: Física y Química · Tema 1 · La actividad científica
       unidad: Tema 1 · La actividad científica
       descripcion: >-
         Clasifica qué se puede medir y qué no, mira a escala por qué «5» no dice nada y «5 m» sí, empareja cada
@@ -292,7 +283,6 @@ recursos:
     solo_pc: true
     es:
       titulo: La escalera de las unidades
-      temas: Física y Química · Tema 1 · La actividad científica
       unidad: Tema 1 · La actividad científica
       descripcion: >-
         Sube y baja la escalera de km a mm (y de las unidades de masa y de capacidad), mira cómo se mueve la coma en
@@ -311,7 +301,6 @@ recursos:
     solo_pc: true
     es:
       titulo: Mide como en el laboratorio
-      temas: Física y Química · Tema 1 · La actividad científica
       unidad: Tema 1 · La actividad científica
       descripcion: >-
         Lee una regla, una probeta, un termómetro, una balanza y un cronómetro, compara la precisión de dos

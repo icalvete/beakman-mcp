@@ -78,6 +78,15 @@ def count(t, n):
     return t["recurso_1"] if n == 1 else t["recurso_n"].format(n=n)
 
 
+def etiqueta(t, r, s, lang):
+    """La misma en todas las tarjetas: curso · materia del libro · tema (o qué abarca, si es para todo el curso)."""
+    tx = r[lang]
+    unidad = tx.get("unidad") or GENERAL
+    partes = [t["cursos"][r["curso"]], tx.get("materia") or s[lang].get("materias", {}).get(r["curso"]),
+              tx.get("temas") if unidad == GENERAL else unidad]
+    return " · ".join(p for p in partes if p)
+
+
 def resource_card(t, r, s, lang, up, prefix):
     """`s` es la asignatura del recurso: su nombre y su color van en la etiqueta."""
     tx = r[lang]
@@ -86,7 +95,7 @@ def resource_card(t, r, s, lang, up, prefix):
     return f"""  <a class="resource" href="{prefix}{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
     <img src="{up}media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span>{kind}<span class="tag">{e(tx["temas"])}</span>{pc}</div>
+      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span>{kind}<span class="tag">{e(etiqueta(t, r, s, lang))}</span>{pc}</div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
       <dl class="why">
@@ -104,7 +113,7 @@ def summary_card(t, r, s, lang, up, prefix):
     return f"""  <a class="summary" href="{prefix}{r["curso"]}/{r["id"]}/" style="--subj: {s["color"]}">
     <img src="{up}media/{r["imagen"]}" alt="" width="800" height="423" loading="lazy">
     <div class="body">
-      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span><span class="tag">{e(t["cursos"][r["curso"]])} · {e(tx["temas"])}</span></div>
+      <div class="meta"><span class="subj">{e(s[lang]["nombre"])}</span><span class="tag">{e(etiqueta(t, r, s, lang))}</span></div>
       <h3>{e(tx["titulo"])}</h3>
       <p>{e(tx["descripcion"])}</p>
     </div>

@@ -25,5 +25,5 @@ Guía para escribir un recurso nuevo en `lab/site/es/<asignatura>/<curso>/<id>/i
 Ver `lab/_modelo.html`. Copiarlo a `lab/site/es/<asignatura>/<curso>/<id>/index.html` y rellenar (las rutas relativas ya cuentan con esa profundidad).
 
 ## Catálogo
-Cada recurso necesita su entrada en `lab/catalog.yml` (título, temas, descripción, objetivo, método) y una miniatura
+Cada recurso necesita su entrada en `lab/catalog.yml` (título, unidad, descripción, objetivo, método; la etiqueta la monta `build.py` con el curso, la materia y la unidad) y una miniatura
 de 800×423 en `lab/site/media/<id>.jpg`. Después, `python3 lab/build.py`.
