@@ -1,4 +1,4 @@
-BORRADOR: temario general de Física y Química de 2º ESO (LOMLOE). Se ajustará al libro de clase.
+Temario de Física y Química de 2º ESO (LOMLOE). Si el libro de clase ordena los temas de otra forma, la tabla de abajo dice qué tema de Beakman va con cada unidad.
 Esta es una de las dos asignaturas de ciencias que puede tocar en 2º ESO. La otra, Biología y Geología, va en su propia parte.
 
 MAPA DEL CURSO – FÍSICA Y QUÍMICA 2º ESO
@@ -14,6 +14,24 @@ MAPA DEL CURSO – FÍSICA Y QUÍMICA 2º ESO
 9. La energía
 10. Calor y temperatura
 11. La luz y el sonido
+12. La corriente eléctrica
+13. Las máquinas simples
+14. El proyecto de investigación: cómo hacer ciencia paso a paso
 
-El curso va de lo pequeño a lo grande: primero la materia (temas 2 a 6), después el movimiento, las fuerzas y la energía (temas 7 a 11).
+El curso va de lo pequeño a lo grande: primero la materia (temas 2 a 6), después el movimiento, las fuerzas y la energía (temas 7 a 13).
 Se combinan observación, medida, experimentación y razonamiento científico.
+
+SI TU LIBRO VA POR ESTAS UNIDADES
+Muchos libros de 2º agrupan el curso así. Si el estudiante te dice en qué unidad está, usa esta tabla para buscar el tema:
+- La actividad científica → tema 1.
+- Propiedades de la materia → temas 2 y 3.
+- Sistemas materiales (sustancias puras, mezclas y disoluciones) → tema 4.
+- Estructura de la materia (el átomo y los elementos) → tema 5.
+- La reacción química → tema 6.
+- Fuerzas y movimiento (o La fuerza y sus aplicaciones) → temas 7 y 8.
+- La energía → temas 9 y 10.
+- La corriente eléctrica → tema 12.
+- Fenómenos ondulatorios (luz y sonido) → tema 11.
+- Máquinas simples → tema 13.
+- Proyectos de investigación (I y II) → tema 14, con el método científico del tema 1.
+Si el libro numera distinto, habla siempre con su nombre de la unidad y no con el número de tema de Beakman.

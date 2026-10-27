@@ -1,0 +1,84 @@
+TEMA 12 – LA CORRIENTE ELÉCTRICA
+
+La electricidad es una forma de energía que se mueve por los cables y hace funcionar casi todo lo que usamos: la luz, el móvil, la nevera.
+Se debe a algo muy pequeño que tiene toda la materia: la carga eléctrica.
+
+EXPLICACIÓN VISUAL
+Imagina un circuito de agua: una bomba empuja el agua por una tubería cerrada, el agua mueve una rueda y vuelve a la bomba. En un circuito eléctrico pasa algo parecido: la pila es la bomba, los cables son la tubería, la bombilla es la rueda y lo que circula son electrones. Si cortas la tubería en cualquier punto, el agua deja de correr. Si abres el interruptor, la bombilla se apaga.
+
+IDEAS CLAVE
+CARGA ELÉCTRICA
+- La materia tiene partículas con carga: los protones (carga positiva) y los electrones (carga negativa). Lo viste en el tema 5.
+- Normalmente un cuerpo tiene tantas cargas positivas como negativas: es neutro.
+- Cargas del mismo signo se repelen; cargas de distinto signo se atraen.
+- Electrización: un cuerpo gana o pierde electrones. Al frotar un globo con el pelo, el globo se lleva electrones del pelo: el globo queda negativo y el pelo, positivo (por eso el pelo se levanta hacia el globo). La carga no se crea: solo pasa de un cuerpo a otro. El globo atrae incluso trocitos de papel neutros, porque reordena un poco sus cargas.
+- La carga se mide en culombios (C).
+
+CONDUCTORES Y AISLANTES
+- Conductores: dejan pasar la corriente con facilidad. Los metales (cobre, aluminio), el agua con sales y el cuerpo humano.
+- Aislantes: casi no la dejan pasar. El plástico, la madera seca, el vidrio, la goma.
+- Por eso los cables son de cobre por dentro y de plástico por fuera.
+
+LA CORRIENTE Y EL CIRCUITO
+- La corriente eléctrica es el movimiento ordenado de cargas (en los metales, de electrones) por un conductor.
+- Un circuito eléctrico es un camino cerrado por el que circula la corriente. Sus partes:
+  - Generador: da la energía que mueve las cargas (una pila, una batería). El enchufe de casa nos conecta con los generadores de las centrales eléctricas.
+  - Conductores: los cables que unen las piezas.
+  - Receptores: transforman la energía eléctrica en otra (una bombilla en luz, un motor en movimiento, una resistencia en calor).
+  - Elementos de control: abren o cierran el circuito (el interruptor).
+- Circuito cerrado: la corriente circula. Circuito abierto: no circula.
+- Por convenio se dice que la corriente va del polo + al polo −, aunque los electrones van del − al +.
+- Corriente continua: siempre en el mismo sentido (pilas y baterías). Corriente alterna: cambia de sentido muchas veces por segundo (el enchufe de casa). El cargador del móvil la convierte en continua.
+- Cada pieza tiene su símbolo para dibujar los circuitos (pila, bombilla, interruptor, motor).
+
+MAGNITUDES ELÉCTRICAS
+- Intensidad (I): cuánta carga pasa por un punto cada segundo. Se mide en amperios (A) con un amperímetro, que se coloca en serie (en el mismo camino que la corriente).
+- Voltaje o tensión (V): la "fuerza" con la que el generador empuja las cargas. Se mide en voltios (V) con un voltímetro, que se coloca en paralelo (conectado a los dos lados del aparato que mides). Una pila normal da 1,5 V; un enchufe de casa, 230 V.
+- Resistencia (R): lo que se opone al paso de la corriente. Se mide en ohmios (Ω).
+- Ley de Ohm: V = I · R. Con dos de ellas se calcula la tercera.
+  Ejemplo: una bombilla de 9 Ω conectada a una pila de 4,5 V. I = V / R = 4,5 / 9 = 0,5 A.
+
+SERIE Y PARALELO
+- En serie: los receptores van uno detrás de otro, en un solo camino. Si se funde una bombilla, se apagan todas. La intensidad es la misma en todos y el voltaje de la pila se reparte entre ellos: cuantas más bombillas, menos luce cada una.
+- En paralelo: cada receptor tiene su propio camino. Si se funde una, las demás siguen encendidas. Cada receptor recibe todo el voltaje de la pila, así que todas lucen igual que si estuvieran solas. Así están los enchufes y las luces de casa.
+
+EFECTOS Y USOS DE LA CORRIENTE
+- Calor: al pasar por una resistencia la calienta (tostadora, secador, calefactor). Se llama efecto Joule.
+- Luz: bombillas y LED.
+- Movimiento: los motores, gracias a la relación entre electricidad y magnetismo.
+- Química: cargar una batería o recubrir un metal con otro.
+- Potencia (P): la energía que consume un aparato cada segundo. P = V · I, en vatios (W). La factura de la luz cobra la energía en kilovatios hora (kWh), como viste en el tema 9.
+- Energía consumida: E = P · t. Ejemplo: un secador de 2000 W (2 kW) encendido media hora gasta 2 · 0,5 = 1 kWh.
+- Las pilas puestas en serie suman sus voltajes: una pila de petaca son tres pilas de 1,5 V por dentro (3 · 1,5 = 4,5 V).
+
+SEGURIDAD
+- Nunca toques enchufes ni cables pelados, ni aparatos con las manos mojadas: el agua de la piel conduce.
+- No metas objetos en los enchufes ni enchufes muchos aparatos en una misma regleta.
+- Los experimentos, siempre con pilas, nunca con la corriente de casa.
+
+ERRORES TÍPICOS
+- Pensar que la corriente "se gasta" en la bombilla y sale menos por el otro lado. En un circuito en serie la intensidad es la misma en todos los puntos: lo que se transforma es la energía, no las cargas.
+- Confundir voltaje e intensidad. El voltaje es el empuje; la intensidad, cuánta carga pasa.
+- Creer que basta un cable para que funcione la bombilla. Hace falta un circuito cerrado, de ida y vuelta.
+- Pensar que los aislantes no conducen nunca. Con un voltaje muy grande (un rayo) también pueden conducir.
+- Colocar el amperímetro en paralelo o el voltímetro en serie.
+
+EJEMPLOS COTIDIANOS
+- El chispazo al tocar una puerta después de andar sobre una alfombra es electricidad estática.
+- Las luces del árbol de Navidad antiguas iban en serie: si fallaba una, se apagaban todas.
+- El cargador del móvil baja los 230 V del enchufe a unos 5 V.
+- Un pájaro posado en un cable no se electrocuta porque tiene las dos patas en el mismo cable: entre ellas casi no hay diferencia de voltaje y por su cuerpo casi no pasa corriente. Si toca a la vez dos cables, o un cable y la torre, sí se electrocuta (les pasa a muchas cigüeñas y águilas).
+
+EXPERIMENTO CASERO
+Con una pila de petaca (la pila cuadrada de 4,5 V), dos cables con pinzas de cocodrilo (pinzas metálicas que muerden el borde de la pila) y una bombilla de linterna de 4,5 V con su portalámparas, monta un circuito y enciende la luz. No uses un LED suelto: sin una resistencia se quema, y si lo pones al revés no luce. Después deja un hueco entre dos pinzas y pon en medio distintos objetos: una moneda, un clip, una goma de borrar, un lápiz por la mina y por la madera, un trozo de papel de aluminio. ¿Cuáles encienden la bombilla? Así clasificas conductores y aislantes. La mina conduce, pero poco: puede que la bombilla apenas brille; prueba con un trozo de mina corto. No unas nunca los dos polos de la pila con un cable, una pinza o papel de aluminio sin una bombilla en medio: es un cortocircuito, el cable se calienta tanto que quema y la pila se estropea. Si algo se calienta, suelta una pinza enseguida. Usa solo una pila de petaca o pilas normales, nunca la batería de un móvil o de un patinete ni el enchufe.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué los cables llevan plástico por fuera y metal por dentro?
+- Si en tu casa se funde una bombilla, ¿por qué no se apagan las demás?
+- ¿Qué tiene más voltaje, una pila o un enchufe? ¿Por eso tocar uno es peligroso y la otra no?
+
+RELACIÓN CON OTROS TEMAS
+Las cargas eléctricas son los protones y los electrones del átomo (tema 5).
+La electricidad es una forma de energía que se transforma en luz, calor y movimiento (temas 9 y 10).
+La atracción entre cargas es una fuerza a distancia, como la gravedad o los imanes (tema 8).
+En Tecnología montarás circuitos con más piezas y verás cómo funcionan los motores.

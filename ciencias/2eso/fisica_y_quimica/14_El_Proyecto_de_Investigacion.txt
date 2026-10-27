@@ -1,0 +1,54 @@
+TEMA 14 – EL PROYECTO DE INVESTIGACIÓN
+
+Un proyecto de investigación es hacer ciencia de verdad: tú eliges una pregunta y buscas la respuesta con experimentos y datos.
+Sirve para los proyectos de clase y para cualquier curiosidad que te ronde la cabeza.
+
+EXPLICACIÓN VISUAL
+Imagina que eres detective. Hay un misterio («¿por qué se derrite antes este helado que aquel?»). Tienes una sospecha, buscas pistas, haces pruebas, apuntas todo en tu libreta y al final cuentas cómo lo resolviste. Un proyecto de investigación es lo mismo, pero el misterio es científico y las pistas son medidas.
+
+IDEAS CLAVE
+LOS PASOS
+1. La pregunta. Tiene que poder comprobarse con un experimento. «¿Influye la temperatura del agua en lo que tarda en disolverse el azúcar?» sirve. «¿Es bonito el azúcar?» no.
+2. Lo que ya se sabe. Busca información en el libro y en fuentes fiables, y anota de dónde la sacas.
+3. La hipótesis. Una respuesta posible que vas a poner a prueba: «Creo que en agua caliente se disuelve antes, porque las partículas se mueven más deprisa».
+4. Las variables:
+   - La que cambias tú (variable independiente): la temperatura del agua.
+   - La que mides (variable dependiente): el tiempo que tarda en disolverse.
+   - Las que mantienes iguales (variables controladas): la cantidad de agua, la de azúcar, el vaso, cómo remueves.
+   Si cambias dos cosas a la vez, no sabrás cuál ha causado el efecto.
+5. El experimento. Escribe el material y los pasos para que otra persona pueda repetirlo. Repite cada medida al menos tres veces.
+6. Los datos. Apúntalos en una tabla con sus unidades. Haz la media de las repeticiones. Si puedes, dibuja una gráfica: la variable que cambias en el eje horizontal y la que mides en el vertical.
+7. La conclusión. ¿Se cumple la hipótesis? Di qué muestran los datos, aunque no sea lo que esperabas: una hipótesis que no se cumple también es un resultado.
+8. Comunicar. Cuéntalo en un póster, una presentación o un informe corto: pregunta, hipótesis, experimento, resultados y conclusión.
+
+TRABAJAR EN EQUIPO
+- Repartid las tareas (quién mide, quién apunta, quién cronometra) y cambiad de papel.
+- Apuntad todo en un cuaderno de laboratorio, con la fecha.
+
+ERRORES TÍPICOS
+- Elegir una pregunta que no se puede medir.
+- Cambiar varias variables a la vez.
+- Medir una sola vez y fiarse de esa medida.
+- Escribir los números sin unidades.
+- Cambiar los datos para que «salga» la hipótesis. En ciencia, lo que cuentan son los datos de verdad.
+- Copiar la conclusión del libro en lugar de sacarla de tus propios datos.
+
+EJEMPLOS DE PREGUNTAS PARA UN PROYECTO
+- ¿Influye la altura desde la que cae una pelota en lo alto que rebota? (temas 7 y 9)
+- ¿Qué material aísla mejor una lata caliente: lana, papel de aluminio o papel de periódico? (tema 10)
+- ¿Cambia la densidad del agua si le echas sal? ¿Flota mejor un huevo? (tema 2)
+- ¿Qué metal o fruta da más voltaje en una pila casera? (tema 12)
+- ¿Cuánta fuerza ahorra una rampa según su inclinación? (tema 13)
+
+EXPERIMENTO CASERO
+Prueba el proyecto del azúcar en pequeño. Tres vasos con la misma cantidad de agua: fría de la nevera, del grifo y templada (no hirviendo; si hace falta calentarla, que lo haga un adulto). Echa en cada uno una cucharadita rasa de azúcar, remueve igual y cronometra hasta que no se vea ningún grano. Repite tres veces, haz la media y dibuja la gráfica. ¿Se cumple tu hipótesis?
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué hay que repetir las medidas varias veces?
+- Si en tu experimento la hipótesis no se cumple, ¿has fracasado?
+- ¿Qué pasaría si cada vaso tuviera una cantidad de agua distinta?
+
+RELACIÓN CON OTROS TEMAS
+Es el método científico del tema 1 llevado a la práctica, con medidas y unidades del Sistema Internacional.
+Cualquier tema del curso puede dar una buena pregunta de investigación.
+En Matemáticas aprendes a hacer tablas, medias y gráficas, que aquí se usan de verdad.

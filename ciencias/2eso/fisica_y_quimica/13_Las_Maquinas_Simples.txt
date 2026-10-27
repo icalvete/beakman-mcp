@@ -1,0 +1,66 @@
+TEMA 13 – LAS MÁQUINAS SIMPLES
+
+Una máquina simple es un aparato muy sencillo que nos ayuda a hacer un trabajo con menos fuerza o de forma más cómoda.
+No tiene motor: funciona con la fuerza que le pones tú.
+
+EXPLICACIÓN VISUAL
+Imagina que tienes que levantar una piedra muy pesada. Con las manos, imposible. Pero si metes una barra larga por debajo, apoyas la barra en un tronco y empujas el otro extremo hacia abajo, la piedra sube. No te has hecho más fuerte: has cambiado dónde y cómo aplicas la fuerza. Eso hace una máquina simple.
+
+IDEAS CLAVE
+- Toda máquina simple tiene tres cosas: la fuerza que haces (potencia o fuerza aplicada, F), la carga que quieres mover (resistencia, R) y algo que transmite la fuerza.
+- Ojo: aquí «potencia» y «resistencia» son fuerzas y se miden en newtons. No tienen nada que ver con la potencia en vatios ni con la resistencia en ohmios del tema 12.
+- En Física, hacer un trabajo es mover algo aplicando una fuerza: trabajo = fuerza · distancia (en julios). La máquina no cambia el trabajo: si la fuerza baja a la mitad, la distancia se duplica.
+- Las máquinas simples no crean energía. Lo que te ahorras en fuerza lo pagas en recorrido: empujas menos, pero durante más distancia. En una máquina real, además, el rozamiento se lleva un poco de energía en forma de calor (tema 9).
+
+LA PALANCA
+- Una barra rígida que gira sobre un punto de apoyo (el fulcro).
+- Ley de la palanca: F · d = R · r, donde d es la distancia de la fuerza al apoyo (brazo de potencia) y r la distancia de la carga al apoyo (brazo de resistencia).
+  Ejemplo: para levantar 200 N a 0,5 m del apoyo, empujando a 2 m del apoyo: F · 2 = 200 · 0,5, así que F = 50 N. Con una palanca larga, cuatro veces menos fuerza.
+- Tres tipos, según qué queda en el medio:
+  - Primer grado: el apoyo en el medio (balancín, tijeras, alicates). Puede ahorrar fuerza o no, según dónde esté el apoyo.
+  - Segundo grado: la carga en el medio (carretilla, cascanueces, abrebotellas). Siempre ahorra fuerza.
+  - Tercer grado: la fuerza en el medio (pinzas de depilar, caña de pescar, tu antebrazo). No ahorra fuerza, pero da precisión y velocidad.
+
+LA POLEA
+- Una rueda con un canal por el que pasa una cuerda.
+- Polea fija: no ahorra fuerza, pero cambia la dirección. Tirar hacia abajo es más cómodo que hacia arriba (la del pozo, la de la bandera).
+- Polea móvil: va unida a la carga y reparte el peso entre dos tramos de cuerda. Hace falta la mitad de fuerza (sin contar el peso de la polea ni el rozamiento), pero hay que tirar del doble de cuerda.
+- El polipasto combina varias poleas para levantar cargas muy pesadas (las grúas).
+
+EL PLANO INCLINADO
+- Una rampa. Subir una carga por ella cuesta menos fuerza que levantarla en vertical, pero el recorrido es más largo.
+- Cuanto más suave (menos empinada) es la rampa, menos fuerza y más camino. Sin rozamiento: F · l = R · h (l, el largo de la rampa; h, la altura).
+  Ejemplo: subir 600 N a 1 m de altura por una rampa de 3 m: F = 600 · 1 / 3 = 200 N.
+- Derivados del plano inclinado:
+  - La cuña: dos planos inclinados juntos que separan o cortan (hacha, cuchillo, cuña de puerta).
+  - El tornillo: un plano inclinado enrollado en espiral.
+
+EL TORNO Y LA RUEDA
+- El torno: un cilindro con una manivela (una palanca en forma de codo que se gira con la mano); al girarla, se enrolla una cuerda y sube la carga (el torno de los pozos antiguos). Cuanto más larga la manivela, menos fuerza: F · largo de la manivela = R · radio del cilindro.
+- La rueda con eje: reduce el rozamiento al mover cargas (carros, carretillas, maletas con ruedas).
+
+ERRORES TÍPICOS
+- Pensar que una máquina simple "da" energía o trabajo gratis. Ahorra fuerza, pero a cambio de más recorrido.
+- Creer que todas las palancas ahorran fuerza. Las de tercer grado no; sirven para otra cosa.
+- Confundir el punto de apoyo con el punto donde se hace la fuerza al clasificar una palanca.
+- Pensar que con una polea fija se hace menos fuerza. Solo cambia la dirección en la que tiras.
+- Confundir la potencia y la resistencia de una palanca (fuerzas, en N) con las de la electricidad (W y Ω).
+
+EJEMPLOS COTIDIANOS
+- Las tijeras son dos palancas de primer grado unidas por el apoyo.
+- La manilla de una puerta y el volante del coche funcionan como un torno: al girar por el borde grande, haces menos fuerza para girar el eje pequeño.
+- Las rampas de los garajes y las de las sillas de ruedas son planos inclinados.
+- Un tornillo entra en la madera girando, como si subieras una rampa en espiral.
+
+EXPERIMENTO CASERO
+Pon una regla de 30 cm sobre un lápiz justo en su centro, de modo que quede equilibrada sola (así su propio peso no cuenta). Coloca 2 monedas iguales a 12 cm del lápiz. ¿Cuántas monedas necesitas a 6 cm del otro lado? ¿Y a 4 cm? Comprueba la ley de la palanca: monedas · distancia a un lado = monedas · distancia al otro (2 · 12 = 4 · 6 = 6 · 4). Mide hasta el centro de cada montón. 100% seguro.
+
+PREGUNTAS PARA PENSAR
+- ¿Por qué el pomo de una puerta está lejos de las bisagras y no junto a ellas?
+- ¿Por qué las carreteras de montaña suben haciendo curvas en vez de ir rectas a la cima?
+- ¿Qué tipo de palanca es tu brazo cuando levantas la mochila doblando el codo?
+
+RELACIÓN CON OTROS TEMAS
+Las máquinas simples cambian cómo aplicamos las fuerzas del tema 8.
+No crean energía: lo que se ahorra en fuerza se gasta en recorrido, como dice la conservación de la energía (tema 9).
+En Tecnología las combinarás en mecanismos más complejos: engranajes, bielas y poleas con correa.

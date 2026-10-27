@@ -19,14 +19,35 @@ IDEAS CLAVE
 - En una reacción los átomos no se crean ni se destruyen: solo se reorganizan.
 - Ley de conservación de la masa (Lavoisier): la masa de los reactivos es igual a la masa de los productos.
   Ejemplo: si reaccionan 10 g de una sustancia con 5 g de otra, se obtienen 15 g de productos (contando también los gases).
-- La temperatura influye en la velocidad de una reacción: a más temperatura, más rápida. Por eso la nevera conserva los alimentos.
 - Reacciones importantes: combustión (algo arde con el oxígeno del aire), oxidación (el hierro se oxida), fotosíntesis, respiración celular, digestión.
+
+LA REACCIÓN QUÍMICA POR DENTRO
+- Para que haya reacción, las partículas de los reactivos tienen que chocar con energía suficiente (lo bastante rápido) y en la posición adecuada. Al chocar, se rompen unos enlaces (las uniones entre átomos) y se forman otros nuevos. Es la teoría de las colisiones.
+- La ecuación química escribe la reacción con fórmulas: los reactivos a la izquierda, los productos a la derecha y una flecha en medio.
+  Ejemplo: el carbón arde con el oxígeno y da dióxido de carbono. C + O₂ → CO₂.
+- Ajustar una ecuación es poner números delante de las fórmulas para que haya los mismos átomos de cada elemento a los dos lados (por la conservación de la masa).
+  Ejemplo: el hidrógeno arde y da agua. 2 H₂ + O₂ → 2 H₂O. Izquierda: 4 átomos de H y 2 de O. Derecha: 4 de H y 2 de O. Ajustada.
+- Qué hace que una reacción vaya más rápida:
+  - Más temperatura: las partículas se mueven más deprisa y chocan más y con más energía. Por eso la nevera conserva los alimentos: en frío se estropean más despacio.
+  - Más concentración de los reactivos (más cantidad de reactivo disuelto en la misma cantidad de agua): hay más partículas para chocar.
+  - Más superficie de contacto: troceado o en polvo reacciona antes que en un bloque (una pastilla efervescente machacada burbujea y se acaba antes que entera, y una astilla arde antes que un tronco).
+  - Un catalizador: una sustancia que acelera la reacción sin gastarse. Las enzimas de la digestión son catalizadores.
+- Energía en las reacciones:
+  - Exotérmicas: desprenden calor (una combustión; una bolsa calientamanos de un solo uso, que lleva hierro que se oxida muy deprisa).
+  - Endotérmicas: absorben calor (el vinagre con bicarbonato enfría un poco el vaso; cocinar un alimento necesita calor todo el rato). Ojo: la bolsa de frío del botiquín enfría al disolverse una sal en agua, y eso es un cambio físico.
+
+LA QUÍMICA Y NOSOTROS
+- La química fabrica medicamentos, plásticos, fertilizantes, tintes y materiales nuevos.
+- Algunas reacciones dañan el medio ambiente: al quemar combustibles fósiles se libera CO₂, que aumenta el efecto invernadero; los gases de algunas industrias producen lluvia ácida.
+- Reciclar y usar menos combustibles reduce esos efectos.
 
 ERRORES TÍPICOS
 - Pensar que disolver es un cambio químico (el azúcar sigue siendo azúcar; si evaporas el agua, lo recuperas).
 - Creer que en una combustión la materia "desaparece" (se convierte en gases que se van al aire).
 - Pensar que todo cambio de color es químico (si mezclas pintura azul y amarilla, es una mezcla, no una reacción).
 - Confundir fundir (cambio físico, como el hielo) con quemar (cambio químico, como el papel).
+- Al ajustar, cambiar los números pequeños de las fórmulas, los subíndices (H₂O no puede pasar a ser H₂O₂: sería otra sustancia, el agua oxigenada). Solo se cambian los números de delante.
+- Pensar que un catalizador se gasta en la reacción. Ayuda, pero sale igual que entró.
 
 EJEMPLOS COTIDIANOS
 - Al hornear un bizcocho, la masa se transforma en algo nuevo: no se puede volver atrás.
@@ -36,6 +57,8 @@ EJEMPLOS COTIDIANOS
 
 EXPERIMENTO CASERO
 Pide a un adulto que corte una manzana por la mitad. Deja una mitad al aire y envuelve la otra bien apretada en film transparente. Al cabo de una hora, compara: ¿cuál se ha puesto marrón? Al mismo tiempo, deja un cubito de hielo derretirse en un plato. ¿Cuál de los dos es un cambio químico y cuál físico? ¿Puedes "deshacer" alguno? (El corte lo hace un adulto; el resto es 100% seguro).
+
+Otro, para comprobar que la masa se conserva: pon una cucharada de vinagre en una botella pequeña de refresco con gas, de plástico (nunca de vidrio). Envuelve media cucharadita de bicarbonato en un trocito de papel de cocina, échalo dentro y cierra el tapón enseguida, antes de que el papel se empape. Pesa todo en una báscula de cocina. Agita un poco: verás burbujas y la botella se pondrá dura por el gas. Pesa otra vez: la masa es la misma, porque el gas no ha salido. Abre el tapón despacio, apuntando lejos de la cara, y pesa de nuevo: ahora pesa un poco menos, porque el gas se ha escapado. No uses más cantidad de la que se dice.
 
 PREGUNTAS PARA PENSAR
 - Si quemas un papel, ¿adónde va su masa?
