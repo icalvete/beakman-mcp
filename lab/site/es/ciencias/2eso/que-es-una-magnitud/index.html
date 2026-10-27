@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Qué es una magnitud? · El laboratorio de Beakman</title>
+<meta name="description" content="Qué se puede medir y qué no, por qué una medida necesita número y unidad, las unidades del Sistema Internacional, los instrumentos y las magnitudes básicas y derivadas. Física y Química de 2º de la ESO, Unidad 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+[hidden] { display: none !important; }
+.block h3 { font-size: 1.15rem; }
+.score { font-weight: 800; color: var(--ink); }
+.fb { min-height: 1.6em; font-weight: 700; }
+
+/* 1. ¿Se puede medir? */
+.mgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.mcard { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 12px 10px; display: grid; gap: 8px; align-content: start; }
+.mcard h3 { font-size: 1.05rem; min-height: 2.4em; }
+.mcard .row { flex-wrap: nowrap; gap: 6px; }
+.mcard .row .b { flex: 1; justify-content: center; white-space: nowrap; padding-inline: 6px; }
+button.chip { font-family: var(--body); font-size: 1rem; color: var(--ink); }
+.mcard .res { display: grid; gap: 2px; }
+.mcard .big { font: 700 1.5rem/1.1 var(--display); color: var(--ink); }
+.mcard .big.no { color: #B23B2E; }
+.mcard .rsn { font-size: .9rem; line-height: 1.4; }
+.keyidea { margin-top: 16px; display: grid; gap: 10px; }
+.formula { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: 600 1.25rem/1.2 var(--display); color: var(--ink); }
+.formula span { background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 6px 14px; box-shadow: 2px 2px 0 var(--lime); }
+
+/* 2. Número y unidad */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.scene { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 10px; margin-top: 10px; }
+.scene svg { display: block; width: 100%; height: auto; }
+#pScene svg { max-width: 760px; margin-inline: auto; }
+.scene p { font-size: .95rem; margin-top: 4px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); }
+.seg button { border: 0; background: #fff; padding: 8px 14px; font: 800 .95rem/1.1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+.seg button:focus-visible, .mcard .b:focus-visible, .b:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.palmcount { font: 700 1.6rem/1.1 var(--display); color: var(--ink); margin-top: 8px; }
+
+/* 3. Cada magnitud con lo suyo */
+.mtable { display: grid; gap: 8px; }
+.mrow { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); gap: 8px; align-items: center; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 10px; }
+.mrow.head { background: transparent; border: 0; padding-block: 0; font-weight: 800; color: var(--muted); font-size: .88rem; }
+.mrow > b { font-family: var(--display); font-weight: 600; color: var(--ink); font-size: 1.1rem; }
+.mrow select { width: 100%; font: 700 .95rem var(--body); color: var(--text); border: 2px solid var(--line); border-radius: 10px; padding: 6px 8px; background: #fff; }
+.mrow .rfb { grid-column: 2 / -1; font-size: .9rem; line-height: 1.4; }
+.mrow .rfb:empty { display: none; }
+.base7 { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.bt { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 10px 8px; text-align: center; display: grid; gap: 2px; align-content: start; }
+.bt.top { border-color: var(--ink); box-shadow: 3px 3px 0 var(--lime); }
+.bt .sym { font: 700 2rem/1.1 var(--display); color: var(--ink); }
+.bt .nm { font-weight: 800; font-size: .9rem; line-height: 1.25; }
+.bt .un { font-size: .85rem; color: var(--muted); }
+.bt .tg { justify-self: center; font-size: .72rem; font-weight: 800; background: var(--lime-soft); border-radius: 6px; padding: 1px 6px; color: var(--ink); }
+
+/* 4. Básicas y derivadas */
+.builder { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 20px; align-items: start; }
+.targets { display: grid; gap: 8px; }
+.targets .chip { justify-content: space-between; width: 100%; font-size: 1rem; }
+.targets .chip small { color: var(--muted); font-weight: 800; }
+.targets .chip.solved small { color: #2E7D32; }
+.bench { background: #fff; border: 2px solid var(--ink); border-radius: 16px; padding: 14px 16px; display: grid; gap: 12px; }
+.expr { min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border: 2px dashed var(--line); border-radius: 12px; padding: 8px 10px; }
+.expr:empty::before { content: "Pulsa los bloques para construir la receta…"; color: var(--muted); }
+.blk { display: inline-grid; justify-items: center; background: var(--lime-soft); border: 2px solid var(--ink); border-radius: 10px; padding: 4px 12px; font-weight: 800; line-height: 1.2; }
+.blk small { font-weight: 700; color: var(--muted); }
+.blk.der { background: var(--note); }
+.op { font: 700 1.6rem/1 var(--display); color: var(--ink); }
+.now { font-weight: 800; }
+.now b { font: 700 1.3rem var(--display); color: var(--ink); }
+.pal { display: flex; flex-wrap: wrap; gap: 8px; }
+.pal .chip { flex-direction: column; gap: 0; padding: 6px 14px; }
+.pal .chip small { color: var(--muted); }
+.pal .chip.der { background: var(--note); }
+.pal .chip:disabled { opacity: .4; cursor: default; }
+.pal .opb { font: 700 1.4rem/1 var(--display); min-width: 52px; justify-content: center; }
+.win { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 14px; align-items: center; background: #E3F3DF; border: 2px solid #2E7D32; border-radius: 14px; padding: 10px 12px; animation: pop .35s ease-out; }
+.win svg { width: 100%; height: auto; display: block; }
+@keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* 5. Ponte a prueba */
+.quiz { max-width: 760px; display: grid; gap: 12px; }
+.quiz .qn { font-weight: 800; color: var(--muted); font-size: .9rem; }
+.quiz .qt { font: 600 1.4rem/1.25 var(--display); color: var(--ink); }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.opts .chip { justify-content: flex-start; font-size: 1rem; text-align: left; }
+.quiz input[type=text] { font: 700 1.1rem var(--body); border: 2px solid var(--line); border-radius: 10px; padding: 8px 12px; width: 220px; }
+.reslist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.reslist li { background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 6px 12px; }
+@media (max-width: 900px) { .mgrid { grid-template-columns: 1fr 1fr; } .two, .builder, .win { grid-template-columns: 1fr; } .base7 { grid-template-columns: repeat(2, 1fr); }
+  .mrow { grid-template-columns: 1fr; } .mrow .rfb { grid-column: auto; } .mrow.head { display: none; } .opts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .win { animation: none; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>¿Qué es una <em>magnitud</em>?</h1>
+    <p class="lead">Antes de medir el mundo hay que saber qué se puede medir. Aquí vas a clasificar, comparar, emparejar y construir
+      hasta que la palabra «magnitud» deje de sonar rara y se convierta en una herramienta tuya.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes">
+    <a href="#medir">1. ¿Se puede medir?</a><a href="#unidad">2. Número y unidad</a><a href="#si">3. Cada magnitud con lo suyo</a>
+    <a href="#derivadas">4. Básicas y derivadas</a><a href="#prueba">5. Ponte a prueba</a>
+  </nav>
+
+  <section class="block" id="medir">
+    <h2>1. ¿Se puede medir?</h2>
+    <p class="hint">Decide en cada tarjeta si es una magnitud (algo que se puede medir) o no. Pregúntate: ¿hay un instrumento que me dé un número y una unidad?</p>
+    <p class="score" id="mScore" aria-live="polite"></p>
+    <div class="mgrid" id="mgrid"></div>
+    <div class="keyidea" id="mKey" hidden>
+      <div class="note"><b>La idea clave:</b> una <b>magnitud</b> es todo lo que se puede medir y expresar con un <b>número</b> y una <b>unidad</b>.
+        La belleza, el miedo o el sabor existen, claro, pero no se pueden medir: no son magnitudes.</div>
+      <div class="formula" aria-label="Una medida es un número más una unidad"><span>medida</span> = <span>número</span> + <span>unidad</span>
+        <span style="background:var(--lime-soft)">1,2 m</span></div>
+      <div class="row"><button class="b ghost small" id="mAgain" type="button">Barajar y volver a clasificar</button></div>
+    </div>
+  </section>
+
+  <section class="block" id="unidad">
+    <h2>2. Número y unidad</h2>
+    <p class="hint">«Mide 5». ¿5 qué? Pulsa cada opción y mira cuánto cambia la cosa con el mismo número.</p>
+    <div class="seg" role="group" aria-label="Elige la unidad" id="uSeg">
+      <button type="button" data-u="0" aria-pressed="true">Mide 5</button><button type="button" data-u="1" aria-pressed="false">5 cm</button>
+      <button type="button" data-u="2" aria-pressed="false">5 m</button><button type="button" data-u="3" aria-pressed="false">5 km</button>
+    </div>
+    <div class="scene" id="uScene" aria-live="polite"></div>
+
+    <h3 style="margin-top:22px">La mesa de los palmos</h3>
+    <div>
+      <div>
+        <p>Le dices a un amigo: «la mesa mide 6 palmos». Él la mide con sus palmos y le salen 7. ¿Quién tiene razón? Los dos: cada uno usa una «regla» distinta.
+          Por eso la ciencia usa unidades que significan lo mismo en Madrid que en Tokio.</p>
+        <p style="margin-top:10px">Mide la misma mesa con distintos palmos:</p>
+        <div class="seg" role="group" aria-label="Con qué mides" id="pSeg" style="margin-top:8px">
+          <button type="button" data-p="20" aria-pressed="true">Palmo de un adulto</button><button type="button" data-p="17" aria-pressed="false">Tu palmo</button>
+          <button type="button" data-p="13" aria-pressed="false">Palmo de un niño pequeño</button><button type="button" data-p="0" aria-pressed="false">Cinta métrica</button>
+        </div>
+        <p class="palmcount" id="pCount" aria-live="polite"></p>
+        <p id="pTxt"></p>
+      </div>
+      <div class="scene" id="pScene"></div>
+    </div>
+  </section>
+
+  <section class="block" id="si">
+    <h2>3. Cada magnitud con lo suyo</h2>
+    <p class="hint">Cada magnitud tiene su unidad del Sistema Internacional (SI), su símbolo y su instrumento. Elige en cada fila y pulsa «Comprobar». Hay alguna trampa escondida.</p>
+    <div class="mtable" id="mtable">
+      <div class="mrow head"><span>Magnitud</span><span>Unidad del SI</span><span>Símbolo</span><span>Instrumento</span></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="b" id="tCheck" type="button">Comprobar</button>
+      <button class="b ghost" id="tSol" type="button">Ver la solución</button><span class="score" id="tScore" aria-live="polite"></span></div>
+
+    <h3 style="margin-top:24px">Las 7 magnitudes básicas del SI</h3>
+    <p>El Sistema Internacional elige siete magnitudes como punto de partida. Las cuatro marcadas son las que más vas a usar este curso.</p>
+    <div class="base7" id="base7"></div>
+  </section>
+
+  <section class="block" id="derivadas">
+    <h2>4. Básicas y derivadas</h2>
+    <p class="hint">Las magnitudes <b>derivadas</b> se construyen con las básicas, como una receta. Elige una, monta su receta con los bloques y mira qué unidad sale.</p>
+    <div class="builder">
+      <div class="targets" id="targets" role="group" aria-label="Magnitud que quieres construir"></div>
+      <div class="bench">
+        <p id="dGoal"></p>
+        <div class="expr" id="expr" aria-live="polite"></div>
+        <p class="now" id="dNow"></p>
+        <div class="pal" id="pal"></div>
+        <div class="row"><button class="b" id="dCheck" type="button">Comprobar</button><button class="b ghost small" id="dUndo" type="button">Deshacer</button>
+          <button class="b ghost small" id="dClear" type="button">Borrar</button><button class="b ghost small" id="dHelp" type="button">Ver la receta</button></div>
+        <p class="fb" id="dFb" aria-live="polite"></p>
+        <div id="dWin"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="prueba">
+    <h2>5. Ponte a prueba</h2>
+    <p class="hint">Diez preguntas mezcladas. Al final verás tu nota y podrás repetir solo las que se te resistan.</p>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <div class="beak" style="margin-bottom:28px"><img src="../../../../media/beakman.jpg" alt="">
+    <div><b>Lo que te llevas</b>Una magnitud es lo que se puede medir, y una medida siempre lleva número y unidad: «5» no dice nada, «5 m» lo dice todo.</div></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.que-es-una-magnitud.v1';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const INK = '#1F3A0B', LIME = '#A6D41E';
+
+  /* ---------- 1. ¿Se puede medir? ---------- */
+  const MEAS = [
+    ['Longitud de la mesa', 1, '1,2 m', 'Una cinta métrica te da un número y una unidad: metros.'],
+    ['Belleza de un cuadro', 0, '', 'A cada persona le parece distinta: no hay instrumento ni unidad de belleza.'],
+    ['Masa de una manzana', 1, '150 g', 'La balanza la mide en gramos o en kilogramos.'],
+    ['Miedo a las arañas', 0, '', 'Lo sientes, pero no existe un «miedómetro» ni una unidad de miedo.'],
+    ['Temperatura del agua', 1, '20 °C', 'La mide el termómetro. En ciencia también se da en kelvin: unos 293 K.'],
+    ['Simpatía', 0, '', 'Puedes opinar sobre ella, pero no medirla: no hay unidad de simpatía.'],
+    ['Tiempo de un recreo', 1, '30 min', 'Con un cronómetro o un reloj. En segundos serían 1800 s.'],
+    ['Sabor de un helado', 0, '', '«Riquísimo» es una opinión, no un número con unidad.'],
+    ['Volumen de una botella', 1, '1,5 L', 'El espacio que ocupa se mide en litros o en metros cúbicos.'],
+    ['Color favorito', 0, '', 'Es un gusto tuyo: no se expresa con número y unidad.'],
+    ['Velocidad de una bici', 1, '15 km/h', 'Un velocímetro la mide en kilómetros por hora (o en m/s).'],
+    ['Cansancio', 0, '', 'Dices «mucho» o «poco», pero no hay unidad de cansancio. Medir tu pulso sería medir otra cosa: el pulso.'],
+    ['Superficie de una habitación', 1, '12 m²', 'Mides el largo y el ancho y los multiplicas: metros cuadrados.'],
+    ['Densidad del aceite', 1, '920 kg/m³', 'Es la masa que hay en cada metro cúbico. El agua tiene 1000 kg/m³: por eso el aceite flota.'],
+    ['Intensidad de una corriente', 1, '0,5 A', 'Se mide con un amperímetro, en amperios (A).'],
+    ['Altura de un árbol', 1, '8 m', 'Es una longitud: se mide en metros.'],
+  ];
+  let mOrder = MEAS.map((_, i) => i), mAns = {};
+  function renderMeas() {
+    const g = $('mgrid'); g.innerHTML = '';
+    mOrder.forEach((i) => {
+      const [name, yes, ex, why] = MEAS[i];
+      const c = document.createElement('div'); c.className = 'mcard';
+      const a = mAns[i];
+      if (a === undefined) {
+        c.innerHTML = '<h3>' + esc(name) + '</h3><div class="row"><button class="b ghost small" type="button" data-v="1">Es magnitud</button>' +
+          '<button class="b ghost small" type="button" data-v="0">No lo es</button></div>';
+        c.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+          mAns[i] = +b.dataset.v; renderMeas();
+          const nb = $('mgrid').querySelectorAll('.mcard button')[0]; if (nb) nb.focus();
+        }));
+      } else {
+        const ok = a === yes; c.classList.add(ok ? 'ok' : 'ko');
+        c.innerHTML = '<h3>' + esc(name) + '</h3><div class="res"><span class="' + (ok ? 'okt' : 'kot') + '">' +
+          (ok ? '¡Bien visto! ' : 'Esta vez no. ') + (yes ? 'Sí es una magnitud.' : 'No es una magnitud.') + '</span>' +
+          (yes ? '<span class="big">' + esc(ex) + '</span>' : '<span class="big no">¿? sin unidad</span>') +
+          '<span class="rsn">' + esc(why) + '</span></div>';
+      }
+      g.appendChild(c);
+    });
+    const n = Object.keys(mAns).length, ok = Object.keys(mAns).filter((i) => mAns[i] === MEAS[i][1]).length;
+    $('mScore').textContent = n ? ok + ' bien de ' + n + ' clasificadas' + (n === MEAS.length ? ' · ¡Ya las has clasificado todas! Mira abajo la idea clave.' : ' · quedan ' + (MEAS.length - n)) : '';
+    $('mKey').hidden = n < MEAS.length;
+  }
+  $('mAgain').addEventListener('click', () => { mAns = {}; mOrder = shuffle(mOrder); renderMeas(); $('mgrid').querySelector('button').focus(); });
+  renderMeas();
+
+  /* ---------- 2. Número y unidad ---------- */
+  const T = (x, y, s, o) => '<text x="' + x + '" y="' + y + '" font-family="Nunito, sans-serif" font-weight="800" font-size="' + ((o && o.fs) || 15) + '" fill="' + ((o && o.c) || INK) + '" text-anchor="' + ((o && o.a) || 'middle') + '">' + s + '</text>';
+  const R = (x, y, w, h, f, extra) => '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" fill="' + f + '" ' + (extra || '') + '/>';
+  function scene(u) {
+    let s = '', cap = '';
+    if (u === 0) {
+      s = T(450, 120, '5', { fs: 110 }) + T(450, 175, '¿5 qué?', { fs: 26 }) +
+        ['¿palmos?', '¿pasos?', '¿centímetros?', '¿kilómetros?'].map((t, i) => T([130, 260, 650, 790][i], [60, 150, 60, 150][i], t, { fs: 20, c: '#8A9A7A' })).join('');
+      cap = 'Solo con el número, nadie sabe cuánto es. Puede ser una goma de borrar o una excursión entera. <b>Falta la unidad.</b>';
+    } else if (u === 1) {
+      s = R(100, 64, 300, 42, '#F7B8C4', 'rx="7" stroke="' + INK + '" stroke-width="2"') + R(250, 64, 150, 42, '#7FA8D8', 'stroke="' + INK + '" stroke-width="2"') +
+        T(250, 50, 'una goma de borrar', { fs: 15 }) + R(100, 120, 600, 44, '#FFF4C8', 'stroke="' + INK + '" stroke-width="2"') + R(100, 120, 300, 44, LIME, 'opacity=".55"');
+      for (let i = 0; i <= 100; i++) { const x = 100 + i * 6, h = i % 10 === 0 ? 16 : i % 5 === 0 ? 11 : 6; s += '<line x1="' + x + '" y1="120" x2="' + x + '" y2="' + (120 + h) + '" stroke="' + INK + '" stroke-width="1.3"/>'; if (i % 10 === 0) s += T(x, 156, i / 10, { fs: 13 }); }
+      s += T(250, 192, '5 cm', { fs: 22 }) + T(760, 148, 'cm', { fs: 15, a: 'start' });
+      cap = '<b>5 cm</b>: más o menos lo que mide una goma de borrar. Cabe en tu mano.';
+    } else if (u === 2) {
+      const k = 70, x0 = 80;
+      s = '<line x1="40" y1="176" x2="860" y2="176" stroke="#B9C8A0" stroke-width="2"/>';
+      s += R(x0, 122, 301, 36, '#7FA8D8', 'rx="12" stroke="' + INK + '" stroke-width="2"') + '<path d="M' + (x0 + 70) + ' 122 L' + (x0 + 110) + ' 92 L' + (x0 + 210) + ' 92 L' + (x0 + 250) + ' 122 Z" fill="#BFD6F0" stroke="' + INK + '" stroke-width="2"/>';
+      s += [x0 + 62, x0 + 240].map((cx) => '<circle cx="' + cx + '" cy="160" r="15" fill="#333" stroke="' + INK + '" stroke-width="2"/>').join('') + T(x0 + 150, 80, 'un coche (unos 4,3 m)', { fs: 14 });
+      const px = 620; s += '<circle cx="' + px + '" cy="74" r="11" fill="#F2C9A0" stroke="' + INK + '" stroke-width="2"/><path d="M' + px + ' 85 V140 M' + px + ' 140 L' + (px - 14) + ' 176 M' + px + ' 140 L' + (px + 14) + ' 176 M' + (px - 20) + ' 104 L' + (px + 20) + ' 104" stroke="' + INK + '" stroke-width="4" stroke-linecap="round" fill="none"/>' + T(px + 70, 120, 'tú (1,6 m)', { fs: 14 });
+      s += R(x0, 190, 5 * k, 10, LIME, 'stroke="' + INK + '" stroke-width="1.5"');
+      for (let i = 0; i <= 5; i++) s += '<line x1="' + (x0 + i * k) + '" y1="186" x2="' + (x0 + i * k) + '" y2="204" stroke="' + INK + '" stroke-width="2"/>' + T(x0 + i * k, 218, i + ' m', { fs: 12 });
+      cap = '<b>5 m</b>: un poco más largo que un coche, o unas tres personas tumbadas en fila.';
+    } else {
+      const x0 = 60, k = 156; // píxeles por km
+      for (let i = 0; i * 105 + 105 <= 5000; i++) { const x = x0 + i * 105 * k / 1000; s += R(x.toFixed(1), 90, (105 * k / 1000 - 2).toFixed(1), 36, '#6DBE45', 'stroke="#3F7F25" stroke-width="1"') + '<line x1="' + (x + 7.2).toFixed(1) + '" y1="90" x2="' + (x + 7.2).toFixed(1) + '" y2="126" stroke="#fff" stroke-width="1"/>'; }
+      s += T(450, 70, '47 campos de fútbol en fila (de unos 105 m cada uno)', { fs: 16 }) + R(x0, 150, 5 * k, 10, LIME, 'stroke="' + INK + '" stroke-width="1.5"');
+      for (let i = 0; i <= 5; i++) s += '<line x1="' + (x0 + i * k) + '" y1="146" x2="' + (x0 + i * k) + '" y2="164" stroke="' + INK + '" stroke-width="2"/>' + T(x0 + i * k, 182, i + ' km', { fs: 13 });
+      cap = '<b>5 km</b>: casi 50 campos de fútbol seguidos. Andando, más o menos una hora. El mismo 5, ¡y fíjate qué diferencia!';
+    }
+    $('uScene').innerHTML = '<svg viewBox="0 0 900 225" role="img" aria-label="Comparación a escala">' + s + '</svg><p>' + cap + '</p>';
+  }
+  $('uSeg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
+    $('uSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); scene(+b.dataset.u); });
+  scene(0);
+
+  function palms(p) {
+    const k = 5, x0 = 40, W = 120 * k; let s = '';
+    s += R(x0, 82, W, 16, '#C68B59', 'rx="3" stroke="' + INK + '" stroke-width="2"') + R(x0 + 14, 98, 12, 64, '#A8713F', 'stroke="' + INK + '" stroke-width="2"') + R(x0 + W - 26, 98, 12, 64, '#A8713F', 'stroke="' + INK + '" stroke-width="2"');
+    if (p) {
+      for (let i = 0; i * p < 120; i++) { const w = Math.min(p, 120 - i * p) * k, full = (i + 1) * p <= 120;
+        s += R(x0 + i * p * k, 42, w, 30, i % 2 ? '#EEF6D6' : LIME, 'rx="5" stroke="' + INK + '" stroke-width="1.5"' + (full ? '' : ' stroke-dasharray="4 3" opacity=".6"')) + (w > 24 ? T(x0 + i * p * k + w / 2, 62, i + 1, { fs: 14 }) : ''); }
+    } else {
+      s += R(x0, 42, W, 30, '#FFE36E', 'stroke="' + INK + '" stroke-width="1.5"');
+      for (let c = 0; c <= 120; c += 10) s += '<line x1="' + (x0 + c * k) + '" y1="42" x2="' + (x0 + c * k) + '" y2="' + (c % 50 ? 52 : 60) + '" stroke="' + INK + '" stroke-width="1.5"/>' + (c % 20 === 0 && c > 0 && c < 120 ? T(x0 + c * k, 68, c, { fs: 11 }) : '');
+    }
+    s += T(x0 + W / 2, 24, 'la misma mesa: 1,2 m', { fs: 14 });
+    $('pScene').innerHTML = '<svg viewBox="0 0 680 175" role="img" aria-label="Mesa medida en palmos">' + s + '</svg>';
+    if (p) { const n = 120 / p; $('pCount').textContent = (Number.isInteger(n) ? '' : 'Unos ') + Math.round(n) + ' palmos';
+      $('pTxt').textContent = 'Con un palmo de ' + p + ' cm. Cambia de mano y cambia el número: el palmo no es igual para todos.'; }
+    else { $('pCount').textContent = '1,2 m'; $('pTxt').textContent = 'El metro mide lo mismo para ti, para un adulto y para alguien en Tokio. Por eso es una unidad que sirve a todo el mundo.'; }
+  }
+  $('pSeg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
+    $('pSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); palms(+b.dataset.p); });
+  palms(20);
+
+  /* ---------- 3. Cada magnitud con lo suyo ---------- */
+  const ROWS = [
+    { m: 'Longitud', u: 'metro', s: 'm', i: 'Regla o cinta métrica', n: 'También usamos cm, mm y km.' },
+    { m: 'Masa', u: 'kilogramo', s: 'kg', i: 'Balanza', n: 'Fíjate: k minúscula. En la cocina, gramos (g).' },
+    { m: 'Tiempo', u: 'segundo', s: 's', i: 'Cronómetro', n: 'Se escribe s, nunca «seg».' },
+    { m: 'Temperatura', u: 'kelvin', s: 'K', i: 'Termómetro', n: 'En la vida diaria usamos el grado Celsius (°C). El kelvin se escribe K, sin «°».' },
+    { m: 'Volumen', u: 'metro cúbico', s: 'm³', i: 'Probeta', n: 'Para líquidos, el litro (L o l): 1 L = 1 dm³ = 1000 cm³.' },
+    { m: 'Superficie', u: 'metro cuadrado', s: 'm²', i: 'Regla o cinta métrica', n: 'No hay «superficiómetro»: mides dos longitudes y las multiplicas.' },
+    { m: 'Velocidad', u: 'metro por segundo', s: 'm/s', i: 'Velocímetro', n: 'En las señales de tráfico, km/h. También puedes calcularla con cinta métrica y cronómetro.' },
+  ];
+  const UNITS = { metro: 'la longitud', kilogramo: 'la masa', gramo: 'la masa', segundo: 'el tiempo', kelvin: 'la temperatura', 'grado Celsius': 'la temperatura',
+    'metro cúbico': 'el volumen', litro: 'el volumen', 'metro cuadrado': 'la superficie', 'metro por segundo': 'la velocidad', 'kilómetro por hora': 'la velocidad' };
+  const SYMS = { m: 'metro', kg: 'kilogramo', Kg: '', g: 'gramo', s: 'segundo', seg: '', K: 'kelvin', '°K': '', '°C': 'grado Celsius', 'm²': 'metro cuadrado', 'm³': 'metro cúbico', L: 'litro', 'm/s': 'metro por segundo', 'km/h': 'kilómetro por hora' };
+  const INSTR = { 'Regla o cinta métrica': 'longitudes', Balanza: 'masas', Cronómetro: 'tiempos', Termómetro: 'temperaturas', Probeta: 'volúmenes de líquidos', Velocímetro: 'velocidades' };
+  const TRAP = { gramo: 'El gramo se usa mucho, pero la unidad del SI es el kilogramo.', 'grado Celsius': 'El grado Celsius es el de la vida diaria; la unidad del SI es el kelvin.',
+    litro: 'El litro es muy práctico, pero la unidad del SI es el metro cúbico.', 'kilómetro por hora': 'El km/h es el de las señales de tráfico; la unidad del SI es el metro por segundo.',
+    Kg: '«Kg» no: el símbolo lleva k minúscula, kg.', seg: '«seg» no es un símbolo: el del segundo es s.', '°K': 'El kelvin va sin «°»: se escribe K.' };
+  const opt = (arr) => '<option value="">Elige…</option>' + arr.map((v) => '<option>' + esc(v) + '</option>').join('');
+  ROWS.forEach((r, k) => {
+    const d = document.createElement('div'); d.className = 'mrow';
+    d.innerHTML = '<b>' + r.m + '</b><select aria-label="Unidad de ' + r.m + '" data-f="u">' + opt(Object.keys(UNITS)) + '</select>' +
+      '<select aria-label="Símbolo de ' + r.m + '" data-f="s">' + opt(Object.keys(SYMS)) + '</select>' +
+      '<select aria-label="Instrumento para ' + r.m + '" data-f="i">' + opt(Object.keys(INSTR)) + '</select><span class="rfb" aria-live="polite"></span>';
+    d.dataset.k = k; $('mtable').appendChild(d);
+  });
+  function checkTable(showSol) {
+    let good = 0;
+    $('mtable').querySelectorAll('.mrow[data-k]').forEach((d) => {
+      const r = ROWS[d.dataset.k], msgs = []; let rowOk = true;
+      d.querySelectorAll('select').forEach((sel) => {
+        const f = sel.dataset.f, want = r[f];
+        if (showSol) sel.value = want;
+        const v = sel.value; sel.classList.remove('ok', 'ko');
+        if (v === want) { sel.classList.add('ok'); return; }
+        rowOk = false; if (!v) return; sel.classList.add('ko');
+        if (TRAP[v] && (f !== 'u' || UNITS[v] === UNITS[want])) msgs.push(TRAP[v]);
+        else if (f === 'u') msgs.push('El ' + v + ' es una unidad de ' + UNITS[v] + '.');
+        else if (f === 's') msgs.push(TRAP[v] || '«' + v + '» es el símbolo del ' + SYMS[v] + '.');
+        else msgs.push('Con ' + (v === 'Balanza' || v === 'Probeta' || v === 'Regla o cinta métrica' ? 'la ' : 'el ') + v.toLowerCase() + ' mides ' + INSTR[v] + '.');
+      });
+      if (rowOk) good++;
+      const fb = d.querySelector('.rfb');
+      fb.innerHTML = rowOk ? '<span class="okt">¡Fila completa!</span> ' + esc(r.n) : msgs.length ? '<span class="kot">Revisa:</span> ' + esc(msgs.join(' ')) : '';
+    });
+    $('tScore').textContent = showSol ? 'Aquí tienes la solución. Lee las notas: son las trampas típicas.' :
+      good === ROWS.length ? '¡Las 7 filas bien! Tienes el SI en el bolsillo.' : good + ' de ' + ROWS.length + ' filas completas. Cambia lo marcado en rojo y vuelve a comprobar.';
+  }
+  $('tCheck').addEventListener('click', () => checkTable(false));
+  $('tSol').addEventListener('click', () => checkTable(true));
+
+  const BASE = [['Longitud', 'metro', 'm', 1], ['Masa', 'kilogramo', 'kg', 1], ['Tiempo', 'segundo', 's', 1], ['Temperatura', 'kelvin', 'K', 1],
+    ['Intensidad de corriente eléctrica', 'amperio', 'A', 0], ['Cantidad de sustancia', 'mol', 'mol', 0], ['Intensidad luminosa', 'candela', 'cd', 0]];
+  $('base7').innerHTML = BASE.map(([n, u, s, top]) => '<div class="bt' + (top ? ' top' : '') + '"><span class="sym">' + s + '</span><span class="nm">' + n + '</span><span class="un">' + u + '</span>' +
+    (top ? '<span class="tg">la usarás mucho</span>' : '') + '</div>').join('');
+
+  /* ---------- 4. Básicas y derivadas ---------- */
+  // dimensiones: [longitud, masa, tiempo]
+  const BLOCKS = { L: ['longitud', 'm', [1, 0, 0]], M: ['masa', 'kg', [0, 1, 0]], Ti: ['tiempo', 's', [0, 0, 1]], V: ['volumen', 'm³', [3, 0, 0], 1] };
+  const sup = (n) => n === 1 ? '' : String(n).split('').map((c) => '⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(c)]).join('');
+  function unitOf(d) {
+    const parts = [['kg', d[1]], ['m', d[0]], ['s', d[2]]];
+    const num = parts.filter((p) => p[1] > 0).map((p) => p[0] + sup(p[1])), den = parts.filter((p) => p[1] < 0).map((p) => p[0] + sup(-p[1]));
+    if (!num.length && !den.length) return 'sin unidad: se anulan';
+    return (num.join('·') || '1') + (den.length ? '/' + (den.length > 1 ? '(' + den.join('·') + ')' : den[0]) : '');
+  }
+  const TGT = {
+    superficie: { d: [2, 0, 0], goal: 'Una superficie tiene largo y ancho.', rec: ['L', '×', 'L'],
+      ex: 'Una habitación de 4 m × 3 m tiene 12 cuadrados de 1 m²: 12 m².',
+      svg: () => { let s = ''; for (let i = 0; i < 4; i++) for (let j = 0; j < 3; j++) s += R(30 + i * 40, 20 + j * 40, 40, 40, LIME, 'opacity="' + ((i + j) % 2 ? '.45' : '.75') + '" stroke="' + INK + '" stroke-width="1.5"'); return s + T(110, 158, '4 m', {}) + T(205, 85, '3 m', {}); } },
+    volumen: { d: [3, 0, 0], goal: 'Un volumen tiene largo, ancho y alto.', rec: ['L', '×', 'L', '×', 'L'],
+      ex: 'Una caja de 1 m × 1 m × 1 m tiene un volumen de 1 m³. ¡Dentro caben 1000 L!',
+      svg: () => '<path d="M60 60 L100 30 L190 30 L150 60 Z" fill="#D4EA8F" stroke="' + INK + '" stroke-width="2"/><path d="M150 60 L190 30 L190 120 L150 150 Z" fill="#8DB516" stroke="' + INK + '" stroke-width="2"/>' + R(60, 60, 90, 90, LIME, 'stroke="' + INK + '" stroke-width="2"') + T(105, 168, '1 m', {}) + T(215, 95, '1 m', {}) + T(105, 110, '1 m³', { fs: 20 }) },
+    velocidad: { d: [1, 0, -1], goal: 'La velocidad dice cuánta distancia recorres en cada unidad de tiempo.', rec: ['L', '÷', 'Ti'],
+      ex: 'Si recorres 100 m en 20 s, vas a 100 m ÷ 20 s = 5 m/s: cada segundo avanzas 5 m.',
+      svg: () => { let s = '<line x1="20" y1="100" x2="220" y2="100" stroke="' + INK + '" stroke-width="3"/>'; for (let i = 0; i <= 4; i++) s += '<circle cx="' + (20 + i * 50) + '" cy="100" r="7" fill="' + LIME + '" stroke="' + INK + '" stroke-width="2"/>' + T(20 + i * 50, 80, i * 5 + ' s', { fs: 13 }) + T(20 + i * 50, 128, i * 25 + ' m', { fs: 13 }); return s + T(120, 160, '100 m en 20 s', {}); } },
+    densidad: { d: [-3, 1, 0], goal: 'La densidad dice cuánta masa hay en cada trozo de volumen.', rec: ['M', '÷', 'V'],
+      ex: '1 m³ de agua tiene 1000 kg de masa: 1000 kg/m³. Un metro cúbico de aceite, unos 920 kg: por eso flota.',
+      svg: () => R(20, 40, 90, 90, '#9CC8EE', 'stroke="' + INK + '" stroke-width="2"') + R(130, 40, 90, 90, '#F3D36B', 'stroke="' + INK + '" stroke-width="2"') + T(65, 90, '1000 kg', { fs: 14 }) + T(175, 90, '920 kg', { fs: 14 }) + T(65, 152, 'agua 1 m³', { fs: 13 }) + T(175, 152, 'aceite 1 m³', { fs: 13 }) },
+  };
+  const ART = { superficie: 'la', volumen: 'el', velocidad: 'la', densidad: 'la' };
+  let target = 'superficie', expr = [], solved = store.get(KEY, {}).solved || {};
+  const tb = $('targets');
+  function renderTargets() {
+    tb.innerHTML = Object.keys(TGT).map((k) => '<button type="button" class="chip' + (k === target ? ' sel' : '') + (solved[k] ? ' solved' : '') + '" data-t="' + k + '" aria-pressed="' + (k === target) + '">' +
+      k[0].toUpperCase() + k.slice(1) + '<small>' + (solved[k] ? '✓ ' + unitOf(TGT[k].d) : '?') + '</small></button>').join('');
+  }
+  tb.addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; target = b.dataset.t; expr = []; $('dWin').innerHTML = ''; $('dFb').textContent = ''; renderTargets(); renderBench(); });
+  function dims() { if (!expr.length) return null; let d = BLOCKS[expr[0]][2].slice();
+    for (let i = 1; i + 1 < expr.length; i += 2) { const b = BLOCKS[expr[i + 1]][2], s = expr[i] === '×' ? 1 : -1; d = d.map((v, j) => v + s * b[j]); } return d; }
+  function renderBench() {
+    $('dGoal').innerHTML = '<b>Construye ' + ART[target] + ' ' + target + '.</b> ' + TGT[target].goal;
+    $('expr').innerHTML = expr.map((t) => BLOCKS[t] ? '<span class="blk' + (BLOCKS[t][3] ? ' der' : '') + '">' + BLOCKS[t][0] + '<small>' + BLOCKS[t][1] + '</small></span>' : '<span class="op">' + t + '</span>').join('');
+    const d = dims(); $('dNow').innerHTML = d ? 'Lo que sale: <b>' + unitOf(d) + '</b>' : '';
+    const wantOp = expr.length % 2 === 1;
+    $('pal').innerHTML = Object.keys(BLOCKS).map((k) => '<button type="button" class="chip' + (BLOCKS[k][3] ? ' der' : '') + '" data-b="' + k + '"' + (wantOp || expr.length >= 7 ? ' disabled' : '') + '>' + BLOCKS[k][0] + '<small>' + BLOCKS[k][1] + (BLOCKS[k][3] ? ' · derivada' : ' · básica') + '</small></button>').join('') +
+      ['×', '÷'].map((o) => '<button type="button" class="chip opb" data-o="' + o + '" aria-label="' + (o === '×' ? 'por' : 'entre') + '"' + (wantOp ? '' : ' disabled') + '>' + o + '</button>').join('');
+  }
+  $('pal').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b || b.disabled) return; expr.push(b.dataset.b || b.dataset.o); $('dFb').textContent = ''; renderBench();
+    const nx = $('pal').querySelector('button:not(:disabled)'); if (nx) nx.focus(); });
+  $('dUndo').addEventListener('click', () => { expr.pop(); renderBench(); });
+  $('dClear').addEventListener('click', () => { expr = []; $('dWin').innerHTML = ''; $('dFb').textContent = ''; renderBench(); });
+  function win() {
+    const t = TGT[target]; solved[target] = 1; const st = store.get(KEY, {}); st.solved = solved; store.set(KEY, st);
+    $('dFb').innerHTML = '<span class="okt">¡Eso es! ' + ART[target][0].toUpperCase() + ART[target].slice(1) + ' ' + target + ' se mide en ' + unitOf(t.d) + '.</span>';
+    $('dWin').innerHTML = '<div class="win"><svg viewBox="0 0 240 175" role="img" aria-label="Ejemplo de ' + target + '">' + t.svg() + '</svg><p>' + esc(t.ex) +
+      (target === 'densidad' ? ' Y el volumen, a su vez, sale de la longitud: kg/m³ es kg ÷ (m · m · m).' : '') + '</p></div>';
+    renderTargets();
+  }
+  $('dCheck').addEventListener('click', () => {
+    const d = dims(), t = TGT[target];
+    if (!d) { $('dFb').textContent = 'Primero pon algún bloque.'; return; }
+    if (expr.length % 2 === 0) { $('dFb').textContent = 'La receta termina en un signo: añade un bloque detrás.'; return; }
+    if (d.every((v, j) => v === t.d[j])) return win();
+    $('dWin').innerHTML = '';
+    let hint = target === 'velocidad' && d[0] === 1 && d[2] === 1 ? ' Multiplicar no: la velocidad es distancia <i>entre</i> tiempo.' :
+      target === 'densidad' && d[1] === 1 && d[0] === 3 ? ' Multiplicar no: la densidad es masa <i>entre</i> volumen.' :
+      target === 'densidad' && d[1] === -1 ? ' Lo tienes al revés: la masa va arriba y el volumen abajo.' :
+      target === 'velocidad' && d[0] === -1 ? ' Lo tienes al revés: la distancia va arriba y el tiempo abajo.' :
+      ' Pista: ' + t.goal.charAt(0).toLowerCase() + t.goal.slice(1);
+    $('dFb').innerHTML = '<span class="kot">Casi.</span> Eso da ' + esc(unitOf(d)) + ', y ' + ART[target] + ' ' + target + ' se mide en ' + unitOf(t.d) + '.' + hint;
+  });
+  $('dHelp').addEventListener('click', () => { expr = TGT[target].rec.slice(); renderBench(); win(); });
+  renderTargets(); renderBench();
+
+  /* ---------- 5. Ponte a prueba ---------- */
+  const Q = [
+    { q: '¿Cuál de estas es una magnitud?', o: ['La masa de una mochila', 'La alegría', 'El sabor del chocolate', 'La simpatía'],
+      ok: 'La masa se mide con una balanza y da un número y una unidad, por ejemplo 4 kg.', ko: 'Las otras son sentimientos u opiniones: no tienen unidad. La que se mide es la masa de la mochila.' },
+    { q: 'Alguien dice: «la pizarra mide 3». ¿Qué le falta?', o: ['La unidad', 'Nada, está completo', 'Un decimal', 'El nombre del instrumento'],
+      ok: '«3» solo no dice nada: ¿3 m?, ¿3 palmos? Con la unidad, sí.', ko: 'Le falta la unidad. «3» puede ser 3 cm o 3 m: una medida siempre lleva número y unidad.' },
+    { q: '¿Con qué instrumento mides la masa?', o: ['Balanza', 'Probeta', 'Termómetro', 'Cronómetro'],
+      ok: 'La balanza mide masas.', ko: 'La masa se mide con la balanza. La probeta mide volúmenes; el termómetro, temperaturas; el cronómetro, tiempos.' },
+    { q: '¿Cuál es la unidad de temperatura del Sistema Internacional?', o: ['El kelvin (K)', 'El grado Celsius (°C)', 'El termómetro', 'El grado Fahrenheit (°F)'],
+      ok: 'El kelvin. El °C es el que usamos en la vida diaria.', ko: 'Es el kelvin (K). El °C lo usamos a diario y el termómetro es el instrumento, no la unidad.' },
+    { q: 'Escribe el símbolo del kilogramo.', w: 1, check: (a) => a === 'kg' ? 1 : /^kg/i.test(a) && a.toLowerCase() !== 'kg' ? 'Los símbolos no llevan plural ni punto: kg.' : a.toLowerCase() === 'kg' ? 'Casi: la k va en minúscula. Se escribe kg.' : 0,
+      ok: 'kg, con k minúscula.', ko: 'Es kg: k de kilo (minúscula) y g de gramo.' },
+    { q: '¿Cuál de estas NO es una magnitud básica del SI?', o: ['Velocidad', 'Longitud', 'Masa', 'Tiempo'],
+      ok: 'La velocidad es derivada: se construye con longitud y tiempo.', ko: 'La que no es básica es la velocidad: sale de dividir longitud entre tiempo.' },
+    { q: '¿Cómo se obtiene la superficie?', o: ['Longitud × longitud', 'Longitud ÷ tiempo', 'Masa ÷ volumen', 'Masa × tiempo'],
+      ok: 'Largo por ancho: m × m = m².', ko: 'Largo por ancho: longitud × longitud, y por eso se mide en m². Longitud ÷ tiempo es la velocidad y masa ÷ volumen, la densidad.' },
+    { q: 'Escribe el símbolo de la unidad de velocidad del SI.', w: 1,
+      check: (a) => { const s = a.replace(/\s+/g, ''); if (s === 'm/s' || /^m[·.*]?s(\^?-1|⁻¹)$/.test(s)) return 1;
+        if (/^km\/h$/i.test(s)) return 'El km/h es el de las señales de tráfico. Prueba con la del SI: metros entre segundos.';
+        if (s.toLowerCase() === 'm/s' || s.toLowerCase() === 'm/seg') return 'Casi: se escribe m/s, todo en minúscula y con s de segundo.'; return 0; },
+      ok: 'm/s: metros por segundo.', ko: 'Es m/s: longitud (m) entre tiempo (s).' },
+    { q: '¿Cuál está bien escrita?', o: ['20 s', '20 seg', '20 S', '20 segs.'],
+      ok: 'El símbolo del segundo es s: minúscula, sin punto y sin plural.', ko: 'Se escribe 20 s. Los símbolos no son abreviaturas: ni «seg», ni mayúscula, ni plural, ni punto.' },
+    { q: '¿Cuántas magnitudes básicas tiene el Sistema Internacional? Escribe el número.', w: 1, check: (a) => ['7', 'siete'].includes(a.toLowerCase()) ? 1 : 0,
+      ok: 'Siete: longitud, masa, tiempo, temperatura, intensidad de corriente, cantidad de sustancia e intensidad luminosa.', ko: 'Son 7. Las cuatro que más usarás: longitud, masa, tiempo y temperatura.' },
+  ];
+  let order = [], pos = 0, results = {};
+  function startQuiz(ids) { order = ids; pos = 0; ids.forEach((i) => delete results[i]); showQ(); }
+  function showQ() {
+    const box = $('quiz');
+    if (pos >= order.length) return endQuiz();
+    const i = order[pos], q = Q[i];
+    box.innerHTML = '<p class="qn">Pregunta ' + (pos + 1) + ' de ' + order.length + '</p><p class="qt">' + esc(q.q) + '</p>' +
+      (q.w ? '<div class="row"><input type="text" id="qIn" autocomplete="off" spellcheck="false" aria-label="Tu respuesta"><button class="b" id="qGo" type="button">Comprobar</button></div>'
+           : '<div class="opts">' + shuffle(q.o.map((t, k) => [t, k])).map(([t, k]) => '<button type="button" class="chip" data-k="' + k + '">' + esc(t) + '</button>').join('') + '</div>') +
+      '<p class="fb" id="qFb" aria-live="polite"></p><div class="row" id="qNext" hidden><button class="b" type="button">' + (pos + 1 < order.length ? 'Siguiente' : 'Ver mi nota') + '</button></div>';
+    const done = (good, msg) => { results[i] = good; $('qFb').innerHTML = (good ? '<span class="okt">¡Bien!</span> ' : '<span class="kot">No pasa nada.</span> ') + esc(msg);
+      $('qNext').hidden = false; $('qNext').querySelector('button').focus(); };
+    $('qNext').querySelector('button').addEventListener('click', () => { pos++; showQ(); $('quiz').querySelector('button, input').focus(); });
+    if (q.w) {
+      const go = () => { if (!$('qNext').hidden) return; const a = $('qIn').value.trim(); if (!a) { $('qFb').textContent = 'Escribe algo, aunque dudes.'; return; }
+        const r = q.check(a); if (typeof r === 'string') { $('qFb').innerHTML = '<span class="kot">Casi.</span> ' + esc(r) + ' Prueba otra vez.'; return; }
+        $('qIn').disabled = true; $('qGo').disabled = true; $('qIn').classList.add(r ? 'ok' : 'ko'); done(!!r, r ? q.ok : q.ko); };
+      $('qGo').addEventListener('click', go); $('qIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') go(); });
+    } else {
+      box.querySelectorAll('.opts .chip').forEach((b) => b.addEventListener('click', () => {
+        if (!$('qNext').hidden) return; const good = b.dataset.k === '0';
+        b.classList.add(good ? 'ok' : 'ko'); if (!good) box.querySelector('.opts .chip[data-k="0"]').classList.add('ok');
+        box.querySelectorAll('.opts .chip').forEach((x) => { x.disabled = true; x.style.cursor = 'default'; }); done(good, good ? q.ok : q.ko); }));
+    }
+  }
+  function endQuiz() {
+    const all = Q.map((_, i) => i), good = all.filter((i) => results[i]).length, failed = all.filter((i) => results[i] === false);
+    const st = store.get(KEY, {}); st.best = Math.max(st.best || 0, good); store.set(KEY, st);
+    const msg = good === Q.length ? '¡Diez de diez! Ya piensas como alguien que mide el mundo.' : good >= 7 ? 'Muy bien. Repasa las que fallaste y quedará redondo.' : 'Buen intento. Vuelve a las partes de arriba y repite las falladas: así se aprende.';
+    $('quiz').innerHTML = '<p class="qt">Tu nota: ' + good + ' de ' + Q.length + '</p><p>' + msg + (st.best > good ? ' (Tu mejor nota hasta ahora: ' + st.best + '.)' : '') + '</p>' +
+      (failed.length ? '<ul class="reslist">' + failed.map((i) => '<li><b>' + esc(Q[i].q) + '</b><br>' + esc(Q[i].ko) + '</li>').join('') + '</ul>' : '') +
+      '<div class="row">' + (failed.length ? '<button class="b" id="qFail" type="button">Repetir solo las falladas (' + failed.length + ')</button>' : '') +
+      '<button class="b ghost" id="qAll" type="button">Empezar de nuevo</button></div>';
+    if (failed.length) $('qFail').addEventListener('click', () => startQuiz(shuffle(failed)));
+    $('qAll').addEventListener('click', () => { results = {}; startQuiz(Q.map((_, i) => i)); });
+  }
+  startQuiz(Q.map((_, i) => i));
+})();
+</script>
+</body>
+</html>

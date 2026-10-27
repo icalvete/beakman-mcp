@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mide como en el laboratorio · El laboratorio de Beakman</title>
+<meta name="description" content="Lee una regla, una probeta, un termómetro, una balanza y un cronómetro; descubre qué es la precisión, repite medidas con un péndulo y haz la media, y caza los errores típicos al medir. Física y Química, Unidad 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+[hidden] { display: none !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.stage { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr); gap: 18px; align-items: start; }
+.draw { background: #FFFDF6; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.draw svg { display: block; width: 100%; height: auto; font-family: var(--body); }
+.modes { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--ink); border-radius: 18px; overflow: hidden; background: #fff; margin-bottom: 14px; }
+.modes button { border: 0; background: #fff; font: 800 .92rem/1 var(--body); color: var(--ink); padding: 9px 14px; cursor: pointer; }
+.modes button + button { border-left: 2px solid var(--ink); }
+.modes button[aria-pressed="true"] { background: var(--lime); }
+.modes button:focus-visible, .chip:focus-visible, .b:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.stage > * { min-width: 0; }
+.panel { grid-template-columns: minmax(0, 1fr); background: #fff; border: 1.5px solid var(--line); border-left: 6px solid var(--lime); border-radius: 0 14px 14px 0; padding: 12px 16px; display: grid; gap: 10px; }
+.panel h3 { font-size: 1.25rem; }
+.ask { font-weight: 700; }
+.tip { font-size: .95rem; background: var(--note); border-radius: 10px; padding: 8px 10px; }
+.tip b { color: var(--ink); }
+.ans { display: flex; gap: 8px; }
+.ans input { flex: 1; min-width: 0; border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; font: 700 1.1rem var(--body); color: var(--text); background: #fff; }
+.ans input:focus { outline: none; border-color: var(--ink); }
+.fb { min-height: 1.5em; font-size: .97rem; }
+.fb p + p { margin-top: 6px; }
+.score { display: flex; gap: 14px; font-weight: 800; align-items: baseline; flex-wrap: wrap; }
+.score small { color: var(--muted); font-weight: 700; }
+.formula { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; font-weight: 800; }
+.formula span.p { background: #fff; border: 2px solid var(--ink); border-radius: 10px; padding: 4px 12px; font: 600 1.2rem/1.2 var(--display); color: var(--ink); }
+.formula span.u { background: var(--lime); }
+.formula em { font-style: normal; color: var(--muted); font-weight: 700; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-family: var(--body); font-size: .97rem; color: var(--text); }
+.res { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.res .soft { background: #fff; }
+.res h3 { font-size: 1.05rem; margin-bottom: 4px; }
+.big { font: 600 1.5rem/1.2 var(--display); color: var(--ink); }
+.watch { font: 700 2.6rem/1 ui-monospace, "Cascadia Mono", Consolas, monospace; background: #C9D8B0; color: #1F2A17; border: 2px solid var(--ink);
+  border-radius: 12px; padding: 12px 16px; text-align: right; letter-spacing: 1px; }
+table.meds { border-collapse: collapse; width: 100%; background: #fff; font-size: .97rem; }
+table.meds th, table.meds td { border: 1.5px solid var(--line); padding: 5px 10px; text-align: left; }
+table.meds th { background: var(--lime-soft); font-weight: 800; color: var(--ink); }
+table.meds td.v { font-weight: 800; font-variant-numeric: tabular-nums; }
+table.meds tr.warn td { background: var(--note); }
+.calc { background: #fff; border-left: 5px solid var(--lime); border-radius: 0 12px 12px 0; padding: 10px 14px; display: grid; gap: 6px; }
+.calc .eq { font-weight: 800; font-variant-numeric: tabular-nums; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.card { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; align-content: start; }
+.card h3 { font-size: 1.1rem; }
+.card svg { display: block; width: 100%; max-width: 420px; height: auto; border: 1.5px solid var(--line); border-radius: 10px; font-family: var(--body); }
+.card .opts { display: grid; gap: 6px; }
+.card .chip { justify-content: flex-start; text-align: left; font-size: .95rem; }
+.beak p + p { margin-top: 6px; }
+.beak li b, .beak p b { display: inline; font: inherit; font-weight: 800; color: var(--ink); margin: 0; }
+#precision .draw { max-width: 860px; }
+.beak ul { margin: 6px 0 0; padding-left: 20px; }
+@media (max-width: 900px) { .stage, .cards, .res { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Mide como en el <em>laboratorio</em></h1>
+    <p class="lead">Una regla, una probeta, un termómetro, una balanza y un cronómetro. Vas a leerlos como lo haría una científica, descubrir por qué unos miden mejor que otros y pillar los fallos que se cuelan al medir.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes de la página">
+    <a href="#lee">Lee el instrumento</a><a href="#precision">La precisión</a><a href="#repite">Mide varias veces</a><a href="#errores">Errores al medir</a><a href="#llevas">Lo que te llevas</a>
+  </nav>
+
+  <section class="block" id="lee">
+    <h2>1. Lee el instrumento</h2>
+    <p class="hint">Mira el instrumento, usa la lupa y escribe lo que marca. Siempre con su unidad.</p>
+    <div class="formula" aria-label="Una medida es un número más una unidad">
+      <span class="p">4,7</span><em>+</em><span class="p u">cm</span><em>=</em><span>una medida.</span>
+      <em>Solo «4,7» no dice nada: ¿4,7 cm? ¿4,7 km?</em>
+    </div>
+    <div class="modes" role="group" aria-label="Instrumento">
+      <button type="button" data-inst="regla" aria-pressed="true">Regla</button>
+      <button type="button" data-inst="probeta" aria-pressed="false">Probeta</button>
+      <button type="button" data-inst="termo" aria-pressed="false">Termómetro</button>
+      <button type="button" data-inst="balanza" aria-pressed="false">Balanza digital</button>
+      <button type="button" data-inst="crono" aria-pressed="false">Cronómetro</button>
+    </div>
+    <div class="stage">
+      <div class="draw">
+        <svg id="svg-read" viewBox="0 0 720 420" role="img" aria-label="Instrumento de medida">
+          <defs><clipPath id="lensclip"><circle cx="0" cy="0" r="1"/></clipPath></defs>
+          <rect width="720" height="420" fill="#FFFDF6"/>
+          <g id="inst"></g>
+          <g id="lens"></g>
+        </svg>
+      </div>
+      <div class="panel">
+        <h3 id="r-title">Regla</h3>
+        <p class="ask" id="r-ask"></p>
+        <p class="tip" id="r-tip"></p>
+        <form class="ans" id="r-form" autocomplete="off">
+          <label class="sr" for="r-in">Tu lectura, con número y unidad</label>
+          <input id="r-in" inputmode="text" placeholder="número y unidad">
+          <button type="submit" class="b">Comprobar</button>
+        </form>
+        <div class="fb" id="r-fb" aria-live="polite"></div>
+        <div id="r-dig" hidden>
+          <p class="ask">Y una más: ¿de cuánto en cuánto puede cambiar la última cifra?</p>
+          <div class="opts" id="r-dig-opts"></div>
+          <div class="fb" id="r-dig-fb" aria-live="polite"></div>
+        </div>
+        <div class="row"><button type="button" class="b ghost small" id="r-sol" hidden>Ver la solución</button>
+          <button type="button" class="b small" id="r-next">Otra medida</button></div>
+        <div class="score"><span class="okt" id="r-ok">✓ 0</span><span class="kot" id="r-ko">✗ 0</span><small id="r-total"></small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="precision">
+    <h2>2. La precisión</h2>
+    <p class="hint">La <b>precisión</b> de un instrumento es la división más pequeña que puede marcar. Mide lo mismo con dos instrumentos y compara.</p>
+    <div class="modes" role="group" aria-label="Pareja de instrumentos">
+      <button type="button" data-pair="long" aria-pressed="true">Regla y cinta</button>
+      <button type="button" data-pair="vol" aria-pressed="false">Probeta y vaso</button>
+    </div>
+    <div class="draw"><svg id="svg-prec" viewBox="0 0 720 330" role="img" aria-label="El mismo objeto medido con dos instrumentos"></svg></div>
+    <p class="ask" style="margin-top:14px" id="p-ask">¿Con cuál de los dos puedes dar una medida más precisa?</p>
+    <div class="opts" id="p-opts" style="margin-top:8px"></div>
+    <div class="fb" id="p-fb" aria-live="polite" style="margin-top:8px"></div>
+    <div class="res" id="p-res" hidden></div>
+    <div class="row" style="margin-top:12px"><button type="button" class="b small" id="p-next">Otro objeto</button></div>
+  </section>
+
+  <section class="block" id="repite">
+    <h2>3. Mide varias veces</h2>
+    <p class="hint">¿Cuánto tarda el péndulo en ir y volver? Pulsa <b>Empezar</b> cuando la bola esté en el extremo izquierdo (la banderita) y <b>Parar</b> cuando vuelva a ese mismo extremo. Hazlo cinco veces.</p>
+    <div class="stage">
+      <div class="draw"><svg id="svg-pend" viewBox="0 0 420 360" role="img" aria-label="Un péndulo oscilando"></svg></div>
+      <div class="panel">
+        <div class="watch" id="w-disp" aria-live="off">0,00 s</div>
+        <div class="row">
+          <button type="button" class="b" id="w-go">▶ Empezar</button>
+          <button type="button" class="b ghost small" id="w-undo" disabled>Borrar la última</button>
+          <button type="button" class="b ghost small" id="w-new">Nuevo péndulo</button>
+        </div>
+        <p class="tip">Truco: deja el foco en el botón y usa la barra espaciadora para empezar y parar.</p>
+        <table class="meds"><thead><tr><th>Medida</th><th>Tiempo de una ida y vuelta</th></tr></thead><tbody id="w-tb"></tbody></table>
+      </div>
+    </div>
+    <div id="w-res" aria-live="polite" style="margin-top:14px"></div>
+  </section>
+
+  <section class="block" id="errores">
+    <h2>4. Errores al medir</h2>
+    <p class="hint">Cuatro personas han medido algo y a las cuatro se les ha colado un fallo. ¿Cuál es en cada caso?</p>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="block" id="llevas">
+    <h2>Lo que te llevas</h2>
+    <div class="beak"><img src="../../../../media/beakman.jpg" alt="">
+      <div><b>Beakman te lo resume</b>
+        <ul>
+          <li>Una medida es <b>número + unidad</b>. «5» no es nada; «5 cm», «5 mL» o «5 °C» sí.</li>
+          <li>La <b>precisión</b> es la división más pequeña del instrumento. La regla de milímetros gana a la cinta de centímetros; la probeta, al vaso.</li>
+          <li>Para leer bien: el objeto en el <b>0</b>, los <b>ojos a la altura</b> de lo que lees, la <b>parte de abajo del menisco</b> y la balanza a <b>cero</b> antes de pesar.</li>
+          <li><b>Repite</b> la medida y haz la <b>media</b>: los fallos hacia arriba y hacia abajo se compensan.</li>
+          <li>Ninguna medida es perfecta. Siempre queda un poquito de duda, la <b>incertidumbre</b>. Medir bien es hacerla lo más pequeña posible y saber que está ahí.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+/* LOGIC START: lectura y corrección de medidas (sin DOM) */
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+// número con coma decimal y signo menos tipográfico
+const fmt = (n, d) => { const s = Math.abs(n).toFixed(d).replace('.', ','); return (n < 0 && +s.replace(',', '.') !== 0 ? '−' : '') + s; };
+const FAM = { L: 'longitud', V: 'volumen', T: 'temperatura', M: 'masa', t: 'tiempo' };
+// unidad → [magnitud, factor a la unidad base (cm, mL, °C, g, s), símbolo, es palabra]
+const U = {};
+const addU = (fam, f, sym, keys, word) => keys.forEach(k => { U[k] = [fam, f, sym, !!word]; });
+addU('L', 1, 'cm', ['cm']); addU('L', 1, 'cm', ['centimetro', 'centimetros'], 1);
+addU('L', 0.1, 'mm', ['mm']); addU('L', 0.1, 'mm', ['milimetro', 'milimetros'], 1);
+addU('L', 100, 'm', ['m']); addU('L', 100, 'm', ['metro', 'metros'], 1);
+addU('L', 10, 'dm', ['dm']); addU('L', 1e5, 'km', ['km']); addU('L', 1e5, 'km', ['kilometro', 'kilometros'], 1);
+addU('V', 1, 'mL', ['ml']); addU('V', 1, 'cm³', ['cm³', 'cm3']); addU('V', 1, 'cm³', ['cc']); addU('V', 1, 'mL', ['mililitro', 'mililitros'], 1);
+addU('V', 1000, 'L', ['l', 'dm3', 'dm³']); addU('V', 1000, 'L', ['litro', 'litros'], 1);
+addU('V', 10, 'cL', ['cl']); addU('V', 100, 'dL', ['dl']);
+addU('T', 0, '°C', ['°c', 'c', 'oc']); addU('T', 0, '°C', ['grado', 'grados', 'celsius', 'grados celsius', 'grados centigrados', 'centigrados'], 1);
+addU('T', -273.15, 'K', ['k', 'kelvin', 'kelvins'], 0);
+addU('M', 1, 'g', ['g', 'gr', 'grs']); addU('M', 1, 'g', ['gramo', 'gramos'], 1);
+addU('M', 1000, 'kg', ['kg']); addU('M', 1000, 'kg', ['kilo', 'kilos', 'kilogramo', 'kilogramos'], 1);
+addU('M', 0.001, 'mg', ['mg']); addU('M', 0.001, 'mg', ['miligramo', 'miligramos'], 1);
+addU('t', 1, 's', ['s', 'seg', 'sg', 'segs']); addU('t', 1, 's', ['segundo', 'segundos'], 1);
+addU('t', 60, 'min', ['min']); addU('t', 60, 'min', ['minuto', 'minutos'], 1);
+addU('t', 0.001, 'ms', ['ms']); addU('t', 3600, 'h', ['h']);
+const normU = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/º/g, '°').replace(/\s+/g, ' ')
+  .replace(/^° ?/, m => '°').replace(/\.$/, '').trim();
+const toBase = (x, u) => (U[u][0] === 'T' ? x + U[u][1] : x * U[u][1]);
+const NUM = '([+\\-]?(?:\\d+(?:[.,]\\d+)?|[.,]\\d+))';
+// devuelve { x: valor en la unidad base, num, u, raw } o un código de problema
+function parseMeasure(raw) {
+  let s = String(raw).replace(/[−–]/g, '-').replace(/ | /g, ' ').trim();
+  if (!s) return { err: 'empty' };
+  const n = t => parseFloat(t.replace(',', '.'));
+  let m = s.match(new RegExp('^(\\d+)\\s*(?:min|minutos?)\\s*' + NUM + '\\s*(?:s|seg|segundos?)?$', 'i'));
+  if (m) return { x: n(m[1]) * 60 + n(m[2]), num: n(m[1]) * 60 + n(m[2]), u: 's', unit: 's', two: true };
+  m = s.match(new RegExp('^(\\d+)\\s*cm\\s*' + NUM + '\\s*mm$', 'i'));
+  if (m) return { x: n(m[1]) + n(m[2]) / 10, num: n(m[1]) + n(m[2]) / 10, u: 'cm', unit: 'cm', two: true };
+  m = s.match(/^(\d+):(\d+(?:[.,]\d+)?)$/);
+  if (m) return { err: 'clock', num: n(m[1]) * 60 + n(m[2]) };
+  m = s.match(new RegExp('^' + NUM + '\\s*(.*)$'));
+  if (!m) return { err: 'nonum' };
+  const num = n(m[1]), unit = m[2].trim();
+  if (!unit) return { err: 'nounit', num };
+  const u = normU(unit);
+  if (!U[u]) return { err: 'unknown', num, unit };
+  return { x: toBase(num, u), num, u, unit };
+}
+// unidades con las que se suele contestar cada magnitud (para detectar "47 cm" cuando eran "47 mm")
+const CANON = { L: ['mm', 'cm', 'm'], V: ['ml', 'l'], T: [], M: ['g', 'kg', 'mg'], t: ['s', 'min'] };
+const near = (a, b, tol) => Math.abs(a - b) <= tol + 1e-9;
+// task: { fam, v (en unidad base), tol, d (decimales), inst, start?, ... }
+function evaluate(task, raw) {
+  const p = parseMeasure(raw), B = { L: 'cm', V: 'mL', T: '°C', M: 'g', t: 's' }[task.fam];
+  const good = fmt(task.v, task.d) + ' ' + B;
+  const fits = num => CANON[task.fam].filter(u => near(num * U[u][1], task.v, task.tol)).map(u => U[u][2]);
+  if (p.err === 'empty' || p.err === 'nonum') return { ok: false, code: p.err, msg: 'Escribe un número y su unidad, por ejemplo «4,7 cm».' };
+  if (p.err === 'clock') return { ok: false, code: 'clock', msg: `Así lo enseña la pantalla, pero el resultado se da con su unidad. Pásalo a segundos: 1 min son 60 s.` };
+  if (p.err === 'nounit') {
+    const f = task.fam === 'T' ? (near(p.num, task.v, task.tol) ? ['°C'] : []) : fits(p.num);
+    return { ok: false, code: 'nounit', msg: `«${fmt(p.num, String(p.num).split('.')[1]?.length || 0)}» a secas no es una medida: falta la unidad. ${({ L: '¿Son milímetros, centímetros, metros…?', V: '¿Son mililitros, litros…?', T: '¿Son grados Celsius, kelvin…?', M: '¿Son gramos, kilos…?', t: '¿Son segundos, minutos…?' })[task.fam]} Cada una es una cantidad muy distinta.` +
+      (f.length ? ` El número encaja si le pones «${f[0]}». Escríbelo con ella.` : '') };
+  }
+  if (p.err === 'unknown') return { ok: false, code: 'unknown', msg: `No reconozco «${p.unit}» como unidad de ${FAM[task.fam]}. Prueba con ${({ L: 'cm o mm', V: 'mL o cm³', T: '°C', M: 'g', t: 's' })[task.fam]}.` };
+  const fam = U[p.u][0];
+  if (fam !== task.fam) return { ok: false, code: 'wrongfam', msg: `«${p.unit}» es una unidad de ${FAM[fam]}, y aquí estás midiendo una ${FAM[task.fam]}. Usa ${({ L: 'cm o mm', V: 'mL (o cm³)', T: '°C', M: 'g', t: 's' })[task.fam]}.` };
+  const sym = U[p.u][2], word = U[p.u][3];
+  let note = '';
+  const typed = p.unit.replace(/º/g, '°').replace(/\s+/g, '');
+  if (!word && typed !== sym && !(sym === 'mL' && typed === 'ml') && !(sym === 'L' && typed === 'l') && !(sym === 'cm³' && typed === 'cm3')) note = ` Un detalle: el símbolo se escribe «${sym}».`;
+  if (sym === 'K') note = ' Lo has pasado a kelvin, la unidad del Sistema Internacional. ¡Muy bien!';
+  if (near(p.x, task.v, task.tol)) {
+    const exact = sym === 'K' || near(p.x, task.v, task.tol / 50);
+    const same = sym === B || word || p.two ? '' : ` (${fmt(p.num, String(p.num).split('.')[1]?.length || 0)} ${sym} es lo mismo que ${good})`;
+    const same2 = sym === 'K' ? ` (${fmt(p.num, String(p.num).split('.')[1]?.length || 0)} K son unos ${good})` : same;
+    return { ok: true, code: exact ? 'ok' : 'okclose', msg: `¡Bien leído! Marca ${good}${same2}.` +
+      (exact ? '' : ` Lo exacto es ${good}, pero tu lectura se separa menos de media división: vale.`) + note };
+  }
+  const f = fits(p.num).filter(s => s !== sym);
+  if (f.length) return { ok: false, code: 'unitmix', msg: `El número está bien, pero la unidad no: ${fmt(p.num, String(p.num).split('.')[1]?.length || 0)} ${sym} es otra cantidad muy distinta. ¿Querías decir «${f[0]}»?` };
+  if (task.inst === 'regla' && task.start > 0 && near(p.x, task.end, task.tol))
+    return { ok: false, code: 'offset', msg: `Has leído dónde acaba el lápiz, pero no empieza en el 0, sino en el ${task.start}. Resta: ${fmt(task.end, 1)} − ${task.start}.` };
+  if (task.inst === 'probeta' && near(p.x, task.v + 1, task.tol))
+    return { ok: false, code: 'meniscus', msg: 'Has leído el borde de arriba, donde el agua sube por el cristal. Se lee la parte de abajo de la curva (el menisco), con los ojos a su altura.' };
+  if (task.inst === 'termo' && task.v !== 0 && near(p.x, -task.v, task.tol))
+    return { ok: false, code: 'sign', msg: task.v < 0 ? 'Mira dónde está el 0: el líquido está por debajo, así que la temperatura es negativa. Lleva un signo menos.' : 'Está por encima del 0: la temperatura es positiva, sin signo menos.' };
+  if (task.inst === 'termo' && near(p.x, task.v + 10 * Math.sign(p.x - task.v), task.tol))
+    return { ok: false, code: 'ten', msg: 'Te has ido 10 grados. Mira el número más cercano y cuenta las rayitas desde él.' };
+  if (task.inst === 'crono' && task.v >= 60 && near(p.x + 60, task.v, task.tol))
+    return { ok: false, code: 'minute', msg: 'Te falta el minuto. La pantalla marca 1 minuto y algo: 1 min son 60 s, súmalos.' };
+  if (task.inst === 'balanza' || task.inst === 'crono')
+    return { ok: false, code: 'digital', msg: 'No es eso. Aquí no hay que contar rayitas: copia el número de la pantalla con todas sus cifras, también las de detrás de la coma.' };
+  const close = { L: 0.3, V: 3, T: 3, M: 1, t: 1 }[task.fam];
+  if (near(p.x, task.v, close)) return { ok: false, code: 'close', msg: `Cerca, pero no. Usa la lupa y cuenta otra vez las rayitas desde el número más cercano: cada una vale ${task.div}.` };
+  return { ok: false, code: 'off', msg: `No es eso. Busca el número más cercano y cuenta las rayitas desde él: cada una vale ${task.div}.` };
+}
+/* LOGIC END */
+
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = s => document.querySelector(s);
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const el = (tag, attrs, parent, text) => { const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]); if (text != null) n.textContent = text; if (parent) parent.appendChild(n); return n; };
+  const INK = '#1F3A0B';
+
+  /* ---------- piezas de dibujo ---------- */
+  // regla horizontal: marcas hacia abajo desde y; px por cm
+  function ruler(g, x0, y, px, cmMax, mm = true, fill = '#F6E7A6') {
+    el('rect', { x: x0 - 22, y, width: cmMax * px + 44, height: mm ? 78 : 64, rx: 4, fill, stroke: '#8A6D1E', 'stroke-width': 2 }, g);
+    for (let k = 0; k <= cmMax * 10; k += mm ? 1 : 10) {
+      const x = x0 + k * px / 10, len = k % 10 === 0 ? 26 : k % 5 === 0 ? 18 : 11;
+      el('line', { x1: x, y1: y, x2: x, y2: y + len, stroke: INK, 'stroke-width': k % 10 === 0 ? 2 : 1.4 }, g);
+      if (k % 10 === 0) el('text', { x, y: y + 46, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: INK }, g, k / 10);
+    }
+    el('text', { x: x0 + cmMax * px + 14, y: y + (mm ? 70 : 58), 'text-anchor': 'end', 'font-size': 13, 'font-weight': 800, fill: '#6B5A1E' }, g, 'cm');
+  }
+  // lápiz que va de xa (extremo plano) a xb (punta)
+  function pencil(g, xa, xb, y, h = 28) {
+    const m = y + h / 2;
+    el('rect', { x: xa, y, width: 14, height: h, fill: '#F29CA3', stroke: '#8B4A50', 'stroke-width': 1.2 }, g);
+    el('rect', { x: xa + 14, y, width: 9, height: h, fill: '#C9CED3', stroke: '#6E767D', 'stroke-width': 1.2 }, g);
+    el('rect', { x: xa + 23, y, width: xb - xa - 45, height: h, fill: '#F2C230', stroke: '#9A7410', 'stroke-width': 1.2 }, g);
+    el('line', { x1: xa + 23, y1: m, x2: xb - 22, y2: m, stroke: '#D9A916', 'stroke-width': 2 }, g);
+    el('polygon', { points: `${xb - 22},${y} ${xb - 22},${y + h} ${xb},${m}`, fill: '#F3D9AE', stroke: '#9A7410', 'stroke-width': 1.2 }, g);
+    const gy = h / 2 * 7 / 22;
+    el('polygon', { points: `${xb - 7},${m - gy} ${xb - 7},${m + gy} ${xb},${m}`, fill: '#3B3B3B' }, g);
+  }
+  function eye(g, x, y, rot = 0) {
+    const e = el('g', { transform: `translate(${x} ${y}) rotate(${rot})` }, g);
+    el('path', { d: 'M-18 0 Q0 -13 18 0 Q0 13 -18 0Z', fill: '#fff', stroke: INK, 'stroke-width': 2 }, e);
+    el('circle', { r: 6, fill: '#3E7CB1' }, e); el('circle', { r: 2.8, fill: '#111' }, e);
+  }
+  // lupa: amplía ×3 lo que hay alrededor de (tx, ty) y lo enseña en un círculo en (cx, cy)
+  function lens(tx, ty, cx, cy, r) {
+    const L = $('#lens'); L.innerHTML = '';
+    if (tx == null) return;
+    const z = 3, rr = r / z, d = Math.hypot(cx - tx, cy - ty), ux = (cx - tx) / d, uy = (cy - ty) / d;
+    el('circle', { cx: tx, cy: ty, r: rr, fill: 'none', stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }, L);
+    el('line', { x1: tx + ux * rr, y1: ty + uy * rr, x2: cx - ux * r, y2: cy - uy * r, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '4 3' }, L);
+    const c = $('#lensclip circle'); c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
+    el('circle', { cx, cy, r, fill: '#FFFDF6' }, L);
+    const g = el('g', { 'clip-path': 'url(#lensclip)' }, L);
+    el('use', { href: '#inst', transform: `translate(${cx} ${cy}) scale(${z}) translate(${-tx} ${-ty})` }, g);
+    el('circle', { cx, cy, r, fill: 'none', stroke: INK, 'stroke-width': 5 }, L);
+    const lx = cx + r * 0.62, ly = cy - r * 0.86;
+    el('rect', { x: lx - 34, y: ly - 14, width: 68, height: 24, rx: 12, fill: INK }, L);
+    el('text', { x: lx, y: ly + 3, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#fff' }, L, 'lupa ×3');
+  }
+
+  /* ---------- 1. Lee el instrumento ---------- */
+  const inst = $('#inst');
+  const INFO = {
+    regla: { title: 'Regla graduada', tip: 'Cada rayita pequeña es <b>1 mm</b>; diez rayitas hacen <b>1 cm</b>. Mira dónde empieza el lápiz y dónde acaba su punta. Puedes contestar en cm o en mm.', ph: 'por ejemplo, 4,7 cm' },
+    probeta: { title: 'Probeta graduada', tip: 'Cada rayita es <b>1 mL</b> (y 1 mL = 1 cm³). El agua se curva hacia arriba al tocar el cristal: es el <b>menisco</b>. Se lee la <b>parte de abajo</b> de la curva, con los ojos a su altura.', ph: 'por ejemplo, 23 mL' },
+    termo: { title: 'Termómetro', tip: 'Cada rayita es <b>1 °C</b>. Por debajo del 0 las temperaturas son negativas: cuenta hacia abajo desde el 0 y pon el signo menos.', ph: 'por ejemplo, 18 °C' },
+    balanza: { title: 'Balanza digital', tip: 'Aquí no hay rayitas: el número sale escrito. Pero también tiene un límite, su <b>última cifra</b>.', ph: 'por ejemplo, 152,3 g' },
+    crono: { title: 'Cronómetro digital', tip: 'La pantalla dice <b>minutos:segundos,centésimas</b>. Da el resultado en segundos.', ph: 'por ejemplo, 12,47 s' }
+  };
+  const TEMPS = [['un vaso de agua con hielo y sal', -9, -2], ['la calle, una mañana de enero en Soria', -6, 3], ['la nevera', 2, 7],
+    ['agua del grifo', 12, 20], ['el aire del aula', 19, 25], ['agua templada', 28, 38]];
+  const THINGS = [['una manzana', 1400, 2200, 'apple'], ['una naranja', 1500, 2600, 'orange'], ['una goma de borrar', 180, 350, 'eraser'], ['una piedra', 600, 3200, 'stone']];
+  const ACTS = ['cuánto tarda una cucharadita de azúcar en disolverse', 'cuánto tarda un cubito de hielo en derretirse en tu mano… o casi', 'cuánto tardas en leer un párrafo en voz alta', 'cuánto tarda en caer una hoja de papel arrugada'];
+  let mode = 'regla', task = null, solved = false;
+  const score = { ok: 0, ko: 0 };
+  let total = store.get('lab.mide.lecturas', 0);
+
+  function makeTask(kind) {
+    inst.innerHTML = '';
+    if (kind === 'regla') {
+      const start = Math.random() < 0.7 ? 0 : pick([1, 2]), L = rnd(25, 97 - start * 10), end = start * 10 + L;
+      const x0 = 50, px = 60, xa = x0 + start * px, xb = x0 + end * px / 10;
+      ruler(inst, x0, 112, px, 10); pencil(inst, xa, xb, 80);
+      lens(xb, 128, Math.min(Math.max(xb, 150), 570), 305, 108);
+      return { fam: 'L', v: L / 10, tol: 0.05, d: 1, inst: 'regla', start, end: end / 10, div: '1 mm',
+        ask: start ? '¿Cuánto mide el lápiz? ¡Ojo! Este no empieza en el 0.' : '¿Cuánto mide el lápiz?' };
+    }
+    if (kind === 'probeta') {
+      const v = rnd(8, 48), Y = k => 385 - k * 6.6, y = Y(v);
+      el('path', { d: 'M162 30 H258 L252 40 V393 H168 V40 Z', fill: '#F4FAFD', stroke: '#5A6B78', 'stroke-width': 3 }, inst);
+      el('path', { d: `M170 ${y - 7} C174 ${y - 1} 184 ${y} 210 ${y} C236 ${y} 246 ${y - 1} 250 ${y - 7} V391 H170 Z`, fill: '#A7D8EE' }, inst);
+      el('path', { d: `M170 ${y - 7} C174 ${y - 1} 184 ${y} 210 ${y} C236 ${y} 246 ${y - 1} 250 ${y - 7}`, fill: 'none', stroke: '#2C7FAE', 'stroke-width': 2 }, inst);
+      el('rect', { x: 130, y: 393, width: 160, height: 16, rx: 6, fill: '#8FA3B0', stroke: '#5A6B78', 'stroke-width': 2 }, inst);
+      for (let k = 2; k <= 50; k++) {
+        const len = k % 10 === 0 ? 34 : k % 5 === 0 ? 24 : 13;
+        el('line', { x1: 251 - len, y1: Y(k), x2: 251, y2: Y(k), stroke: INK, 'stroke-width': k % 5 === 0 ? 2 : 1.3 }, inst);
+        if (k % 5 === 0) el('text', { x: 264, y: Y(k) + 5, 'font-size': k % 10 === 0 ? 17 : 14, 'font-weight': 800, fill: INK }, inst, k);
+      }
+      el('text', { x: 300, y: 52, 'font-size': 15, 'font-weight': 800, fill: '#5A6B78' }, inst, 'mL');
+      eye(inst, 96, y);
+      el('line', { x1: 118, y1: y, x2: 205, y2: y, stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }, inst);
+      lens(240, y, 520, Math.min(Math.max(y, 158), 262), 150);
+      return { fam: 'V', v, tol: 0.5, d: 0, inst: 'probeta', div: '1 mL', ask: '¿Cuánta agua hay en la probeta?' };
+    }
+    if (kind === 'termo') {
+      const c = Math.random() < 0.3 ? TEMPS[0] : pick(TEMPS), t = rnd(c[1], c[2]), Y = k => 340 - (k + 10) * 5.8;
+      el('rect', { x: 192, y: 26, width: 32, height: 344, rx: 16, fill: '#F4FAFD', stroke: '#5A6B78', 'stroke-width': 3 }, inst);
+      el('circle', { cx: 208, cy: 378, r: 22, fill: '#D93A2B', stroke: '#5A6B78', 'stroke-width': 3 }, inst);
+      el('rect', { x: 204, y: Y(t), width: 8, height: 370 - Y(t), fill: '#D93A2B' }, inst);
+      for (let k = -10; k <= 40; k++) {
+        const len = k % 10 === 0 ? 26 : k % 5 === 0 ? 18 : 10;
+        el('line', { x1: 228, y1: Y(k), x2: 228 + len, y2: Y(k), stroke: INK, 'stroke-width': k % 5 === 0 ? 2 : 1.3 }, inst);
+        if (k % 10 === 0) el('text', { x: 262, y: Y(k) + 6, 'font-size': 18, 'font-weight': 800, fill: k === 0 ? '#1565A8' : INK }, inst, fmt(k, 0));
+      }
+      el('text', { x: 230, y: 20, 'font-size': 15, 'font-weight': 800, fill: '#5A6B78' }, inst, '°C');
+      eye(inst, 120, Y(t));
+      el('line', { x1: 142, y1: Y(t), x2: 200, y2: Y(t), stroke: INK, 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }, inst);
+      lens(245, Y(t), 520, Math.min(Math.max(Y(t), 158), 262), 150);
+      return { fam: 'T', v: t, tol: 0.5, d: 0, inst: 'termo', div: '1 °C', ask: `Lo hemos metido en ${c[0]}. ¿Qué temperatura marca?` };
+    }
+    lens();
+    if (kind === 'balanza') {
+      const o = pick(THINGS), m = rnd(o[1], o[2]) / 10;
+      el('rect', { x: 230, y: 236, width: 260, height: 12, rx: 6, fill: '#C8CDD2', stroke: '#5A6570', 'stroke-width': 2 }, inst);
+      el('rect', { x: 350, y: 248, width: 20, height: 16, fill: '#8C959E' }, inst);
+      el('rect', { x: 160, y: 262, width: 400, height: 116, rx: 18, fill: '#E9ECEF', stroke: '#5A6570', 'stroke-width': 3 }, inst);
+      el('rect', { x: 262, y: 286, width: 196, height: 62, rx: 8, fill: '#C9D8B0', stroke: '#3D4A33', 'stroke-width': 2.5 }, inst);
+      el('text', { x: 418, y: 332, 'text-anchor': 'end', 'font-size': 38, 'font-weight': 700, 'font-family': 'ui-monospace, Consolas, monospace', fill: '#1F2A17' }, inst, fmt(m, 1));
+      el('text', { x: 426, y: 332, 'font-size': 20, 'font-weight': 800, fill: '#1F2A17' }, inst, 'g');
+      el('circle', { cx: 210, cy: 318, r: 18, fill: '#fff', stroke: '#5A6570', 'stroke-width': 2 }, inst);
+      el('text', { x: 210, y: 323, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 800, fill: '#5A6570' }, inst, 'ON');
+      el('rect', { x: 476, y: 302, width: 62, height: 30, rx: 8, fill: '#fff', stroke: '#5A6570', 'stroke-width': 2 }, inst);
+      el('text', { x: 507, y: 322, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 800, fill: '#5A6570' }, inst, 'TARA');
+      const k = o[3];
+      if (k === 'apple') { el('circle', { cx: 360, cy: 198, r: 38, fill: '#D8443A' }, inst); el('path', { d: 'M360 162 q4 -14 14 -18', stroke: '#6B3A1E', 'stroke-width': 4, fill: 'none' }, inst);
+        el('ellipse', { cx: 378, cy: 152, rx: 12, ry: 6, fill: '#5E9B3A', transform: 'rotate(-25 378 152)' }, inst); }
+      if (k === 'orange') { el('circle', { cx: 360, cy: 196, r: 40, fill: '#F29A2E' }, inst); el('circle', { cx: 360, cy: 158, r: 3, fill: '#6B8E23' }, inst); }
+      if (k === 'eraser') { el('rect', { x: 310, y: 206, width: 100, height: 30, rx: 4, fill: '#F29CA3' }, inst); el('rect', { x: 370, y: 206, width: 40, height: 30, rx: 4, fill: '#4A7FC1' }, inst); }
+      if (k === 'stone') el('path', { d: 'M300 236 C296 200 330 180 362 184 C400 186 428 206 420 236 Z', fill: '#9A9A92', stroke: '#6E6E66', 'stroke-width': 2 }, inst);
+      el('text', { x: 360, y: 405, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 700, fill: '#4E5A45' }, inst, 'Encima: ' + o[0]);
+      return { fam: 'M', v: m, tol: 0.05, d: 1, inst: 'balanza', div: '0,1 g', ask: `¿Cuál es la masa de ${o[0]}?`, dig: ['1 g', '0,1 g', '0,01 g'], digOk: '0,1 g',
+        digWhy: 'Su última cifra son las décimas de gramo: entre 152,3 g y 152,4 g, la balanza no sabe qué hay. Esa es su precisión, aunque sea digital.' };
+    }
+    const cs = Math.random() < 0.75 ? rnd(200, 5999) : rnd(6000, 11999);
+    const mm = Math.floor(cs / 6000), ss = Math.floor((cs % 6000) / 100), cc = cs % 100, p2 = n => String(n).padStart(2, '0');
+    el('rect', { x: 340, y: 64, width: 40, height: 26, rx: 5, fill: '#8C959E', stroke: '#5A6570', 'stroke-width': 2 }, inst);
+    el('rect', { x: 350, y: 88, width: 20, height: 12, fill: '#8C959E' }, inst);
+    el('rect', { x: 452, y: 102, width: 26, height: 16, rx: 4, fill: '#8C959E', transform: 'rotate(40 465 110)' }, inst);
+    el('circle', { cx: 360, cy: 240, r: 142, fill: '#2F5D3A', stroke: INK, 'stroke-width': 4 }, inst);
+    el('circle', { cx: 360, cy: 240, r: 122, fill: '#E9ECEF' }, inst);
+    el('rect', { x: 228, y: 198, width: 264, height: 76, rx: 10, fill: '#C9D8B0', stroke: '#3D4A33', 'stroke-width': 2.5 }, inst);
+    el('text', { x: 360, y: 252, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 700, 'font-family': 'ui-monospace, Consolas, monospace', fill: '#1F2A17' }, inst,
+      `${p2(mm)}:${p2(ss)},${p2(cc)}`);
+    el('text', { x: 360, y: 298, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#4E5A45' }, inst, 'min : s , centésimas');
+    el('text', { x: 360, y: 178, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 800, fill: '#4E5A45' }, inst, 'CRONÓMETRO');
+    return { fam: 't', v: cs / 100, tol: 0.005, d: 2, inst: 'crono', div: '0,01 s', ask: `Has cronometrado ${pick(ACTS)}. ¿Cuántos segundos marca?` + (mm ? ' (Hay un minuto entero: súmalo.)' : ''),
+      dig: ['1 s', '0,1 s', '0,01 s'], digOk: '0,01 s',
+      digWhy: 'Marca centésimas de segundo. Pero ojo: tu dedo tarda unas décimas en pulsar, así que al cronometrar a mano la duda real es mayor. Lo verás en «Mide varias veces».' };
+  }
+
+  const fbEl = $('#r-fb'), inp = $('#r-in'), solBtn = $('#r-sol'), dig = $('#r-dig'), digOpts = $('#r-dig-opts'), digFb = $('#r-dig-fb');
+  const showScore = () => { $('#r-ok').textContent = '✓ ' + score.ok; $('#r-ko').textContent = '✗ ' + score.ko;
+    $('#r-total').textContent = total ? `En total llevas ${total} ${total === 1 ? 'lectura bien' : 'lecturas bien'}.` : ''; };
+  function newTask() {
+    task = makeTask(mode); solved = false;
+    const I = INFO[mode];
+    $('#r-title').textContent = I.title; $('#r-tip').innerHTML = I.tip; $('#r-ask').textContent = task.ask;
+    $('#svg-read').setAttribute('aria-label', I.title);
+    inp.value = ''; inp.placeholder = I.ph; inp.disabled = false; fbEl.innerHTML = ''; solBtn.hidden = true;
+    dig.hidden = true; digFb.innerHTML = ''; digOpts.innerHTML = '';
+    if (task.dig) task.dig.forEach(o => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = o;
+      b.addEventListener('click', () => { digOpts.querySelectorAll('.chip').forEach(x => x.classList.remove('ok', 'ko'));
+        const good = o === task.digOk; b.classList.add(good ? 'ok' : 'ko');
+        digFb.innerHTML = good ? '<span class="okt">¡Eso es!</span> ' + task.digWhy : '<span class="kot">Mira otra vez.</span> Fíjate en cuántas cifras hay detrás de la coma.'; });
+      digOpts.appendChild(b); });
+    showScore();
+  }
+  $('#r-form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (solved) return;
+    const r = evaluate(task, inp.value);
+    if (r.code === 'empty') { fbEl.innerHTML = '<p>' + r.msg + '</p>'; inp.focus(); return; }
+    if (r.ok) { score.ok++; total++; store.set('lab.mide.lecturas', total); solved = true; inp.disabled = true; solBtn.hidden = true;
+      fbEl.innerHTML = '<p><span class="okt">✓</span> ' + r.msg + '</p>'; if (task.dig) dig.hidden = false; $('#r-next').focus(); }
+    else { score.ko++; fbEl.innerHTML = '<p><span class="kot">✗</span> ' + r.msg + '</p>'; solBtn.hidden = false; inp.select(); }
+    showScore();
+  });
+  solBtn.addEventListener('click', () => {
+    const B = { L: 'cm', V: 'mL', T: '°C', M: 'g', t: 's' }[task.fam];
+    let extra = task.fam === 'L' ? ` (${fmt(task.v * 10, 0)} mm)` : task.fam === 'V' ? ` (${fmt(task.v, 0)} cm³)` : '';
+    if (task.start) extra += `: acaba en ${fmt(task.end, 1)} cm y empieza en ${task.start} cm`;
+    fbEl.innerHTML += `<p><b>Solución:</b> ${fmt(task.v, task.d)} ${B}${extra}. Pulsa «Otra medida» y prueba con una nueva.</p>`;
+    solved = true; inp.disabled = true; solBtn.hidden = true; if (task.dig) dig.hidden = false;
+  });
+  $('#r-next').addEventListener('click', () => { newTask(); inp.focus(); });
+  document.querySelectorAll('#lee .modes button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.inst; document.querySelectorAll('#lee .modes button').forEach(x => x.setAttribute('aria-pressed', x === b)); newTask();
+  }));
+  newTask();
+
+  /* ---------- 2. La precisión ---------- */
+  const ps = $('#svg-prec'), pOpts = $('#p-opts'), pFb = $('#p-fb'), pRes = $('#p-res');
+  let pair = 'long', pv = 0;
+  function label(g, x, y, t, s = 16) { el('text', { x, y, 'font-size': s, 'font-weight': 800, fill: INK }, g, t); }
+  function cylinder(g, x, w, yb, Y, v, maxV, step, labStep, minor) {
+    el('path', { d: `M${x - 8} ${Y(maxV) - 18} H${x + w + 8} L${x + w} ${Y(maxV) - 10} V${yb} H${x} V${Y(maxV) - 10} Z`, fill: '#F4FAFD', stroke: '#5A6B78', 'stroke-width': 2.5 }, g);
+    const y = Y(v), r = Math.min(5, w / 10);
+    el('path', { d: `M${x + 1} ${y - r} C${x + 4} ${y} ${x + w / 4} ${y} ${x + w / 2} ${y} C${x + w * 3 / 4} ${y} ${x + w - 4} ${y} ${x + w - 1} ${y - r} V${yb - 1} H${x + 1} Z`, fill: '#A7D8EE' }, g);
+    for (let k = step; k <= maxV; k += step) {
+      const big = k % labStep === 0, len = big ? (minor ? 16 : 26) : (k % (5 * step) === 0 ? 10 : 6);
+      el('line', { x1: x + w - len, y1: Y(k), x2: x + w, y2: Y(k), stroke: INK, 'stroke-width': big ? 1.8 : 1 }, g);
+      if (big) el('text', { x: x + w + 12, y: Y(k) + 5, 'font-size': 14, 'font-weight': 800, fill: INK }, g, k);
+    }
+  }
+  function drawPair() {
+    ps.innerHTML = ''; pRes.hidden = true; pFb.innerHTML = '';
+    el('rect', { width: 720, height: 330, fill: '#FFFDF6' }, ps);
+    let opts;
+    if (pair === 'long') {
+      do pv = rnd(31, 94); while (pv % 10 === 0 || pv % 10 === 5);
+      label(ps, 40, 26, 'Regla: rayitas de 1 mm');
+      pencil(ps, 60, 60 + pv * 5.8, 36); ruler(ps, 60, 68, 58, 10);
+      label(ps, 40, 192, 'Cinta: solo marca centímetros');
+      pencil(ps, 60, 60 + pv * 5.8, 202); ruler(ps, 60, 234, 58, 10, false, '#FFF3B8');
+      opts = ['La regla', 'La cinta', 'Las dos igual'];
+      $('#p-ask').textContent = '¿Con cuál de los dos puedes dar una medida más precisa del lápiz?';
+    } else {
+      pv = rnd(52, 97); if (pv === 75) pv = 73;
+      label(ps, 70, 24, 'Probeta de 100 mL: rayitas de 1 mL');
+      cylinder(ps, 150, 52, 318, k => 318 - k * 2.6, pv, 100, 1, 10, false);
+      el('text', { x: 230, y: 52, 'font-size': 13, 'font-weight': 800, fill: '#5A6B78' }, ps, 'mL');
+      label(ps, 410, 24, 'Vaso de precipitados: marcas cada 50 mL');
+      const Yb = k => 318 - k * 0.9;
+      el('path', { d: `M432 ${Yb(250) - 6} H598 V318 H442 Q432 318 432 308 Z`, fill: '#F4FAFD', stroke: '#5A6B78', 'stroke-width': 2.5 }, ps);
+      el('path', { d: `M424 ${Yb(250) - 12} L436 ${Yb(250) - 4}`, stroke: '#5A6B78', 'stroke-width': 2.5 }, ps);
+      const y = Yb(pv);
+      el('path', { d: `M433 ${y - 4} C436 ${y} 450 ${y} 515 ${y} C580 ${y} 594 ${y} 597 ${y - 4} V317 H443 Q433 317 433 307 Z`, fill: '#A7D8EE' }, ps);
+      for (let k = 50; k <= 200; k += 50) {
+        el('line', { x1: 450, y1: Yb(k), x2: 480, y2: Yb(k), stroke: INK, 'stroke-width': 2 }, ps);
+        el('text', { x: 486, y: Yb(k) + 5, 'font-size': 14, 'font-weight': 800, fill: INK }, ps, k);
+      }
+      el('text', { x: 515, y: 140, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#5A6B78' }, ps, '250 mL');
+      opts = ['La probeta', 'El vaso', 'Los dos igual'];
+      $('#p-ask').textContent = 'En los dos hay la misma cantidad de agua. ¿Con cuál la mides con más precisión?';
+    }
+    pOpts.innerHTML = '';
+    opts.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = o;
+      b.addEventListener('click', () => answerPair(i, b)); pOpts.appendChild(b); });
+  }
+  function answerPair(i, b) {
+    pOpts.querySelectorAll('.chip').forEach(x => x.classList.remove('ok', 'ko'));
+    b.classList.add(i === 0 ? 'ok' : 'ko');
+    if (i !== 0) { pFb.innerHTML = '<span class="kot">Míralo otra vez.</span> ' + (i === 1 ? 'Fíjate en lo juntas que están las rayitas de cada uno.' :
+      'Miden lo mismo, sí, pero ¿con qué detalle lo puedes leer en cada uno?'); pRes.hidden = true; return; }
+    if (pair === 'long') {
+      const lo = Math.floor(pv / 10);
+      pFb.innerHTML = '<span class="okt">¡Eso es!</span> Cuanto más pequeña es la división más pequeña, más preciso es el instrumento.';
+      pRes.innerHTML = `<div class="soft"><h3>Con la regla</h3><p class="big">${fmt(pv / 10, 1)} cm</p><p>Precisión: <b>1 mm</b> (0,1 cm). Puedes dar los milímetros.</p></div>
+        <div class="soft"><h3>Con la cinta</h3><p class="big">unos ${Math.round(pv / 10)} cm</p><p>Precisión: <b>1 cm</b>. Solo sabes que está entre ${lo} y ${lo + 1} cm; los milímetros se pierden.</p></div>`;
+    } else {
+      pFb.innerHTML = '<span class="okt">¡Eso es!</span> La probeta tiene divisiones de 1 mL; el vaso, una marca cada 50 mL. El vaso sirve para guardar y mezclar, no para medir con cuidado.';
+      pRes.innerHTML = `<div class="soft"><h3>Con la probeta</h3><p class="big">${pv} mL</p><p>Precisión: <b>1 mL</b>.</p></div>
+        <div class="soft"><h3>Con el vaso</h3><p class="big">entre 50 y 100 mL</p><p>Precisión: <b>50 mL</b>. Como mucho dirías «unos 75 mL», y podrías fallar por más de 20.</p></div>`;
+    }
+    pRes.hidden = false;
+  }
+  $('#p-next').addEventListener('click', drawPair);
+  document.querySelectorAll('#precision .modes button').forEach(b => b.addEventListener('click', () => {
+    pair = b.dataset.pair; document.querySelectorAll('#precision .modes button').forEach(x => x.setAttribute('aria-pressed', x === b)); drawPair();
+  }));
+  drawPair();
+
+  /* ---------- 3. Mide varias veces: el péndulo ---------- */
+  const sv = $('#svg-pend'), disp = $('#w-disp'), go = $('#w-go'), undo = $('#w-undo'), tb = $('#w-tb'), wres = $('#w-res');
+  const PX = 210, PY = 34, A = 0.34;
+  const P = { T: 1.6, L: 200, t0: performance.now(), run: false, start: 0, vals: [] };
+  let rope, bob, flag;
+  function buildPend() {
+    sv.innerHTML = '';
+    el('rect', { width: 420, height: 360, fill: '#FFFDF6' }, sv);
+    el('rect', { x: 110, y: 18, width: 200, height: 16, rx: 4, fill: '#8C6A3E' }, sv);
+    const x1 = PX - P.L * Math.sin(A), y1 = PY + P.L * Math.cos(A), x2 = PX + P.L * Math.sin(A);
+    el('path', { d: `M${x1} ${y1} A${P.L} ${P.L} 0 0 0 ${x2} ${y1}`, fill: 'none', stroke: '#B9C6A3', 'stroke-width': 2, 'stroke-dasharray': '5 5' }, sv);
+    flag = el('g', { transform: `translate(${x1 - 30} ${y1 + 22})` }, sv);
+    el('line', { x1: 0, y1: 0, x2: 0, y2: -30, stroke: INK, 'stroke-width': 2 }, flag);
+    el('path', { d: 'M0 -30 L18 -24 L0 -18 Z', fill: '#E04A3A' }, flag);
+    rope = el('line', { x1: PX, y1: PY, stroke: '#4E5A45', 'stroke-width': 2 }, sv);
+    bob = el('circle', { r: 18, fill: '#3E7CB1', stroke: INK, 'stroke-width': 2.5 }, sv);
+    el('circle', { cx: PX, cy: PY, r: 4, fill: INK }, sv);
+  }
+  function newPend() {
+    P.T = rnd(130, 200) / 100;
+    const Lm = 9.81 * P.T * P.T / (4 * Math.PI * Math.PI); // longitud real del péndulo para ese tiempo (m)
+    P.L = 110 + (Lm - 0.42) / (0.99 - 0.42) * 190;
+    P.t0 = performance.now(); P.run = false; P.vals = []; go.disabled = false; go.textContent = '▶ Empezar'; disp.textContent = '0,00 s';
+    buildPend(); renderTable(); wres.innerHTML = '';
+  }
+  function frame(now) {
+    const th = -A * Math.cos(2 * Math.PI * ((now - P.t0) / 1000) / P.T);
+    const x = PX + P.L * Math.sin(th), y = PY + P.L * Math.cos(th);
+    rope.setAttribute('x2', x); rope.setAttribute('y2', y); bob.setAttribute('cx', x); bob.setAttribute('cy', y);
+    if (P.run) disp.textContent = fmt((now - P.start) / 1000, 2) + ' s';
+    requestAnimationFrame(frame);
+  }
+  const median = a => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+  function renderTable() {
+    tb.innerHTML = '';
+    const med = P.vals.length >= 3 ? median(P.vals) : null;
+    for (let i = 0; i < 5; i++) {
+      const v = P.vals[i], tr = document.createElement('tr'), odd = v != null && med && Math.abs(v - med) > 0.35 * med;
+      if (odd) tr.className = 'warn';
+      tr.innerHTML = `<td>${i + 1}</td><td class="v">${v != null ? fmt(v, 2) + ' s' + (odd ? ' <small>⚠ muy distinta: ¿se te fue el dedo?</small>' : '') : '—'}</td>`;
+      tb.appendChild(tr);
+    }
+    undo.disabled = !P.vals.length || P.run;
+    if (P.vals.length === 5) results(); else wres.innerHTML = '';
+  }
+  function results() {
+    const cs = P.vals.map(v => Math.round(v * 100)), sum = cs.reduce((a, b) => a + b, 0), mean = sum / 5 / 100, meanR = Math.round(sum / 5) / 100;
+    const max = Math.max(...cs) / 100, min = Math.min(...cs) / 100, errMean = Math.abs(meanR - P.T);
+    const farther = P.vals.filter(v => Math.abs(v - P.T) > errMean + 1e-9).length;
+    const T = fmt(P.T, 2);
+    wres.innerHTML = `<div class="calc">
+      <p><b>La media:</b> suma las cinco medidas y divide entre cinco.</p>
+      <p class="eq">(${P.vals.map(v => fmt(v, 2)).join(' + ')}) ÷ 5 = ${fmt(sum / 100, 2)} ÷ 5 = ${fmt(mean, 3)} s ≈ <span style="background:var(--lime);padding:0 6px;border-radius:6px">${fmt(meanR, 2)} s</span></p>
+      <p>La redondeamos a centésimas, que es lo que marca el cronómetro.</p>
+      <p><b>La dispersión</b> (la mayor menos la menor): <span class="eq">${fmt(max, 2)} − ${fmt(min, 2)} = ${fmt(max - min, 2)} s</span>. ${max - min <= 0.15 ? 'Pequeña: has medido con mucha regularidad.' : max - min <= 0.4 ? 'Normal al cronometrar a mano: tu dedo nunca llega igual.' : 'Bastante grande: alguna medida se ha escapado. Puedes borrarla y repetirla.'}</p>
+    </div>
+    <div class="beak" style="margin-top:12px"><img src="../../../../media/beakman.jpg" alt="">
+      <div><b>El secreto del péndulo</b>
+        <p>Como es una simulación, aquí sí sé el valor de verdad: este péndulo tarda <b>${T} s</b>. Tu media se separa ${fmt(errMean, 2)} s. ${farther >= 3 ? `De tus cinco medidas sueltas, ${farther} se separaban más que la media.` : farther ? `Solo ${farther === 1 ? 'una de tus medidas sueltas se separaba' : farther + ' de tus medidas sueltas se separaban'} más que la media: ¡has medido muy fino!` : 'Has tenido mucha puntería: alguna medida suelta ha acertado tanto como la media.'}</p>
+        <p>Por eso se repite: unas veces pulsas un poco tarde y otras un poco pronto, y al hacer la media esos fallos se compensan. Aun así, ni la media es perfecta: siempre queda un poquito de duda. Eso es la <b>incertidumbre</b>, y la tiene toda medida.</p>
+      </div></div>
+    <div class="row" style="margin-top:12px"><button type="button" class="b small" id="w-again">Probar con otro péndulo</button></div>`;
+    $('#w-again').addEventListener('click', () => { newPend(); go.focus(); });
+  }
+  go.addEventListener('click', () => {
+    const now = performance.now();
+    if (!P.run) { if (P.vals.length >= 5) return; P.run = true; P.start = now; go.textContent = '■ Parar'; undo.disabled = true; return; }
+    P.run = false; const v = Math.round((now - P.start) / 10) / 100; disp.textContent = fmt(v, 2) + ' s';
+    P.vals.push(v); go.textContent = '▶ Empezar'; if (P.vals.length >= 5) go.disabled = true; renderTable();
+  });
+  undo.addEventListener('click', () => { P.vals.pop(); go.disabled = false; renderTable(); go.focus(); });
+  $('#w-new').addEventListener('click', newPend);
+  newPend(); requestAnimationFrame(frame);
+
+  /* ---------- 4. Errores al medir ---------- */
+  const LCD = (x, y, t) => `<rect x="${x}" y="${y}" width="80" height="28" rx="4" fill="#C9D8B0" stroke="#3D4A33" stroke-width="1.5"/>` +
+    `<text x="${x + 72}" y="${y + 20}" text-anchor="end" font-size="17" font-weight="700" font-family="ui-monospace, Consolas, monospace" fill="#1F2A17">${t}</text>`;
+  const SCALE = (x, t, top, lab) => `<g transform="translate(${x} 0)"><rect x="18" y="72" width="84" height="8" rx="4" fill="#C8CDD2" stroke="#5A6570" stroke-width="1.5"/>` +
+    `<rect x="56" y="80" width="8" height="8" fill="#8C959E"/><rect x="5" y="88" width="110" height="52" rx="10" fill="#E9ECEF" stroke="#5A6570" stroke-width="2"/>${LCD(20, 100, t)}${top}` +
+    `<text x="60" y="160" text-anchor="middle" font-size="13" font-weight="800" fill="#4E5A45">${lab}</text></g>`;
+  const EYE = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r})"><path d="M-14 0 Q0 -10 14 0 Q0 10 -14 0Z" fill="#fff" stroke="#1F3A0B" stroke-width="1.8"/><circle r="4.5" fill="#3E7CB1"/><circle r="2" fill="#111"/></g>`;
+  const ticks = (from, to, Y, x2, labels) => { let s = ''; for (let k = from; k <= to; k++) {
+    s += `<line x1="${x2 - (labels.includes(k) ? 22 : 12)}" y1="${Y(k)}" x2="${x2}" y2="${Y(k)}" stroke="#1F3A0B" stroke-width="${labels.includes(k) ? 2 : 1.3}"/>`;
+    if (labels.includes(k)) s += `<text x="${x2 + 8}" y="${Y(k) + 5}" font-size="14" font-weight="800" fill="#1F3A0B">${k}</text>`; } return s; };
+  const Yp = k => 149 - (k - 37) * 12, Ym = k => 150 - (k - 34) * 30;
+  let rul = ''; for (let k = 0; k <= 160; k += 5) { const x = 22 + k * 1.35, c = k % 10 === 0;
+    rul += `<line x1="${x}" y1="96" x2="${x}" y2="${96 + (c ? 14 : 8)}" stroke="#1F3A0B" stroke-width="${c ? 1.5 : 1}"/>`; if (c && k % 20 === 0) rul += `<text x="${x}" y="126" text-anchor="middle" font-size="11" font-weight="800" fill="#1F3A0B">${k / 10}</text>`; }
+  const CASES = [
+    { h: 'Sara y la probeta', story: 'Sara se pone de pie, mira la probeta desde arriba y apunta 43 mL.',
+      svg: `<rect width="260" height="170" fill="#FFFDF6"/><path d="M118 18 H170 L166 24 V164 H122 V24 Z" fill="#F4FAFD" stroke="#5A6B78" stroke-width="2"/>` +
+        `<path d="M123 ${Yp(41) - 5} C126 ${Yp(41)} 132 ${Yp(41)} 144 ${Yp(41)} C156 ${Yp(41)} 162 ${Yp(41)} 165 ${Yp(41) - 5} V163 H123 Z" fill="#A7D8EE"/>` +
+        ticks(38, 46, Yp, 166, [40, 45]) + EYE(48, 24, 35) + `<line x1="60" y1="33" x2="166" y2="${Yp(43)}" stroke="#B23B2E" stroke-width="1.6" stroke-dasharray="5 4"/>` +
+        `<text x="205" y="${Yp(43) + 5}" font-size="14" font-weight="800" fill="#B23B2E">¿43?</text>`,
+      opts: [['Ha mirado desde arriba: tenía que poner los ojos a la altura del líquido.', 1, 'Desde arriba la raya parece estar más alta de lo que está. Se llama <b>error de paralaje</b>. Agáchate hasta que tus ojos queden a la altura del líquido: aquí marca 41 mL.'],
+        ['La probeta es demasiado pequeña para medir.', 0, 'El tamaño está bien. Fíjate en desde dónde mira Sara.'],
+        ['Se ha olvidado de la unidad.', 0, 'Ha escrito «43 mL»: la unidad está. El fallo está en cómo ha mirado.']] },
+    { h: 'Pablo y la balanza', story: 'Antes de poner nada, la balanza ya marcaba 2,0 g. Pablo pone su goma, ve 47,0 g y apunta «la goma tiene 47,0 g».',
+      svg: `<rect width="260" height="170" fill="#FFFDF6"/>` + SCALE(6, '2,0 g', '', 'sin nada encima') +
+        SCALE(134, '47,0 g', '<rect x="36" y="50" width="48" height="22" rx="3" fill="#F29CA3"/><rect x="64" y="50" width="20" height="22" rx="3" fill="#4A7FC1"/>', 'con la goma'),
+      opts: [['No ha puesto la balanza a cero (con el botón TARA). La goma tiene 45,0 g.', 1, 'Eso es: si la balanza no empieza en 0,0 g, todas las medidas salen 2,0 g de más. Antes de pesar, pulsa <b>TARA</b> o resta lo que marcaba: 47,0 − 2,0 = 45,0 g.'],
+        ['Tenía que pesarla tres veces y hacer la media.', 0, 'Repetir siempre ayuda, pero aquí las tres veces saldría 2,0 g de más. Es un error que se repite igual cada vez: repetir no lo arregla. Hay que poner la balanza a cero.'],
+        ['Una goma no se puede pesar en gramos: va en kilos.', 0, 'Una goma pesa unos pocos gramos; en kilos serían 0,045 kg. Los gramos van bien. El fallo es otro.']] },
+    { h: 'Leo y el lápiz', story: 'Leo pone su lápiz en el 0 de la regla. La punta llega al 15 y apunta «15 m».',
+      svg: `<rect width="260" height="170" fill="#FFFDF6"/><rect x="12" y="96" width="236" height="38" rx="3" fill="#F6E7A6" stroke="#8A6D1E" stroke-width="1.5"/>${rul}` +
+        `<rect x="22" y="72" width="8" height="20" fill="#F29CA3"/><rect x="30" y="72" width="160" height="20" fill="#F2C230"/><polygon points="190,72 190,92 224.5,82" fill="#F3D9AE"/>` +
+        `<rect x="150" y="16" width="92" height="40" rx="6" fill="#F8EFCB" stroke="#E8D27A" stroke-width="1.5" transform="rotate(-4 196 36)"/>` +
+        `<text x="196" y="44" text-anchor="middle" font-size="22" font-weight="800" fill="#B23B2E" transform="rotate(-4 196 36)">15 m</text>` +
+        `<text x="236" y="146" text-anchor="end" font-size="10" font-weight="800" fill="#6B5A1E">cm</text>`,
+      opts: [['La unidad está mal: son 15 cm. 15 m es más largo que un autobús.', 1, 'Eso es. El número está bien, pero la unidad cambia todo: 15 cm caben en tu estuche; 15 m, no caben ni en tu clase. Mira siempre qué unidad pone en el instrumento.'],
+        ['Está bien: la «m» es de milímetro.', 0, 'Cuidado con esta trampa: «m» solo es metro. El milímetro se escribe «mm». Y además la regla marca centímetros.'],
+        ['Tenía que medir con más precisión, con decimales.', 0, 'La punta cae justo en el 15, así que vale. El fallo está en la unidad.']] },
+    { h: 'Iker y el menisco', story: 'Iker pone los ojos a la altura del borde de arriba, donde el agua toca el cristal, y apunta 37 mL.',
+      svg: `<rect width="260" height="170" fill="#FFFDF6"/><path d="M80 14 V166 M200 14 V166" stroke="#5A6B78" stroke-width="3"/>` +
+        `<path d="M81 ${Ym(37)} C88 ${Ym(36) - 2} 104 ${Ym(36)} 140 ${Ym(36)} C176 ${Ym(36)} 192 ${Ym(36) - 2} 199 ${Ym(37)} V166 H81 Z" fill="#A7D8EE"/>` +
+        `<path d="M81 ${Ym(37)} C88 ${Ym(36) - 2} 104 ${Ym(36)} 140 ${Ym(36)} C176 ${Ym(36)} 192 ${Ym(36) - 2} 199 ${Ym(37)}" fill="none" stroke="#2C7FAE" stroke-width="2"/>` +
+        ticks(34, 38, Ym, 200, [34, 35, 36, 37, 38]) + EYE(30, Ym(37), 0) + `<line x1="46" y1="${Ym(37)}" x2="200" y2="${Ym(37)}" stroke="#B23B2E" stroke-width="1.6" stroke-dasharray="5 4"/>` +
+        `<text x="8" y="162" font-size="10" font-weight="800" fill="#4E5A45">con lupa</text>`,
+      opts: [['Ha leído el borde de arriba del menisco. Se lee la parte de abajo de la curva: 36 mL.', 1, '¡Bien visto! El agua «trepa» un poco por el cristal y forma una curva, el <b>menisco</b>. La medida buena está en la parte de abajo de la curva: 36 mL.'],
+        ['Tenía que redondear al número más cercano con una marca grande: 40 mL.', 0, 'Redondear así tira a la basura la precisión de la probeta. Cada rayita es 1 mL: aprovéchalas.'],
+        ['El agua no se mide en mL, se mide en gramos.', 0, 'El volumen del agua se mide en mL (o cm³). Los gramos son para la masa, y eso lo dice la balanza. El fallo es otro.']] }
+  ];
+  const cardsEl = $('#cards');
+  CASES.forEach(c => {
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML = `<h3>${c.h}</h3><svg viewBox="0 0 260 170" role="img" aria-label="${c.story}">${c.svg}</svg><p>${c.story}</p><p class="ask">¿Qué ha fallado?</p><div class="opts"></div><p class="fb" aria-live="polite"></p>`;
+    const opts = card.querySelector('.opts'), fb = card.querySelector('.fb');
+    shuffle([...c.opts]).forEach(([t, good, why]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = t;
+      b.addEventListener('click', () => { opts.querySelectorAll('.chip').forEach(x => x.classList.remove('ok', 'ko')); b.classList.add(good ? 'ok' : 'ko');
+        fb.innerHTML = (good ? '<span class="okt">¡Eso es!</span> ' : '<span class="kot">Casi.</span> ') + why; });
+      opts.appendChild(b); });
+    cardsEl.appendChild(card);
+  });
+})();
+</script>
+</body>
+</html>

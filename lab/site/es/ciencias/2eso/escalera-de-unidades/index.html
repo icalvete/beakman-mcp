@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La escalera de las unidades · El laboratorio de Beakman</title>
+<meta name="description" content="Múltiplos, submúltiplos y cambios de unidades con factores de conversión, vistos y tocados: la escalera, la coma que se mueve, las unidades que se tachan y un entrenador. Física y Química de 2º de la ESO, Unidad 1.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* La escalera: los peldaños, la coma que se mueve, las unidades que se tachan y el entrenador */
+[hidden] { display: none !important; }
+.seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); flex-wrap: wrap; }
+.seg button { border: 0; background: #fff; padding: 8px 14px; font: 800 .92rem/1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+button:focus-visible, input:focus-visible, select:focus-visible, .step:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.ctrl { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin-bottom: 12px; }
+.ctrl label { font-weight: 800; color: var(--ink); }
+input.num { width: 130px; font: 700 1.1rem/1.2 var(--body); color: var(--text); border: 2px solid var(--line); border-radius: 12px; padding: 7px 10px; background: #fff; }
+input.num:focus { border-color: var(--ink); outline: none; }
+select.unit { font: 700 1rem/1.2 var(--body); border: 2px solid var(--line); border-radius: 12px; padding: 7px 8px; background: #fff; color: var(--ink); }
+.presets .chip { font-size: .86rem; padding: 4px 10px; border-radius: 999px; }
+.msg { min-height: 1.4em; font-weight: 700; }
+h3.sub { font-size: 1.15rem; margin: 18px 0 8px; }
+
+/* la escalera */
+.stairbox { position: relative; background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 46px 14px 10px; }
+.stair { position: relative; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: end; height: 220px; }
+.step { position: relative; height: var(--h); background: var(--card); border: 2px solid var(--ink); border-top: 9px solid var(--lime); border-radius: 10px 10px 3px 3px;
+  cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px 0; font: inherit; color: var(--ink); transition: background .2s; }
+.step b { font: 700 1.55rem/1 var(--display); }
+.step small { font-size: .74rem; font-weight: 700; color: var(--muted); }
+.step .x10 { position: absolute; right: -15px; top: -34px; z-index: 1; font-size: .7rem; font-weight: 800; color: #4F6B0A; background: var(--lime-soft); border-radius: 6px; padding: 0 4px; }
+.step.cur { background: var(--lime-soft); box-shadow: 3px 3px 0 var(--lime); }
+.step.base::after { content: "unidad"; position: absolute; bottom: 6px; font-size: .68rem; font-weight: 800; color: #fff; background: var(--ink); border-radius: 999px; padding: 0 7px; }
+.ball { position: absolute; width: 28px; height: 28px; border-radius: 50%; background: var(--lime); border: 3px solid var(--ink); box-shadow: 2px 2px 0 var(--ink);
+  transition: left .35s, top .35s; pointer-events: none; z-index: 2; }
+.legend { display: flex; justify-content: space-between; gap: 10px; font-size: .88rem; font-weight: 800; color: var(--muted); margin-top: 8px; }
+.legend .dn { color: #2E7D32; } .legend .up { color: #B23B2E; }
+
+.readout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 18px; margin-top: 16px; align-items: start; }
+.display { background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime); padding: 14px 16px; }
+.stripwrap { overflow-x: auto; padding: 6px 0 4px; }
+.strip { position: relative; display: inline-flex; padding-right: 70px; font: 700 2.3rem/1.2 var(--display); color: var(--ink); padding-bottom: 4px; }
+.cell { width: 30px; text-align: center; transition: opacity .3s; }
+.cell.pad { color: #7FA80F; }
+.cell.off { opacity: 0; }
+.comma { position: absolute; left: var(--x, 0); top: 6px; transform: translateX(-50%); color: #B23B2E; font-size: 2.6rem; transition: left .35s, opacity .3s; }
+.comma.hide { opacity: .25; }
+.unitlbl { position: absolute; left: var(--ux, 0); top: 12px; font: 600 1.6rem/1 var(--display); color: var(--ink); margin-left: 12px; white-space: nowrap; transition: left .35s; }
+.value { font-size: 1.1rem; margin-top: 4px; }
+.value b { font: 700 1.35rem/1 var(--display); color: var(--ink); }
+.moves { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; }
+.b.down { background: #CDEBC5; } .b.up { background: #F7CFC8; }
+ol.log { margin: 6px 0 0; padding-left: 22px; display: grid; gap: 2px; font-size: .96rem; max-height: 210px; overflow-y: auto; }
+ol.log li::marker { color: var(--muted); font-weight: 800; }
+.log .em { color: var(--muted); font-size: .88rem; }
+.ref { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 14px; padding: 12px 14px; }
+.ref h4 { margin: 0 0 4px; font: 600 1.1rem/1.2 var(--display); color: var(--ink); }
+.tip2 { font-size: .88rem; color: var(--muted); margin-top: 8px; }
+
+/* prefijos y la barra de 1 m */
+.two { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 20px; align-items: start; }
+table.pref { width: 100%; border-collapse: collapse; background: #fff; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; font-size: .95rem; }
+table.pref th, table.pref td { padding: 5px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+table.pref th { background: var(--lime-soft); color: var(--ink); font-weight: 800; }
+table.pref td.sym { font: 700 1.15rem/1 var(--display); color: var(--ink); }
+table.pref tr.base td { background: var(--card); font-weight: 800; }
+.bar1m svg { width: 100%; height: auto; display: block; background: #fff; border: 2px solid var(--line); border-radius: 12px; }
+
+/* el factor de conversión */
+.expr { font: 600 1.5rem/1.3 var(--display); color: var(--ink); background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime);
+  padding: 16px 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; min-height: 104px; }
+.fr { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; }
+.fr > span { padding: 0 6px; white-space: nowrap; }
+.fr > span:first-child { border-bottom: 3px solid var(--ink); }
+.op { color: var(--muted); }
+.expr u, .fr u { text-decoration: none; position: relative; color: #1E5AA8; }
+u.x { color: var(--muted); }
+u.x::after { content: ""; position: absolute; left: -3px; right: -3px; top: 52%; height: 3px; background: #B23B2E; border-radius: 2px; transform: rotate(-12deg) scaleX(0);
+  transform-origin: left center; transition: transform .45s ease-out; }
+u.x.on::after { transform: rotate(-12deg) scaleX(1); }
+.qbox { display: inline-grid; place-items: center; width: 92px; height: 74px; border: 2.5px dashed var(--muted); border-radius: 12px; color: var(--muted); font-size: 1.6rem; }
+.res { color: #2E7D32; white-space: nowrap; }
+.opts { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0 8px; align-items: center; }
+.opt { font: 600 1.3rem/1.3 var(--display); color: var(--ink); background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 8px 14px; cursor: pointer; }
+.opt:hover { border-color: var(--ink); }
+.fb { border-radius: 12px; padding: 10px 14px; margin-top: 8px; }
+.fb.good { background: #E3F3DF; border: 1.5px solid #2E7D32; }
+.fb.bad { background: #FBE5E1; border: 1.5px solid #B23B2E; }
+.fb.neutral { background: #fff; border: 1.5px solid var(--line); }
+.why2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+
+/* superficie y volumen */
+.svgrid { display: grid; grid-template-columns: 250px 290px minmax(0, 1fr); gap: 20px; align-items: start; }
+.svgrid figure { margin: 0; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 10px; text-align: center; }
+.svgrid figcaption { font-weight: 800; color: var(--ink); font-size: .95rem; margin-top: 4px; }
+.ladder { font: 700 1rem/1.2 var(--body); display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin: 4px 0 10px; }
+.ladder span { background: #fff; border: 2px solid var(--ink); border-radius: 8px; padding: 3px 7px; color: var(--ink); }
+.ladder i { font-style: normal; font-size: .78rem; color: #4F6B0A; font-weight: 800; }
+.mini { display: grid; gap: 10px; margin-top: 10px; }
+.mini .q { font-weight: 800; }
+.badge { display: inline-block; font-size: .8rem; font-weight: 800; background: var(--ink); color: #fff; border-radius: 999px; padding: 1px 10px; vertical-align: middle; margin-left: 8px; }
+
+/* entrena */
+.train { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 20px; align-items: start; }
+.task { background: #fff; border: 2px solid var(--ink); border-radius: 18px; box-shadow: 4px 4px 0 var(--lime); padding: 18px 20px; }
+.task .kind2 { font-size: .85rem; font-weight: 800; color: #4F6B0A; }
+.task .q2 { font: 600 1.7rem/1.4 var(--display); color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 6px 0 12px; }
+.task input.num { width: 190px; font-size: 1.3rem; }
+.task .sol { margin-top: 12px; display: grid; gap: 8px; }
+.task .sol .expr { font-size: 1.25rem; min-height: 0; box-shadow: none; border-width: 1.5px; }
+.score { background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime); padding: 14px 16px; display: grid; gap: 10px; }
+.score div { display: flex; justify-content: space-between; align-items: baseline; }
+.score b { font: 700 1.6rem/1 var(--display); color: var(--ink); }
+.score span { font-weight: 700; color: var(--muted); font-size: .92rem; }
+.keys { font-size: .82rem; color: var(--muted); margin-top: 8px; }
+kbd { font: 700 .78rem/1 var(--body); border: 1.5px solid var(--line); border-bottom-width: 3px; border-radius: 6px; padding: 1px 6px; background: #fff; }
+
+/* errores */
+ul.errs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+ul.errs li { background: #fff; border: 2px solid var(--line); border-left: 6px solid #B23B2E; border-radius: 10px; padding: 8px 12px; }
+ul.errs b { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .readout, .two, .train, .why2, .svgrid { grid-template-columns: 1fr; }
+  ul.errs { grid-template-columns: 1fr; }
+  .step b { font-size: 1.1rem; } .step small { display: none; } .step .x10 { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .ball, .comma, .cell, u.x::after { transition: none; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>La escalera de las <em>unidades</em></h1>
+    <p class="lead">Kilómetros, metros y milímetros miden lo mismo: la longitud, vista con distinto zoom. Aquí vas a subir y bajar
+      por la escalera de las unidades, ver cómo se mueve la coma y aprender el truco del factor de conversión, que sirve para cualquier cambio de unidad.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes">
+    <a href="#escalera">1. La escalera</a><a href="#prefijos">Los prefijos</a><a href="#factor">2. El factor de conversión</a>
+    <a href="#superficie">3. Superficie y volumen</a><a href="#entrena">4. Entrena</a><a href="#errores">5. Errores típicos</a>
+  </nav>
+
+  <section class="block" id="escalera">
+    <h2>1. La escalera</h2>
+    <p class="hint">Escribe una cantidad y muévela peldaño a peldaño. Mira qué le pasa al número… y a la coma.</p>
+    <div class="ctrl">
+      <div class="seg" role="group" aria-label="Magnitud" id="magSeg">
+        <button type="button" data-mag="len" aria-pressed="true">Longitud (m)</button>
+        <button type="button" data-mag="mass" aria-pressed="false">Masa (g)</button>
+        <button type="button" data-mag="cap" aria-pressed="false">Capacidad (L)</button>
+      </div>
+      <label for="qIn">Cantidad</label>
+      <input class="num" id="qIn" inputmode="decimal" value="3,5" autocomplete="off">
+      <select class="unit" id="uIn" aria-label="Unidad de partida"></select>
+      <button class="b" type="button" id="place">Ponerla en la escalera</button>
+      <span class="row presets" id="presets"></span>
+    </div>
+    <p class="msg kot" id="placeMsg" aria-live="polite"></p>
+    <div class="stairbox" id="stairBox" tabindex="0" aria-label="Escalera de unidades. Usa las flechas arriba y abajo para moverte.">
+      <div class="stair" id="stair"></div>
+      <div class="ball" id="ball"></div>
+      <div class="legend"><span class="dn">Bajar un peldaño: · 10 (la coma, un lugar a la derecha) →</span><span class="up">← Subir un peldaño: : 10 (la coma, un lugar a la izquierda)</span></div>
+    </div>
+    <div class="readout">
+      <div class="display">
+        <div class="stripwrap"><div class="strip" id="strip"></div></div>
+        <p class="value" aria-live="polite">Ahora tienes <b id="valTxt"></b> <span id="valSum" class="em"></span></p>
+        <div class="moves">
+          <button class="b up" type="button" id="goUp">↑ Subir un peldaño (: 10)</button>
+          <button class="b down" type="button" id="goDown">↓ Bajar un peldaño (· 10)</button>
+          <button class="b ghost small" type="button" id="goBack">Volver al principio</button>
+        </div>
+        <p class="tip2">Las cifras no se mueven: se mueve la coma. Los ceros verdes son de relleno: aparecen cuando la coma se aleja de las cifras. Si el número es entero, la coma está «escondida» al final.</p>
+        <ol class="log" id="log"></ol>
+      </div>
+      <aside class="ref" aria-live="polite"><h4 id="refH"></h4><p id="refT"></p>
+        <p class="tip2">Truco: pulsa un peldaño cualquiera y la bolita bajará o subirá hasta él, paso a paso.</p></aside>
+    </div>
+  </section>
+
+  <section class="block" id="prefijos">
+    <h2>Los prefijos: qué significa cada peldaño</h2>
+    <p class="hint">El prefijo es la parte de delante de la unidad. Dice cuántas veces cabe la unidad (metro, gramo o litro) en él.</p>
+    <div class="two">
+      <table class="pref">
+        <thead><tr><th>Prefijo</th><th>Símbolo</th><th>Vale</th><th>Ejemplo</th></tr></thead>
+        <tbody>
+          <tr><td>kilo</td><td class="sym">k</td><td>1000</td><td>1 km = 1000 m</td></tr>
+          <tr><td>hecto</td><td class="sym">h</td><td>100</td><td>1 hm = 100 m</td></tr>
+          <tr><td>deca</td><td class="sym">da</td><td>10</td><td>1 dam = 10 m</td></tr>
+          <tr class="base"><td>(la unidad)</td><td class="sym">—</td><td>1</td><td>m · g · L</td></tr>
+          <tr><td>deci</td><td class="sym">d</td><td>0,1</td><td>1 dm = 0,1 m</td></tr>
+          <tr><td>centi</td><td class="sym">c</td><td>0,01</td><td>1 cm = 0,01 m</td></tr>
+          <tr><td>mili</td><td class="sym">m</td><td>0,001</td><td>1 mm = 0,001 m</td></tr>
+        </tbody>
+      </table>
+      <div>
+        <p>Los de arriba (<b>múltiplos</b>) son más grandes que la unidad; los de abajo (<b>submúltiplos</b>) son trozos de ella. Fíjate en tres detalles:
+          la <b>k</b> de kilo va en minúscula (km, kg), los símbolos no llevan punto ni plural (5 km, nunca «5 kms.»), y «da» son dos letras.</p>
+        <p class="tip2" style="margin-bottom:12px">Hay más prefijos. Dos que verás pronto: <b>mega (M) = 1 000 000</b>, como en megapíxel, y <b>micro (µ) = 0,000 001</b>, como en micrómetro (µm). Ojo: M mayúscula es mega; m minúscula es mili.</p>
+        <div class="bar1m">
+          <div class="row" style="margin-bottom:8px"><b>1 metro partido en…</b>
+            <div class="seg" role="group" aria-label="Partir el metro" id="barSeg">
+              <button type="button" data-cut="10" aria-pressed="true">10 dm</button>
+              <button type="button" data-cut="100" aria-pressed="false">100 cm</button>
+              <button type="button" data-cut="1000" aria-pressed="false">1000 mm</button>
+            </div></div>
+          <svg id="bar" viewBox="0 0 1020 92" role="img" aria-label="Una barra de un metro dividida en partes iguales"></svg>
+          <p class="tip2" id="barTxt"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="factor">
+    <h2>2. El truco del factor de conversión</h2>
+    <p class="hint">La escalera va de 10 en 10. Pero las horas van de 60 en 60, y en km/h cambian dos unidades a la vez. Para todo eso hay un truco que nunca falla:
+      multiplicar por una fracción que vale 1.</p>
+    <div class="row" id="exTabs" role="group" aria-label="Ejemplos" style="margin-bottom:12px"></div>
+    <div class="expr" id="expr" aria-live="polite"></div>
+    <p class="msg" id="exAsk" style="margin-top:12px"></p>
+    <div class="opts" id="opts"></div>
+    <div id="exFb" aria-live="polite"></div>
+    <div class="why2">
+      <div class="soft"><b>¿Por qué la fracción vale 1?</b> 1000 m y 1 km son la misma longitud. Así que 1000 m / 1 km es como 5/5: arriba y abajo hay lo mismo, y vale 1.
+        Multiplicar por 1 no cambia la cantidad: solo cambia cómo la escribes.</div>
+      <div class="soft"><b>¿Por qué la unidad que quieres quitar va abajo?</b> Porque en una fracción lo que está arriba y abajo a la vez se tacha, como en 3 · 5/5 = 3.
+        Tu cantidad tiene los km arriba; si en el factor pones km abajo, se tachan y solo queda la unidad nueva.</div>
+    </div>
+  </section>
+
+  <section class="block" id="superficie">
+    <h2>3. Superficie y volumen <span class="badge">un paso más</span></h2>
+    <p class="hint">Con unidades al cuadrado (m²) o al cubo (m³) la escalera es la misma, pero los peldaños son más altos.</p>
+    <div class="svgrid">
+      <figure><svg id="sq" viewBox="0 0 230 230" width="220" height="220" role="img" aria-label="Un cuadrado de 1 dm de lado dividido en 100 cuadraditos de 1 cm de lado"></svg>
+        <figcaption>1 dm² = 10 · 10 = 100 cm²</figcaption></figure>
+      <figure><svg id="cube" viewBox="0 -62 280 314" width="260" height="292" role="img" aria-label="Un cubo de 1 dm de lado formado por cubitos de 1 cm de lado"></svg>
+        <figcaption>1 dm³ = 10 · 10 · 10 = 1000 cm³ = 1 L</figcaption></figure>
+      <div>
+        <p><b>Superficie:</b> un cuadrado de 1 dm de lado tiene 10 cm de lado; caben 10 filas de 10 cuadraditos: 100 cm². Por eso cada peldaño vale <b>· 100</b> y la coma salta <b>dos</b> lugares.</p>
+        <div class="ladder"><span>km²</span><i>·100</i><span>hm²</span><i>·100</i><span>dam²</span><i>·100</i><span>m²</span><i>·100</i><span>dm²</span><i>·100</i><span>cm²</span><i>·100</i><span>mm²</span></div>
+        <p><b>Volumen:</b> en un cubo de 1 dm de lado caben 10 capas de 100 cubitos: 1000 cm³. Cada peldaño vale <b>· 1000</b> y la coma salta <b>tres</b> lugares.</p>
+        <div class="ladder"><span>m³</span><i>·1000</i><span>dm³</span><i>·1000</i><span>cm³</span><i>·1000</i><span>mm³</span></div>
+        <p>Y el puente con la capacidad: <b>1 L = 1 dm³</b> y <b>1 mL = 1 cm³</b>. Por eso 1 m³ = 1000 dm³ = 1000 L.</p>
+        <div class="mini" id="mini"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="entrena">
+    <h2>4. Entrena</h2>
+    <p class="hint">Ejercicios que no se acaban. Escribe solo el número (con coma o con punto, como prefieras). Si fallas, te doy una pista y lo intentas otra vez.</p>
+    <div class="ctrl">
+      <div class="seg" role="group" aria-label="Nivel" id="lvSeg">
+        <button type="button" data-lv="1" aria-pressed="true">Nivel 1 · Peldaños</button>
+        <button type="button" data-lv="2" aria-pressed="false">Nivel 2 · Toda la escalera y el tiempo</button>
+        <button type="button" data-lv="3" aria-pressed="false">Nivel 3 · Factores de verdad</button>
+      </div>
+    </div>
+    <div class="train">
+      <div class="task">
+        <div class="kind2" id="tKind"></div>
+        <div class="q2"><span id="tQ"></span> = <input class="num" id="tIn" inputmode="decimal" autocomplete="off" aria-label="Tu respuesta"> <span id="tU"></span></div>
+        <div class="row">
+          <button class="b" type="button" id="tCheck">Comprobar</button>
+          <button class="b ghost" type="button" id="tShow">Ver la solución</button>
+          <button class="b ghost" type="button" id="tNext">Otro ejercicio</button>
+        </div>
+        <p class="keys"><kbd>Intro</kbd> comprueba y, cuando ya está resuelto, pasa al siguiente.</p>
+        <div id="tFb" aria-live="polite"></div>
+      </div>
+      <aside class="score">
+        <div><span>Aciertos a la primera</span><b id="sOk">0</b></div>
+        <div><span>Ejercicios hechos</span><b id="sTot">0</b></div>
+        <div><span>Racha ahora</span><b id="sStreak">0</b></div>
+        <div><span>Mejor racha</span><b id="sBest">0</b></div>
+        <button class="b ghost small" type="button" id="sReset">Empezar de cero</button>
+      </aside>
+    </div>
+  </section>
+
+  <section class="block" id="errores">
+    <h2>5. Errores típicos (y cómo esquivarlos)</h2>
+    <p class="hint">Todos los cometemos alguna vez. Conocerlos es la mitad del trabajo.</p>
+    <ul class="errs">
+      <li><b>Mover la coma hacia el lado equivocado.</b> Antes de calcular, pregúntate: ¿el número debe salir más grande o más pequeño? Si la unidad nueva es más pequeña, caben más: 5 km = 5000 m.</li>
+      <li><b>Contar mal los peldaños.</b> De km a m hay tres (hm, dam, m): · 1000. Señala cada peldaño con el dedo.</li>
+      <li><b>Olvidar que m² y m³ van de otra forma.</b> En superficie cada peldaño es · 100 y en volumen · 1000: 1 m² = 100 dm², no 10.</li>
+      <li><b>Confundir la m de metro con la m de mili.</b> Sola, «m» es metro; delante de otra unidad es mili: mm es milímetro, mg miligramo, mL mililitro.</li>
+      <li><b>Pensar que el tiempo va de 10 en 10.</b> 1 h = 60 min y 1 min = 60 s. Hora y media son 90 min, no 150.</li>
+      <li><b>Poner el factor del revés.</b> La unidad que quieres quitar va abajo. Si no se tacha, dale la vuelta a la fracción.</li>
+      <li><b>Dar el resultado sin unidad.</b> «2500» no dice nada; «2500 m», sí.</li>
+      <li><b>Escribir mal los símbolos.</b> km, kg y kL con k minúscula; sin punto final y sin plural.</li>
+    </ul>
+  </section>
+
+  <div class="beak" style="margin-bottom:30px"><img src="../../../../media/beakman.jpg" alt="">
+    <div><b>Lo que te llevas, según Beakman</b>Cambiar de unidad no cambia la cosa medida: solo cambia cómo la escribes. En la escalera, bajar multiplica y subir divide (por 10, por 100 en m² y por 1000 en m³).
+      Para todo lo demás, el factor de conversión: una fracción que vale 1, con la unidad que quieres quitar abajo, y a tachar. Y antes de nada, la pregunta mágica: ¿el número debe salir más grande o más pequeño?</div></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script id="core">
+// Aritmética decimal exacta (BigInt): un número es { n, s } y vale n / 10^s. Así nunca sale 0,30000000000000004.
+globalThis.EU = (() => {
+  const T = (k) => 10n ** BigInt(k);
+  function norm(n, s) { if (n === 0n) return { n: 0n, s: 0 }; while (n % 10n === 0n) { n /= 10n; s--; } return { n, s }; }
+  const dec = (n, s = 0) => norm(BigInt(n), s);
+  const shift = (d, k) => norm(d.n, d.s - k);                    // · 10^k
+  function mul(d, num, den) {                                    // · num / den, solo si el resultado es decimal exacto
+    const m = d.n * BigInt(num), q = BigInt(den);
+    for (let e = 0; e <= 24; e++) { const x = m * T(e); if (x % q === 0n) return norm(x / q, d.s + e); }
+    return null;
+  }
+  const eq = (a, b) => !!a && !!b && a.n === b.n && a.s === b.s;
+  function cmp(a, b) { const S = Math.max(a.s, b.s), x = a.n * T(S - a.s), y = b.n * T(S - b.s); return x < y ? -1 : x > y ? 1 : 0; }
+  function fmt(d) {                                              // 3500000 → 3 500 000; 0.35 → 0,35
+    let t = d.n.toString(), ip, fp = '';
+    if (d.s <= 0) ip = t + '0'.repeat(-d.s);
+    else { if (t.length <= d.s) t = '0'.repeat(d.s - t.length + 1) + t; ip = t.slice(0, t.length - d.s); fp = t.slice(t.length - d.s); }
+    if (ip.length >= 5) ip = ip.replace(/\B(?=(\d{3})+$)/g, ' ');
+    return fp ? ip + ',' + fp : ip;
+  }
+  function parse(raw) {
+    const s = String(raw).replace(/[\s   ']/g, '');
+    if (!s) return { err: 'empty' };
+    const m = s.match(/^([0-9.,]*)([a-zA-Zµ²³0-9/]*)$/);
+    if (!m || !/\d/.test(m[1])) return { err: 'bad' };
+    const num = m[1], unit = m[2], seps = num.replace(/\d/g, '');
+    if (seps.length > 1) {
+      if (/^\d{1,3}(\.\d{3})+$/.test(num)) return { err: 'miles', alt: dec(num.replace(/\./g, '')) };
+      return { err: 'seps' };
+    }
+    let ip = num, fp = '';
+    if (seps) [ip, fp] = num.split(/[.,]/);
+    if ((ip + fp).length > 18) return { err: 'bad' };
+    const d = norm(BigInt((ip || '0') + fp), fp.length);
+    const alt = seps === '.' && fp.length === 3 && ip.length >= 1 && ip.length <= 3 && !/^0+$/.test(ip) ? dec(ip + fp) : null;
+    return { d, alt, unit };
+  }
+
+  const FAM = { len: ['km', 'hm', 'dam', 'm', 'dm', 'cm', 'mm'], mass: ['kg', 'hg', 'dag', 'g', 'dg', 'cg', 'mg'], cap: ['kL', 'hL', 'daL', 'L', 'dL', 'cL', 'mL'],
+    area: ['km²', 'hm²', 'dam²', 'm²', 'dm²', 'cm²', 'mm²'], vol: ['km³', 'hm³', 'dam³', 'm³', 'dm³', 'cm³', 'mm³'] };
+  const R = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const pick = (a) => a[R(0, a.length - 1)];
+  const U = (s) => { const [a, b] = s.split('/'); return { num: [a], den: b ? [b] : [] }; };
+  const F = (n, nu, d, du) => ({ n: BigInt(n), nu, d: BigInt(d), du });
+  function apply(q, fs, swap) { let r = q; for (const f of fs) { r = swap ? mul(r, f.d, f.n) : mul(r, f.n, f.d); if (!r) return null; } return r; }
+  const make = (kind, q, from, to, fs, extra) => Object.assign({ kind, q, from, to, fs, ans: apply(q, fs) }, extra || {});
+  function prefEx(fam, i, j, q) {
+    const k = j - i, step = fam === 'area' ? 2 : fam === 'vol' ? 3 : 1, big = T(Math.abs(k) * step), a = FAM[fam][i], b = FAM[fam][j];
+    return make(fam, q, a, b, [k > 0 ? F(big, b, 1, a) : F(1, b, big, a)], { k, step });
+  }
+  function val(lv) {
+    const r = Math.random();
+    if (lv === 1) return r < .45 ? dec(R(1, 99)) : r < .85 ? dec(R(11, 99), 1) : dec(pick([125, 250, 350, 450, 750, 1200, 1500]));
+    return r < .3 ? dec(R(1, 999)) : r < .6 ? dec(R(11, 999), 1) : r < .85 ? dec(R(101, 999), 2) : dec(R(1, 99), 3);
+  }
+  const fits = (d, maxLen, maxDec) => !!d && fmt(d).replace(/[ ,]/g, '').length <= maxLen && Math.max(0, d.s) <= maxDec;
+  function genPref(lv, fam) {
+    for (let t = 0; t < 200; t++) {
+      const lo = fam === 'vol' ? 3 : fam === 'area' ? 1 : 0, i = R(lo, 6), j = R(lo, 6), k = j - i;
+      const maxK = lv === 1 ? 3 : fam === 'area' || fam === 'vol' ? 2 : 6;
+      if (!k || Math.abs(k) > maxK) continue;
+      const ex = prefEx(fam, i, j, val(lv === 1 ? 1 : 2));
+      if (lv === 1 ? fits(ex.q, 4, 1) && fits(ex.ans, 7, 3) : fits(ex.ans, 9, 6)) return ex;
+    }
+    return prefEx(fam, 0, 3, dec(35, 1));
+  }
+  const TF = { 'h>min': [F(60, 'min', 1, 'h')], 'min>s': [F(60, 's', 1, 'min')], 'h>s': [F(60, 'min', 1, 'h'), F(60, 's', 1, 'min')],
+    'min>h': [F(1, 'h', 60, 'min')], 's>min': [F(1, 'min', 60, 's')], 's>h': [F(1, 'min', 60, 's'), F(1, 'h', 60, 'min')] };
+  function genTime(lv) {
+    const key = pick(Object.keys(TF)), [a, b] = key.split('>'), half = () => dec(R(0, 9) * 10 + 5, 1);
+    const L2 = { 'h>min': () => pick([dec(R(1, 10)), half()]), 'min>s': () => pick([dec(R(1, 20)), half()]), 'h>s': () => pick([dec(R(1, 4)), dec(R(0, 3) * 10 + 5, 1)]),
+      'min>h': () => pick([dec(30 * R(1, 8)), dec(15 * R(1, 12))]), 's>min': () => dec(30 * R(1, 20)), 's>h': () => pick([dec(1800 * R(1, 6)), dec(900 * R(1, 8))]) };
+    const L3 = { 'h>min': () => pick([dec(R(1, 50), 1), dec(pick([25, 75, 125, 175, 225, 275]), 2)]), 'min>s': () => dec(R(1, 99), 1), 'h>s': () => dec(R(1, 30), 1),
+      'min>h': () => dec(pick([6, 3]) * R(1, 40)), 's>min': () => dec(pick([6, 3]) * R(1, 60)), 's>h': () => dec(pick([360, 180]) * R(1, 30)) };
+    return make('time', (lv === 3 ? L3 : L2)[key](), a, b, TF[key]);
+  }
+  function genVel() {
+    if (Math.random() < .5) return make('vel', pick([dec(18 * R(1, 8)), dec(9 * R(1, 15))]), 'km/h', 'm/s', [F(1000, 'm', 1, 'km'), F(1, 'h', 3600, 's')]);
+    return make('vel', pick([dec(R(1, 40)), dec(R(1, 9) * 10 + 5, 1)]), 'm/s', 'km/h', [F(1, 'km', 1000, 'm'), F(3600, 's', 1, 'h')]);
+  }
+  const BRIDGE = [['L', 'cm³', 1000, 1], ['cm³', 'L', 1, 1000], ['mL', 'cm³', 1, 1], ['cm³', 'mL', 1, 1], ['m³', 'L', 1000, 1], ['L', 'm³', 1, 1000], ['dm³', 'L', 1, 1], ['L', 'dm³', 1, 1]];
+  function genVol() {
+    if (Math.random() < .5) return genPref(3, 'vol');
+    for (let t = 0; t < 100; t++) { const [a, b, n, d] = pick(BRIDGE), ex = make('bridge', val(2), a, b, [F(n, b, d, a)]); if (fits(ex.ans, 9, 6)) return ex; }
+    return make('bridge', dec(15, 1), 'L', 'cm³', [F(1000, 'cm³', 1, 'L')]);
+  }
+  function gen(lv) {
+    const r = Math.random(), lin = () => genPref(lv, pick(['len', 'len', 'mass', 'cap']));
+    let ex;
+    if (lv === 1) ex = lin();
+    else if (lv === 2) ex = r < .65 ? lin() : genTime(2);
+    else ex = r < .15 ? lin() : r < .4 ? genTime(3) : r < .65 ? genVel() : r < .82 ? genPref(3, 'area') : genVol();
+    return ex.ans && fits(ex.ans, 10, 6) ? ex : gen(lv);
+  }
+  function wrongs(ex) {
+    const w = [], add = (d, why) => { if (d && !eq(d, ex.ans) && !w.some((x) => eq(x.d, d))) w.push({ d, why }); };
+    add(apply(ex.q, ex.fs, true), 'inv');
+    if (ex.k) { add(shift(ex.ans, 1), 'step'); add(shift(ex.ans, -1), 'step');
+      if (ex.step > 1) { add(shift(ex.q, ex.k), 'lin'); add(shift(ex.q, 2 * ex.k), 'lin'); } }
+    if (ex.kind === 'time') add(apply(ex.q, ex.fs.map((f) => F(f.n === 60n ? 100 : f.n, f.nu, f.d === 60n ? 100 : f.d, f.du))), 'sixty');
+    if (ex.kind === 'vel') { add(apply(ex.q, ex.fs.slice(0, 1)), 'onef'); add(apply(ex.q, ex.fs.slice(1)), 'onef'); }
+    return w;
+  }
+  function check(ex, raw) {
+    const p = parse(raw);
+    if (p.err === 'miles' && eq(p.alt, ex.ans)) return { ok: true, note: 'miles' };
+    if (p.err) return { err: p.err };
+    if (eq(p.d, ex.ans)) return { ok: true, unit: p.unit };
+    if (p.alt && eq(p.alt, ex.ans)) return { ok: true, note: 'punto' };
+    const hit = wrongs(ex).find((x) => eq(x.d, p.d));
+    return { ok: false, why: hit ? hit.why : null, d: p.d };
+  }
+  return { T, dec, norm, shift, mul, eq, cmp, fmt, parse, FAM, U, F, apply, gen, check, wrongs };
+})();
+</script>
+<script>
+(() => {
+  const { T, dec, shift, mul, eq, cmp, fmt, parse, FAM, U, F, gen, check } = EU;
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.escalera-unidades.v1';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const slow = !window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pl = (n, one, many) => n === 1 ? one : many;
+
+  /* ---------- expresiones con factores y unidades que se tachan ---------- */
+  let uid = 0;
+  function terms(q, from, fs) {                       // [{top:[txt, units], bot:[txt, units]}]
+    const u = U(from), out = [{ top: [fmt(q), u.num], bot: u.den.length ? ['', u.den] : null }];
+    fs.forEach((f) => out.push({ top: [fmt(dec(f.n)), [f.nu]], bot: [fmt(dec(f.d)), [f.du]] }));
+    return out;
+  }
+  function render(ts, { pending = false, result = '', skip = null } = {}) {
+    const top = [], bot = [];
+    const side = (txt, units, list) => (txt ? esc(txt) + ' ' : '') + units.map((x) => { const id = 'u' + (++uid); list.push({ x, id }); return `<u id="${id}">${esc(x)}</u>`; }).join('·');
+    const parts = ts.map((t) => t.bot ? `<span class="fr"><span>${side(t.top[0], t.top[1], top)}</span><span>${side(t.bot[0], t.bot[1], bot)}</span></span>`
+                                      : `<span>${side(t.top[0], t.top[1], top)}</span>`);
+    let html = parts.join('<span class="op">·</span>');
+    if (pending) html += '<span class="op">·</span><span class="qbox">?</span>';
+    if (result) html += `<span class="op">=</span><span class="res">${result}</span>`;
+    const cut = [];
+    bot.forEach((b) => { if (b.x === skip) return; const i = top.findIndex((t) => t.x === b.x && !t.used); if (i >= 0) { top[i].used = true; cut.push(top[i].id, b.id); } });
+    return { html, cut };
+  }
+  function show(el, r, animate) {
+    el.innerHTML = r.html;
+    r.cut.forEach((id) => { const u = document.getElementById(id); if (u) u.classList.add('x'); });
+    const on = () => r.cut.forEach((id) => { const u = document.getElementById(id); if (u) u.classList.add('on'); });
+    if (animate && slow) setTimeout(on, 80); else on();
+  }
+  function arith(q, fs, ans) {                         // 72 · 1000 : 3600 = 20
+    let s = fmt(q);
+    fs.forEach((f) => { if (f.n !== 1n) s += ' · ' + fmt(dec(f.n)); });
+    fs.forEach((f) => { if (f.d !== 1n) s += ' : ' + fmt(dec(f.d)); });
+    return s + ' = ' + fmt(ans);
+  }
+
+  /* ---------- 1. la escalera ---------- */
+  const NAMES = { len: ['kilómetro', 'hectómetro', 'decámetro', 'metro', 'decímetro', 'centímetro', 'milímetro'],
+    mass: ['kilogramo', 'hectogramo', 'decagramo', 'gramo', 'decigramo', 'centigramo', 'miligramo'],
+    cap: ['kilolitro', 'hectolitro', 'decalitro', 'litro', 'decilitro', 'centilitro', 'mililitro'] };
+  const REF = {
+    len: ['Unos 9 o 10 campos de fútbol puestos en fila (cada campo mide entre 100 y 110 m). Andando, unos 12 minutos.',
+      'Más o menos el largo de un campo de fútbol. Es la distancia de la carrera de 100 metros lisos.',
+      'Un poco menos que un autobús urbano, que mide unos 12 m.',
+      'Un paso largo de una persona adulta. Una puerta mide unos 2 m de alto.',
+      'Son 10 cm: más o menos el ancho de la palma de tu mano.',
+      'Más o menos el ancho de la uña de tu dedo meñique.',
+      'Una tarjeta bancaria tiene algo menos de 1 mm de grosor.'],
+    mass: ['Más o menos un brik de leche lleno: 1 L de agua tiene una masa de 1 kg.',
+      'Son 100 g: una tableta de chocolate normal.',
+      'Son 10 g: más o menos dos folios (cada uno tiene unos 5 g).',
+      'La masa de 1 mL de agua, unas 20 gotas. Un clip pequeño tiene más o menos 1 g.',
+      'Son 0,1 g: unos cuatro granos de arroz.',
+      'Un grano de arroz tiene unos 2 o 3 cg.',
+      'Un grano de sal fina tiene menos de 1 mg. Las dosis de los medicamentos se dan en mg.'],
+    cap: ['Son 1000 L: lo que cabe en un cubo de 1 m de lado (1 m³).',
+      'Son 100 L: una bañera llena tiene entre 1 y 2 hL.',
+      'Son 10 L: más o menos un cubo de fregar.',
+      'Un brik de leche. 1 L = 1 dm³: un cubo de 10 cm de lado.',
+      'Son 100 mL: más o menos medio vaso de agua.',
+      'Son 10 mL: una cucharada de postre. Las latas de refresco ponen 33 cL.',
+      'Unas 20 gotas. 1 mL = 1 cm³: un dado pequeño de 1 cm de lado. Los jarabes se miden en mL.'] };
+  const PRESETS = { len: [['3,5', 0], ['250', 3], ['45', 6], ['0,8', 3]], mass: [['250', 3], ['1,2', 0], ['500', 6], ['35', 4]],
+    cap: [['1,5', 3], ['33', 5], ['250', 6], ['2', 0]] };
+  const st = { mag: 'len', q0: dec(35, 1), u0: 0, u: 0, timer: null };
+  const units = () => FAM[st.mag];
+  const curVal = () => shift(st.q0, st.u - st.u0);
+  const stair = $('stair');
+
+  function buildStair() {
+    stair.innerHTML = units().map((u, i) => `<button type="button" class="step${i === 3 ? ' base' : ''}" data-i="${i}" style="--h:${204 - i * 22}px" aria-label="${NAMES[st.mag][i]}">
+      <b>${u}</b><small>${NAMES[st.mag][i]}</small>${i < 6 ? '<span class="x10">· 10 ↘</span>' : ''}</button>`).join('');
+    $('uIn').innerHTML = units().map((u, i) => `<option value="${i}">${u}</option>`).join('');
+    $('uIn').value = st.u0;
+    $('presets').innerHTML = PRESETS[st.mag].map(([v, i]) => `<button type="button" class="chip" data-v="${v}" data-i="${i}">${v} ${units()[i]}</button>`).join('');
+  }
+  function placeBall() {
+    const btn = stair.children[st.u]; if (!btn) return;
+    const ball = $('ball'), box = $('stairBox');
+    const r = btn.getBoundingClientRect(), b = box.getBoundingClientRect();
+    ball.style.left = (r.left - b.left + r.width / 2 - 14) + 'px';
+    ball.style.top = (r.top - b.top - 32) + 'px';
+  }
+  function drawStrip() {
+    const t = st.q0.n.toString(), L = t.length, base = st.q0.s + st.u0;
+    const hi = L - 1 - base, lo = -base, Phi = Math.max(hi, 0), Plo = Math.min(lo, -6), u = st.u;
+    let h = '';
+    for (let p = Phi; p >= Plo; p--) {
+      const idx = hi - p, inNum = idx >= 0 && idx < L;
+      const vis = p <= Math.max(hi, -u) && p >= Math.min(lo, -u);
+      h += `<span class="cell${inNum ? '' : ' pad'}${vis ? '' : ' off'}">${inNum ? t[idx] : '0'}</span>`;
+    }
+    const strip = $('strip'), keep = strip.querySelector('.comma');
+    if (!keep || strip.dataset.key !== `${t}|${base}`) { strip.innerHTML = h + '<span class="comma">,</span><span class="unitlbl" id="stripU"></span>'; strip.dataset.key = `${t}|${base}`; }
+    else { const cells = strip.querySelectorAll('.cell'), tmp = document.createElement('div'); tmp.innerHTML = h;
+      tmp.querySelectorAll('.cell').forEach((c, i) => { cells[i].className = c.className; }); }
+    const comma = strip.querySelector('.comma'), cw = strip.querySelector('.cell').offsetWidth || 34;
+    comma.style.setProperty('--x', ((Phi + u + 1) * cw) + 'px');
+    comma.classList.toggle('hide', lo >= -u);
+    const last = Phi - Math.min(lo, -u);
+    $('stripU').style.setProperty('--ux', ((last + 1) * cw) + 'px');
+    $('stripU').textContent = units()[u];
+  }
+  function refresh() {
+    [...stair.children].forEach((b, i) => { b.classList.toggle('cur', i === st.u); b.setAttribute('aria-pressed', i === st.u); });
+    placeBall(); drawStrip();
+    $('valTxt').textContent = fmt(curVal()) + ' ' + units()[st.u];
+    const n = st.u - st.u0;
+    $('valSum').textContent = n === 0 ? '(el punto de partida)' : `(desde ${fmt(st.q0)} ${units()[st.u0]}: ${Math.abs(n)} ${pl(Math.abs(n), 'peldaño', 'peldaños')} hacia ${n > 0 ? 'abajo, · ' : 'arriba, : '}${fmt(dec(T(Math.abs(n))))})`;
+    $('refH').textContent = `¿Cuánto es 1 ${units()[st.u]}?`;
+    $('refT').textContent = REF[st.mag][st.u];
+    $('goUp').disabled = st.u === 0; $('goDown').disabled = st.u === 6;
+  }
+  function step(dir) {
+    const to = st.u + dir; if (to < 0 || to > 6) return;
+    const a = curVal(), ua = units()[st.u]; st.u = to; const b = curVal(), ub = units()[st.u];
+    const li = document.createElement('li');
+    li.innerHTML = dir > 0 ? `<b>${ua} → ${ub}</b> (bajas): ${fmt(a)} · 10 = <b>${fmt(b)} ${ub}</b> <span class="em">la coma, un lugar a la derecha</span>`
+                           : `<b>${ua} → ${ub}</b> (subes): ${fmt(a)} : 10 = <b>${fmt(b)} ${ub}</b> <span class="em">la coma, un lugar a la izquierda</span>`;
+    $('log').appendChild(li); li.scrollIntoView({ block: 'nearest' });
+    refresh();
+  }
+  function walkTo(i) {
+    clearInterval(st.timer);
+    if (i === st.u) return;
+    const go = () => { if (st.u === i) { clearInterval(st.timer); return; } step(i > st.u ? 1 : -1); };
+    go(); if (st.u !== i) st.timer = setInterval(go, slow ? 480 : 60);
+  }
+  function place(v, i) {
+    clearInterval(st.timer);
+    const p = parse(v), msg = $('placeMsg');
+    if (p.err || !p.d || p.d.n === 0n) { msg.textContent = 'Escribe un número mayor que cero, por ejemplo 3,5 o 250.'; return; }
+    const L = p.d.n.toString().length, hi = L - 1 - p.d.s - i, lo = -p.d.s - i;
+    if (L > 6 || hi > 6 || lo < -12) { msg.textContent = 'Ese número es muy largo para la escalera: prueba con 6 cifras como mucho (por ejemplo 3,5 o 0,25).'; return; }
+    msg.textContent = '';
+    Object.assign(st, { q0: p.d, u0: i, u: i });
+    $('log').innerHTML = `<li class="em">Empiezas con ${fmt(p.d)} ${units()[i]}.</li>`;
+    $('qIn').value = fmt(p.d); $('uIn').value = i;
+    refresh();
+  }
+  $('magSeg').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    st.mag = b.dataset.mag;
+    [...$('magSeg').children].forEach((x) => x.setAttribute('aria-pressed', x === b));
+    buildStair(); place($('qIn').value, st.u0);
+  });
+  stair.addEventListener('click', (e) => { const b = e.target.closest('.step'); if (b) walkTo(+b.dataset.i); });
+  $('stairBox').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); clearInterval(st.timer); step(1); }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); clearInterval(st.timer); step(-1); }
+  });
+  $('goUp').addEventListener('click', () => { clearInterval(st.timer); step(-1); });
+  $('goDown').addEventListener('click', () => { clearInterval(st.timer); step(1); });
+  $('goBack').addEventListener('click', () => place(fmt(st.q0), st.u0));
+  $('place').addEventListener('click', () => place($('qIn').value, +$('uIn').value));
+  $('qIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') place($('qIn').value, +$('uIn').value); });
+  $('presets').addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (b) place(b.dataset.v, +b.dataset.i); });
+  window.addEventListener('resize', placeBall);
+
+  /* la barra de 1 m */
+  function drawBar(cut) {
+    const W = 1000, x0 = 10, y = 18, hgt = 40;
+    let s = `<rect x="${x0}" y="${y}" width="${W}" height="${hgt}" fill="#EEF6D6" stroke="#1F3A0B" stroke-width="2"/>`;
+    if (cut === 10) for (let i = 0; i < 10; i++) s += `<rect x="${x0 + i * 100}" y="${y}" width="100" height="${hgt}" fill="${i % 2 ? '#fff' : '#CDEBC5'}" stroke="#1F3A0B" stroke-width="1.5"/><text x="${x0 + i * 100 + 50}" y="${y + 27}" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="16" fill="#1F3A0B">1 dm</text>`;
+    else { let d = ''; const step = W / cut;
+      for (let i = 1; i < cut; i++) { const long = cut === 100 ? i % 10 === 0 : i % 100 === 0, mid = cut === 1000 && i % 10 === 0;
+        d += `M${(x0 + i * step).toFixed(1)} ${y}v${long ? hgt : mid ? 24 : cut === 100 ? 22 : 12}`; }
+      s += `<path d="${d}" stroke="#1F3A0B" stroke-width="${cut === 100 ? 1.2 : .5}" fill="none"/>`; }
+    s += `<text x="${x0}" y="80" font-family="Nunito" font-weight="800" font-size="15" fill="#4E5A45">0</text><text x="${x0 + W}" y="80" text-anchor="end" font-family="Nunito" font-weight="800" font-size="15" fill="#4E5A45">1 m</text>`;
+    $('bar').innerHTML = s;
+    $('barTxt').textContent = cut === 10 ? '1 m = 10 dm. Cada trozo, un decímetro: más o menos el ancho de tu mano.'
+      : cut === 100 ? '1 m = 100 cm. Cada decímetro se parte en 10 centímetros: las rayas largas marcan los decímetros.'
+      : '1 m = 1000 mm. ¡Casi no se distinguen! Cada centímetro se parte en 10 milímetros.';
+  }
+  $('barSeg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return;
+    [...$('barSeg').children].forEach((x) => x.setAttribute('aria-pressed', x === b)); drawBar(+b.dataset.cut); });
+
+  /* ---------- 2. el factor de conversión ---------- */
+  const EXS = [
+    { name: '2,5 km → m', q: dec(25, 1), from: 'km', to: 'm', steps: [
+      { ask: '¿Qué factor quita los km y deja metros?', right: F(1000, 'm', 1, 'km'), wrong: F(1, 'km', 1000, 'm'), quit: 'km' }] },
+    { name: '350 g → kg', q: dec(350), from: 'g', to: 'kg', steps: [
+      { ask: '¿Qué factor quita los gramos y deja kilogramos?', right: F(1, 'kg', 1000, 'g'), wrong: F(1000, 'g', 1, 'kg'), quit: 'g' }] },
+    { name: '1,5 h → s (dos pasos)', q: dec(15, 1), from: 'h', to: 's', steps: [
+      { ask: 'Primer paso: de horas a minutos. ¿Qué factor quita las horas?', right: F(60, 'min', 1, 'h'), wrong: F(1, 'h', 60, 'min'), quit: 'h' },
+      { ask: 'Segundo paso: ahora sobran los minutos. ¿Qué factor los quita?', right: F(60, 's', 1, 'min'), wrong: F(1, 'min', 60, 's'), quit: 'min' }] },
+    { name: '72 km/h → m/s (dos pasos)', q: dec(72), from: 'km/h', to: 'm/s', steps: [
+      { ask: 'Hay dos unidades que cambiar. Primero los km, que están arriba: ¿qué factor los quita?', right: F(1000, 'm', 1, 'km'), wrong: F(1, 'km', 1000, 'm'), quit: 'km' },
+      { ask: 'Ahora las horas. Ojo: en km/h la h está abajo. ¿Qué factor la quita?', right: F(1, 'h', 3600, 's'), wrong: F(3600, 's', 1, 'h'), quit: 'h' }] }];
+  const ex2 = { i: 0, done: [], order: [] };
+  const QN = { km: 'los km', g: 'los gramos', h: 'las horas', min: 'los minutos' };
+  const fracBtn = (f) => `<span class="fr"><span>${fmt(dec(f.n))} ${esc(f.nu)}</span><span>${fmt(dec(f.d))} ${esc(f.du)}</span></span>`;
+  function drawEx(animate) {
+    const E = EXS[ex2.i], fin = ex2.done.length === E.steps.length;
+    [...$('exTabs').children].forEach((b, i) => b.setAttribute('aria-pressed', i === ex2.i));
+    const fs = E.steps.slice(0, ex2.done.length).map((s) => s.right);
+    const ans = EU.apply(E.q, fs);
+    show($('expr'), render(terms(E.q, E.from, fs), { pending: !fin, result: fin ? `${fmt(ans)} ${E.to}` : '' }), animate);
+    if (fin) {
+      $('exAsk').textContent = '';
+      $('opts').innerHTML = '';
+      $('exFb').innerHTML = `<div class="fb good"><b>¡Listo!</b> Todas las unidades viejas se han tachado y solo queda ${esc(E.to)}. Ahora, la cuenta con los números: <b>${arith(E.q, fs, ans)}</b>.
+        <div class="row" style="margin-top:8px"><button class="b small" type="button" id="exAgain">Hacerlo otra vez</button>${ex2.i < EXS.length - 1 ? '<button class="b small" type="button" id="exNext">Siguiente ejemplo →</button>' : ''}</div></div>`;
+      $('exAgain').onclick = () => openEx(ex2.i);
+      if ($('exNext')) $('exNext').onclick = () => openEx(ex2.i + 1);
+      return;
+    }
+    const S = E.steps[ex2.done.length];
+    $('exAsk').textContent = S.ask;
+    const pair = ex2.order[ex2.done.length] ? [S.wrong, S.right] : [S.right, S.wrong];
+    $('opts').innerHTML = pair.map((f) => `<button type="button" class="opt" data-ok="${f === S.right}" aria-label="${fmt(dec(f.n))} ${f.nu} entre ${fmt(dec(f.d))} ${f.du}">${fracBtn(f)}</button>`).join('')
+      + '<span class="tip2">Las dos fracciones valen 1. Solo una tacha la unidad que sobra.</span>';
+  }
+  function openEx(i) { ex2.i = i; ex2.done = []; ex2.order = EXS[i].steps.map(() => Math.random() < .5); $('exFb').innerHTML = ''; drawEx(false); }
+  $('opts').addEventListener('click', (e) => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    const E = EXS[ex2.i], S = E.steps[ex2.done.length];
+    if (b.dataset.ok === 'true') {
+      ex2.done.push(true); drawEx(true);
+      if (ex2.done.length < E.steps.length) $('exFb').innerHTML = `<div class="fb good"><b>¡Eso es!</b> ${esc(S.quit)} arriba y ${esc(S.quit)} abajo: se tachan. Mira cómo desaparecen.</div>`;
+    } else {
+      b.classList.add('ko');
+      const fs = E.steps.slice(0, ex2.done.length).map((s) => s.right).concat([S.wrong]);
+      const r = render(terms(E.q, E.from, fs), { skip: S.quit });
+      $('exFb').innerHTML = `<div class="fb bad"><b>Con esa, ${QN[S.quit]} no se tachan.</b> Quedaría así: <span class="expr" id="badExpr" style="display:inline-flex;font-size:1.05rem;min-height:0;padding:4px 10px;box-shadow:none;margin:6px 0"></span><br>
+        Fíjate: ${QN[S.quit]} siguen ahí, y encima aparecen otra vez. La unidad que quieres quitar tiene que estar en el piso contrario: si en tu cantidad está ${E.from.split('/')[1] === S.quit ? 'abajo, en el factor va arriba' : 'arriba, en el factor va abajo'}. Prueba con la otra.</div>`;
+      show($('badExpr'), r, false);
+    }
+  });
+  $('exTabs').innerHTML = EXS.map((E, i) => `<button type="button" class="chip" data-i="${i}">${esc(E.name)}</button>`).join('');
+  $('exTabs').addEventListener('click', (e) => { const b = e.target.closest('.chip'); if (b) openEx(+b.dataset.i); });
+  const tabStyle = () => [...$('exTabs').children].forEach((b) => b.classList.toggle('sel', b.getAttribute('aria-pressed') === 'true'));
+  new MutationObserver(tabStyle).observe($('exTabs'), { attributes: true, subtree: true, attributeFilter: ['aria-pressed'] });
+
+  /* ---------- 3. superficie y volumen ---------- */
+  (function drawSq() {
+    let s = '<rect x="10" y="10" width="200" height="200" fill="#EEF6D6" stroke="#1F3A0B" stroke-width="2.5"/>';
+    let d = ''; for (let i = 1; i < 10; i++) d += `M${10 + i * 20} 10v200M10 ${10 + i * 20}h200`;
+    s += `<path d="${d}" stroke="#7FA80F" stroke-width="1"/><rect x="10" y="10" width="20" height="20" fill="#A6D41E" stroke="#1F3A0B"/>`;
+    s += '<text x="110" y="226" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="13" fill="#4E5A45">1 dm = 10 cm</text>';
+    s += '<text x="40" y="25" font-family="Nunito" font-weight="800" font-size="11" fill="#1F3A0B">1 cm²</text>';
+    $('sq').innerHTML = s;
+  })();
+  (function drawCube() {
+    const a = 150, c = Math.cos(Math.PI / 6), sn = 0.5, O = [140, 245];
+    const P = (x, y, z) => [O[0] + (x - y) * c * a / 10, O[1] - (x + y) * sn * a / 10 - z * a / 10];
+    const poly = (pts, fill) => `<polygon points="${pts.map((p) => p.map((v) => v.toFixed(1)).join(',')).join(' ')}" fill="${fill}" stroke="#1F3A0B" stroke-width="2"/>`;
+    let s = poly([P(0, 0, 10), P(10, 0, 10), P(10, 10, 10), P(0, 10, 10)], '#EEF6D6')
+      + poly([P(0, 0, 0), P(10, 0, 0), P(10, 0, 10), P(0, 0, 10)], '#CDEBC5')
+      + poly([P(0, 0, 0), P(0, 10, 0), P(0, 10, 10), P(0, 0, 10)], '#DCE6C6');
+    let d = ''; const L = (p, q) => { d += `M${p[0].toFixed(1)} ${p[1].toFixed(1)}L${q[0].toFixed(1)} ${q[1].toFixed(1)}`; };
+    for (let i = 1; i < 10; i++) {
+      L(P(i, 0, 10), P(i, 10, 10)); L(P(0, i, 10), P(10, i, 10));
+      L(P(i, 0, 0), P(i, 0, 10)); L(P(0, 0, i), P(10, 0, i));
+      L(P(0, i, 0), P(0, i, 10)); L(P(0, 0, i), P(0, 10, i));
+    }
+    s += `<path d="${d}" stroke="#7FA80F" stroke-width=".9"/>`;
+    s += poly([P(0, 0, 9), P(1, 0, 9), P(1, 0, 10), P(0, 0, 10)], '#A6D41E') + poly([P(0, 0, 10), P(1, 0, 10), P(1, 1, 10), P(0, 1, 10)], '#A6D41E');
+    $('cube').innerHTML = s;
+  })();
+  const MINI = [['1 m² = … dm²', ['10', '100', '1000'], 1, '1 m = 10 dm, y el cuadrado tiene 10 · 10 = 100 dm².'],
+    ['1 L = … cm³', ['1', '100', '1000'], 2, '1 L = 1 dm³ = 1000 cm³.'],
+    ['2 m³ = … L', ['200', '2000', '20 000'], 1, '1 m³ = 1000 dm³ = 1000 L, así que 2 m³ = 2000 L.']];
+  $('mini').innerHTML = MINI.map(([q, o], i) => `<div><span class="q">${q}</span> <span class="row" style="display:inline-flex" data-m="${i}">${o.map((x, j) => `<button type="button" class="chip" data-j="${j}">${x}</button>`).join('')}</span> <div class="msg" id="mm${i}" aria-live="polite" style="font-weight:600"></div></div>`).join('');
+  $('mini').addEventListener('click', (e) => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    const i = +b.parentNode.dataset.m, [, , ok, why] = MINI[i];
+    if (+b.dataset.j === ok) { b.classList.add('ok'); $('mm' + i).innerHTML = `<span class="okt">¡Sí!</span> ${why}`; }
+    else { b.classList.add('ko'); $('mm' + i).innerHTML = i === 0 ? 'Casi: recuerda que es un cuadrado, se multiplica por 10 dos veces.' : 'Piénsalo otra vez: mira el dibujo del cubo.'; }
+  });
+
+  /* ---------- 4. entrena ---------- */
+  const fresh = () => ({ lv: 1, ok: 0, tot: 0, streak: 0, best: 0 });
+  let S = Object.assign(fresh(), store.get(KEY, {}));
+  if (![1, 2, 3].includes(S.lv)) S.lv = 1;
+  const save = () => store.set(KEY, S);
+  const KIND = { len: 'Longitud', mass: 'Masa', cap: 'Capacidad', time: 'Tiempo', vel: 'Velocidad', area: 'Superficie', vol: 'Volumen', bridge: 'Volumen y capacidad' };
+  let cur = null, tries = 0, solved = false;
+  function score() { $('sOk').textContent = S.ok; $('sTot').textContent = S.tot; $('sStreak').textContent = S.streak; $('sBest').textContent = S.best;
+    [...$('lvSeg').children].forEach((b) => b.setAttribute('aria-pressed', +b.dataset.lv === S.lv)); }
+  function next() {
+    cur = gen(S.lv); tries = 0; solved = false;
+    $('tKind').textContent = KIND[cur.kind];
+    $('tQ').textContent = `${fmt(cur.q)} ${cur.from}`; $('tU').textContent = cur.to;
+    $('tIn').value = ''; $('tIn').disabled = false; $('tFb').innerHTML = ''; $('tCheck').disabled = false; $('tShow').disabled = false;
+    $('tIn').focus({ preventScroll: true });
+  }
+  const bigger = () => cmp(cur.ans, cur.q) > 0;
+  function sizeWhy() {
+    return bigger() ? `${cur.to} es una unidad más pequeña que ${cur.from}: caben más, y el número sale más grande.`
+                    : `${cur.to} es una unidad más grande que ${cur.from}: caben menos, y el número sale más pequeño.`;
+  }
+  function stairNote() {
+    const k = cur.k; if (!k) {
+      if (cur.kind === 'time') return 'Recuerda: 1 h = 60 min y 1 min = 60 s (así que 1 h = 3600 s).';
+      if (cur.kind === 'vel') return 'Recuerda: 1 km = 1000 m y 1 h = 3600 s. Hay que cambiar las dos unidades, con un factor para cada una.';
+      return 'El puente: 1 L = 1 dm³ = 1000 cm³, 1 mL = 1 cm³ y 1 m³ = 1000 L.';
+    }
+    const n = Math.abs(k), per = cur.step === 1 ? '10' : cur.step === 2 ? '100' : '1000', moves = n * cur.step;
+    return `En la escalera: ${k > 0 ? 'bajas' : 'subes'} ${n} ${pl(n, 'peldaño', 'peldaños')} de ${cur.from} a ${cur.to}${cur.step > 1 ? `, y cada uno vale · ${per}` : ''}.
+      La coma se mueve ${moves} ${pl(moves, 'lugar', 'lugares')} a la ${k > 0 ? 'derecha' : 'izquierda'} (${k > 0 ? '·' : ':'} ${fmt(dec(T(moves)))}).`;
+  }
+  function solution(head, cls) {
+    const r = render(terms(cur.q, cur.from, cur.fs), { result: `${fmt(cur.ans)} ${esc(cur.to)}` });
+    $('tFb').innerHTML = `<div class="fb ${cls}">${head}<div class="sol"><div class="expr" id="tExpr"></div>
+      <div>Con los números: <b>${arith(cur.q, cur.fs, cur.ans)}</b>.</div><div>${stairNote()}</div><div class="tip2">${sizeWhy()}</div></div></div>`;
+    show($('tExpr'), r, true);
+  }
+  function finish(first, okk, head) {
+    solved = true; S.tot++;
+    if (okk && first) { S.ok++; S.streak++; S.best = Math.max(S.best, S.streak); } else S.streak = 0;
+    save(); score();
+    $('tCheck').disabled = true; $('tShow').disabled = true; $('tIn').disabled = true;
+    solution(head, okk ? 'good' : 'neutral');
+    $('tNext').focus({ preventScroll: true });
+  }
+  const HINT = {
+    inv: () => `Has ido en sentido contrario. De ${cur.from} a ${cur.to}, ¿la unidad se hace más grande o más pequeña? Piensa si el número debe crecer o encoger.`,
+    step: () => `¡Muy cerca! Te sobra o te falta un peldaño (un factor 10). Cuenta otra vez los escalones de ${cur.from} a ${cur.to}.`,
+    lin: () => `Cuidado: en ${cur.kind === 'area' ? 'superficie cada peldaño vale · 100' : 'volumen cada peldaño vale · 1000'}, no · 10.`,
+    sixty: () => 'Ojo: el tiempo no va de 10 en 10. 1 h = 60 min y 1 min = 60 s.',
+    onef: () => `Vas bien, pero falta un factor: hay que cambiar ${cur.from === 'km/h' ? 'los km y también las horas' : 'los metros y también los segundos'}.`,
+    none: () => `No es eso, pero vamos bien. Pista: el número tiene que salir ${bigger() ? 'más grande' : 'más pequeño'} que ${fmt(cur.q)}. ¿Qué factor lo consigue?`
+  };
+  const ERR = { empty: 'Escribe tu respuesta primero.', bad: 'No entiendo ese número. Escribe solo cifras y, si hace falta, una coma (por ejemplo 0,35).',
+    seps: 'Usa una sola coma (o un punto) para los decimales.', miles: 'Para los miles no pongas puntos: escribe 2500 o 2 500. El punto y la coma los leo como coma decimal.' };
+  function doCheck() {
+    if (solved) { next(); return; }
+    const r = check(cur, $('tIn').value);
+    if (r.err) { $('tFb').innerHTML = `<div class="fb neutral">${ERR[r.err]}</div>`; return; }
+    if (r.ok) {
+      const note = r.note === 'miles' || r.note === 'punto' ? ` <span class="tip2">(Lo he leído como ${fmt(cur.ans)}. Para los miles mejor no uses punto: escribe ${fmt(cur.ans)}.)</span>` : '';
+      finish(tries === 0, true, `<b class="okt">¡Correcto${tries === 0 ? '' : ', a la segunda'}!</b> ${fmt(cur.q)} ${esc(cur.from)} = ${fmt(cur.ans)} ${esc(cur.to)}.${note} Así se hace con factores:`);
+      return;
+    }
+    if (tries === 0) {
+      tries = 1;
+      $('tFb').innerHTML = `<div class="fb bad"><b>Todavía no.</b> ${HINT[r.why || 'none']()} Inténtalo otra vez.</div>`;
+      $('tIn').select();
+    } else finish(false, false, `<b>Esta se resistía.</b> Has escrito ${fmt(r.d)}, y la respuesta es <b>${fmt(cur.ans)} ${esc(cur.to)}</b>. Míralo paso a paso:`);
+  }
+  $('tCheck').addEventListener('click', doCheck);
+  $('tIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); doCheck(); } });
+  $('tNext').addEventListener('click', () => { if (!solved && tries > 0) { S.tot++; S.streak = 0; save(); score(); } next(); });
+  $('tShow').addEventListener('click', () => finish(false, false, `La respuesta es <b>${fmt(cur.ans)} ${esc(cur.to)}</b>. Míralo paso a paso:`));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && solved && document.activeElement === $('tNext')) { e.preventDefault(); next(); } }, true);
+  $('lvSeg').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; S.lv = +b.dataset.lv; save(); score(); next(); });
+  $('sReset').addEventListener('click', () => { S = Object.assign(fresh(), { lv: S.lv }); save(); score(); });
+
+  /* arranque */
+  buildStair(); place('3,5', 0); drawBar(10); openEx(0); score();
+  cur = gen(S.lv); tries = 0; solved = false;
+  $('tKind').textContent = KIND[cur.kind]; $('tQ').textContent = `${fmt(cur.q)} ${cur.from}`; $('tU').textContent = cur.to;
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeBall(); drawStrip(); });
+})();
+</script>
+</body>
+</html>

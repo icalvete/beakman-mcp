@@ -232,3 +232,59 @@ recursos:
       metodo: >-
         Una regla que mueves tú corta los tres carriles y te cuenta qué existía en ese año y qué pasó cerca. En papel,
         un A4 apaisado para tenerlo delante al estudiar.
+
+  - id: que-es-una-magnitud
+    asignatura: ciencias
+    curso: 2eso
+    imagen: que-es-una-magnitud.jpg
+    solo_pc: true
+    es:
+      titulo: ¿Qué es una magnitud?
+      temas: Física y Química · La actividad científica
+      descripcion: >-
+        Clasifica qué se puede medir y qué no, mira a escala por qué «5» no dice nada y «5 m» sí, empareja cada
+        magnitud con su unidad, su símbolo y su instrumento, y construye las magnitudes derivadas con bloques.
+      objetivo: >-
+        Entender de verdad qué es una magnitud, por qué una medida siempre lleva número y unidad, qué son el Sistema
+        Internacional y sus siete magnitudes básicas, y cómo salen de ellas la superficie, el volumen, la velocidad y la
+        densidad.
+      metodo: >-
+        Hacer antes que leer: tarjetas con respuesta al momento, dibujos a escala, una tabla con las trampas típicas
+        (Kg, seg, °K) explicadas y un constructor de recetas que enseña la unidad mientras la montas. Al final, diez
+        preguntas y repetir solo las falladas.
+
+  - id: escalera-de-unidades
+    asignatura: ciencias
+    curso: 2eso
+    imagen: escalera-de-unidades.jpg
+    solo_pc: true
+    es:
+      titulo: La escalera de las unidades
+      temas: Física y Química · La actividad científica
+      descripcion: >-
+        Sube y baja la escalera de km a mm (y de las unidades de masa y de capacidad), mira cómo se mueve la coma en
+        cada escalón y aprende el truco del factor de conversión, con las unidades tachándose ante tus ojos.
+      objetivo: >-
+        Cambiar de unidad sin miedo y sin memorizar: entender los múltiplos y submúltiplos, por qué cada escalón es
+        un ×10 o un ÷10, y cómo funciona el factor de conversión, también con km/h y m/s.
+      metodo: >-
+        Una escalera animada que hace la cuenta en cada paso, ejemplos guiados del factor de conversión, superficie y
+        volumen con cuadraditos y cubitos, y un generador de ejercicios con la corrección paso a paso.
+
+  - id: mide-como-en-el-laboratorio
+    asignatura: ciencias
+    curso: 2eso
+    imagen: mide-como-en-el-laboratorio.jpg
+    solo_pc: true
+    es:
+      titulo: Mide como en el laboratorio
+      temas: Física y Química · La actividad científica
+      descripcion: >-
+        Lee una regla, una probeta, un termómetro, una balanza y un cronómetro, compara la precisión de dos
+        instrumentos, mide varias veces y haz la media, y caza los errores típicos al medir.
+      objetivo: >-
+        Saber medir bien: leer cada instrumento, escribir siempre número y unidad, entender qué es la precisión y por
+        qué en ciencia se repite una medida y se hace la media.
+      metodo: >-
+        Instrumentos dibujados que cambian cada vez, corrección con margen de media división, un juego de reflejos
+        para medir tiempos cinco veces y casos para descubrir qué ha hecho mal quien mide.
