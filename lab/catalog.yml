@@ -40,7 +40,7 @@ recursos:
     tipo: resumen
     imagen: resumen-tema-1.jpg
     es:
-      titulo: El Tema 1 contado como una historia
+      titulo: "Resumen del Tema 1: La huella andalusí"
       temas: Tema 1 · La huella andalusí
       unidad: Tema 1 · La huella andalusí
       descripcion: >-
@@ -251,7 +251,7 @@ recursos:
     tipo: resumen
     imagen: resumen-actividad-cientifica.jpg
     es:
-      titulo: La actividad científica, paso a paso
+      titulo: "Resumen del Tema 1: La actividad científica"
       temas: Física y Química · Tema 1 · La actividad científica
       unidad: Tema 1 · La actividad científica
       descripcion: >-
