@@ -311,3 +311,81 @@ recursos:
       metodo: >-
         Instrumentos dibujados que cambian cada vez, corrección con margen de media división, un juego de reflejos
         para medir tiempos cinco veces y casos para descubrir qué ha hecho mal quien mide.
+
+  - id: resumen-propiedades-materia
+    asignatura: ciencias
+    curso: 2eso
+    tipo: resumen
+    imagen: resumen-propiedades-materia.jpg
+    es:
+      titulo: "Resumen del Tema 2: Propiedades de la materia"
+      unidad: Tema 2 · Propiedades de la materia
+      descripcion: >-
+        La unidad entera en una lectura: masa, volumen y densidad, por qué algo flota, los tres estados, la teoría
+        cinético-molecular, los cambios de estado y la gráfica de calentamiento.
+      objetivo: >-
+        Tener claro lo esencial antes de practicar: qué propiedades identifican una sustancia, cómo se calcula la
+        densidad y qué hacen las partículas en cada estado y al cambiar de uno a otro.
+      metodo: >-
+        Ocho apartados cortos, cada uno con la idea que hay que guardar y el recurso del lab para practicarlo, y al
+        final las 5 claves del examen.
+
+  - id: flota-o-se-hunde
+    asignatura: ciencias
+    curso: 2eso
+    imagen: flota-o-se-hunde.jpg
+    solo_pc: true
+    es:
+      titulo: ¿Flota o se hunde? La densidad
+      unidad: Tema 2 · Propiedades de la materia
+      descripcion: >-
+        Pesa objetos en una balanza, sumérgelos en una probeta y lee el menisco, calcula su densidad con las unidades
+        bien escritas y suéltalos en agua, agua con sal, aceite o mercurio para ver si flotan. Y desmonta las trampas:
+        el kilo de hierro y el de paja, y el barco de acero que flota.
+      objetivo: >-
+        Entender de verdad qué son la masa, el volumen y la densidad, por qué la densidad sirve para reconocer una
+        sustancia y no cambia al partir el objeto, y por qué algo flota cuando es menos denso que el líquido.
+      metodo: >-
+        Hacer antes que leer: tarjetas con respuesta al momento, un laboratorio virtual que avisa de los errores típicos
+        (el menisco, restar los volúmenes, dividir al revés), apostar antes de soltar cada objeto, dibujos a escala y un
+        barco cuyo casco agrandas tú. Al final, diez preguntas y repetir solo las falladas.
+
+  - id: particulas-en-movimiento
+    asignatura: ciencias
+    curso: 2eso
+    imagen: particulas-en-movimiento.jpg
+    solo_pc: true
+    es:
+      titulo: Las partículas en movimiento
+      unidad: Tema 2 · Propiedades de la materia
+      descripcion: >-
+        Calienta y enfría una caja de partículas y mira cómo pasan de vibrar a deslizarse y a volar, aprieta un gas en
+        una jeringuilla contando sus choques contra el émbolo y explica con partículas la colonia, el colorante, la
+        rueda de la bici o el vaso que suda.
+      objetivo: >-
+        Entender la teoría cinético-molecular y usarla para explicar cómo se comporta cada estado: por qué un gas se
+        comprime y un líquido no, qué es la presión y por qué las partículas nunca cambian de tamaño ni se paran.
+      metodo: >-
+        Ver antes que leer: una simulación con termómetro, las cuatro ideas de la teoría conectadas cada una con algo
+        que se ve en la caja y una jeringuilla con contador de choques y tabla para descubrir la ley de Boyle. Al final,
+        diez situaciones de la vida diaria con el porqué de cada opción y repetir solo las falladas.
+
+  - id: cambios-de-estado
+    asignatura: ciencias
+    curso: 2eso
+    imagen: cambios-de-estado.jpg
+    solo_pc: true
+    es:
+      titulo: Los cambios de estado y la gráfica de calentamiento
+      unidad: Tema 2 · Propiedades de la materia
+      descripcion: >-
+        Pon nombre a las seis flechas entre sólido, líquido y gas, calienta hielo en un hornillo virtual mientras se
+        dibuja su gráfica en directo y lee las gráficas de otras sustancias para descubrir cuál es cada una.
+      objetivo: >-
+        Dominar los nombres de los cambios de estado y saber cuáles absorben o ceden energía, y leer e interpretar
+        una gráfica de calentamiento y de enfriamiento: los tramos, las mesetas, por qué en ellas no sube la
+        temperatura y qué dicen del punto de fusión y de ebullición.
+      metodo: >-
+        Hacer antes que leer: un triángulo para completar con respuesta al momento, un experimento con el vaso, el
+        termómetro y una lupa de partículas junto a la gráfica, once gráficas con datos reales para leer (también
+        una mezcla sin meseta) y la trampa del «humo» blanco de la olla.

@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Flota o se hunde? La densidad · El laboratorio de Beakman</title>
+<meta name="description" content="Masa, volumen y densidad con una balanza y una probeta virtuales: mide, calcula d = m/V y descubre por qué unas cosas flotan y otras se hunden. Física y Química de 2º de la ESO, Tema 2.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+[hidden] { display: none !important; }
+.block h3 { font-size: 1.15rem; }
+.score { font-weight: 800; color: var(--ink); }
+.fb { min-height: 1.6em; font-weight: 700; }
+button.chip { font-family: var(--body); font-size: 1rem; color: var(--ink); }
+.b:focus-visible, .chip:focus-visible, .seg button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.draw { background: #FFFDF6; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; }
+.draw svg { display: block; width: 100%; height: auto; font-family: var(--body); }
+.seg { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); background: #fff; }
+.seg button { border: 0; background: #fff; padding: 8px 14px; font: 800 .95rem/1.1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+.formula { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font: 600 1.25rem/1.2 var(--display); color: var(--ink); }
+.formula span { background: #fff; border: 2px solid var(--ink); border-radius: 12px; padding: 6px 14px; box-shadow: 2px 2px 0 var(--lime); }
+
+/* 1. General o específica */
+.pgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pcard { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 12px 10px; display: grid; gap: 8px; align-content: start; }
+.pcard h3 { font-size: 1.1rem; }
+.pcard .row { flex-wrap: nowrap; gap: 6px; }
+.pcard .row .b { flex: 1; justify-content: center; padding-inline: 6px; }
+.pcard .rsn { font-size: .9rem; line-height: 1.4; }
+.pcard .big { font: 700 1.2rem/1.1 var(--display); color: var(--ink); }
+.keyidea { margin-top: 16px; display: grid; gap: 12px; }
+.same100 { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: center; }
+
+/* 2. Laboratorio */
+.lab { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 1fr); gap: 18px; align-items: start; }
+.lab > * { min-width: 0; }
+.objs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.objs .chip { padding: 6px 10px; }
+.objs .chip svg { width: 26px; height: 26px; }
+.panel { background: #fff; border: 1.5px solid var(--line); border-left: 6px solid var(--lime); border-radius: 0 14px 14px 0; padding: 12px 16px; display: grid; gap: 10px; }
+.panel h3 { font-size: 1.2rem; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.steps li { display: grid; gap: 6px; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 12px; background: #FBFCF7; }
+.steps li.cur { border-color: var(--ink); background: #fff; box-shadow: 2px 2px 0 var(--lime); }
+.steps li.done { opacity: .85; }
+.steps li.todo { opacity: .45; }
+.steps .t { font-weight: 800; color: var(--ink); }
+.steps .t small { color: var(--muted); font-weight: 700; }
+.ans { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.ans input, .ans select { border: 2px solid var(--line); border-radius: 10px; padding: 6px 10px; font: 700 1.05rem var(--body); color: var(--text); background: #fff; }
+.ans input { width: 110px; }
+.ans input:focus, .ans select:focus { outline: none; border-color: var(--ink); }
+.ans .u { font-weight: 800; color: var(--ink); }
+.tip { font-size: .93rem; background: var(--note); border-radius: 10px; padding: 8px 10px; }
+.msg { font-size: .95rem; font-weight: 700; min-height: 1.3em; }
+table.nb { border-collapse: collapse; width: 100%; background: #fff; font-size: .95rem; margin-top: 10px; }
+table.nb th, table.nb td { border: 1.5px solid var(--line); padding: 5px 9px; text-align: left; }
+table.nb th { background: var(--lime-soft); font-weight: 800; color: var(--ink); }
+table.nb td.v { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+/* 3. Flota o se hunde */
+.fl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 20px; align-items: start; }
+.fl > * { min-width: 0; }
+.fl .objs .chip small { color: var(--muted); font-weight: 800; }
+.cmp { font: 600 1.35rem/1.25 var(--display); color: var(--ink); }
+.cmp .lt { color: #2E7D32; } .cmp .gt { color: #B23B2E; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.facts div { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 6px 10px; }
+.facts small { display: block; color: var(--muted); font-weight: 800; font-size: .8rem; }
+.facts b { font: 700 1.15rem/1.2 var(--display); color: var(--ink); }
+.facts .hl { border-color: var(--ink); box-shadow: 2px 2px 0 var(--lime); }
+.mover { transition: transform 1.3s cubic-bezier(.3, .7, .4, 1); }
+
+/* 4. Las trampas */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.two > * { min-width: 0; }
+.ship input[type=range] { width: 100%; accent-color: #7FA80F; }
+.tf { display: grid; gap: 8px; }
+.tfrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.tfrow .rsn { grid-column: 1 / -1; font-size: .93rem; line-height: 1.4; }
+.tfrow .rsn:empty { display: none; }
+
+/* 5. Ponte a prueba */
+.quiz { max-width: 760px; display: grid; gap: 12px; }
+.quiz .qn { font-weight: 800; color: var(--muted); font-size: .9rem; }
+.quiz .qt { font: 600 1.35rem/1.25 var(--display); color: var(--ink); }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.opts .chip { justify-content: flex-start; font-size: 1rem; text-align: left; }
+.reslist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.reslist li { background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 6px 12px; }
+@media (max-width: 900px) { .pgrid { grid-template-columns: 1fr 1fr; } .lab, .fl, .two, .same100 { grid-template-columns: 1fr; } .opts, .facts { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .mover { transition: none; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>¿Flota o se hunde? <em>La densidad</em></h1>
+    <p class="lead">Un barco de miles de toneladas flota y una moneda de un céntimo, que no llega a 3 gramos, se hunde. ¿Cómo puede ser? Hoy vas a pesar, sumergir,
+      calcular y soltar cosas en el agua hasta que lo veas claro. La clave tiene nombre: densidad.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes">
+    <a href="#propiedades">1. ¿General o específica?</a><a href="#laboratorio">2. Mide la densidad</a><a href="#flota">3. ¿Flota o se hunde?</a>
+    <a href="#trampas">4. Las trampas</a><a href="#prueba">5. Ponte a prueba</a>
+  </nav>
+
+  <section class="block" id="propiedades">
+    <h2>1. ¿General o específica?</h2>
+    <p class="hint">Las propiedades <b>generales</b> las tiene toda la materia, pero no te dicen qué sustancia es. Las <b>específicas</b> sirven para reconocerla.
+      Clasifica cada tarjeta. Pregúntate: si solo sé esto, ¿puedo saber de qué está hecho?</p>
+    <p class="score" id="pScore" aria-live="polite"></p>
+    <div class="pgrid" id="pgrid"></div>
+    <div class="keyidea" id="pKey" hidden>
+      <div class="same100">
+        <div class="note"><b>La idea clave:</b> la <b>masa</b> (cuánta materia hay) y el <b>volumen</b> (cuánto sitio ocupa) dependen de cuánto cojas: no dicen qué es.
+          Mira el dibujo: tres trozos de <b>100 g</b> cada uno. Misma masa, pero el de oro es un dado pequeñito y el de corcho, un cubo de más de 7 cm de lado.
+          Lo que los distingue es cuánta masa cabe en cada centímetro cúbico: la <b>densidad</b>.
+          <div class="formula" style="margin-top:10px" aria-label="Densidad igual a masa entre volumen"><span>d</span> = <span>m</span> ÷ <span>V</span>
+            <span style="background:var(--lime-soft)">g/cm³</span></div></div>
+        <div class="draw" id="p100" aria-label="Tres cubos de 100 g dibujados a escala: oro de 1,7 cm de lado, hierro de 2,3 cm y corcho de 7,5 cm"></div>
+      </div>
+      <div class="row"><button class="b ghost small" id="pAgain" type="button">Barajar y volver a clasificar</button></div>
+    </div>
+  </section>
+
+  <section class="block" id="laboratorio">
+    <h2>2. Mide la densidad en el laboratorio</h2>
+    <p class="hint">Elige un objeto. Lo pesas en la balanza, lees la probeta, lo sumerges y vuelves a leer. El agua sube justo lo que ocupa el objeto.
+      Con eso calculas su densidad. Cada rayita de la probeta es <b>1 mL</b>, y <b>1 mL = 1 cm³</b>.</p>
+    <div class="objs" id="labObjs" role="group" aria-label="Objeto que vas a medir"></div>
+    <div class="lab">
+      <div><div class="draw" id="labScene"></div>
+        <h3 style="margin-top:18px">Tu cuaderno de laboratorio</h3>
+        <p class="hint" id="nbHint" style="margin:0">Aquí se apunta cada objeto que midas bien. Prueba varios: ¿cuál es el más denso?</p>
+        <div id="nb"></div></div>
+      <div class="panel">
+        <h3 id="labTitle">Elige un objeto</h3>
+        <ol class="steps" id="steps"></ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="flota">
+    <h2>3. ¿Flota o se hunde?</h2>
+    <p class="hint">La regla es una comparación: si el objeto es <b>menos denso</b> que el líquido, flota; si es <b>más denso</b>, se hunde.
+      Elige objeto y líquido, apuesta y suéltalo. Después pártelo por la mitad o hazlo el doble de grande y vuelve a probar.</p>
+    <div class="fl">
+      <div>
+        <h3>El objeto</h3>
+        <div class="objs" id="flObjs" role="group" aria-label="Objeto" style="margin-top:6px"></div>
+        <h3>El líquido</h3>
+        <div class="seg" id="flLiq" role="group" aria-label="Líquido" style="margin:6px 0 14px"></div>
+        <h3>El tamaño</h3>
+        <div class="seg" id="flSize" role="group" aria-label="Tamaño" style="margin:6px 0 14px">
+          <button type="button" data-f="0.5" aria-pressed="false">Partido por la mitad</button><button type="button" data-f="1" aria-pressed="true">Normal</button><button type="button" data-f="2" aria-pressed="false">El doble</button>
+        </div>
+        <div class="facts" id="flFacts"></div>
+        <p style="margin-top:14px;font-weight:800">¿Qué va a pasar?</p>
+        <div class="row" style="margin-top:6px"><button class="b" type="button" id="flUp">Flota</button><button class="b" type="button" id="flDown">Se hunde</button>
+          <button class="b ghost small" type="button" id="flReset" hidden>Sacarlo y probar otra vez</button></div>
+        <p class="fb" id="flFb" aria-live="polite" style="margin-top:10px"></p>
+        <p class="score" id="flScore"></p>
+      </div>
+      <div>
+        <div class="draw" id="flScene"></div>
+        <p class="cmp" id="flCmp" style="margin-top:10px" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="trampas">
+    <h2>4. Las trampas</h2>
+    <p class="hint">Ideas que suenan bien y te pueden hacer fallar en el examen. Piensa antes de pulsar.</p>
+    <div class="two">
+      <div>
+        <h3>¿Qué pesa más, un kilo de hierro o un kilo de paja?</h3>
+        <div class="row" id="kgOpts" style="margin:8px 0">
+          <button class="chip" type="button" data-k="h">El de hierro</button><button class="chip" type="button" data-k="p">El de paja</button><button class="chip" type="button" data-k="i">Los dos igual</button>
+        </div>
+        <p class="fb" id="kgFb" aria-live="polite"></p>
+        <div class="draw" id="kgScene" hidden></div>
+      </div>
+      <div class="ship">
+        <h3>¿Cómo flota un barco de acero?</h3>
+        <p style="margin-top:6px">Tienes <b>790 g de acero</b> (7,9 g/cm³), así que hay <b>100 cm³</b> de acero. Hecho una bola, se hunde.
+          Ahora dale forma de barco: el acero es el mismo, pero el casco encierra aire. Mueve la barra.</p>
+        <label for="shipV" style="display:block;font-weight:800;margin-top:10px">Volumen total del barco (acero + aire): <span id="shipVt" class="num"></span></label>
+        <input type="range" id="shipV" min="100" max="2000" step="10" value="100">
+        <div class="draw" id="shipScene" style="margin-top:8px"></div>
+        <p class="cmp" id="shipCmp" style="margin-top:8px;font-size:1.1rem" aria-live="polite"></p>
+        <div class="row" style="margin-top:8px"><button class="b ghost small" type="button" id="shipHole">Hacerle un agujero al casco</button></div>
+        <p id="shipTxt" style="margin-top:8px"></p>
+      </div>
+    </div>
+    <h3 style="margin-top:24px">¿Verdad o mentira?</h3>
+    <div class="tf" id="tf" style="margin-top:8px"></div>
+  </section>
+
+  <section class="block" id="prueba">
+    <h2>5. Ponte a prueba</h2>
+    <p class="hint">Diez preguntas mezcladas. Ten a mano papel y lápiz para las cuentas. Al final verás tu nota y podrás repetir solo las falladas.</p>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <div class="beak" style="margin-bottom:28px"><img src="../../../../media/beakman.jpg" alt="">
+    <div><b>Lo que te llevas</b>La densidad es la masa que cabe en cada cm³: d = m / V. No cambia si partes el objeto, porque es de la sustancia, no del trozo.
+      Y algo flota si es menos denso que el líquido en el que está: por eso el hielo flota, la plastilina se hunde y el barco, con su aire dentro, flota.</div></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.flota-o-se-hunde.v1';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const fmt = (n, d) => n.toFixed(d).replace('.', ',');
+  const fmtd = (n) => n >= 10 ? fmt(n, 1) : fmt(n, 2);           // densidades: 19,3 · 7,90 · 0,24
+  const num = (s) => { const t = String(s).trim().replace(/\s/g, '').replace(',', '.'); return t === '' || isNaN(+t) ? null : +t; };
+  const INK = '#1F3A0B';
+
+  /* ---------- Objetos (masa y volumen coherentes con la densidad real) ---------- */
+  // id, nombre, masa (g), volumen (cm³), densidad (g/cm³), nota
+  const OBJ = {
+    granito:    { n: 'Piedra de granito', m: 108.0, V: 40, d: 2.70 },
+    hierro:     { n: 'Trozo de hierro', m: 94.8, V: 12, d: 7.90 },
+    corcho:     { n: 'Tapón de corcho', m: 12.0, V: 50, d: 0.24 },
+    hielo:      { n: 'Cubito de hielo', m: 27.6, V: 30, d: 0.92 },
+    plastilina: { n: 'Bola de plastilina', m: 40.0, V: 25, d: 1.60 },
+    oro:        { n: 'Pepita de oro', m: 77.2, V: 4, d: 19.3 },
+    pino:       { n: 'Taco de madera de pino', m: 20.0, V: 40, d: 0.50 },
+    huevo:      { n: 'Huevo crudo', m: 63.0, V: 60, d: 1.05 },
+  };
+  const LAB_IDS = ['granito', 'hierro', 'corcho', 'hielo', 'plastilina', 'oro', 'pino'];
+  const FL_IDS = ['corcho', 'pino', 'hielo', 'huevo', 'plastilina', 'granito', 'hierro', 'oro'];
+
+  // Dibujo de cada objeto en una caja de w × h con la esquina arriba a la izquierda en (0, 0)
+  const ASPECT = { granito: .8, hierro: .7, corcho: 1.1, hielo: 1, plastilina: .95, oro: .7, pino: .75, huevo: 1.3 };
+  function shape(id, w) {
+    const h = w * ASPECT[id], P = (pts) => 'M' + pts.map(([x, y]) => (x * w).toFixed(1) + ' ' + (y * h).toFixed(1)).join(' L') + ' Z';
+    switch (id) {
+      case 'granito': return `<path d="${P([[.08, .55], [.2, .12], [.55, 0], [.88, .18], [1, .6], [.82, 1], [.25, 1], [0, .85]])}" fill="#A9A49A" stroke="#6E6A62" stroke-width="2"/>` +
+        [[.3, .4], [.6, .3], [.5, .7], [.75, .6], [.25, .75]].map(([x, y]) => `<circle cx="${x * w}" cy="${y * h}" r="${Math.max(1.2, w * .03)}" fill="#5E5A54"/>`).join('');
+      case 'hierro': return `<rect x="0" y="0" width="${w}" height="${h}" rx="${w * .06}" fill="#6B7178" stroke="#3E4247" stroke-width="2"/><rect x="${w * .1}" y="${h * .14}" width="${w * .5}" height="${h * .12}" rx="2" fill="#8D949C"/>`;
+      case 'corcho': return `<rect x="0" y="0" width="${w}" height="${h}" rx="${w * .12}" fill="#C89B62" stroke="#8A6236" stroke-width="2"/>` +
+        [[.25, .2], [.7, .3], [.4, .55], [.75, .7], [.2, .8], [.55, .88]].map(([x, y]) => `<circle cx="${x * w}" cy="${y * h}" r="${Math.max(1.2, w * .035)}" fill="#9A6E3C"/>`).join('');
+      case 'hielo': return `<rect x="0" y="0" width="${w}" height="${h}" rx="${w * .12}" fill="#E4F6FC" fill-opacity=".9" stroke="#7DBBD6" stroke-width="2"/><path d="M${w * .18} ${h * .2} L${w * .45} ${h * .2}" stroke="#fff" stroke-width="${Math.max(2, w * .06)}" stroke-linecap="round"/>`;
+      case 'plastilina': return `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${w / 2}" ry="${h / 2}" fill="#E8574A" stroke="#A8332A" stroke-width="2"/><ellipse cx="${w * .35}" cy="${h * .3}" rx="${w * .12}" ry="${h * .07}" fill="#F38A7F"/>`;
+      case 'oro': return `<path d="${P([[.05, .6], [.2, .1], [.6, 0], [.95, .3], [1, .75], [.7, 1], [.2, .95]])}" fill="#E8B930" stroke="#9C7410" stroke-width="2"/><path d="M${w * .3} ${h * .3} L${w * .55} ${h * .22}" stroke="#FFE68A" stroke-width="${Math.max(2, w * .07)}" stroke-linecap="round"/>`;
+      case 'pino': return `<rect x="0" y="0" width="${w}" height="${h}" rx="3" fill="#E6C48A" stroke="#9C7440" stroke-width="2"/>` +
+        [.3, .55, .8].map((y) => `<path d="M${w * .08} ${h * y} Q${w * .5} ${h * (y - .12)} ${w * .92} ${h * y}" stroke="#B68E52" stroke-width="1.5" fill="none"/>`).join('');
+      case 'huevo': return `<ellipse cx="${w / 2}" cy="${h / 2}" rx="${w / 2}" ry="${h / 2}" fill="#F4E3C6" stroke="#B89A6A" stroke-width="2"/>`;
+    }
+    return '';
+  }
+  const icon = (id) => { const w = 22, h = w * ASPECT[id];
+    return `<svg viewBox="-2 -2 ${w + 4} ${h + 4}" aria-hidden="true">${shape(id, w)}</svg>`; };
+
+  /* ---------- 1. General o específica ---------- */
+  const PROPS = [
+    ['Masa', 'g', 'Todo tiene masa, y depende de cuánto cojas: 100 g de oro y 100 g de corcho tienen la misma. No te dice qué es.'],
+    ['Volumen', 'g', 'Todo ocupa sitio. Un litro de agua y un litro de aceite ocupan lo mismo, y son sustancias distintas.'],
+    ['Densidad', 'e', 'Cada sustancia tiene la suya: el oro, 19,3 g/cm³; el hierro, 7,9 g/cm³. Sirve para reconocerla.'],
+    ['Temperatura de fusión', 'e', 'El hielo se funde a 0 °C y el hierro, a unos 1538 °C. Es como una huella dactilar de la sustancia.'],
+    ['Temperatura de ebullición', 'e', 'El agua pura hierve a 100 °C (a nivel del mar) y el alcohol, a unos 78 °C. Así se distinguen.'],
+    ['Color', 'e', 'El cobre es rojizo y el oro, amarillo. Ayuda a reconocer, aunque solo con el color a veces te equivocas.'],
+    ['Dureza', 'e', 'El diamante raya el vidrio, pero el vidrio no raya el diamante. Cada material tiene su dureza.'],
+    ['Olor', 'e', 'El vinagre y el alcohol se distinguen por el olor. En el laboratorio se huele abanicando con la mano, nunca acercando la nariz.'],
+  ];
+  let pAns = {};
+  function renderProps() {
+    const order = shuffle(PROPS.map((_, i) => i));
+    $('pgrid').innerHTML = order.map((i) => `<div class="pcard" data-i="${i}"><h3>${esc(PROPS[i][0])}</h3>
+      <div class="row"><button class="b ghost small" type="button" data-v="g">General</button><button class="b ghost small" type="button" data-v="e">Específica</button></div>
+      <div class="res" aria-live="polite"></div></div>`).join('');
+    pAns = {}; $('pKey').hidden = true; pScore();
+    $('pgrid').querySelectorAll('.pcard').forEach((c) => c.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+      const i = +c.dataset.i; if (i in pAns) return;
+      const good = b.dataset.v === PROPS[i][1]; pAns[i] = good;
+      c.classList.add(good ? 'ok' : 'ko'); c.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+      c.querySelector('.res').innerHTML = `<p class="big">${PROPS[i][1] === 'g' ? 'General' : 'Específica'}</p><p class="rsn">${good ? '' : '<span class="kot">Esta no.</span> '}${esc(PROPS[i][2])}</p>`;
+      pScore(); if (Object.keys(pAns).length === PROPS.length) { $('pKey').hidden = false; }
+    })));
+  }
+  function pScore() { const n = Object.keys(pAns).length, g = Object.values(pAns).filter(Boolean).length;
+    $('pScore').textContent = n ? `Llevas ${g} de ${n} bien.` + (n === PROPS.length ? (g === n ? ' ¡Todas!' : ' Lee las que fallaste: ahí está lo interesante.') : '') : ''; }
+  $('pAgain').addEventListener('click', renderProps);
+  // tres cubos de 100 g a escala (1 cm = 22 px)
+  (() => { const S = 22, cubes = [['oro', 'Oro', 19.3, '#E8B930', '#9C7410'], ['hierro', 'Hierro', 7.9, '#6B7178', '#3E4247'], ['corcho', 'Corcho', 0.24, '#C89B62', '#8A6236']];
+    let x = 14, out = ''; const base = 200;
+    cubes.forEach(([, n, d, f, s]) => { const V = 100 / d, a = Math.cbrt(V), px = a * S;
+      out += `<rect x="${x}" y="${base - px}" width="${px}" height="${px}" fill="${f}" stroke="${s}" stroke-width="2" rx="2"/>
+        <text x="${x + px / 2}" y="${base + 20}" text-anchor="middle" font-size="14" font-weight="800" fill="${INK}">${n}</text>
+        <text x="${x + px / 2}" y="${base + 37}" text-anchor="middle" font-size="12" font-weight="700" fill="#4E5A45">${fmt(V, V < 100 ? 1 : 0)} cm³</text>`;
+      x += Math.max(px, 52) + 22; });
+    $('p100').innerHTML = `<svg viewBox="0 0 300 246" role="img"><text x="150" y="20" text-anchor="middle" font-size="14" font-weight="800" fill="${INK}">100 g de cada uno, a escala</text>
+      <line x1="6" y1="200" x2="294" y2="200" stroke="${INK}" stroke-width="2"/>${out}</svg>`; })();
+  renderProps();
+
+  /* ---------- 2. Laboratorio: balanza + probeta ---------- */
+  const st = store.get(KEY, {}); st.nb = st.nb || {};
+  let L = null;   // estado: { id, Vi, Vf, step, weighed, dunk }
+  const PY = (mL) => 392 - mL * 2.2;        // probeta: 0 mL en y = 392, 150 mL en y = 62
+  const PX0 = 352, PX1 = 428;               // paredes de dentro de la probeta
+  function labScene() {
+    const o = L && OBJ[L.id], level = !L ? 0 : L.dunk ? L.Vf : L.Vi;
+    let s = `<svg viewBox="0 0 660 430" role="img" aria-label="Balanza digital y probeta con agua">`;
+    // balanza
+    s += `<rect x="40" y="300" width="240" height="96" rx="16" fill="#E9ECEF" stroke="#5A6570" stroke-width="3"/>
+      <rect x="70" y="286" width="180" height="12" rx="6" fill="#C8CDD2" stroke="#5A6570" stroke-width="2"/>
+      <rect x="92" y="320" width="136" height="50" rx="8" fill="#C9D8B0" stroke="#3D4A33" stroke-width="2.5"/>
+      <text x="200" y="357" text-anchor="end" font-size="30" font-weight="700" font-family="ui-monospace, Consolas, monospace" fill="#1F2A17">${L && L.weighed && !L.dunk ? fmt(o.m, 1) : '0,0'}</text>
+      <text x="207" y="357" font-size="18" font-weight="800" fill="#1F2A17">g</text>
+      <text x="160" y="418" text-anchor="middle" font-size="14" font-weight="800" fill="#5A6570">Balanza (0,1 g)</text>`;
+    if (L && L.weighed && !L.dunk) { const w = Math.min(90, 20 * Math.cbrt(o.V)), h = w * ASPECT[L.id]; s += `<g transform="translate(${160 - w / 2} ${286 - h})">${shape(L.id, w)}</g>`; }
+    if (L && !L.weighed) { const w = Math.min(90, 20 * Math.cbrt(o.V)), h = w * ASPECT[L.id]; s += `<g transform="translate(${160 - w / 2} ${200 - h / 2})">${shape(L.id, w)}</g>
+      <text x="160" y="140" text-anchor="middle" font-size="14" font-weight="700" fill="#4E5A45">${esc(o.n)}</text>`; }
+    // probeta
+    s += `<path d="M${PX0 - 6} 46 H${PX1 + 10} L${PX1 + 4} 56 V394 H${PX0 - 4} V56 Z" fill="#F4FAFD" stroke="#5A6B78" stroke-width="3"/>`;
+    if (L) { const y = PY(level);
+      s += `<path d="M${PX0} ${y - 5} C${PX0 + 4} ${y} ${PX0 + 12} ${y} ${(PX0 + PX1) / 2} ${y} C${PX1 - 12} ${y} ${PX1 - 4} ${y} ${PX1} ${y - 5} V392 H${PX0} Z" fill="#A7D8EE" fill-opacity=".85"/>`; }
+    if (L && L.dunk) { const w = Math.min(60, 13 * Math.cbrt(o.V)), h = w * ASPECT[L.id], floats = o.d < 1;
+      const top = floats ? PY(L.Vf) + 10 : 390 - h;
+      s += `<g transform="translate(${(PX0 + PX1) / 2 - w / 2} ${top})">${shape(L.id, w)}</g>`;
+      if (floats) s += `<line x1="${(PX0 + PX1) / 2 + 3}" y1="20" x2="${(PX0 + PX1) / 2 + 3}" y2="${top + 4}" stroke="#555" stroke-width="1.6"/>
+        <text x="${PX1 + 50}" y="28" font-size="12" font-weight="700" fill="#4E5A45">aguja fina</text>`;
+    }
+    for (let k = 10; k <= 150; k += 10) { const y = PY(k), big = k % 50 === 0;
+      s += `<line x1="${PX1 - (big ? 24 : 14)}" y1="${y}" x2="${PX1}" y2="${y}" stroke="${INK}" stroke-width="${big ? 2 : 1.3}"/>`;
+      if (big) s += `<text x="${PX1 + 14}" y="${y + 5}" font-size="14" font-weight="800" fill="${INK}">${k}</text>`; }
+    s += `<rect x="${PX0 - 34}" y="394" width="${PX1 - PX0 + 68}" height="14" rx="6" fill="#8FA3B0" stroke="#5A6B78" stroke-width="2"/>
+      <text x="${PX0 - 12}" y="76" text-anchor="end" font-size="14" font-weight="800" fill="#5A6B78">mL</text>`;
+    // lupa con el menisco
+    if (L) { const cx = 568, cy = 230, r = 82, S = 16, ly = (k) => cy - (k - level) * S, wall = 500;
+      s += `<line x1="${PX1}" y1="${PY(level)}" x2="${cx - r}" y2="${cy}" stroke="#5A6B78" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <defs><clipPath id="lc"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath></defs><g clip-path="url(#lc)">
+        <rect x="${cx - r}" y="${cy - r}" width="${2 * r}" height="${2 * r}" fill="#F4FAFD"/>
+        <path d="M${wall} ${ly(level + 1)} C${wall + 6} ${ly(level + .25)} ${wall + 22} ${ly(level)} ${wall + 46} ${ly(level)} H${cx + r} V${cy + r} H${wall} Z" fill="#A7D8EE"/>
+        <path d="M${wall} ${ly(level + 1)} C${wall + 6} ${ly(level + .25)} ${wall + 22} ${ly(level)} ${wall + 46} ${ly(level)} H${cx + r}" fill="none" stroke="#2C7FAE" stroke-width="2.5"/>`;
+      for (let k = Math.floor(level) - 6; k <= level + 6; k++) { const y = ly(k), five = k % 5 === 0;
+        s += `<line x1="${cx + 8 - (five ? 46 : 30)}" y1="${y}" x2="${cx + 8}" y2="${y}" stroke="${INK}" stroke-width="${five ? 2.4 : 1.4}"/>`;
+        if (five) s += `<text x="${cx + 16}" y="${y + 6}" font-size="17" font-weight="800" fill="${INK}">${k}</text>`; }
+      s += `<rect x="${wall - 14}" y="${cy - r}" width="14" height="${2 * r}" fill="#DDE7EE"/></g>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${INK}" stroke-width="4"/>
+        <line x1="${cx + r * .7}" y1="${cy + r * .7}" x2="${cx + r * .7 + 30}" y2="${cy + r * .7 + 30}" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+        <text x="${cx}" y="${cy - r - 10}" text-anchor="middle" font-size="13" font-weight="800" fill="#4E5A45">La lupa: cada rayita, 1 mL</text>`; }
+    else s += `<text x="560" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#4E5A45">Elige un objeto arriba</text>`;
+    $('labScene').innerHTML = s + '</svg>';
+  }
+  const STEPS = ['Pésalo', 'Lee la probeta sin el objeto', 'Sumérgelo y vuelve a leer', 'Calcula su volumen', 'Calcula su densidad'];
+  function labSteps() {
+    if (!L) { $('steps').innerHTML = ''; return; }
+    const o = OBJ[L.id], cls = (i) => i < L.step ? 'done' : i === L.step ? 'cur' : 'todo';
+    const inp = (id, ph, unit) => `<span class="ans"><input id="${id}" inputmode="decimal" autocomplete="off" placeholder="${ph}" aria-label="${ph}"><span class="u">${unit}</span><button class="b small" type="button" data-go="${id}">Comprobar</button></span>`;
+    let h = '';
+    h += `<li class="${cls(0)}"><span class="t">1. ${STEPS[0]}</span>` + (L.step === 0 ? `<button class="b small" type="button" id="doW" style="justify-self:start">Ponerlo en la balanza</button>`
+      : `<span>m = <b class="num">${fmt(o.m, 1)} g</b></span>`) + `</li>`;
+    h += `<li class="${cls(1)}"><span class="t">2. ${STEPS[1]} <small>V<sub>inicial</sub></small></span>` + (L.step === 1 ? `<span class="tip">Mira la lupa. El agua se curva al tocar el cristal: es el <b>menisco</b>. Se lee la <b>parte de abajo</b> de la curva.</span>` + inp('inVi', '¿cuánta agua?', 'mL')
+      : L.step > 1 ? `<span>V<sub>inicial</sub> = <b class="num">${L.Vi} mL</b></span>` : '') + `</li>`;
+    h += `<li class="${cls(2)}"><span class="t">3. ${STEPS[2]} <small>V<sub>final</sub></small></span>` + (L.step === 2 ? (L.dunk ? (o.d < 1 ? `<span class="tip">¡Este flota! Para medir su volumen lo empujamos con una aguja fina hasta que queda entero bajo el agua. La aguja casi no ocupa sitio.</span>` : '') + inp('inVf', '¿dónde está ahora?', 'mL')
+        : `<button class="b small" type="button" id="doD" style="justify-self:start">Meterlo en la probeta</button>`)
+      : L.step > 2 ? `<span>V<sub>final</sub> = <b class="num">${L.Vf} mL</b></span>` : '') + `</li>`;
+    h += `<li class="${cls(3)}"><span class="t">4. ${STEPS[3]} <small>V = V<sub>final</sub> − V<sub>inicial</sub></small></span>` + (L.step === 3 ? inp('inV', 'volumen', 'cm³')
+      : L.step > 3 ? `<span>V = ${L.Vf} − ${L.Vi} = <b class="num">${o.V} mL = ${o.V} cm³</b></span>` : '') + `</li>`;
+    h += `<li class="${cls(4)}"><span class="t">5. ${STEPS[4]} <small>d = m ÷ V</small></span>` + (L.step === 4 ? `<span class="ans"><input id="inD" inputmode="decimal" autocomplete="off" placeholder="densidad" aria-label="densidad">
+        <select id="inU" aria-label="unidad"><option value="">unidad…</option><option>g/cm³</option><option>cm³/g</option><option>g·cm³</option><option>g</option><option>cm³</option></select>
+        <button class="b small" type="button" data-go="inD">Comprobar</button></span>`
+      : L.step > 4 ? `<span>d = ${fmt(o.m, 1)} g ÷ ${o.V} cm³ = <b class="num">${fmtd(o.d)} g/cm³</b></span>` : '') + `</li>`;
+    h += `<li class="${L.step > 4 ? 'cur' : 'todo'}" ${L.step > 4 ? '' : 'hidden'}><span class="okt">¡Medido!</span><span>${esc(o.n)}: <b>${fmtd(o.d)} g/cm³</b>. ` +
+      `${o.d > 1 ? 'Es más denso que el agua (1,00 g/cm³): en agua se hunde.' : 'Es menos denso que el agua (1,00 g/cm³): en agua flota.'}</span>
+      <button class="b small" type="button" id="doNext" style="justify-self:start">Medir otro objeto</button></li>`;
+    h += `<li style="border:0;background:none;padding:0"><p class="msg" id="labMsg" aria-live="polite"></p></li>`;
+    $('steps').innerHTML = h;
+    const msg = (t, bad) => { $('labMsg').innerHTML = (bad ? '<span class="kot">Casi.</span> ' : '<span class="okt">¡Bien!</span> ') + t; };
+    if ($('doW')) $('doW').addEventListener('click', () => { L.weighed = true; L.step = 1; draw(); });
+    if ($('doD')) $('doD').addEventListener('click', () => { L.dunk = true; draw(); $('inVf') && $('inVf').focus(); });
+    if ($('doNext')) $('doNext').addEventListener('click', () => { const left = LAB_IDS.filter((k) => !st.nb[k] && k !== L.id); pickLab(left[0] || LAB_IDS[(LAB_IDS.indexOf(L.id) + 1) % LAB_IDS.length]); });
+    const check = (id) => {
+      const v = num($(id).value);
+      if (v === null) { $('labMsg').innerHTML = 'Escribe un número, aunque dudes.'; return; }
+      if (id === 'inVi' || id === 'inVf') { const want = id === 'inVi' ? L.Vi : L.Vf;
+        if (Math.abs(v - want) < .5) { L.step++; draw(); msg(`Son ${want} mL.`); focusIn(); return; }
+        if (Math.abs(v - want - 1) < .5) return msg('Has leído donde el agua sube por el cristal. Se lee la parte de abajo de la curva, con los ojos a su altura.', 1);
+        return msg('Cuenta las rayitas desde la marca con número más cercana: cada una es 1 mL.', 1); }
+      if (id === 'inV') {
+        if (v === o.V) { L.step++; draw(); msg(`El objeto ocupa ${o.V} cm³, porque 1 mL = 1 cm³.`); focusIn(); return; }
+        if (v === L.Vf) return msg(`${L.Vf} mL es toda el agua más el objeto. El volumen del objeto es lo que ha subido: resta el nivel de antes.`, 1);
+        if (v === L.Vf + L.Vi) return msg('Hay que restar, no sumar: lo que ha subido el agua es V<sub>final</sub> − V<sub>inicial</sub>.', 1);
+        return msg(`Resta: ${L.Vf} − ${L.Vi}.`, 1); }
+      if (id === 'inD') { const u = $('inU').value, tol = Math.max(.02, o.d * .015);
+        if (Math.abs(v - o.V / o.m) < Math.max(.02, (o.V / o.m) * .015) && Math.abs(v - o.d) > tol) return msg('Has dividido al revés: volumen entre masa. La densidad es masa entre volumen.', 1);
+        if (Math.abs(v - o.m / L.Vf) < .01 && Math.abs(v - o.d) > tol) return msg('Has dividido entre el nivel final de la probeta. Usa el volumen del objeto, el que te salió en el paso 4.', 1);
+        if (Math.abs(v - o.d) > tol) return msg(`Divide la masa entre el volumen: ${fmt(o.m, 1)} ÷ ${o.V}.`, 1);
+        if (!u) return msg('El número está bien. Ahora elige la unidad: una medida sin unidad no dice nada.', 1);
+        if (u !== 'g/cm³') return msg(`El número está bien, pero si divides gramos entre centímetros cúbicos, la unidad es g/cm³ («gramos por centímetro cúbico»).`, 1);
+        L.step++; st.nb[L.id] = { Vi: L.Vi, Vf: L.Vf }; store.set(KEY, st); draw(); renderNb(); msg(`${fmtd(o.d)} g/cm³: cada centímetro cúbico de ${o.n.toLowerCase().replace(/^(tapón|trozo|bola|taco|piedra|pepita|cubito) de /, '')} tiene ${fmtd(o.d)} g.`); }
+    };
+    $('steps').querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => check(b.dataset.go)));
+    $('steps').querySelectorAll('input').forEach((i) => i.addEventListener('keydown', (e) => { if (e.key === 'Enter') check(i.id); }));
+  }
+  const focusIn = () => { const i = $('steps').querySelector('input'); if (i) i.focus(); };
+  function draw() { labScene(); labSteps(); $('labTitle').textContent = L ? OBJ[L.id].n : 'Elige un objeto'; }
+  function pickLab(id) {
+    L = { id, Vi: 50 + Math.floor(Math.random() * 21), step: 0, weighed: false, dunk: false }; L.Vf = L.Vi + OBJ[id].V;
+    $('labObjs').querySelectorAll('.chip').forEach((c) => c.classList.toggle('sel', c.dataset.id === id)); draw();
+  }
+  $('labObjs').innerHTML = LAB_IDS.map((id) => `<button type="button" class="chip" data-id="${id}">${icon(id)}${esc(OBJ[id].n)}</button>`).join('');
+  $('labObjs').querySelectorAll('.chip').forEach((c) => c.addEventListener('click', () => pickLab(c.dataset.id)));
+  function renderNb() {
+    const ids = LAB_IDS.filter((k) => st.nb[k]).sort((a, b) => OBJ[a].d - OBJ[b].d);
+    if (!ids.length) { $('nb').innerHTML = ''; return; }
+    $('nb').innerHTML = `<table class="nb"><thead><tr><th>Objeto</th><th>m (g)</th><th>V<sub>inicial</sub> (mL)</th><th>V<sub>final</sub> (mL)</th><th>V (cm³)</th><th>d (g/cm³)</th><th>En agua…</th></tr></thead><tbody>` +
+      ids.map((k) => { const o = OBJ[k], r = st.nb[k]; return `<tr><td>${esc(o.n)}</td><td class="v">${fmt(o.m, 1)}</td><td class="v">${r.Vi}</td><td class="v">${r.Vf}</td><td class="v">${o.V}</td><td class="v">${fmtd(o.d)}</td><td>${o.d < 1 ? 'flota' : 'se hunde'}</td></tr>`; }).join('') +
+      `</tbody></table>` + (ids.length >= 3 ? `<p class="hint" style="margin-top:8px">Ordenados de menos a más denso. Fíjate: el tapón de corcho es el que más ocupa y el que menos pesa. La pepita de oro es la más pequeña y, aun así, pesa más que casi todos: es la más densa.</p>` : '');
+  }
+  draw(); renderNb();
+
+  /* ---------- 3. ¿Flota o se hunde? ---------- */
+  const LIQ = [
+    { id: 'agua', n: 'Agua', d: 1.00, c: '#A7D8EE', o: .8 },
+    { id: 'sal', n: 'Agua con mucha sal', d: 1.20, c: '#B6DDE0', o: .85 },
+    { id: 'aceite', n: 'Aceite de oliva', d: 0.92, c: '#E6CF5C', o: .75 },
+    { id: 'mercurio', n: 'Mercurio', d: 13.6, c: '#B7BDC4', o: .95 },
+  ];
+  let F = { id: 'corcho', liq: 'agua', f: 1, shown: false }, flHits = 0, flTries = 0;
+  const SURF = 120, BOT = 318, CX = 260;
+  const fState = () => { const o = OBJ[F.id], q = LIQ.find((l) => l.id === F.liq), r = o.d / q.d;
+    return { o, q, r, tie: Math.abs(o.d - q.d) < .005, floats: o.d < q.d - .005 }; };
+  function flY() {
+    const { r, tie, floats } = fState(), w = 15 * Math.cbrt(OBJ[F.id].V * F.f), h = w * ASPECT[F.id];
+    return { w, y: !F.shown ? 56 - h / 2 : tie ? SURF + 70 : floats ? SURF - h * (1 - r) : BOT - h };
+  }
+  function flScene() {
+    const { q } = fState(), { w, y } = flY();
+    let s = `<svg viewBox="0 0 520 350" role="img" aria-label="Vaso con ${esc(q.n.toLowerCase())}">
+      <path d="M110 40 V322 Q110 336 124 336 H396 Q410 336 410 322 V40" fill="#F4FAFD" stroke="#5A6B78" stroke-width="3"/>
+      <rect x="112" y="${SURF}" width="296" height="${BOT + 16 - SURF}" fill="${q.c}" fill-opacity="${q.o}"/>
+      <line x1="112" y1="${SURF}" x2="408" y2="${SURF}" stroke="#2C7FAE" stroke-width="2"/>
+      <text x="398" y="${BOT + 8}" text-anchor="end" font-size="14" font-weight="800" fill="${INK}">${esc(q.n)}: ${fmtd(q.d)} g/cm³</text>
+      <g class="mover" style="transform: translate(${CX - w / 2}px, ${y}px)">${shape(F.id, w)}</g>`;
+    if (F.f === 0.5) s += `<g class="mover" data-dx="110" style="transform: translate(${CX - w / 2 + 110}px, ${y}px)">${shape(F.id, w)}</g>
+      <text x="${CX + 55}" y="28" text-anchor="middle" font-size="13" font-weight="800" fill="#4E5A45">las dos mitades</text>`;
+    s += `</svg>`;
+    $('flScene').innerHTML = s;
+  }
+  function flFacts() {
+    const { o } = fState(), m = o.m * F.f, V = o.V * F.f;
+    $('flFacts').innerHTML = `<div><small>Masa</small><b class="num">${fmt(m, 1)} g</b></div><div><small>Volumen</small><b class="num">${fmt(V, V % 1 ? 1 : 0)} cm³</b></div>
+      <div class="hl"><small>Densidad = m ÷ V</small><b class="num">${fmtd(m / V)} g/cm³</b></div>`;
+  }
+  function flCmp() {
+    const { o, q, tie, floats } = fState();
+    if (!F.shown) { $('flCmp').innerHTML = ''; return; }
+    $('flCmp').innerHTML = tie ? `${fmtd(o.d)} ≈ ${fmtd(q.d)} → empate` :
+      floats ? `<span class="lt">${fmtd(o.d)} &lt; ${fmtd(q.d)}</span> → flota` : `<span class="gt">${fmtd(o.d)} &gt; ${fmtd(q.d)}</span> → se hunde`;
+  }
+  function flRender(keepScene) { if (!keepScene) flScene(); flFacts(); flCmp(); $('flUp').disabled = $('flDown').disabled = F.shown; $('flReset').hidden = !F.shown;
+    $('flScore').textContent = flTries ? `Apuestas acertadas: ${flHits} de ${flTries}` : ''; }
+  function flBet(up) {
+    const { o, q, r, tie, floats } = fState(), good = tie || up === floats;
+    flTries++; if (good) flHits++;
+    F.shown = true; const { w, y } = flY();
+    $('flScene').querySelectorAll('.mover').forEach((g) => { g.style.transform = `translate(${CX - w / 2 + (+g.dataset.dx || 0)}px, ${y}px)`; });
+    let t;
+    if (tie) t = `Las dos respuestas tienen su parte de razón. El hielo (0,917) y el aceite de oliva (entre 0,91 y 0,92) están casi empatados: en un vaso real el hielo se queda casi entero bajo el aceite, a media altura o bajando despacio. Y cuando se derrite, sus gotas de agua (1,00) se van al fondo.`;
+    else if (floats) t = `Flota porque es menos denso que el ${q.n.toLowerCase()}. Queda bajo la superficie el ${Math.round(r * 100)} % del objeto, justo ${fmtd(o.d)} ÷ ${fmtd(q.d)}.` +
+      (F.id === 'hielo' && F.liq === 'agua' ? ' Por eso de un iceberg solo asoma un trocito.' : '') + (F.id === 'hierro' ? ' Sí: el hierro flota en mercurio. Lo que importa es comparar densidades.' : '');
+    else t = `Se hunde porque es más denso que el ${q.n.toLowerCase()}.` + (F.id === 'huevo' && F.liq === 'agua' ? ' Prueba con agua con mucha sal: es el experimento del huevo que puedes hacer en casa.' : '') +
+      (F.id === 'oro' && F.liq === 'mercurio' ? ' El oro, 19,3 g/cm³, gana incluso al mercurio.' : '');
+    if (F.f !== 1) t += F.f === 0.5 ? ' Partido por la mitad pasa lo mismo: la mitad de masa entre la mitad de volumen da la misma densidad.' : ' Más grande, lo mismo: el doble de masa entre el doble de volumen da la misma densidad.';
+    $('flFb').innerHTML = (good ? '<span class="okt">¡Acertaste!</span> ' : '<span class="kot">Esta vez no.</span> ') + t;
+    flRender(true);
+  }
+  $('flObjs').innerHTML = FL_IDS.map((id) => `<button type="button" class="chip${id === F.id ? ' sel' : ''}" data-id="${id}">${icon(id)}${esc(OBJ[id].n)} <small>${fmtd(OBJ[id].d)}</small></button>`).join('');
+  $('flLiq').innerHTML = LIQ.map((l) => `<button type="button" data-l="${l.id}" aria-pressed="${l.id === F.liq}">${esc(l.n)} (${fmtd(l.d)})</button>`).join('');
+  const flChange = () => { F.shown = false; $('flFb').innerHTML = ''; flRender(); };
+  $('flObjs').querySelectorAll('.chip').forEach((c) => c.addEventListener('click', () => { F.id = c.dataset.id; $('flObjs').querySelectorAll('.chip').forEach((x) => x.classList.toggle('sel', x === c)); flChange(); }));
+  $('flLiq').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { F.liq = b.dataset.l; $('flLiq').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); flChange(); }));
+  $('flSize').querySelectorAll('button').forEach((b) => b.addEventListener('click', () => { F.f = +b.dataset.f; $('flSize').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); flChange(); }));
+  $('flUp').addEventListener('click', () => flBet(true));
+  $('flDown').addEventListener('click', () => flBet(false));
+  $('flReset').addEventListener('click', flChange);
+  flRender();
+  const liqNote = document.createElement('p'); liqNote.className = 'hint'; liqNote.style.margin = '0 0 12px';
+  liqNote.innerHTML = 'El mercurio es un metal líquido y es tóxico: solo se usa con mucho cuidado en el laboratorio. Aquí lo verás sin riesgo.';
+  $('flLiq').after(liqNote);
+
+  /* ---------- 4. Las trampas ---------- */
+  // 4a. Un kilo de hierro y un kilo de paja (paja suelta, unos 0,05 g/cm³)
+  $('kgOpts').querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => {
+    if ($('kgOpts').dataset.done) return; $('kgOpts').dataset.done = 1;
+    const good = b.dataset.k === 'i'; b.classList.add(good ? 'ok' : 'ko'); if (!good) $('kgOpts').querySelector('[data-k="i"]').classList.add('ok');
+    $('kgFb').innerHTML = (good ? '<span class="okt">¡Exacto!</span> ' : '<span class="kot">¡Cayó la trampa!</span> ') +
+      'Un kilo es un kilo: los dos tienen 1 kg de masa y la balanza se queda en equilibrio. Lo que cambia es el <b>volumen</b>: el hierro cabe en un cubo de unos 5 cm de lado (127 cm³) y la paja suelta, a unos 0,05 g/cm³, necesita unos 20 L: un cubo de unos 27 cm de lado.';
+    const S = 4.2; // px por cm
+    $('kgScene').hidden = false;
+    $('kgScene').innerHTML = `<svg viewBox="0 0 460 270" role="img" aria-label="Balanza de dos platos en equilibrio: cubo pequeño de hierro y cubo grande de paja">
+      <rect x="40" y="226" width="380" height="30" rx="8" fill="#E9ECEF" stroke="#5A6570" stroke-width="2.5"/>
+      <rect x="70" y="208" width="320" height="8" rx="4" fill="#5A6570"/><rect x="226" y="212" width="8" height="16" fill="#5A6570"/>
+      <rect x="106" y="178" width="8" height="32" fill="#8C959E"/><rect x="346" y="178" width="8" height="32" fill="#8C959E"/>
+      <rect x="45" y="170" width="130" height="8" rx="4" fill="#5A6570"/><rect x="285" y="170" width="130" height="8" rx="4" fill="#5A6570"/>
+      <rect x="${110 - 5.02 * S / 2}" y="${170 - 5.02 * S}" width="${5.02 * S}" height="${5.02 * S}" fill="#6B7178" stroke="#3E4247" stroke-width="2"/>
+      <rect x="${350 - 27.1 * S / 2}" y="${170 - 27.1 * S}" width="${27.1 * S}" height="${27.1 * S}" fill="#EBD27A" stroke="#B4962E" stroke-width="2"/>
+      ${Array.from({ length: 14 }, (_, i) => `<line x1="${302 + (i * 37) % 84}" y1="${66 + (i * 23) % 92}" x2="${318 + (i * 37) % 84}" y2="${58 + (i * 23) % 92}" stroke="#B4962E" stroke-width="2"/>`).join('')}
+      <text x="110" y="246" text-anchor="middle" font-size="13" font-weight="800" fill="${INK}">1 kg de hierro</text>
+      <text x="350" y="246" text-anchor="middle" font-size="13" font-weight="800" fill="${INK}">1 kg de paja</text>
+      <text x="230" y="200" text-anchor="middle" font-size="13" font-weight="800" fill="#2E7D32">equilibrio</text>
+      <text x="230" y="24" text-anchor="middle" font-size="12" font-weight="700" fill="#4E5A45">dibujado a escala</text></svg>`;
+  }));
+  // 4b. El barco de acero: 790 g de acero (100 cm³) + aire (0,0012 g/cm³)
+  let hole = false;
+  function ship() {
+    const V = +$('shipV').value, air = V - 100, m = 790 + (hole ? 1.00 * air : 0.0012 * air), d = m / V, floats = d < 1;
+    $('shipVt').textContent = V + ' cm³';
+    const W = 60 + 240 * (V - 100) / 1900, H = V === 100 ? 26 : 30 + 26 * (V - 100) / 1900, SURF2 = 70, BOT2 = 168;
+    const top = floats ? SURF2 - H * (1 - d) : BOT2 - H, x0 = 210 - W / 2;
+    const hull = V === 100 ? `<ellipse cx="210" cy="${top + H / 2}" rx="${H / 2 + 4}" ry="${H / 2}" fill="#6B7178" stroke="#3E4247" stroke-width="2"/>`
+      : `<path d="M${x0} ${top} H${x0 + W} L${x0 + W - 18} ${top + H} H${x0 + 18} Z" fill="${hole ? '#A7D8EE' : '#fff'}" stroke="#3E4247" stroke-width="4"/>`;
+    $('shipScene').innerHTML = `<svg viewBox="0 0 420 184" role="img" aria-label="${floats ? 'El barco flota' : 'El acero se hunde'}">
+      <rect x="0" y="${SURF2}" width="420" height="${BOT2 - SURF2 + 16}" fill="#A7D8EE" fill-opacity=".8"/><line x1="0" y1="${SURF2}" x2="420" y2="${SURF2}" stroke="#2C7FAE" stroke-width="2"/>
+      <rect x="0" y="${BOT2}" width="420" height="16" fill="#D9C9A3"/>${hull}
+      <text x="12" y="24" font-size="13" font-weight="800" fill="${INK}">${V === 100 ? 'Una bola de acero' : hole ? 'Casco lleno de agua' : 'Casco con aire dentro'}</text></svg>`;
+    $('shipCmp').innerHTML = `Masa ${fmt(m, 1)} g ÷ volumen ${V} cm³ = <b class="num">${fmt(d, 2)} g/cm³</b> → ` + (floats ? '<span class="lt">flota</span>' : '<span class="gt">se hunde</span>');
+    $('shipTxt').innerHTML = hole ? 'Al entrar el agua, el aire se va: ahora la masa del barco es el acero más el agua de dentro. Su densidad media vuelve a ser mayor que 1 y se hunde. Es lo que le pasa a un barco con una vía de agua, como el Titanic.'
+      : V === 100 ? 'Hecho una bola, todo es acero: 7,90 g/cm³. Al fondo.'
+      : floats ? `Flota porque cuenta la <b>densidad media</b> del barco entero: acero más aire. El aire casi no tiene masa (1 L de aire, unos 1,2 g), así que cuanto más hueco, menor densidad media. Con 790 g de acero, flota a partir de unos 790 cm³ de volumen total.`
+      : 'Todavía encierra poco aire: la densidad media sigue siendo mayor que la del agua. Sigue agrandando el casco.';
+    $('shipHole').textContent = hole ? 'Tapar el agujero y vaciar el agua' : 'Hacerle un agujero al casco'; $('shipHole').disabled = V === 100;
+  }
+  $('shipV').addEventListener('input', ship);
+  $('shipHole').addEventListener('click', () => { hole = !hole; ship(); });
+  ship();
+  // 4c. Verdad o mentira
+  const TF = [
+    ['Las cosas grandes se hunden y las pequeñas flotan.', 0, 'Mentira. Un barco enorme flota y una moneda pequeña se hunde. No manda el tamaño, manda la densidad.'],
+    ['Si partes un taco de madera por la mitad, la mitad es menos densa.', 0, 'Mentira. La mitad tiene la mitad de masa y la mitad de volumen: la división da lo mismo. La densidad es de la sustancia.'],
+    ['Un globo grande puede tener muy poca masa.', 1, 'Verdad. Tiene mucho volumen, pero casi todo es aire: poca materia. No confundas masa con volumen.'],
+    ['Flotas mejor en el mar que en la piscina.', 1, 'Verdad. El agua del mar lleva sal disuelta y es algo más densa que la de la piscina, así que te empuja más hacia arriba.'],
+    ['Si aplastas una bola de plastilina, su densidad aumenta.', 0, 'Mentira. Cambias su forma, pero no le quitas ni le añades materia ni sitio: masa, volumen y densidad se quedan igual.'],
+  ];
+  $('tf').innerHTML = TF.map(([t], i) => `<div class="tfrow" data-i="${i}"><span>${esc(t)}</span><span class="row"><button class="b ghost small" type="button" data-v="1">Verdad</button><button class="b ghost small" type="button" data-v="0">Mentira</button></span><p class="rsn"></p></div>`).join('');
+  $('tf').querySelectorAll('.tfrow').forEach((r) => r.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => {
+    if (r.dataset.done) return; r.dataset.done = 1; const i = +r.dataset.i, good = +b.dataset.v === TF[i][1];
+    r.classList.add(good ? 'ok' : 'ko'); r.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+    r.querySelector('.rsn').innerHTML = (good ? '<span class="okt">¡Bien!</span> ' : '<span class="kot">No pasa nada.</span> ') + esc(TF[i][2]);
+  })));
+
+  /* ---------- 5. Ponte a prueba ---------- */
+  const Q = [
+    { q: 'Una piedra tiene 150 g. En una probeta con 100 mL de agua, el nivel sube a 160 mL. ¿Cuál es su densidad?', o: ['2,5 g/cm³', '1,5 g/cm³', '0,94 g/cm³', '0,4 g/cm³'],
+      ok: 'V = 160 − 100 = 60 cm³, y d = 150 g ÷ 60 cm³ = 2,5 g/cm³.', ko: 'Primero el volumen de la piedra: 160 − 100 = 60 cm³. Luego d = 150 g ÷ 60 cm³ = 2,5 g/cm³.' },
+    { q: '¿Cuál de estas es una propiedad específica?', o: ['La densidad', 'La masa', 'El volumen', 'Las tres'],
+      ok: 'La densidad sirve para reconocer la sustancia. Masa y volumen dependen de cuánto cojas.', ko: 'Es la densidad. La masa y el volumen son generales: dependen de cuánto cojas y no dicen qué sustancia es.' },
+    { q: '¿Qué tiene más densidad, un litro de aceite o una gota de aceite?', o: ['Los dos la misma', 'El litro', 'La gota', 'Depende del vaso'],
+      ok: 'La densidad es del aceite, no de la cantidad: 0,92 g/cm³ en los dos.', ko: 'Los dos igual. El litro tiene más masa y más volumen, pero la división m ÷ V da lo mismo: 0,92 g/cm³.' },
+    { q: 'Aplastas una bola de plastilina hasta dejarla como una torta. ¿Qué cambia?', o: ['Solo la forma', 'La masa', 'La densidad', 'El volumen y la densidad'],
+      ok: 'Solo la forma: la misma materia ocupando el mismo sitio. Masa, volumen y densidad no cambian.', ko: 'Solo cambia la forma. No añades ni quitas plastilina, así que masa, volumen y densidad siguen igual.' },
+    { q: 'Un objeto tiene 30 g y ocupa 40 cm³. ¿Qué hace en agua?', o: ['Flota: su densidad es 0,75 g/cm³', 'Se hunde: su densidad es 1,33 g/cm³', 'Se hunde: tiene 30 g', 'Flota: ocupa 40 cm³'],
+      ok: 'd = 30 ÷ 40 = 0,75 g/cm³, menos que el agua (1,00): flota.', ko: 'd = m ÷ V = 30 ÷ 40 = 0,75 g/cm³. Como es menor que 1,00, flota. (1,33 sale de dividir al revés.)' },
+    { q: 'Un cubo de hierro (7,9 g/cm³) ocupa 8 cm³. ¿Cuál es su masa?', o: ['63,2 g', '15,8 g', '1,01 g', '7,9 g'],
+      ok: 'm = d × V = 7,9 × 8 = 63,2 g.', ko: 'Si d = m ÷ V, entonces m = d × V = 7,9 g/cm³ × 8 cm³ = 63,2 g.' },
+    { q: 'La probeta marca 74 mL. ¿Cuántos cm³ son?', o: ['74 cm³', '7,4 cm³', '740 cm³', '0,074 cm³'],
+      ok: '1 mL = 1 cm³, así que 74 mL = 74 cm³.', ko: 'Son 74 cm³: un mililitro y un centímetro cúbico son exactamente lo mismo.' },
+    { q: '¿Qué pesa más, un kilo de hierro o un kilo de paja?', o: ['Los dos igual, pero el hierro ocupa menos', 'El hierro', 'La paja, porque ocupa más', 'Depende de la balanza'],
+      ok: 'Un kilo es un kilo. El hierro es más denso: la misma masa cabe en mucho menos sitio.', ko: 'Los dos tienen 1 kg. La diferencia está en el volumen: el hierro, más denso, ocupa mucho menos.' },
+    { q: '¿Por qué flota un barco de acero, si el acero es más denso que el agua?', o: ['Porque con el aire de dentro, su densidad media es menor que la del agua', 'Porque es muy grande', 'Porque el acero de los barcos es especial y flota', 'Porque se mueve'],
+      ok: 'Cuenta todo el barco: acero más aire. Su densidad media queda por debajo de 1 g/cm³.', ko: 'Es la densidad media: el casco encierra mucho aire, casi sin masa, y el conjunto queda menos denso que el agua. Si entra agua, se hunde.' },
+    { q: 'La densidad del agua es 1 g/cm³. ¿Cuánto es en kg/m³?', o: ['1000 kg/m³', '1 kg/m³', '0,001 kg/m³', '100 kg/m³'],
+      ok: '1 m³ son 1 000 000 cm³: 1 000 000 g = 1000 kg. Por eso 1 g/cm³ = 1000 kg/m³.', ko: 'Es 1000 kg/m³. Un metro cúbico tiene un millón de cm³; un millón de gramos son 1000 kg.' },
+  ];
+  let order = [], pos = 0, results = {};
+  function startQuiz(ids) { order = ids; pos = 0; ids.forEach((i) => delete results[i]); showQ(); }
+  function showQ() {
+    const box = $('quiz');
+    if (pos >= order.length) return endQuiz();
+    const i = order[pos], q = Q[i];
+    box.innerHTML = '<p class="qn">Pregunta ' + (pos + 1) + ' de ' + order.length + '</p><p class="qt">' + esc(q.q) + '</p>' +
+      '<div class="opts">' + shuffle(q.o.map((t, k) => [t, k])).map(([t, k]) => '<button type="button" class="chip" data-k="' + k + '">' + esc(t) + '</button>').join('') + '</div>' +
+      '<p class="fb" id="qFb" aria-live="polite"></p><div class="row" id="qNext" hidden><button class="b" type="button">' + (pos + 1 < order.length ? 'Siguiente' : 'Ver mi nota') + '</button></div>';
+    $('qNext').querySelector('button').addEventListener('click', () => { pos++; showQ(); $('quiz').querySelector('button').focus(); });
+    box.querySelectorAll('.opts .chip').forEach((b) => b.addEventListener('click', () => {
+      if (!$('qNext').hidden) return; const good = b.dataset.k === '0';
+      b.classList.add(good ? 'ok' : 'ko'); if (!good) box.querySelector('.opts .chip[data-k="0"]').classList.add('ok');
+      box.querySelectorAll('.opts .chip').forEach((x) => { x.disabled = true; x.style.cursor = 'default'; });
+      results[i] = good; $('qFb').innerHTML = (good ? '<span class="okt">¡Bien!</span> ' : '<span class="kot">No pasa nada.</span> ') + esc(good ? q.ok : q.ko);
+      $('qNext').hidden = false; $('qNext').querySelector('button').focus(); }));
+  }
+  function endQuiz() {
+    const all = Q.map((_, i) => i), good = all.filter((i) => results[i]).length, failed = all.filter((i) => results[i] === false);
+    st.best = Math.max(st.best || 0, good); store.set(KEY, st);
+    const msg = good === Q.length ? '¡Diez de diez! Ya sabes por qué flotan los barcos.' : good >= 7 ? 'Muy bien. Repasa las que fallaste y quedará redondo.' : 'Buen intento. Vuelve al laboratorio de arriba y repite las falladas: así se aprende.';
+    $('quiz').innerHTML = '<p class="qt">Tu nota: ' + good + ' de ' + Q.length + '</p><p>' + msg + (st.best > good ? ' (Tu mejor nota hasta ahora: ' + st.best + '.)' : '') + '</p>' +
+      (failed.length ? '<ul class="reslist">' + failed.map((i) => '<li><b>' + esc(Q[i].q) + '</b><br>' + esc(Q[i].ko) + '</li>').join('') + '</ul>' : '') +
+      '<div class="row">' + (failed.length ? '<button class="b" id="qFail" type="button">Repetir solo las falladas (' + failed.length + ')</button>' : '') +
+      '<button class="b ghost" id="qAll" type="button">Empezar de nuevo</button></div>';
+    if (failed.length) $('qFail').addEventListener('click', () => startQuiz(shuffle(failed)));
+    $('qAll').addEventListener('click', () => { results = {}; startQuiz(Q.map((_, i) => i)); });
+  }
+  startQuiz(Q.map((_, i) => i));
+})();
+</script>
+</body>
+</html>

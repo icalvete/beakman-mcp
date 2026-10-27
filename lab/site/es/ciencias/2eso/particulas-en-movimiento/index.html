@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Las partículas en movimiento · El laboratorio de Beakman</title>
+<meta name="description" content="La teoría cinético-molecular con simulaciones: calienta y enfría una caja de partículas, aprieta un gas en una jeringuilla y explica con partículas la colonia, el colorante, la rueda de la bici o el vaso que suda. Física y Química de 2º de la ESO, Tema 2.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+[hidden] { display: none !important; }
+.block h3 { font-size: 1.15rem; }
+.score { font-weight: 800; color: var(--ink); }
+.fb { min-height: 1.6em; font-weight: 700; }
+button.chip { font-family: var(--body); font-size: 1rem; color: var(--ink); text-align: left; }
+.b:focus-visible, .chip:focus-visible, .seg button:focus-visible, input:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+canvas { display: block; width: 100%; height: auto; touch-action: none; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 2px solid var(--ink); border-radius: 14px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); }
+.seg button { border: 0; background: #fff; padding: 7px 12px; font: 800 .92rem/1.1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+.seg button:disabled { opacity: .45; cursor: default; }
+.lbl { font-weight: 800; font-size: .9rem; color: var(--muted); margin-bottom: 4px; }
+.bar { height: 14px; background: #fff; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #7FC4FF, #FF8A3D); transition: width .2s; }
+.small { font-size: .88rem; color: var(--muted); line-height: 1.45; }
+
+/* 1. La caja */
+.lab { display: grid; grid-template-columns: 450px minmax(0, 1fr); gap: 22px; align-items: start; }
+.stage { position: relative; background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 6px; }
+.toast { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); background: var(--ink); color: #fff; font-weight: 800;
+  padding: 6px 14px; border-radius: 999px; font-size: .95rem; white-space: nowrap; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.toast.on { opacity: 1; }
+.panel { display: grid; gap: 14px; }
+.thermo { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; }
+.tbig { font: 700 2.4rem/1 var(--display); color: var(--ink); min-width: 4.6ch; }
+.tslider { position: relative; }
+.tslider input { width: 100%; accent-color: #E8590C; }
+.ticks { position: relative; height: 34px; font-size: .78rem; font-weight: 800; color: var(--muted); }
+.ticks span { position: absolute; top: 0; transform: translateX(-50%); text-align: center; line-height: 1.2; white-space: nowrap; }
+.ticks span::before { content: ""; display: block; width: 2px; height: 7px; background: var(--muted); margin: 0 auto 1px; }
+.statecard { background: #fff; border: 2px solid var(--ink); border-radius: 14px; padding: 12px 14px; box-shadow: 3px 3px 0 var(--lime); display: grid; gap: 6px; }
+.statecard .nm { font: 700 1.6rem/1.1 var(--display); color: var(--ink); }
+.statecard dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; font-size: .95rem; }
+.statecard dt { font-weight: 800; color: var(--ink); }
+.statecard dd { margin: 0; }
+.statecard .like { font-size: .9rem; color: var(--muted); font-style: italic; }
+.facts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fact { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 8px 10px; font-size: .9rem; line-height: 1.35; }
+.fact b { display: block; font: 600 1.05rem/1.2 var(--display); color: var(--ink); }
+.fact svg { vertical-align: middle; }
+.say { min-height: 0; }
+.say:empty { display: none; }
+.check1 { margin-top: 18px; display: grid; gap: 10px; max-width: 900px; }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.opts .chip { justify-content: flex-start; font-size: 1rem; }
+
+/* 2. Las cuatro ideas */
+.ideas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.idea { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 12px 12px; display: grid; gap: 8px; align-content: start; }
+.idea .n { font: 700 2rem/1 var(--display); color: var(--lime); -webkit-text-stroke: 1.5px var(--ink); }
+.idea h3 { font-size: 1.08rem; min-height: 2.5em; }
+.idea p { font-size: .93rem; line-height: 1.45; }
+.idea .look { background: var(--lime-soft); border-radius: 10px; padding: 6px 9px; font-size: .88rem; }
+.idea.on { border-color: var(--ink); box-shadow: 3px 3px 0 var(--lime); }
+
+/* 3. Jeringuilla */
+.syr { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.syr .stage canvas { cursor: grab; }
+.syr .stage canvas.drag { cursor: grabbing; }
+.gauge { display: grid; gap: 10px; }
+.big { font: 700 1.8rem/1.1 var(--display); color: var(--ink); }
+.big small { font: 700 .9rem var(--body); color: var(--muted); }
+.vol input { width: 100%; accent-color: var(--ink); }
+.rec { width: 100%; border-collapse: collapse; font-size: .92rem; background: #fff; border-radius: 10px; overflow: hidden; }
+.rec th, .rec td { border: 1.5px solid var(--line); padding: 4px 8px; text-align: right; }
+.rec th { background: var(--lime-soft); color: var(--ink); font-weight: 800; text-align: center; }
+.rec td:last-child { font-weight: 800; color: var(--ink); }
+.syrmsg { min-height: 1.5em; font-weight: 700; }
+
+/* 4. Explícalo con partículas */
+.quiz { max-width: 860px; display: grid; gap: 12px; }
+.quiz .qn { font-weight: 800; color: var(--muted); font-size: .9rem; }
+.quiz .qt { font: 600 1.35rem/1.3 var(--display); color: var(--ink); }
+.quiz .why { border-left: 5px solid var(--lime); background: #fff; border-radius: 0 12px 12px 0; padding: 10px 14px; display: grid; gap: 6px; }
+.reslist { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.reslist li { background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 6px 12px; }
+.dye { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 6px; max-width: 560px; }
+
+@media (max-width: 960px) { .lab, .syr { grid-template-columns: 1fr; } .stage { max-width: 470px; } .syr .stage { max-width: none; }
+  .ideas { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .ideas, .opts, .facts { grid-template-columns: 1fr; } .gauge { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Las partículas <em>en movimiento</em></h1>
+    <p class="lead">Todo lo que tocas está hecho de partículas diminutas que no se quedan quietas nunca. Aquí vas a calentarlas,
+      enfriarlas y apretarlas hasta poder explicar con ellas por qué un sólido, un líquido y un gas se comportan como lo hacen.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes">
+    <a href="#caja">1. La caja de partículas</a><a href="#ideas">2. Las cuatro ideas</a>
+    <a href="#jeringuilla">3. Aprieta un gas</a><a href="#explica">4. Explícalo con partículas</a>
+  </nav>
+
+  <section class="block" id="caja">
+    <h2>1. La caja de partículas</h2>
+    <p class="hint">Dentro de la caja hay agua. Mueve el termómetro: por debajo de 0 °C es hielo y por encima de 100 °C, vapor.
+      Fíjate en qué cambia… y en qué no cambia nunca.</p>
+    <div class="lab">
+      <div class="stage">
+        <canvas id="box" width="440" height="400" aria-label="Simulación: caja con 80 partículas de agua que se mueven según la temperatura"></canvas>
+        <div class="toast" id="toast" aria-live="polite"></div>
+      </div>
+      <div class="panel">
+        <div>
+          <p class="lbl"><label for="temp">Temperatura</label></p>
+          <div class="thermo">
+            <span class="tbig" id="tBig">20 °C</span>
+            <div class="tslider">
+              <input type="range" id="temp" min="-40" max="160" step="1" value="20">
+              <div class="ticks" aria-hidden="true"><span style="left:20%">0 °C<br>funde</span><span style="left:70%">100 °C<br>hierve</span></div>
+            </div>
+          </div>
+          <div class="row" style="margin-top:2px">
+            <button class="b ghost small" type="button" data-t="-20">Hielo (−20 °C)</button>
+            <button class="b ghost small" type="button" data-t="20">Agua (20 °C)</button>
+            <button class="b ghost small" type="button" data-t="130">Vapor (130 °C)</button>
+            <button class="b small" type="button" id="ramp">Calentar poco a poco</button>
+          </div>
+        </div>
+        <div class="statecard" aria-live="polite">
+          <span class="nm" id="sName">Líquido</span>
+          <dl>
+            <dt>Forma</dt><dd id="sForm"></dd>
+            <dt>Volumen</dt><dd id="sVol"></dd>
+            <dt>Partículas</dt><dd id="sPart"></dd>
+          </dl>
+          <span class="like" id="sLike"></span>
+        </div>
+        <div>
+          <p class="lbl">Rapidez media de las partículas</p>
+          <div class="bar"><i id="vBar"></i></div>
+        </div>
+        <div class="facts">
+          <div class="fact"><b>80 partículas</b>Siempre las mismas: ni aparecen ni desaparecen.</div>
+          <div class="fact"><b>Tamaño <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8" fill="#5AA9E6" stroke="#1F3A0B" stroke-width="1.5"/></svg></b>
+            El mismo en los tres estados. Compruébalo.</div>
+        </div>
+        <div class="row">
+          <button class="b ghost small" type="button" id="follow" aria-pressed="false">Sigue a una partícula</button>
+          <button class="b ghost small" type="button" id="pause" aria-pressed="false">Pausa</button>
+        </div>
+        <div class="beak say" id="say"></div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px">En la simulación, las partículas están dibujadas enormes y las diferencias de rapidez, exageradas, para que se vean.
+      En el vapor de verdad están mucho más separadas: en un gas, la distancia entre partículas es de unas diez veces su tamaño.</p>
+    <div class="check1" id="check1"></div>
+  </section>
+
+  <section class="block" id="ideas">
+    <h2>2. Las cuatro ideas de la teoría cinético-molecular</h2>
+    <p class="hint">La teoría cinético-molecular (TCM) explica los estados de la materia con solo cuatro ideas. «Cinético» viene de una palabra griega
+      que significa «movimiento». Pulsa «Míralo en la caja» en cada una y busca lo que te dice.</p>
+    <div class="ideas" id="ideaList"></div>
+  </section>
+
+  <section class="block" id="jeringuilla">
+    <h2>3. Aprieta un gas</h2>
+    <p class="hint">Una jeringuilla con la punta tapada. Arrastra el émbolo (o usa el deslizador) y mira el contador: cada choque de una partícula
+      contra el émbolo es un empujoncito. La <b>presión</b> es el efecto de todos esos choques juntos.</p>
+    <div class="syr">
+      <div><div class="stage">
+        <canvas id="syr" width="760" height="250" aria-label="Simulación: jeringuilla tapada con partículas que chocan contra el émbolo"></canvas>
+      </div>
+    <h3 style="margin-top:18px">Apunta tus medidas</h3>
+    <p style="margin-top:4px">Con el aire, deja quieto el émbolo en un volumen, espera a que el contador se calme y pulsa «Apuntar». Repite con otros volúmenes,
+      sin cambiar la temperatura ni la cantidad de aire. Mira la última columna.</p>
+    <div class="row" style="margin-top:10px"><button class="b" type="button" id="recBtn" disabled>Apuntar</button>
+      <button class="b ghost small" type="button" id="recClr">Borrar la tabla</button></div>
+    <div style="margin-top:10px">
+      <table class="rec" id="recTable"><thead><tr><th>Volumen (mL)</th><th>Choques por segundo</th><th>Volumen × choques</th></tr></thead><tbody></tbody></table>
+    </div>
+    <div class="beak" id="boyle" style="margin-top:14px" hidden><img src="../../../../media/beakman.jpg" alt="">
+      <div><b>¿Lo ves?</b>La última columna sale parecida (nunca idéntica: los choques van a golpes). A la mitad de volumen, el doble de choques.
+        Las partículas no van más rápido: tienen menos camino entre pared y pared y llegan más a menudo al émbolo.
+        Es la <b>ley de Boyle</b>: si la temperatura no cambia, la presión por el volumen se mantiene constante (P · V = constante).</div></div>
+      </div>
+      <div class="panel">
+        <div>
+          <p class="lbl">Dentro de la jeringuilla hay</p>
+          <div class="seg" role="group" aria-label="Qué hay dentro" id="sMode">
+            <button type="button" data-m="gas" aria-pressed="true">Aire (gas)</button><button type="button" data-m="liquid" aria-pressed="false">Agua (líquido)</button>
+          </div>
+        </div>
+        <div class="vol">
+          <p class="lbl"><label for="vol">Volumen: <span id="vTxt">60 mL</span></label></p>
+          <input type="range" id="vol" min="15" max="60" step="1" value="60">
+        </div>
+        <div class="gauge">
+          <div><p class="lbl">Choques por segundo contra el émbolo</p><span class="big" id="hits">…</span></div>
+          <div><p class="lbl">Presión</p><div class="bar"><i id="pBar"></i></div><p class="small" id="nTxt" style="margin-top:6px"></p></div>
+        </div>
+        <div id="gasOnly" class="panel" style="gap:10px">
+          <div>
+            <p class="lbl">Temperatura del aire</p>
+            <div class="seg" role="group" aria-label="Temperatura" id="sTemp">
+              <button type="button" data-v="0" aria-pressed="false">Fría</button><button type="button" data-v="1" aria-pressed="true">Templada</button><button type="button" data-v="2" aria-pressed="false">Caliente</button>
+            </div>
+          </div>
+          <div class="row"><button class="b ghost small" type="button" id="addAir">Meter aire (+10)</button><button class="b ghost small" type="button" id="subAir">Sacar aire (−10)</button></div>
+        </div>
+        <p class="syrmsg" id="syrMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="explica">
+    <h2>4. Explícalo con partículas</h2>
+    <p class="hint">Diez situaciones de la vida diaria. Elige la explicación que usa bien las partículas. Si fallas, lee el porqué: ahí está lo bueno.</p>
+    <div class="quiz" id="quiz"></div>
+  </section>
+
+  <div class="beak" style="margin-bottom:28px"><img src="../../../../media/beakman.jpg" alt="">
+    <div><b>Lo que te llevas</b>Las partículas nunca cambian de tamaño ni se paran. De un estado a otro cambia cuánto se mueven y cuánto se separan.
+      Y la presión de un gas son los choques de sus partículas contra las paredes.</div></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.particulas-en-movimiento.v1';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const rnd = Math.random;
+  const gauss = () => { let u = 0; while (!u) u = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * rnd()); };
+  const INK = '#1F3A0B', WATER = '#5AA9E6', AIR = '#A9BEDB', HI = '#FF8A3D';
+  const BEAK = '<img src="../../../../media/beakman.jpg" alt="">';
+
+  function setupCanvas(cv) {
+    const W = cv.width, H = cv.height, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = W * dpr; cv.height = H * dpr; cv.style.aspectRatio = W + ' / ' + H;
+    const ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); return { ctx, W, H };
+  }
+  // choques elásticos entre discos iguales, con una rejilla para no comparar todas las parejas
+  // att (opcional): atracción entre vecinas cercanas, la que mantiene juntas las partículas de un líquido
+  function collide(ps, R, att, h) {
+    const D = 2 * R, D2 = D * D, RA = 3.4 * R, cs = att ? RA : D, C2 = cs * cs, grid = new Map(), n = ps.length;
+    for (let i = 0; i < n; i++) { const k = ((ps[i].x / cs) | 0) * 512 + ((ps[i].y / cs) | 0); let c = grid.get(k); if (!c) grid.set(k, c = []); c.push(i); }
+    for (let i = 0; i < n; i++) {
+      const p = ps[i], cx = (p.x / cs) | 0, cy = (p.y / cs) | 0;
+      for (let ox = -1; ox <= 1; ox++) for (let oy = -1; oy <= 1; oy++) {
+        const c = grid.get((cx + ox) * 512 + cy + oy); if (!c) continue;
+        for (const j of c) {
+          if (j <= i) continue; const q = ps[j]; let dx = p.x - q.x, dy = p.y - q.y; const d2 = dx * dx + dy * dy; if (d2 >= C2) continue;
+          if (d2 >= D2) { const d = Math.sqrt(d2), a = att * h * Math.min(1, (RA - d) / (RA - D) * 2) / d;
+            p.vx -= dx * a; p.vy -= dy * a; q.vx += dx * a; q.vy += dy * a; continue; }
+          let d = Math.sqrt(d2); if (d < 1e-6) { dx = rnd() - .5; dy = rnd() - .5; d = Math.hypot(dx, dy); }
+          const nx = dx / d, ny = dy / d, ov = (D - d) / 2;
+          p.x += nx * ov; p.y += ny * ov; q.x -= nx * ov; q.y -= ny * ov;
+          const vn = (p.vx - q.vx) * nx + (p.vy - q.vy) * ny;
+          if (vn < 0) { p.vx -= vn * nx; p.vy -= vn * ny; q.vx += vn * nx; q.vy += vn * ny; }
+        }
+      }
+    }
+  }
+  function disc(ctx, x, y, r, fill) { ctx.beginPath(); ctx.arc(x, y, r, 0, 6.2832); ctx.fillStyle = fill; ctx.fill(); ctx.stroke(); }
+
+  /* ---------- 1. La caja de partículas ---------- */
+  const box = setupCanvas($('box'));
+  const BX = { x0: 12, y0: 12, x1: 428, y1: 388, R: 8, N: 80, g: 900, k: 600, att: 2800 };
+  const STATES = {
+    solid: { nm: 'Sólido (hielo)', form: 'Propia: no cambia aunque cambies de recipiente.', vol: 'Fijo.',
+      part: 'Muy juntas y ordenadas. No se desplazan: vibran en su sitio.', like: 'Como en la fila para la foto de clase: muy juntos y quietos, aunque os movéis un poco en el sitio.', gam: 4 },
+    liquid: { nm: 'Líquido (agua)', form: 'La del recipiente: se queda abajo y se extiende.', vol: 'Fijo.',
+      part: 'Juntas pero desordenadas. Se deslizan unas sobre otras.', like: 'Como en el pasillo al cambiar de clase: juntos, pero moviéndoos y cruzándoos.', gam: 2.5 },
+    gas: { nm: 'Gas (vapor)', form: 'La del recipiente.', vol: 'Ocupa todo el recipiente y se puede comprimir.',
+      part: 'Muy separadas. Van rápido en todas direcciones y chocan con las paredes.', like: 'Como en el recreo: cada uno corre por donde quiere y de vez en cuando os chocáis.', gam: 0.3 },
+  };
+  const ORDER = ['solid', 'liquid', 'gas'];
+  const stateOf = (T) => T < 0 ? 'solid' : T < 100 ? 'liquid' : 'gas';
+  const vt = (T) => 22 + (T + 40) * 1.2;       // rapidez típica (px/s): crece con la temperatura
+  let T = 20, st = stateOf(T), ps = [], follow = false, paused = false, trail = [], ramp = null;
+  // red del hielo: 10 × 8 al fondo y en el centro
+  const SITES = []; {
+    const s = 2 * BX.R * 1.03, h = s * 0.866, cols = 10, rows = 8, w = (cols - 1) * s + s / 2, xs = (BX.x0 + BX.x1) / 2 - w / 2;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) SITES.push({ x: xs + c * s + (r % 2) * s / 2, y: BX.y1 - BX.R - 0.5 - r * h });
+  }
+  for (let i = 0; i < BX.N; i++) { const s = SITES[i]; ps.push({ x: s.x, y: s.y - 120, vx: 0, vy: 0, site: null }); }
+  function freeze() {   // cada sitio de la red, de abajo arriba, se lo queda la partícula libre más cercana
+    ps.forEach((p) => { p.site = null; });
+    SITES.forEach((s) => { let best = null, bd = 1e12;
+      ps.forEach((p) => { if (p.site) return; const d = (p.x - s.x) ** 2 + (p.y - s.y) ** 2; if (d < bd) { bd = d; best = p; } }); best.site = s; });
+  }
+  function stepBox(h) {
+    const S = STATES[st], gam = S.gam, sig = Math.sqrt(2 * gam * vt(T) * vt(T) / 2 * h), R = BX.R;
+    for (const p of ps) {
+      let ax = 0, ay = 0;
+      if (st === 'solid' && p.site) {
+        let dx = p.site.x - p.x, dy = p.site.y - p.y; const d = Math.hypot(dx, dy), cap = 3;
+        if (d > cap) { dx *= cap / d; dy *= cap / d; }
+        ax = BX.k * dx; ay = BX.k * dy; if (d > 2 * R) ay += BX.g * 0.5;
+      } else if (st !== 'gas') ay = BX.g;
+      p.vx += ax * h - gam * p.vx * h + sig * gauss(); p.vy += ay * h - gam * p.vy * h + sig * gauss();
+      p.x += p.vx * h; p.y += p.vy * h;
+      if (p.x < BX.x0 + R) { p.x = BX.x0 + R; if (p.vx < 0) p.vx = -p.vx; } else if (p.x > BX.x1 - R) { p.x = BX.x1 - R; if (p.vx > 0) p.vx = -p.vx; }
+      if (p.y < BX.y0 + R) { p.y = BX.y0 + R; if (p.vy < 0) p.vy = -p.vy; } else if (p.y > BX.y1 - R) { p.y = BX.y1 - R; if (p.vy > 0) p.vy = -p.vy; }
+    }
+    collide(ps, R, st === 'liquid' ? BX.att : 0, h);
+  }
+  function drawBox() {
+    const c = box.ctx; c.clearRect(0, 0, box.W, box.H);
+    c.fillStyle = '#FBFDF6'; c.fillRect(BX.x0, BX.y0, BX.x1 - BX.x0, BX.y1 - BX.y0);
+    c.lineWidth = 4; c.strokeStyle = INK; c.strokeRect(BX.x0 - 2, BX.y0 - 2, BX.x1 - BX.x0 + 4, BX.y1 - BX.y0 + 4);
+    if (follow && trail.length > 1) { c.beginPath(); c.moveTo(trail[0][0], trail[0][1]); trail.forEach((t) => c.lineTo(t[0], t[1]));
+      c.strokeStyle = 'rgba(255,138,61,.55)'; c.lineWidth = 2.5; c.stroke(); }
+    c.lineWidth = 1.5; c.strokeStyle = INK;
+    ps.forEach((p, i) => { if (!(follow && i === 0)) disc(c, p.x, p.y, BX.R - 0.6, WATER); });
+    if (follow) { const p = ps[0]; disc(c, p.x, p.y, BX.R - 0.6, HI); }
+  }
+  const TRANS = { 'solid>liquid': 'Fusión: de sólido a líquido', 'liquid>gas': 'Vaporización (ebullición): de líquido a gas',
+    'gas>liquid': 'Condensación: de gas a líquido', 'liquid>solid': 'Solidificación: de líquido a sólido' };
+  let toastT = 0;
+  function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2800); }
+  function setT(v, fromUser) {
+    T = Math.max(-40, Math.min(160, Math.round(v))); $('temp').value = T; $('tBig').textContent = String(T).replace('-', '−') + ' °C';
+    if (fromUser && ramp) stopRamp();
+    const ns = stateOf(T); if (ns === st) return;
+    const a = ORDER.indexOf(st), b = ORDER.indexOf(ns), steps = [];
+    for (let i = a; i !== b; i += (b > a ? 1 : -1)) steps.push(TRANS[ORDER[i] + '>' + ORDER[i + (b > a ? 1 : -1)]]);
+    toast(steps.length > 1 ? steps.map((s, i) => { s = s.split(':')[0]; return i ? s.toLowerCase() : s; }).join(' y después ') : steps[0]);
+    st = ns; if (st === 'solid') freeze(); else ps.forEach((p) => { p.site = null; });
+    showState();
+  }
+  function showState() { const S = STATES[st]; $('sName').textContent = S.nm; $('sForm').textContent = S.form; $('sVol').textContent = S.vol;
+    $('sPart').textContent = S.part; $('sLike').textContent = S.like; }
+  function stopRamp() { clearInterval(ramp); ramp = null; $('ramp').textContent = 'Calentar poco a poco'; }
+  function startRamp(from) { if (ramp) stopRamp(); if (from !== undefined) setT(from); paused = false; syncPause();
+    $('ramp').textContent = 'Parar';
+    ramp = setInterval(() => { if (T >= 160) { stopRamp(); return; } setT(T + 1); }, 45); }
+  $('temp').addEventListener('input', (e) => setT(+e.target.value, true));
+  document.querySelectorAll('[data-t]').forEach((b) => b.addEventListener('click', () => setT(+b.dataset.t, true)));
+  $('ramp').addEventListener('click', () => ramp ? stopRamp() : startRamp(T >= 150 ? -40 : undefined));
+  function syncFollow() { $('follow').setAttribute('aria-pressed', follow); $('follow').textContent = follow ? 'Dejar de seguirla' : 'Sigue a una partícula'; trail = []; }
+  function syncPause() { $('pause').setAttribute('aria-pressed', paused); $('pause').textContent = paused ? 'Seguir' : 'Pausa'; }
+  $('follow').addEventListener('click', () => { follow = !follow; syncFollow(); });
+  $('pause').addEventListener('click', () => { paused = !paused; syncPause(); });
+  function say(html) { $('say').innerHTML = html ? BEAK + '<div>' + html + '</div>' : ''; }
+  showState();
+
+  // pregunta rápida bajo la caja
+  const C1 = { q: 'Pon el hielo y después el vapor. Del sólido al gas, ¿qué les ha pasado a las partículas?', o: [
+    ['Son las mismas y del mismo tamaño: se mueven más y están más separadas.', 'Exacto. Calentar no hincha las partículas: cambia cuánto se mueven y cuánto se separan.'],
+    ['Se han hecho más grandes: por eso el gas ocupa toda la caja.', 'Es el error más típico. Mira las bolitas: miden lo mismo. El gas ocupa más porque sus partículas se separan, no porque crezcan.'],
+    ['Se han multiplicado: ahora hay más.', 'Cuéntalas: siempre hay 80. Ni aparecen ni desaparecen; solo se reparten por toda la caja.'],
+    ['Se han convertido en partículas de aire.', 'Siguen siendo agua, ahora en estado gaseoso (vapor). El aire es otra mezcla de sustancias.']] };
+  function renderOne(box, q, onDone) {
+    box.innerHTML = '<p class="qt" style="font:600 1.2rem/1.3 var(--display);color:var(--ink)">' + esc(q.q) + '</p><div class="opts">' +
+      shuffle(q.o.map((o, k) => [o[0], k])).map(([t, k]) => '<button type="button" class="chip" data-k="' + k + '">' + esc(t) + '</button>').join('') +
+      '</div><div class="fb" aria-live="polite"></div>';
+    const fb = box.querySelector('.fb');
+    box.querySelectorAll('.opts .chip').forEach((b) => b.addEventListener('click', () => {
+      if (box.dataset.done) return; box.dataset.done = 1; const k = +b.dataset.k, good = k === 0;
+      b.classList.add(good ? 'ok' : 'ko'); if (!good) box.querySelector('.chip[data-k="0"]').classList.add('ok');
+      box.querySelectorAll('.opts .chip').forEach((x) => { x.disabled = true; x.style.cursor = 'default'; });
+      fb.innerHTML = '<div class="why">' + (good ? '<span><span class="okt">¡Bien!</span> ' + esc(q.o[0][1]) + '</span>'
+        : '<span><span class="kot">Esa no.</span> ' + esc(q.o[k][1]) + '</span><span><b>La buena:</b> ' + esc(q.o[0][0]) + ' ' + esc(q.o[0][1]) + '</span>') +
+        (q.extra || '') + '</div>';
+      if (onDone) onDone(good, fb);
+    }));
+  }
+  function check1() { delete $('check1').dataset.done; renderOne($('check1'), C1, (g, fb) => {
+    fb.insertAdjacentHTML('beforeend', '<div class="row" style="margin-top:8px"><button class="b ghost small" type="button">Otra vez</button></div>');
+    fb.querySelector('button').addEventListener('click', check1); }); }
+  check1();
+
+  /* ---------- 2. Las cuatro ideas ---------- */
+  const IDEAS = [
+    { h: 'La materia está formada por partículas muy pequeñas.', p: 'Tan pequeñas que no se ven ni con el microscopio del instituto. En una sola gota de agua hay unos 1 700 trillones (un 17 seguido de 20 ceros).',
+      look: 'En la caja las dibujamos enormes. Cada bolita es una partícula de agua, y la naranja es una de ellas.',
+      go() { setT(20, true); follow = true; syncFollow(); say('<b>Una partícula de agua</b>Sigue la naranja. Ni se rompe ni cambia de tamaño: solo se mueve.'); } },
+    { h: 'Las partículas están en movimiento continuo.', p: 'Nunca se paran. En un sólido no se desplazan de su sitio, pero vibran sin descanso.',
+      look: 'Hielo a −40 °C: la partícula naranja sigue temblando en su sitio.',
+      go() { setT(-40, true); follow = true; syncFollow(); say('<b>Ni a −40 °C se paran</b>Fíjate en la naranja: no se va de su sitio, pero vibra. Un sólido no está quieto por dentro.'); } },
+    { h: 'Entre las partículas hay espacio vacío.', p: 'Entre una partícula y otra no hay nada: ni aire ni agua. Vacío. En los gases ese hueco es enorme; por eso se pueden comprimir.',
+      look: 'Vapor a 130 °C: todo el blanco entre las bolitas es vacío.',
+      go() { setT(130, true); follow = false; syncFollow(); say('<b>Huecos vacíos</b>Entre las partículas del vapor no hay aire ni nada: es vacío. En la parte 3 verás que eso permite apretar un gas.'); } },
+    { h: 'Cuanta más temperatura, más rápido se mueven.', p: 'Al calentar, las partículas se agitan más. En el tema de calor y temperatura verás que la temperatura mide justo esa agitación.',
+      look: 'Mira la barra de rapidez mientras subo de −40 °C a 160 °C: primero vibran, luego se deslizan y al final vuelan.',
+      go() { follow = true; syncFollow(); startRamp(-40); say('<b>Calentando…</b>Mira la barra de rapidez. Al llegar a 0 °C se sueltan de su sitio; al llegar a 100 °C se separan del todo.'); } },
+  ];
+  $('ideaList').innerHTML = IDEAS.map((d, i) => '<div class="idea" data-i="' + i + '"><span class="n">' + (i + 1) + '</span><h3>' + esc(d.h) + '</h3><p>' + esc(d.p) +
+    '</p><p class="look"><b>Qué buscar:</b> ' + esc(d.look) + '</p><button class="b small" type="button">Míralo en la caja</button></div>').join('');
+  $('ideaList').querySelectorAll('.idea button').forEach((b) => b.addEventListener('click', () => {
+    const card = b.closest('.idea'); $('ideaList').querySelectorAll('.idea').forEach((x) => x.classList.toggle('on', x === card));
+    paused = false; syncPause(); IDEAS[+card.dataset.i].go(); $('box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }));
+
+  /* ---------- 3. Aprieta un gas ---------- */
+  const syr = setupCanvas($('syr'));
+  const SY = { xL: 50, yT: 52, yB: 192, R: 4.5, Pmax: 620 };
+  const mL = (P) => (P - SY.xL) / (SY.Pmax - SY.xL) * 60, toP = (v) => SY.xL + v / 60 * (SY.Pmax - SY.xL);
+  const VT = [380, 520, 680];
+  let mode = 'gas', gps = [], P = SY.Pmax, Ptarget = SY.Pmax, Pvel = 0, tempIx = 1, simT = 0, hits = [], tMeas = 0, flashes = [], dragging = false, nAir = 60;
+  const L0liq = toP(30) - SY.xL;
+  function addGas(n) { for (let i = 0; i < n; i++) { const a = rnd() * 6.2832, v = VT[tempIx];
+    gps.push({ x: SY.xL + SY.R + rnd() * (P - SY.xL - 2 * SY.R), y: SY.yT + SY.R + rnd() * (SY.yB - SY.yT - 2 * SY.R), vx: v * Math.cos(a), vy: v * Math.sin(a) }); } }
+  function resetMeas() { hits = []; tMeas = simT; }
+  function setMode(m) {
+    mode = m; gps = []; flashes = [];
+    document.querySelectorAll('#sMode button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.m === m));
+    $('gasOnly').hidden = m !== 'gas';
+    if (m === 'gas') { P = Ptarget = SY.Pmax; addGas(nAir); $('vol').min = 15; $('vol').max = 60; }
+    else {
+      P = Ptarget = SY.xL + L0liq; const s = 2 * SY.R * 1.07, h = s * 0.866;
+      for (let y = SY.yT + SY.R + 0.5, r = 0; y <= SY.yB - SY.R; y += h, r++)
+        for (let x = SY.xL + SY.R + 0.5 + (r % 2) * s / 2; x <= P - SY.R; x += s) { const a = rnd() * 6.2832; gps.push({ x, y, vx: 120 * Math.cos(a), vy: 120 * Math.sin(a) }); }
+      $('vol').min = 10; $('vol').max = 60;
+    }
+    $('vol').value = Math.round(mL(P)); showVol(); resetMeas(); $('syrMsg').textContent = '';
+  }
+  function setVolume(v) {
+    let p = toP(v), msg = '';
+    if (mode === 'gas') p = Math.max(toP(15), Math.min(SY.Pmax, p));
+    else { const lo = SY.xL + L0liq * 0.97, hi = SY.xL + L0liq;
+      if (p < lo) msg = '¡No baja más! Las partículas del agua ya están casi tocándose: no quedan huecos que cerrar.';
+      else if (p > hi) msg = 'La punta está tapada y el agua llena justo 30 mL: no puedes sacar el émbolo sin dejar un hueco vacío.';
+      p = Math.max(lo, Math.min(hi, p)); }
+    $('syrMsg').textContent = msg;
+    if (Math.abs(p - Ptarget) > 0.5) { Ptarget = p; resetMeas(); }
+    $('vol').value = Math.round(mL(Ptarget)); showVol();
+  }
+  function showVol() { $('vTxt').textContent = mL(Ptarget).toFixed(mode === 'gas' ? 0 : 1).replace('.', ',') + ' mL';
+    $('nTxt').textContent = mode === 'gas' ? gps.length + ' partículas de aire' : gps.length + ' partículas de agua'; }
+  $('vol').addEventListener('input', (e) => setVolume(+e.target.value));
+  document.querySelectorAll('#sMode button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.m)));
+  document.querySelectorAll('#sTemp button').forEach((b) => b.addEventListener('click', () => { tempIx = +b.dataset.v;
+    document.querySelectorAll('#sTemp button').forEach((x) => x.setAttribute('aria-pressed', x === b)); resetMeas(); }));
+  $('addAir').addEventListener('click', () => { if (gps.length >= 120) { $('syrMsg').textContent = 'Ya hay mucho aire: con más, no se verían bien los huecos.'; return; }
+    addGas(10); nAir = gps.length; showVol(); resetMeas(); $('syrMsg').textContent = 'Has metido 10 partículas más, como al dar un golpe de bomba a la rueda.'; });
+  $('subAir').addEventListener('click', () => { if (gps.length <= 20) return; gps.splice(0, 10); nAir = gps.length; showVol(); resetMeas(); $('syrMsg').textContent = 'Has sacado 10 partículas.'; });
+  // arrastrar el émbolo
+  const cvS = $('syr');
+  const toX = (e) => { const r = cvS.getBoundingClientRect(); return (e.clientX - r.left) / r.width * syr.W; };
+  cvS.addEventListener('pointerdown', (e) => { const x = toX(e); if (x > P - 25 && x < P + 120) { dragging = true; cvS.classList.add('drag'); cvS.setPointerCapture(e.pointerId); } });
+  cvS.addEventListener('pointermove', (e) => { if (dragging) setVolume(mL(toX(e))); });
+  const endDrag = () => { dragging = false; cvS.classList.remove('drag'); };
+  cvS.addEventListener('pointerup', endDrag); cvS.addEventListener('pointercancel', endDrag);
+
+  function stepSyr(h) {
+    const R = SY.R, old = P; let d = Ptarget - P; const maxv = 500 * h; if (Math.abs(d) > maxv) d = Math.sign(d) * maxv; P += d; Pvel = (P - old) / h;
+    const liquid = mode === 'liquid';
+    for (const p of gps) {
+      if (liquid) { const sig = Math.sqrt(2 * 5 * 120 * 120 / 2 * h); p.vx += -5 * p.vx * h + sig * gauss(); p.vy += -5 * p.vy * h + sig * gauss(); }
+      p.x += p.vx * h; p.y += p.vy * h;
+      if (p.x < SY.xL + R) { p.x = SY.xL + R; if (p.vx < 0) p.vx = -p.vx; }
+      if (p.x > P - R) { p.x = P - R; if (p.vx > Pvel) { p.vx = 2 * Pvel - p.vx; hits.push(simT); flashes.push({ y: p.y, t: simT }); } }
+      if (p.y < SY.yT + R) { p.y = SY.yT + R; if (p.vy < 0) p.vy = -p.vy; } else if (p.y > SY.yB - R) { p.y = SY.yB - R; if (p.vy > 0) p.vy = -p.vy; }
+    }
+    if (liquid) collide(gps, R);
+    if (!liquid) { // temperatura constante: si el émbolo calienta el aire al empujar, se devuelve poco a poco a su rapidez
+      let m = 0; gps.forEach((p) => { m += p.vx * p.vx + p.vy * p.vy; }); m /= gps.length; const f = Math.sqrt(1 + 0.03 * (VT[tempIx] * VT[tempIx] / m - 1));
+      gps.forEach((p) => { p.vx *= f; p.vy *= f;
+        // las partículas del aire también chocan entre sí y cambian de dirección: sin esto, al empujar el émbolo
+        // todas acabarían yendo de lado a lado y los choques crecerían más de la cuenta
+        if (rnd() < 1.5 * h) { const s = Math.hypot(p.vx, p.vy), a = rnd() * 6.2832; p.vx = s * Math.cos(a); p.vy = s * Math.sin(a); } });
+    }
+    simT += h;
+  }
+  function rate() { const from = Math.max(tMeas, simT - 8), span = simT - from; if (span < 1.2) return null;
+    while (hits.length && hits[0] < from) hits.shift(); return hits.length / span; }
+  function drawSyr() {
+    const c = syr.ctx, { xL, yT, yB } = SY; c.clearRect(0, 0, syr.W, syr.H);
+    // barril y graduación
+    c.fillStyle = '#F3F8FF'; c.fillRect(xL, yT, SY.Pmax + 12 - xL, yB - yT);
+    c.lineWidth = 3; c.strokeStyle = INK; const xe = SY.Pmax + 12; c.beginPath(); c.moveTo(xe, yT); c.lineTo(xL, yT); c.lineTo(xL, yB); c.lineTo(xe, yB); c.stroke();
+    c.fillStyle = INK; c.fillRect(xe - 2, yT - 18, 6, 18); c.fillRect(xe - 2, yB, 6, 18);
+    c.fillStyle = '#E8590C'; c.beginPath(); c.roundRect(14, (yT + yB) / 2 - 14, 30, 28, 6); c.fill(); c.lineWidth = 2; c.stroke();
+    c.font = '800 12px Nunito, sans-serif'; c.textAlign = 'center'; c.fillStyle = INK; c.fillText('tapón', 29, (yT + yB) / 2 + 30);
+    c.lineWidth = 1.5;
+    for (let v = 0; v <= 60; v += 5) { const x = toP(v); c.beginPath(); c.moveTo(x, yT); c.lineTo(x, yT - (v % 10 ? 6 : 11)); c.stroke();
+      if (v % 10 === 0 && v) c.fillText(v + ' mL', x, yT - 16); }
+    // partículas
+    c.strokeStyle = INK; c.lineWidth = 1.2; const col = mode === 'gas' ? AIR : WATER;
+    gps.forEach((p) => disc(c, p.x, p.y, SY.R - 0.5, col));
+    // choques contra el émbolo
+    flashes = flashes.filter((f) => simT - f.t < 0.15);
+    c.fillStyle = 'rgba(166,212,30,.9)'; flashes.forEach((f) => { c.beginPath(); c.arc(P - 2, f.y, 7, 0, 6.2832); c.fill(); });
+    // émbolo
+    c.fillStyle = '#3A3F44'; c.fillRect(P, yT + 2, 14, yB - yT - 4);
+    c.fillStyle = '#C9CED3'; c.strokeStyle = INK; c.lineWidth = 2; c.fillRect(P + 14, (yT + yB) / 2 - 7, 90, 14); c.strokeRect(P + 14, (yT + yB) / 2 - 7, 90, 14);
+    c.fillStyle = '#C9CED3'; c.beginPath(); c.roundRect(P + 104, yT - 4, 14, yB - yT + 8, 5); c.fill(); c.stroke();
+    if (!dragging && simT < 6 && mode === 'gas' && Math.abs(Ptarget - SY.Pmax) < 1) { c.fillStyle = INK; c.font = '800 14px Nunito, sans-serif'; c.textAlign = 'right';
+      c.fillText('← arrastra el émbolo', P - 18, yB + 30); }
+  }
+  let lastUi = 0;
+  function uiSyr(now) {
+    if (now - lastUi < 250) return; lastUi = now;
+    const r = rate(); $('hits').innerHTML = r === null ? '<small>midiendo…</small>' : Math.round(r);
+    $('pBar').style.width = r === null ? '0' : Math.min(100, r / (mode === 'gas' ? 1.5 : 6)) + '%';
+    $('recBtn').disabled = !(mode === 'gas' && r !== null && simT - Math.max(tMeas, simT - 8) >= 4);
+  }
+  const recs = [];
+  function drawRecs() { $('recTable').querySelector('tbody').innerHTML = recs.map((r) => '<tr><td>' + r.v + '</td><td>' + r.h + '</td><td>' + (r.v * r.h).toLocaleString('es-ES') + '</td></tr>').join('');
+    $('boyle').hidden = new Set(recs.map((r) => r.v)).size < 2; }
+  $('recBtn').addEventListener('click', () => { const r = rate(); if (r === null) return; recs.push({ v: Math.round(mL(Ptarget)), h: Math.round(r) }); if (recs.length > 8) recs.shift(); drawRecs();
+    $('syrMsg').textContent = 'Apuntado. Ahora cambia el volumen, espera y apunta otra vez.'; });
+  $('recClr').addEventListener('click', () => { recs.length = 0; drawRecs(); });
+  setMode('gas');
+
+  /* ---------- bucle de animación: solo se mueve lo que se ve ---------- */
+  const vis = { box: true, syr: false };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { vis[e.target.id] = e.isIntersecting; }));
+    io.observe($('box')); io.observe($('syr'));
+  } else vis.syr = true;
+  let last = performance.now(), lastBoxUi = 0;
+  function frame(now) {
+    const dt = Math.max(0, Math.min(0.033, (now - last) / 1000)); last = now; if (!dt) { requestAnimationFrame(frame); return; }
+    if (vis.box && !paused) {
+      const n = 3; for (let i = 0; i < n; i++) stepBox(dt / n);
+      if (follow) { trail.push([ps[0].x, ps[0].y]); if (trail.length > 70) trail.shift(); }
+      drawBox();
+      if (now - lastBoxUi > 200) { lastBoxUi = now; let m = 0; ps.forEach((p) => { m += Math.hypot(p.vx, p.vy); }); m /= ps.length;
+        $('vBar').style.width = Math.min(100, m / 230 * 100) + '%'; }
+    }
+    if (vis.syr) { const n = mode === 'gas' ? 4 : 3; for (let i = 0; i < n; i++) stepSyr(dt / n); drawSyr(); uiSyr(now); }
+    requestAnimationFrame(frame);
+  }
+  // para pruebas y capturas: ?t=-20&v=30&m=liquid&warm=6 deja la simulación ya en marcha
+  const qs = new URLSearchParams(location.search);
+  if (qs.has('m')) setMode(qs.get('m'));
+  if (qs.has('t')) setT(+qs.get('t'));
+  if (qs.has('v')) { setVolume(+qs.get('v')); P = Ptarget; }
+  for (let i = 0, n = Math.min(30, +qs.get('warm') || 0) * 180; i < n; i++) { stepBox(1 / 180); stepSyr(1 / 180); }
+  if (qs.has('f')) { follow = true; syncFollow(); }
+  drawBox(); drawSyr(); requestAnimationFrame(frame);
+
+  /* ---------- 4. Explícalo con partículas ---------- */
+  const DYE = '<p class="lbl" style="margin-top:4px">El experimento: una gota de colorante en agua fría y en agua caliente, sin remover</p><div class="dye"><canvas width="540" height="230" aria-label="Simulación: el colorante se reparte antes en el vaso de agua caliente"></canvas></div>' +
+    '<div class="row"><button class="b ghost small" type="button" data-dye>Otra gota</button></div>';
+  const Q = [
+    { q: 'Abres un frasco de colonia en una esquina y al rato se huele en toda la habitación. ¿Por qué?', o: [
+      ['Las partículas de colonia, ya en gas, se mueven sin parar y se mezclan con las del aire hasta llegar a tu nariz.', 'Las partículas de un gas van en todas direcciones y se cuelan entre los huecos de las del aire: se reparten solas, aunque no haya corriente.'],
+      ['La colonia se hace más grande y llena la habitación.', 'Las partículas no crecen. Se reparten porque se mueven y hay huecos entre las del aire.'],
+      ['El olor viaja por el aire como el sonido, sin que se mueva nada.', 'El olor no es una onda: para olerla, partículas de colonia tienen que llegar de verdad a tu nariz.'],
+      ['Solo se huele si hay corriente de aire que la empuje.', 'La corriente ayuda a que llegue antes, pero sin ella también llega: las partículas se mueven solas.']] },
+    { q: 'Echas una gota de colorante en un vaso de agua fría y otra en uno de agua caliente, sin remover. ¿En cuál se reparte antes el color?', demo: true, o: [
+      ['En el caliente: sus partículas se mueven más rápido, chocan con las del colorante y las reparten antes.', 'Más temperatura, más rapidez: las partículas de agua caliente empujan más y más a menudo a las del colorante.'],
+      ['En el frío, porque el agua fría arrastra mejor el colorante.', 'Es al revés: en el agua fría las partículas van más despacio y el color tarda más en repartirse.'],
+      ['En los dos igual: el colorante se mueve solo.', 'El colorante se mueve, sí, pero la rapidez de las partículas depende de la temperatura. Míralo abajo.'],
+      ['En el caliente, porque sus partículas se hacen más grandes y dejan más sitio.', 'Acierta el vaso, pero no el porqué: las partículas no crecen al calentarse, van más rápido.']] },
+    { q: 'Inflas la rueda de la bici con la bomba y se pone dura. ¿Qué pasa dentro?', o: [
+      ['Metes más partículas de aire en el mismo espacio y chocan más veces contra la cubierta: más presión.', 'Más partículas en el mismo volumen, más choques por segundo. Pruébalo en la parte 3 con «Meter aire».'],
+      ['Las partículas de aire se hacen más grandes al apretarlas.', 'Al apretarlas no crecen ni encogen: se juntan más, porque había huecos vacíos entre ellas.'],
+      ['El aire de dentro se vuelve sólido y por eso está duro.', 'Sigue siendo gas. Lo que «empuja» la cubierta son los choques de sus partículas.'],
+      ['Las partículas se quedan quietas haciendo fuerza contra la goma.', 'Las partículas nunca se quedan quietas. Empujan porque chocan una y otra vez.']] },
+    { q: 'Sacas un vaso con agua muy fría y, al rato, el cristal está mojado por fuera: el vaso «suda». ¿De dónde sale esa agua?', o: [
+      ['Del aire: sus partículas de vapor de agua chocan con el cristal frío, se frenan, se juntan y forman gotitas.', 'Es condensación: el vapor del aire pasa a líquido al enfriarse contra el cristal. El agua del vaso no tiene nada que ver.'],
+      ['Del vaso: el agua atraviesa el cristal poco a poco.', 'El cristal no deja pasar el agua. Si llenas el vaso de zumo, las gotas de fuera siguen siendo de agua: vienen del aire.'],
+      ['El frío fabrica agua nueva en la superficie.', 'La materia no aparece de la nada: el agua ya estaba en el aire, en forma de vapor invisible.'],
+      ['Es el cristal, que se derrite un poco con el frío.', 'El frío no derrite nada. Las gotas son agua que estaba en el aire como vapor.']] },
+    { q: 'Tapas la punta de una jeringuilla. Con aire dentro, el émbolo baja; con agua, casi nada. ¿Por qué?', o: [
+      ['En el aire hay mucho espacio vacío entre partículas; en el agua ya están casi tocándose.', 'Comprimir es juntar las partículas cerrando huecos. Un gas tiene muchos; un líquido, casi ninguno. Lo has visto en la parte 3.'],
+      ['Las partículas del aire son blandas y se aplastan.', 'Las partículas no se aplastan ni cambian de tamaño: lo que se reduce es el hueco entre ellas.'],
+      ['El agua pesa más y empuja hacia fuera.', 'Pasaría lo mismo con la jeringuilla en cualquier posición: no es por el peso, es por los huecos entre partículas.'],
+      ['El aire no tiene partículas y por eso no ofrece resistencia.', 'El aire sí tiene partículas, y ofrece resistencia: cuanto más aprietas, más choques y más presión notas.']] },
+    { q: 'Un cubito de hielo a −20 °C. ¿Cómo están sus partículas?', o: [
+      ['Ordenadas y muy juntas, vibrando en su sitio sin parar.', 'En un sólido las partículas no se desplazan, pero nunca dejan de vibrar.'],
+      ['Totalmente quietas, porque es un sólido.', 'Error muy común: las partículas nunca están quietas. En el sólido vibran (lo viste a −40 °C en la caja).'],
+      ['Moviéndose libres por todo el cubito.', 'Eso sería un líquido. En el sólido cada partícula se queda en su sitio y solo vibra.'],
+      ['Pegadas, sin ningún espacio entre ellas.', 'Incluso en un sólido hay espacio vacío entre partículas, aunque sea poco.']] },
+    { q: 'Si el agua hierve a 100 °C, ¿por qué se seca un charco en un día de 20 °C?', o: [
+      ['Algunas partículas de la superficie van tan rápido que escapan al aire: es evaporación, y pasa a cualquier temperatura.', 'No todas las partículas van igual de rápido. Las más rápidas de la superficie se escapan poco a poco. Eso es evaporar, no hervir.'],
+      ['Porque el sol pone el charco a 100 °C y hierve.', 'El charco no llega a 100 °C. No hierve: se evapora desde la superficie.'],
+      ['Porque las partículas se hacen tan pequeñas que dejan de verse.', 'Las partículas no encogen. Pasan al aire como vapor, que es invisible.'],
+      ['Porque al calentarse el agua desaparece.', 'Nada desaparece: las partículas de agua siguen existiendo, ahora en el aire como vapor.']] },
+    { q: 'Cuando hierves agua en una olla sale una nube blanca. ¿Es vapor de agua?', o: [
+      ['No: el vapor es invisible; lo blanco son gotitas de agua que se han condensado al enfriarse en el aire.', 'Justo encima del agua hay vapor que no se ve. Al enfriarse, sus partículas se juntan en gotitas diminutas: eso es lo blanco.'],
+      ['Sí: el vapor de agua es blanco.', 'El vapor de agua es invisible, como el resto del aire. Lo blanco son gotitas de agua líquida.'],
+      ['Es humo, porque el agua se está quemando.', 'El agua no se quema. Es agua que ha cambiado de estado dos veces: de líquido a gas y otra vez a líquido.'],
+      ['Es aire caliente, que se ve blanco.', 'El aire caliente no se ve. Lo que ves son gotitas de agua.']] },
+    { q: 'Dejas al sol un balón bien inflado y se pone todavía más duro. ¿Por qué?', o: [
+      ['Al calentarse, las partículas de aire van más rápido y chocan más veces y más fuerte contra el balón.', 'Más temperatura, más rapidez, más choques: más presión. En la parte 3 puedes probarlo con «Caliente».'],
+      ['Entra más aire por los poros del balón.', 'El balón está cerrado: el número de partículas es el mismo. Lo que cambia es su rapidez.'],
+      ['Las partículas de aire se dilatan y ocupan más.', 'Las partículas no se dilatan. Se mueven más rápido, y por eso empujan más.'],
+      ['El sol empuja el balón desde fuera.', 'La luz del sol calienta el aire de dentro; el empuje lo hacen las partículas de dentro al chocar.']] },
+    { q: 'Cuando el hielo se derrite, ¿qué les pasa a sus partículas?', o: [
+      ['Son las mismas, pero dejan su sitio fijo y empiezan a deslizarse unas sobre otras.', 'Es la fusión: las partículas se mueven más, se sueltan de la red y pasan a deslizarse. Siguen siendo agua.'],
+      ['Se rompen en trozos más pequeños.', 'Las partículas no se rompen al cambiar de estado: el agua líquida tiene las mismas partículas que el hielo.'],
+      ['Se hacen más grandes y por eso el agua se derrama.', 'No crecen. Se derrama porque las partículas ya no tienen un sitio fijo y se deslizan.'],
+      ['Se convierten en partículas de otra sustancia.', 'Hielo y agua líquida son la misma sustancia: cambia el estado, no las partículas.']] },
+  ];
+  let order = [], pos = 0, results = {};
+  function startQuiz(ids) { order = ids; pos = 0; ids.forEach((i) => delete results[i]); showQ(); }
+  function showQ() {
+    const qz = $('quiz'); if (pos >= order.length) return endQuiz();
+    const i = order[pos], q = Q[i];
+    qz.innerHTML = '<p class="qn">Situación ' + (pos + 1) + ' de ' + order.length + '</p><div id="qBox"></div><div class="row" id="qNext" hidden><button class="b" type="button">' +
+      (pos + 1 < order.length ? 'Siguiente' : 'Ver mi nota') + '</button></div>';
+    $('qBox').className = 'quiz'; $('qBox').style.gap = '12px';
+    renderOne($('qBox'), q, (good, fb) => { results[i] = good;
+      if (q.demo) { fb.insertAdjacentHTML('beforeend', DYE); runDye(fb.querySelector('canvas')); fb.querySelector('[data-dye]').addEventListener('click', () => runDye(fb.querySelector('canvas'), true)); }
+      $('qNext').hidden = false; $('qNext').querySelector('button').focus({ preventScroll: true }); });
+    $('qBox').querySelector('.qt').style.cssText = '';
+    $('qNext').querySelector('button').addEventListener('click', () => { pos++; showQ(); const f = $('quiz').querySelector('button'); if (f) f.focus({ preventScroll: true }); });
+  }
+  function endQuiz() {
+    const all = Q.map((_, i) => i), good = all.filter((i) => results[i]).length, failed = all.filter((i) => results[i] === false);
+    const s = store.get(KEY, {}); s.best = Math.max(s.best || 0, good); store.set(KEY, s);
+    const msg = good === Q.length ? '¡Diez de diez! Ya explicas el mundo con partículas.' : good >= 7 ? 'Muy bien. Repasa las que fallaste y quedará redondo.' : 'Buen intento. Vuelve a la caja y a la jeringuilla, y repite las falladas: así se aprende.';
+    $('quiz').innerHTML = '<p class="qt">Tu nota: ' + good + ' de ' + Q.length + '</p><p>' + msg + (s.best > good ? ' (Tu mejor nota hasta ahora: ' + s.best + '.)' : '') + '</p>' +
+      (failed.length ? '<ul class="reslist">' + failed.map((i) => '<li><b>' + esc(Q[i].q) + '</b><br>' + esc(Q[i].o[0][0]) + '</li>').join('') + '</ul>' : '') +
+      '<div class="row">' + (failed.length ? '<button class="b" id="qFail" type="button">Repetir solo las falladas (' + failed.length + ')</button>' : '') +
+      '<button class="b ghost" id="qAll" type="button">Empezar de nuevo</button></div>';
+    if (failed.length) $('qFail').addEventListener('click', () => startQuiz(shuffle(failed)));
+    $('qAll').addEventListener('click', () => { results = {}; startQuiz(shuffle(Q.map((_, i) => i))); });
+  }
+  // el colorante: paseo al azar, con pasos más largos en el agua caliente
+  let dyeRun = 0;
+  function runDye(cv, again) {
+    if (!cv.dataset.ready) { const s = setupCanvas(cv); cv._c = s; cv.dataset.ready = 1; }
+    const { ctx: c } = cv._c, id = ++dyeRun;
+    const G = [{ x0: 30, label: 'Agua fría (10 °C)', step: 0.9 }, { x0: 290, label: 'Agua caliente (50 °C)', step: 2.6 }], gw = 220, gy0 = 34, gy1 = 210;
+    G.forEach((g) => { g.water = Array.from({ length: 110 }, () => ({ x: g.x0 + 5 + rnd() * (gw - 10), y: gy0 + 5 + rnd() * (gy1 - gy0 - 10) }));
+      g.dye = Array.from({ length: 45 }, () => ({ x: g.x0 + gw / 2 + gauss() * 5, y: gy0 + 18 + Math.abs(gauss()) * 5 })); });
+    const walk = (p, s, g) => { p.x += gauss() * s; p.y += gauss() * s;
+      p.x = Math.max(g.x0 + 4, Math.min(g.x0 + gw - 4, p.x)); p.y = Math.max(gy0 + 4, Math.min(gy1 - 4, p.y)); };
+    let t0 = performance.now();
+    function tick(now) {
+      if (id !== dyeRun || !cv.isConnected) return;
+      c.clearRect(0, 0, 540, 230); c.font = '800 13px Nunito, sans-serif'; c.textAlign = 'center';
+      G.forEach((g) => {
+        g.water.forEach((p) => walk(p, g.step * 1.6, g)); g.dye.forEach((p) => walk(p, g.step, g));
+        c.fillStyle = '#EEF6FF'; c.fillRect(g.x0, gy0, gw, gy1 - gy0); c.strokeStyle = INK; c.lineWidth = 3;
+        c.beginPath(); c.moveTo(g.x0, gy0 - 10); c.lineTo(g.x0, gy1); c.lineTo(g.x0 + gw, gy1); c.lineTo(g.x0 + gw, gy0 - 10); c.stroke();
+        c.fillStyle = 'rgba(90,169,230,.45)'; g.water.forEach((p) => { c.beginPath(); c.arc(p.x, p.y, 3, 0, 6.2832); c.fill(); });
+        c.fillStyle = '#C2255C'; g.dye.forEach((p) => { c.beginPath(); c.arc(p.x, p.y, 3.6, 0, 6.2832); c.fill(); });
+        c.fillStyle = INK; c.fillText(g.label, g.x0 + gw / 2, 20);
+      });
+      c.fillStyle = '#4E5A45'; c.font = '700 12px Nunito, sans-serif'; c.fillText(Math.min(20, Math.floor((now - t0) / 1000)) + ' s', 270, 225);
+      if (now - t0 < 20000) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  startQuiz(shuffle(Q.map((_, i) => i)));
+})();
+</script>
+</body>
+</html>

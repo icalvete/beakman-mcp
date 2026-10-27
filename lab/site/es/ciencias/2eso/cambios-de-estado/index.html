@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los cambios de estado y la gráfica de calentamiento · El laboratorio de Beakman</title>
+<meta name="description" content="Los nombres de los cambios de estado, un hornillo virtual que dibuja la gráfica de calentamiento del hielo en directo y gráficas de otras sustancias para leer e interpretar. Física y Química de 2º de la ESO, Tema 2.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+/* Cambios de estado: el triángulo, el hornillo con su gráfica, las gráficas para leer y la trampa del humo */
+[hidden] { display: none !important; }
+:root { --hot: #C8432F; --hot-soft: #FBE5E1; --cold: #2563B8; --cold-soft: #E1ECFA; --water: #3B7DD8; }
+.seg { display: inline-flex; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; box-shadow: 2px 2px 0 var(--ink); flex-wrap: wrap; }
+.seg button { border: 0; background: #fff; padding: 8px 14px; font: 800 .92rem/1 var(--body); color: var(--ink); cursor: pointer; }
+.seg button + button { border-left: 2px solid var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--lime); }
+.seg button:disabled { color: var(--muted); cursor: default; }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+h3.sub { font-size: 1.15rem; margin: 18px 0 8px; }
+.tip2 { font-size: .88rem; color: var(--muted); }
+.fb { border-radius: 12px; padding: 10px 14px; margin-top: 10px; }
+.fb.good { background: #E3F3DF; border: 1.5px solid #2E7D32; }
+.fb.bad { background: #FBE5E1; border: 1.5px solid #B23B2E; }
+.fb.neutral { background: #fff; border: 1.5px solid var(--line); }
+.opts { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 4px; }
+.opt { font: 700 1rem/1.25 var(--body); color: var(--ink); background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 14px; cursor: pointer; text-align: left; }
+.opt:hover:not(:disabled) { border-color: var(--ink); }
+.opt:disabled { cursor: default; }
+.mcq + .mcq { margin-top: 16px; padding-top: 14px; border-top: 1.5px dashed var(--line); }
+.mcq .q { font-weight: 800; color: var(--ink); }
+
+/* 1. el triángulo */
+.cyc { display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 1fr); gap: 22px; align-items: start; }
+.tri { position: relative; width: 100%; aspect-ratio: 640 / 500; background: #fff; border: 2px solid var(--line); border-radius: 16px; }
+.tri svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tri .node { fill: var(--card); stroke: var(--ink); stroke-width: 2.5; }
+.tri .nname { font: 600 22px var(--display); fill: var(--ink); text-anchor: middle; }
+.tri .pt { fill: var(--water); stroke: var(--ink); stroke-width: 1.2; }
+.tri .arr { stroke: #8D9682; stroke-width: 4; fill: none; transition: stroke .3s; }
+.tri .arr.hot { stroke: var(--hot); } .tri .arr.cold { stroke: var(--cold); }
+.slot { position: absolute; transform: translate(-50%, -50%); min-width: 92px; max-width: 124px; padding: 5px 9px; border-radius: 12px;
+  border: 2.5px dashed var(--muted); background: #fff; font: 800 .86rem/1.15 var(--body); color: var(--muted); cursor: pointer; text-align: center; }
+.slot.sel { border-style: solid; border-color: var(--ink); background: var(--lime-soft); color: var(--ink); }
+.slot.done { border-style: solid; color: var(--ink); cursor: default; }
+.slot.done.hot { border-color: var(--hot); background: var(--hot-soft); } .slot.done.cold { border-color: var(--cold); background: var(--cold-soft); }
+.slot.over { border-color: var(--ink); background: var(--lime-soft); }
+.slot small { display: block; font-weight: 700; font-size: .72rem; }
+.bank { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 6px; min-height: 44px; }
+.bank .chip[aria-pressed="true"] { border-color: var(--ink); background: var(--lime-soft); box-shadow: 2px 2px 0 var(--lime); }
+.erow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 10px; align-items: center; background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 7px 10px; }
+.erow + .erow { margin-top: 6px; }
+.erow b { color: var(--ink); } .erow span { font-size: .85rem; color: var(--muted); }
+.erow .row { gap: 6px; }
+.erow .b.small.h { background: var(--hot-soft); } .erow .b.small.c { background: var(--cold-soft); }
+.erow.okh { border-color: var(--hot); background: var(--hot-soft); } .erow.okc { border-color: var(--cold); background: var(--cold-soft); }
+.legend2 { display: flex; gap: 14px; flex-wrap: wrap; font-size: .88rem; font-weight: 800; margin-top: 8px; }
+.legend2 .h { color: var(--hot); } .legend2 .c { color: var(--cold); }
+.examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.examples .soft { font-size: .93rem; }
+.examples b { color: var(--ink); }
+
+/* 2. el hornillo */
+.lab2 { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
+.scene { background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 6px; }
+.scene svg { display: block; width: 100%; height: auto; }
+.zoom { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center; margin-top: 10px; }
+.zoom canvas { width: 150px; height: 150px; background: #fff; border: 2px solid var(--ink); border-radius: 18px; box-shadow: 3px 3px 0 var(--lime); }
+.zoom p { font-size: .86rem; color: var(--muted); }
+.zoom p b { color: var(--ink); }
+.gbox { background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime); padding: 8px 8px 4px; }
+.gbox svg { display: block; width: 100%; height: auto; touch-action: none; }
+.plot .gl { stroke: #E4EBD3; stroke-width: 1; }
+.plot .zl { stroke: #B8C79A; stroke-width: 1.5; }
+.plot .ax { stroke: var(--ink); stroke-width: 2; }
+.plot .tk { font: 700 12px var(--body); fill: var(--muted); }
+.plot .al { font: 800 13px var(--body); fill: var(--ink); }
+.plot .cur { stroke: var(--hot); stroke-width: 3.5; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.plot .cool { stroke: var(--cold); stroke-width: 3.5; fill: none; stroke-linejoin: round; stroke-linecap: round; }
+.plot .ghost { stroke: #A3AE92; stroke-width: 2.5; fill: none; stroke-dasharray: 7 5; }
+.plot .gtx { font: 800 12px var(--body); fill: #7B8670; }
+.plot .band { fill: rgba(166, 212, 30, .22); }
+.plot .lt circle { fill: #fff; stroke: var(--ink); stroke-width: 2; }
+.plot .lt text { font: 700 13px var(--display); fill: var(--ink); text-anchor: middle; dominant-baseline: central; }
+.plot .lt .nm { font: 800 11.5px var(--body); text-anchor: start; }
+.plot .hv { stroke: var(--ink); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.plot .hvd { fill: var(--ink); }
+.plot .hvb { fill: var(--ink); } .plot .hvt { font: 800 12.5px var(--body); fill: #fff; }
+.plot .mk { stroke: var(--ink); stroke-width: 2; stroke-dasharray: 3 3; }
+.plot .mkb { fill: var(--lime); stroke: var(--ink); stroke-width: 1.5; } .plot .mkt { font: 800 12.5px var(--body); fill: var(--ink); text-anchor: middle; }
+.ctrl { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; margin: 12px 0 6px; }
+.ctrl > b { color: var(--ink); }
+.readouts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 8px 0; }
+.readouts div { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 6px 10px; }
+.readouts span { display: block; font-size: .78rem; font-weight: 800; color: var(--muted); }
+.readouts b { font: 700 1.25rem/1.2 var(--display); color: var(--ink); }
+.now { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 14px; padding: 10px 14px; min-height: 92px; }
+.now h4 { margin: 0 0 2px; font: 600 1.08rem/1.25 var(--display); color: var(--ink); }
+.where { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; margin-top: 8px; font-size: .86rem; font-weight: 800; color: var(--muted); }
+.where i { font-style: normal; border: 2px solid var(--line); border-radius: 999px; padding: 2px 10px; background: #fff; transition: background .2s, border-color .2s, color .2s; }
+.where i.on { border-color: var(--ink); background: var(--lime); color: var(--ink); }
+.qs2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+.qs2 .mcq { background: #fff; border: 2px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.qs2 .mcq + .mcq { margin-top: 0; padding-top: 12px; border-top: 2px solid var(--line); }
+.qs2 .opt { font-size: .92rem; padding: 6px 11px; }
+
+/* 3. lee la gráfica */
+.read3 { display: grid; grid-template-columns: minmax(0, 1fr) 270px; gap: 20px; align-items: start; }
+.qhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.qhead h3 { font-size: 1.2rem; }
+.qhead span { font-weight: 800; color: var(--muted); font-size: .9rem; }
+.qtext { font: 600 1.12rem/1.4 var(--display); color: var(--ink); margin: 12px 0 4px; }
+table.subs { width: 100%; border-collapse: collapse; background: #fff; border: 2px solid var(--ink); border-radius: 12px; overflow: hidden; font-size: .9rem; }
+table.subs th, table.subs td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+table.subs th { background: var(--lime-soft); color: var(--ink); font-weight: 800; font-size: .82rem; }
+table.subs td:not(:first-child) { text-align: right; font-weight: 800; color: var(--ink); white-space: nowrap; }
+.score { background: #fff; border: 2px solid var(--ink); border-radius: 16px; box-shadow: 3px 3px 0 var(--lime); padding: 12px 14px; display: grid; gap: 8px; margin-top: 14px; }
+.score div { display: flex; justify-content: space-between; align-items: baseline; }
+.score b { font: 700 1.5rem/1 var(--display); color: var(--ink); }
+.score span { font-weight: 700; color: var(--muted); font-size: .9rem; }
+.dots { display: flex; gap: 5px; flex-wrap: wrap; }
+.dots i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line); background: #fff; }
+.dots i.y { background: #7BC067; border-color: #2E7D32; } .dots i.n { background: #F2B8AE; border-color: #B23B2E; } .dots i.c { border-color: var(--ink); }
+
+/* 4. evaporar no es hervir */
+.vs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.vs .card { background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 12px 14px; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; align-items: center; }
+.vs h3 { font-size: 1.2rem; margin-bottom: 4px; }
+.vs ul { margin: 0; padding-left: 18px; font-size: .94rem; }
+.vs svg { width: 150px; height: 150px; }
+.evp { animation: rise 4.5s ease-in infinite; opacity: 0; }
+.bub { animation: bub 1.4s ease-in infinite; }
+@keyframes rise { 0% { transform: translate(0, 0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translate(var(--dx, 6px), -64px); opacity: 0; } }
+@keyframes bub { 0% { transform: translate(0, 0) scale(.5); opacity: 0; } 15% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translate(0, -52px) scale(1.1); opacity: 0; } }
+.vib { animation: vib .18s linear infinite alternate; }
+@keyframes vib { from { transform: translate(-1px, 0); } to { transform: translate(1px, .6px); } }
+.sits { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.sit { background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 8px 10px; display: grid; gap: 6px; }
+.sit p { font-weight: 700; color: var(--text); }
+.sit .row { gap: 6px; }
+.sit .why3 { font-size: .86rem; color: var(--muted); }
+.sit.ok .why3, .sit.ko .why3 { color: var(--text); }
+.trap { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 20px; align-items: start; margin-top: 8px; }
+.trap svg { width: 100%; height: auto; background: #fff; border: 2px solid var(--line); border-radius: 16px; }
+.cloud circle { fill: #fff; stroke: #C9D1BC; stroke-width: 1.5; }
+.zlab rect { fill: var(--ink); } .zlab text { font: 800 14px var(--body); fill: #fff; text-anchor: middle; dominant-baseline: central; }
+
+/* errores */
+ul.errs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+ul.errs li { background: #fff; border: 2px solid var(--line); border-left: 6px solid #B23B2E; border-radius: 10px; padding: 8px 12px; }
+ul.errs b { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .cyc, .lab2, .read3, .vs, .trap, .qs2, .examples, .sits { grid-template-columns: 1fr; }
+  .readouts { grid-template-columns: 1fr 1fr; }
+  ul.errs { grid-template-columns: 1fr; }
+  .slot { font-size: .7rem; min-width: 60px; padding: 3px 5px; }
+}
+@media (prefers-reduced-motion: reduce) { .evp, .bub, .vib { animation: none; } .evp { opacity: .8; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Los cambios de estado y la <em>gráfica de calentamiento</em></h1>
+    <p class="lead">El hielo se funde, el agua hierve, la ropa tendida se seca… y cada cambio tiene su nombre. Aquí vas a ponérselo,
+      a calentar hielo en un hornillo virtual mientras se dibuja su gráfica y a leer las gráficas de otras sustancias como un detective.</p>
+  </div>
+  <nav class="tabs" aria-label="Partes">
+    <a href="#ciclo">1. El ciclo de los cambios</a><a href="#hornillo">2. Calienta hielo</a><a href="#graficas">3. Lee la gráfica</a>
+    <a href="#evaporar">4. Evaporar no es hervir</a><a href="#errores">5. Errores típicos</a>
+  </nav>
+
+  <!-- 1 -->
+  <section class="block" id="ciclo">
+    <h2>1. El ciclo de los cambios</h2>
+    <p class="hint">Cada flecha es un cambio de estado. Pulsa un nombre y luego el hueco de su flecha (o arrástralo hasta él).</p>
+    <div class="cyc">
+      <div class="tri" id="tri"><svg id="triSvg" viewBox="0 0 640 500" role="img" aria-label="Sólido, líquido y gas en un triángulo, con seis flechas entre ellos"></svg></div>
+      <div>
+        <div id="step1">
+          <b>Los nombres</b>
+          <div class="bank" id="bank"></div>
+          <div id="fb1" aria-live="polite"></div>
+        </div>
+        <div id="step2" hidden>
+          <b>Ahora, la energía.</b> <span class="tip2">¿Hay que darle energía (calentar) o la suelta (se enfría)?</span>
+          <div id="erows" style="margin-top:8px"></div>
+          <div id="fb2" aria-live="polite"></div>
+        </div>
+        <div class="legend2"><span class="h">— rojo: absorbe energía</span><span class="c">— azul: cede energía</span></div>
+        <p style="margin-top:10px"><button class="b ghost small" type="button" id="reset1">Empezar otra vez</button></p>
+      </div>
+    </div>
+    <div class="examples">
+      <div class="soft"><b>Fusión y solidificación.</b> Un cubito que se derrite en el vaso; el agua que se hace hielo en el congelador; la lava que se enfría y se hace roca.</div>
+      <div class="soft"><b>Vaporización y condensación.</b> El charco que se seca; el espejo que se empaña al ducharte; el vaso frío que «suda».</div>
+      <div class="soft"><b>Sublimación y sublimación inversa.</b> La nieve que desaparece sin derretirse en días muy fríos y secos; la escarcha que aparece en el coche una mañana de helada.</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="block" id="hornillo">
+    <h2>2. Calienta hielo y mira la gráfica</h2>
+    <p class="hint">Tienes 200 g de hielo a −20 °C en un vaso. Enciende el hornillo: el termómetro irá dibujando la gráfica temperatura-tiempo. Pasa el ratón por la gráfica para leerla.</p>
+    <div class="lab2">
+      <div>
+        <div class="scene"><svg id="scene" viewBox="0 0 300 340" role="img" aria-label="Vaso sobre un hornillo, con un termómetro"></svg></div>
+        <div class="zoom"><canvas id="lupa" width="150" height="150" aria-label="Lupa: las partículas del agua"></canvas>
+          <p><b>La lupa.</b> Así se mueven las partículas del agua. Cuanto más caliente, más rápido. Para pasar a líquido o a gas hay que separarlas.</p></div>
+      </div>
+      <div>
+        <div class="gbox"><svg id="g2" class="plot" viewBox="0 0 700 380" role="img" aria-label="Gráfica temperatura-tiempo del experimento"></svg></div>
+        <div class="ctrl">
+          <button class="b" type="button" id="run">Encender el hornillo</button>
+          <b>Fuego</b>
+          <div class="seg" role="group" aria-label="Potencia del fuego" id="powSeg">
+            <button type="button" data-p="0.25" aria-pressed="false">suave</button>
+            <button type="button" data-p="0.5" aria-pressed="true">medio</button>
+            <button type="button" data-p="1" aria-pressed="false">fuerte</button>
+          </div>
+          <button class="b ghost small" type="button" id="fast" aria-pressed="false">Más rápido ×3</button>
+          <button class="b ghost small" type="button" id="keep" disabled>Guardar la curva y repetir</button>
+          <button class="b ghost small" type="button" id="reset2">Borrar todo</button>
+        </div>
+        <div class="readouts">
+          <div><span>Tiempo</span><b id="rT">0,0 min</b></div>
+          <div><span>Temperatura</span><b id="rC">−20 °C</b></div>
+          <div><span>En el vaso</span><b id="rIn" style="font-size:1rem">hielo</b></div>
+          <div><span>Energía aportada</span><b id="rE">0 kJ</b></div>
+        </div>
+        <div class="now" aria-live="polite"><h4 id="nowH">Preparado</h4><p id="nowP"></p>
+          <div class="where">¿En qué se gasta la energía ahora? <i id="wA">en agitar las partículas: sube la temperatura</i><i id="wS">en separarlas: cambia el estado</i></div></div>
+      </div>
+    </div>
+    <div class="qs2" id="qs2"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="block" id="graficas">
+    <h2>3. Lee la gráfica</h2>
+    <p class="hint">Gráficas de verdad de otras sustancias. Las partes planas (las mesetas) te chivan su punto de fusión y su punto de ebullición. Pasa el ratón por la gráfica para leer los valores.</p>
+    <div class="read3">
+      <div>
+        <div class="qhead"><h3 id="qTitle"></h3><span id="qNum"></span></div>
+        <div class="gbox"><svg id="g3" class="plot" viewBox="0 0 700 360" role="img" aria-label="Gráfica temperatura-tiempo de una sustancia"></svg></div>
+        <p class="qtext" id="qText"></p>
+        <div class="opts" id="qOpts"></div>
+        <div id="qFb" aria-live="polite"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="b ghost" type="button" id="qPrev">← Anterior</button>
+          <button class="b" type="button" id="qNext">Siguiente gráfica →</button>
+        </div>
+      </div>
+      <aside>
+        <table class="subs">
+          <thead><tr><th>Sustancia pura</th><th>Funde a</th><th>Hierve a</th></tr></thead>
+          <tbody>
+            <tr><td>Agua</td><td>0 °C</td><td>100 °C</td></tr>
+            <tr><td>Alcohol etílico</td><td>−114 °C</td><td>78 °C</td></tr>
+            <tr><td>Mercurio</td><td>−39 °C</td><td>357 °C</td></tr>
+            <tr><td>Estaño</td><td>232 °C</td><td>2602 °C</td></tr>
+            <tr><td>Plomo</td><td>327 °C</td><td>1749 °C</td></tr>
+          </tbody>
+        </table>
+        <p class="tip2" style="margin-top:6px">A nivel del mar. Cada sustancia pura tiene los suyos: sirven para reconocerla, como una huella dactilar.</p>
+        <div class="score">
+          <div><span>Acertadas a la primera</span><b id="sOk">0</b></div>
+          <div><span>Respondidas</span><b id="sTot">0</b></div>
+          <div class="dots" id="sDots" aria-hidden="true"></div>
+          <button class="b ghost small" type="button" id="sReset">Empezar de cero</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="block" id="evaporar">
+    <h2>4. Evaporar no es hervir</h2>
+    <p class="hint">Las dos son vaporización (de líquido a gas), pero no son lo mismo.</p>
+    <div class="vs">
+      <div class="card">
+        <svg viewBox="0 0 150 150" aria-hidden="true">
+          <path d="M30 60 L38 138 H112 L120 60" fill="none" stroke="#1F3A0B" stroke-width="3"/>
+          <path d="M33 86 L38 136 H112 L117 86 Z" fill="#CFE2FA"/>
+          <line x1="33" y1="86" x2="117" y2="86" stroke="#3B7DD8" stroke-width="2"/>
+          <g fill="#3B7DD8" stroke="#1F3A0B" stroke-width="1">
+            <circle class="evp" cx="55" cy="84" r="4" style="animation-delay:0s"/>
+            <circle class="evp" cx="85" cy="84" r="4" style="animation-delay:1.6s;--dx:-8px"/>
+            <circle class="evp" cx="100" cy="84" r="4" style="animation-delay:3.1s"/>
+          </g>
+          <text x="75" y="120" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="15" fill="#1F3A0B">20 °C</text>
+        </svg>
+        <div><h3>Evaporación</h3>
+          <ul><li>Solo en la <b>superficie</b> del líquido.</li><li>A <b>cualquier temperatura</b>: un charco se seca a 20 °C.</li>
+            <li>Lenta, sin burbujas. Va más rápida con calor, viento y mucha superficie.</li></ul></div>
+      </div>
+      <div class="card">
+        <svg viewBox="0 0 150 150" aria-hidden="true">
+          <path d="M24 56 V120 Q24 128 32 128 H118 Q126 128 126 120 V56" fill="none" stroke="#1F3A0B" stroke-width="3"/>
+          <path d="M27 70 V119 Q27 125 33 125 H117 Q123 125 123 119 V70 Z" fill="#CFE2FA"/>
+          <g fill="#fff" stroke="#3B7DD8" stroke-width="1.6">
+            <circle class="bub" cx="45" cy="118" r="5" style="animation-delay:0s"/>
+            <circle class="bub" cx="70" cy="120" r="6" style="animation-delay:.5s"/>
+            <circle class="bub" cx="95" cy="117" r="5" style="animation-delay:.9s"/>
+            <circle class="bub" cx="110" cy="119" r="4" style="animation-delay:.3s"/>
+            <circle class="bub" cx="58" cy="105" r="4" style="animation-delay:1.1s"/>
+          </g>
+          <path d="M40 140 Q48 130 52 140 Q60 128 66 140 Q74 130 80 140 Q88 128 94 140 Q102 130 108 140" fill="#F6A33B" stroke="#C8432F" stroke-width="1.5"/>
+          <text x="75" y="95" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="15" fill="#1F3A0B">100 °C</text>
+        </svg>
+        <div><h3>Ebullición</h3>
+          <ul><li>En <b>todo el líquido</b>: salen burbujas de vapor desde dentro.</li><li>A una <b>temperatura fija</b>: el agua, a 100 °C (a nivel del mar).</li>
+            <li>Rápida. Mientras hierve, la temperatura no sube.</li></ul></div>
+      </div>
+    </div>
+    <h3 class="sub">¿Evaporación o ebullición?</h3>
+    <div class="sits" id="sits"></div>
+
+    <h3 class="sub">La trampa del «humo» blanco</h3>
+    <div class="trap">
+      <svg viewBox="0 0 330 300" aria-label="Un cazo hirviendo: justo encima del agua no se ve nada (zona A) y más arriba hay una nube blanca (zona B)">
+        <g class="cloud">
+          <circle cx="150" cy="78" r="26"/><circle cx="182" cy="66" r="30"/><circle cx="214" cy="82" r="24"/><circle cx="170" cy="96" r="22"/><circle cx="205" cy="104" r="18"/>
+          <circle cx="138" cy="102" r="17"/>
+        </g>
+        <rect x="100" y="140" width="130" height="44" fill="none" stroke="#4E5A45" stroke-width="1.5" stroke-dasharray="5 5" rx="8"/>
+        <path d="M80 190 V262 Q80 272 90 272 H240 Q250 272 250 262 V190" fill="#E9EEF2" stroke="#1F3A0B" stroke-width="3"/>
+        <path d="M250 200 H306" stroke="#1F3A0B" stroke-width="7" stroke-linecap="round"/>
+        <path d="M83 204 V261 Q83 269 91 269 H239 Q247 269 247 261 V204 Z" fill="#CFE2FA"/>
+        <g fill="#fff" stroke="#3B7DD8" stroke-width="1.5"><circle cx="120" cy="250" r="5"/><circle cx="160" cy="232" r="6"/><circle cx="200" cy="248" r="5"/><circle cx="140" cy="214" r="4"/><circle cx="220" cy="222" r="4"/></g>
+        <path d="M100 290 Q110 278 116 290 Q126 276 134 290 Q144 278 152 290 Q162 276 170 290 Q180 278 188 290 Q198 276 206 290 Q216 278 224 290" fill="#F6A33B" stroke="#C8432F" stroke-width="1.5"/>
+        <g class="zlab"><rect x="236" y="148" width="30" height="28" rx="8"/><text x="251" y="162">A</text></g>
+        <g class="zlab"><rect x="246" y="62" width="30" height="28" rx="8"/><text x="261" y="76">B</text></g>
+      </svg>
+      <div id="trapQ"></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="block" id="errores">
+    <h2>5. Errores típicos (y cómo esquivarlos)</h2>
+    <p class="hint">Todos los cometemos alguna vez. Conocerlos es la mitad del trabajo.</p>
+    <ul class="errs">
+      <li><b>Pensar que, si sigues calentando, la temperatura siempre sube.</b> Mientras una sustancia pura cambia de estado, no sube: la energía se usa en separar las partículas.</li>
+      <li><b>Creer que con más fuego el agua hierve a más temperatura.</b> Con más fuego hierve antes y se acaba antes, pero a la misma temperatura: 100 °C a nivel del mar.</li>
+      <li><b>Confundir evaporación con ebullición.</b> La ropa tendida se seca sin hervir: eso es evaporación, y pasa a cualquier temperatura.</li>
+      <li><b>Llamar vapor al «humo» blanco de la olla.</b> El vapor de agua es invisible. Lo blanco son gotitas de agua líquida que ya se han condensado.</li>
+      <li><b>Olvidar que también hay cambios de vuelta.</b> Solidificación, condensación y sublimación inversa ceden energía: por eso el vapor de la olla quema tanto al condensarse en tu piel.</li>
+      <li><b>Pensar que todo tiene mesetas.</b> Solo las sustancias puras cambian de estado a una temperatura fija. Una mezcla, como la cera, se ablanda poco a poco.</li>
+      <li><b>Creer que el agua siempre hierve a 100 °C.</b> A nivel del mar, sí. En lo alto de una montaña, a menos (en la cima del Everest, a unos 70 °C).</li>
+      <li><b>Pensar que las partículas de un sólido están quietas, o que crecen al calentarse.</b> Vibran siempre. Al calentar se mueven más y se separan, pero no se hacen más grandes.</li>
+    </ul>
+  </section>
+
+  <div class="beak" style="margin-bottom:30px"><img src="../../../../media/beakman.jpg" alt="">
+    <div><b>Lo que te llevas, según Beakman</b>Seis cambios, tres de ida y tres de vuelta. Los de ida (fusión, vaporización, sublimación) necesitan energía para separar las partículas;
+      los de vuelta la sueltan. En una gráfica, las cuestas son la sustancia calentándose y las mesetas son los cambios de estado: su altura te dice a qué temperatura funde o hierve,
+      y con eso sabes qué sustancia es. Y la meseta de hervir el agua es la más larga: separar del todo sus partículas cuesta casi siete veces más que fundir el hielo.</div></div>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script>
+(() => {
+  const store = { get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } },
+                  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const KEY = 'beakman.cambios-de-estado.v1';
+  const saved = store.get(KEY, {}) || {};
+  const save = () => store.set(KEY, saved);
+  const $ = (id) => document.getElementById(id);
+  const motion = !window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const num = (x, d = 0) => { const s = x.toFixed(d).replace('.', ','); return s.replace(/^-/, '−').replace(/^−0(,0+)?$/, '0$1'); };
+  const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+  /* ---------- pregunta de opciones: respuesta al momento, se puede reintentar ---------- */
+  function mcq(el, q) {
+    const box = document.createElement('div'); box.className = 'mcq';
+    box.innerHTML = `<p class="q">${q.q}</p><div class="opts"></div><div class="fbx" aria-live="polite"></div>`;
+    const opts = box.querySelector('.opts'), fb = box.querySelector('.fbx');
+    let tries = 0;
+    q.opts.forEach((o, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.innerHTML = o;
+      b.onclick = () => {
+        tries++;
+        if (i === q.ok) {
+          b.classList.add('ok'); opts.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+          fb.innerHTML = `<div class="fb good"><b class="okt">${tries === 1 ? '¡Bien visto!' : '¡Eso es!'}</b> ${q.good}</div>`;
+          if (q.done) q.done(tries === 1);
+        } else {
+          b.classList.add('ko'); b.disabled = true;
+          const why = typeof q.bad === 'function' ? q.bad(i) : q.bad;
+          fb.innerHTML = `<div class="fb bad"><b class="kot">Todavía no.</b> ${why}</div>`;
+        }
+      };
+      opts.appendChild(b);
+    });
+    el.appendChild(box);
+    return box;
+  }
+
+  /* ---------- 1. el ciclo ---------- */
+  const NODES = { S: { x: 110, y: 400, name: 'Sólido' }, L: { x: 530, y: 400, name: 'Líquido' }, G: { x: 320, y: 88, name: 'Gas' } };
+  const SNAME = { S: 'sólido', L: 'líquido', G: 'gas' };
+  const ARR = [
+    { id: 'fus', at: .5, a: 'S', b: 'L', side: 1, name: 'Fusión', hot: true, ex: 'el cubito que se derrite' },
+    { id: 'sol', at: .5, a: 'L', b: 'S', side: -1, name: 'Solidificación', hot: false, ex: 'el agua que se congela' },
+    { id: 'vap', at: .28, a: 'L', b: 'G', side: 1, name: 'Vaporización', hot: true, ex: 'el agua que hierve o el charco que se seca' },
+    { id: 'con', at: .4, a: 'G', b: 'L', side: -1, name: 'Condensación', hot: false, ex: 'el espejo que se empaña' },
+    { id: 'sub', at: .6, a: 'S', b: 'G', side: -1, name: 'Sublimación', hot: true, ex: 'la nieve que desaparece sin derretirse' },
+    { id: 'dep', at: .72, a: 'G', b: 'S', side: 1, name: 'Sublimación inversa', alt: 'o deposición', hot: false, ex: 'la escarcha' }];
+  const C = { x: 320, y: 296 };
+  function geo(a) {
+    const A = NODES[a.a], B = NODES[a.b];
+    const dx = B.x - A.x, dy = B.y - A.y, len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+    let nx = -uy, ny = ux; const mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2;
+    if ((C.x - mx) * nx + (C.y - my) * ny < 0) { nx = -nx; ny = -ny; }       // normal hacia dentro del triángulo
+    const off = (a.a === 'G' || a.b === 'G' ? 15 : 21) * a.side, r = 64;
+    const x1 = A.x + ux * (r + 6) + nx * off, y1 = A.y + uy * (r + 6) + ny * off;
+    const x2 = B.x - ux * (r + 14) + nx * off, y2 = B.y - uy * (r + 14) + ny * off;
+    const lx = x1 + (x2 - x1) * a.at, ly = y1 + (y2 - y1) * a.at;           // el hueco va encima de su flecha
+    return { x1, y1, x2, y2, lx, ly };
+  }
+  const particles = {
+    S: () => { let s = ''; for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) s += `<circle class="pt" cx="${-24 + j * 16}" cy="${-14 + i * 15}" r="6"/>`; return `<g class="${motion ? 'vib' : ''}">${s}</g>`; },
+    L: () => [[-28, 30], [-14, 34], [1, 31], [16, 34], [30, 27], [-22, 17], [-7, 19], [9, 18], [24, 14], [-31, 4], [-15, 4], [3, 6], [18, 1], [-4, -9]]
+      .map(([x, y]) => `<circle class="pt" cx="${x}" cy="${y - 4}" r="6"/>`).join(''),
+    G: () => [[-30, -14], [8, -26], [30, 4], [-12, 18], [16, 30], [-34, 26]].map(([x, y]) => `<circle class="pt" cx="${x}" cy="${y}" r="6"/>`).join('') };
+  const tri = $('tri'), triSvg = $('triSvg');
+  let s1 = { placed: {}, energy: {}, sel: null, selSlot: null };
+  function drawTri() {
+    let s = `<defs>${['n', 'h', 'c'].map((k) => `<marker id="ah${k}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="${k === 'n' ? '#8D9682' : k === 'h' ? '#C8432F' : '#2563B8'}"/></marker>`).join('')}</defs>`;
+    ARR.forEach((a) => {
+      const g = geo(a), e = s1.energy[a.id], k = e ? (a.hot ? 'h' : 'c') : 'n';
+      s += `<line class="arr ${k === 'h' ? 'hot' : k === 'c' ? 'cold' : ''}" x1="${g.x1.toFixed(1)}" y1="${g.y1.toFixed(1)}" x2="${g.x2.toFixed(1)}" y2="${g.y2.toFixed(1)}" marker-end="url(#ah${k})"/>`;
+    });
+    Object.entries(NODES).forEach(([k, n]) => {
+      s += `<g transform="translate(${n.x} ${n.y})"><circle class="node" r="58"/>${particles[k]()}</g>`;
+      s += `<text class="nname" x="${n.x}" y="${k === 'G' ? n.y - 66 : n.y + 86}">${n.name}</text>`;
+    });
+    triSvg.innerHTML = s;
+  }
+  function slotHtml(a) {
+    if (!s1.placed[a.id]) return '?';
+    return a.name + (a.alt ? `<small>${a.alt}</small>` : '');
+  }
+  function buildSlots() {
+    tri.querySelectorAll('.slot').forEach((x) => x.remove());
+    ARR.forEach((a) => {
+      const g = geo(a), b = document.createElement('button');
+      b.type = 'button'; b.className = 'slot'; b.dataset.id = a.id;
+      b.style.left = (g.lx / 640 * 100) + '%'; b.style.top = (g.ly / 500 * 100) + '%';
+      b.setAttribute('aria-label', `Flecha de ${SNAME[a.a]} a ${SNAME[a.b]}`);
+      b.onclick = () => { if (s1.placed[a.id]) return; if (s1.sel) place(a.id, s1.sel); else { s1.selSlot = s1.selSlot === a.id ? null : a.id; paintSlots(); } };
+      b.ondragover = (e) => { if (!s1.placed[a.id]) { e.preventDefault(); b.classList.add('over'); } };
+      b.ondragleave = () => b.classList.remove('over');
+      b.ondrop = (e) => { e.preventDefault(); b.classList.remove('over'); const n = e.dataTransfer.getData('text/plain'); if (n) place(a.id, n); };
+      tri.appendChild(b);
+    });
+    paintSlots();
+  }
+  function paintSlots() {
+    tri.querySelectorAll('.slot').forEach((b) => {
+      const a = ARR.find((x) => x.id === b.dataset.id), done = !!s1.placed[a.id], e = s1.energy[a.id];
+      b.innerHTML = slotHtml(a);
+      b.className = 'slot' + (done ? ' done' : '') + (e ? (a.hot ? ' hot' : ' cold') : '') + (s1.selSlot === a.id ? ' sel' : '');
+    });
+  }
+  function buildBank() {
+    const bank = $('bank'); bank.innerHTML = '';
+    shuffle(ARR).forEach((a) => {
+      if (s1.placed[a.id]) return;
+      const c = document.createElement('button'); c.type = 'button'; c.className = 'chip'; c.draggable = true; c.dataset.n = a.name;
+      c.textContent = a.name + (a.alt ? ' ' + a.alt : ''); c.setAttribute('aria-pressed', 'false');
+      c.onclick = () => {
+        if (s1.selSlot) { place(s1.selSlot, a.name); return; }
+        s1.sel = s1.sel === a.name ? null : a.name;
+        bank.querySelectorAll('.chip').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.n === s1.sel)));
+      };
+      c.ondragstart = (e) => { e.dataTransfer.setData('text/plain', a.name); };
+      bank.appendChild(c);
+    });
+    if (!bank.children.length) bank.innerHTML = '<span class="okt">¡Las seis flechas tienen nombre!</span>';
+  }
+  function place(id, name) {
+    const a = ARR.find((x) => x.id === id), chosen = ARR.find((x) => x.name === name);
+    s1.sel = null; s1.selSlot = null;
+    if (a.name === name) {
+      s1.placed[id] = true;
+      $('fb1').innerHTML = `<div class="fb good"><b class="okt">¡Eso es!</b> ${a.name} ${a.alt ? '(' + a.alt.replace('o ', '') + ') ' : ''}es pasar de ${SNAME[a.a]} a ${SNAME[a.b]}, como ${a.ex}.</div>`;
+    } else {
+      const b = tri.querySelector(`.slot[data-id="${id}"]`);
+      b.classList.add('ko'); setTimeout(() => b.classList.remove('ko'), 900);
+      $('fb1').innerHTML = `<div class="fb bad"><b class="kot">Casi.</b> «${chosen.name}» es pasar de ${SNAME[chosen.a]} a ${SNAME[chosen.b]}. Esa flecha va de ${SNAME[a.a]} a ${SNAME[a.b]}: mira bien hacia dónde apunta.</div>`;
+    }
+    buildBank(); paintSlots();
+    if (ARR.every((x) => s1.placed[x.id])) startEnergy();
+  }
+  function startEnergy() {
+    $('step2').hidden = false;
+    const box = $('erows'); box.innerHTML = '';
+    ARR.forEach((a) => {
+      const r = document.createElement('div'); r.className = 'erow'; r.dataset.id = a.id;
+      r.innerHTML = `<div><b>${a.name}</b> <span>de ${SNAME[a.a]} a ${SNAME[a.b]}</span></div>
+        <div class="row"><button class="b small h" type="button" data-v="1">Absorbe</button><button class="b small c" type="button" data-v="0">Cede</button></div>`;
+      r.querySelectorAll('button').forEach((btn) => btn.onclick = () => {
+        const v = btn.dataset.v === '1';
+        if (v === a.hot) {
+          s1.energy[a.id] = true; r.className = 'erow ' + (a.hot ? 'okh' : 'okc');
+          r.querySelector('.row').innerHTML = `<span class="${a.hot ? 'kot' : ''}" style="color:${a.hot ? 'var(--hot)' : 'var(--cold)'};font-weight:800">${a.hot ? 'absorbe' : 'cede'}</span>`;
+          $('fb2').innerHTML = '';
+          drawTri(); paintSlots();
+          if (ARR.every((x) => s1.energy[x.id])) {
+            $('fb2').innerHTML = `<div class="fb good"><b class="okt">¡Completo!</b> Mira los colores: las flechas rojas van hacia más desorden (sólido → líquido → gas) y necesitan energía para separar las partículas.
+              Las azules hacen el camino de vuelta y sueltan esa misma energía.</div>`;
+            saved.s1 = true; save();
+          }
+        } else {
+          $('fb2').innerHTML = `<div class="fb bad"><b class="kot">Piénsalo otra vez.</b> ${a.hot
+            ? `Para conseguir ${a.ex}, ¿le das calor o se lo quitas? Pasar de ${SNAME[a.a]} a ${SNAME[a.b]} es separar las partículas, y eso cuesta energía.`
+            : `Para conseguir ${a.ex}, hay que enfriar: las partículas se juntan y sueltan energía al entorno.`}</div>`;
+        }
+      });
+      box.appendChild(r);
+    });
+  }
+  function reset1() { s1 = { placed: {}, energy: {}, sel: null, selSlot: null }; $('step2').hidden = true; $('fb1').innerHTML = ''; $('fb2').innerHTML = ''; drawTri(); buildSlots(); buildBank(); }
+  $('reset1').onclick = reset1;
+  reset1();
+
+  /* ---------- gráficas: un dibujo común ---------- */
+  const PAD = { l: 60, r: 20, t: 18, b: 48 };
+  function niceStep(range, max = 10) { for (const s of [1, 2, 5, 10, 20, 25, 50, 100, 200, 500]) if (range / s <= max) return s; return 1000; }
+  const niceUp = (x, s) => Math.ceil(x / s - 1e-9) * s;
+  function interp(pts, t) {
+    if (!pts.length || t < pts[0][0] || t > pts[pts.length - 1][0]) return null;
+    for (let i = 1; i < pts.length; i++) if (t <= pts[i][0]) { const [a, A] = pts[i - 1], [b, B] = pts[i]; return b === a ? B : A + (B - A) * (t - a) / (b - a); }
+    return null;
+  }
+  function plot(svg, o) {
+    const W = o.W, H = o.H, iw = W - PAD.l - PAD.r, ih = H - PAD.t - PAD.b;
+    const X = (t) => PAD.l + t / o.xmax * iw, Y = (T) => PAD.t + (o.ymax - T) / (o.ymax - o.ymin) * ih;
+    const xs = niceStep(o.xmax, 12), ys = o.ystep || niceStep(o.ymax - o.ymin, 9);
+    let s = '';
+    if (o.band) s += `<rect class="band" x="${X(o.band[0])}" y="${PAD.t}" width="${X(o.band[1]) - X(o.band[0])}" height="${ih}"/>`;
+    for (let t = 0; t <= o.xmax + 1e-9; t += xs) s += `<line class="gl" x1="${X(t)}" y1="${PAD.t}" x2="${X(t)}" y2="${PAD.t + ih}"/><text class="tk" x="${X(t)}" y="${H - PAD.b + 18}" text-anchor="middle">${num(t)}</text>`;
+    for (let T = Math.ceil(o.ymin / ys) * ys; T <= o.ymax + 1e-9; T += ys) s += `<line class="${T === 0 ? 'zl' : 'gl'}" x1="${PAD.l}" y1="${Y(T)}" x2="${PAD.l + iw}" y2="${Y(T)}"/><text class="tk" x="${PAD.l - 8}" y="${Y(T) + 4}" text-anchor="end">${num(T)}</text>`;
+    s += `<line class="ax" x1="${PAD.l}" y1="${PAD.t}" x2="${PAD.l}" y2="${PAD.t + ih}"/><line class="ax" x1="${PAD.l}" y1="${PAD.t + ih}" x2="${PAD.l + iw}" y2="${PAD.t + ih}"/>`;
+    s += `<text class="al" x="${PAD.l + iw / 2}" y="${H - 8}" text-anchor="middle">Tiempo (min)</text>`;
+    s += `<text class="al" transform="translate(16 ${PAD.t + ih / 2}) rotate(-90)" text-anchor="middle">Temperatura (°C)</text>`;
+    (o.series || []).forEach((se) => {
+      if (se.pts.length < 2) return;
+      s += `<path class="${se.cls}" d="M${se.pts.map((p) => X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1)).join('L')}"/>`;
+      if (se.label) { const p = se.pts[se.pts.length - 1]; s += `<text class="gtx" x="${Math.min(X(p[0]) + 6, W - PAD.r - 70)}" y="${Y(p[1]) - 8}">${se.label}</text>`; }
+    });
+    (o.letters || []).forEach((l) => {
+      const x = X(l.t), y = Y(l.T) + (l.flat ? -18 : 0), xx = l.flat ? x : x + (l.dx || -16);
+      s += `<g class="lt"><circle cx="${xx}" cy="${y}" r="11"/><text x="${xx}" y="${y}">${l.txt}</text>${l.nm ? `<text class="nm" x="${xx + 15}" y="${y}">${l.nm}</text>` : ''}</g>`;
+    });
+    if (o.marker) { const x = X(o.marker.t); s += `<line class="mk" x1="${x}" y1="${PAD.t}" x2="${x}" y2="${PAD.t + ih}"/><rect class="mkb" x="${x - 34}" y="${PAD.t + 2}" width="68" height="22" rx="8"/><text class="mkt" x="${x}" y="${PAD.t + 17}">${o.marker.label}</text>`; }
+    if (o.hover != null && o.series && o.series[0]) {
+      const T = interp(o.series[0].pts, o.hover);
+      if (T != null) {
+        const x = X(o.hover), y = Y(T), txt = `${num(o.hover, 1)} min · ${num(T, Math.abs(T - Math.round(T)) < .05 ? 0 : 1)} °C`, w = txt.length * 7.2 + 16;
+        const bx = Math.min(Math.max(x - w / 2, PAD.l), PAD.l + iw - w), by = y - 40 < PAD.t ? y + 14 : y - 38;
+        s += `<line class="hv" x1="${x}" y1="${PAD.t}" x2="${x}" y2="${PAD.t + ih}"/><line class="hv" x1="${PAD.l}" y1="${y}" x2="${x}" y2="${y}"/><circle class="hvd" cx="${x}" cy="${y}" r="5"/>`;
+        s += `<rect class="hvb" x="${bx}" y="${by}" width="${w}" height="24" rx="8"/><text class="hvt" x="${bx + w / 2}" y="${by + 16.5}" text-anchor="middle">${txt}</text>`;
+      }
+    }
+    svg.innerHTML = s;
+  }
+  function hoverable(svg, W, getMax, set) {
+    const iw = W - PAD.l - PAD.r;
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W, t = (x - PAD.l) / iw * getMax();
+      set(t >= 0 && t <= getMax() ? t : null);
+    });
+    svg.addEventListener('pointerleave', () => set(null));
+  }
+
+  /* ---------- 2. el hornillo ---------- */
+  // 200 g de agua. Calores específicos (kJ/kg·°C): hielo 2,1; agua 4,18; vapor 2,0. Calores latentes: fusión 334 kJ/kg; vaporización 2260 kJ/kg.
+  const M = 0.2, cS = 2.1, LF = 334, cL = 4.18, LV = 2260, cG = 2.0, T0 = -20, TEND = 130;
+  const EA = M * cS * (0 - T0), EB = EA + M * LF, EC = EB + M * cL * 100, ED = EC + M * LV, EE = ED + M * cG * (TEND - 100);
+  const TH = [EA, EB, EC, ED, EE];
+  function phase(E) {
+    if (E <= EA) return { T: T0 + E / (M * cS), fs: 1, fl: 0, fg: 0, k: 0 };
+    if (E <= EB) { const fs = 1 - (E - EA) / (M * LF); return { T: 0, fs, fl: 1 - fs, fg: 0, k: 1 }; }
+    if (E <= EC) return { T: (E - EB) / (M * cL), fs: 0, fl: 1, fg: 0, k: 2 };
+    if (E <= ED) { const fl = 1 - (E - EC) / (M * LV); return { T: 100, fs: 0, fl, fg: 1 - fl, k: 3 }; }
+    return { T: Math.min(TEND, 100 + (E - ED) / (M * cG)), fs: 0, fl: 0, fg: 1, k: 4 };
+  }
+  const TRAMOS = [
+    { L: 'A', nm: 'el hielo se calienta', h: 'Tramo A · El hielo se calienta', p: 'Sus partículas vibran cada vez más fuerte en su sitio, y la temperatura sube. Todavía no se funde nada: está por debajo de 0 °C.' },
+    { L: 'B', nm: 'fusión', h: 'Tramo B · Fusión a 0 °C', p: 'Hay hielo y agua a la vez. La energía del hornillo se gasta en soltar las partículas de su sitio, no en agitarlas más: la temperatura no se mueve de 0 °C hasta que se funde el último trocito.' },
+    { L: 'C', nm: 'el agua se calienta', h: 'Tramo C · El agua líquida se calienta', p: 'Ya todo es líquido y sube de 0 a 100 °C. Aunque no hierva, por la superficie ya se evapora un poco.' },
+    { L: 'D', nm: 'ebullición', h: 'Tramo D · Ebullición a 100 °C', p: 'Salen burbujas de vapor desde dentro del líquido. Separar del todo las partículas cuesta mucha energía: esta meseta es la más larga de todas. El vapor es invisible; lo blanco de encima son gotitas.' },
+    { L: 'E', nm: 'el vapor se calienta', h: 'Tramo E · El vapor se calienta', p: 'Ya no queda líquido. Si no dejáramos escapar el vapor (imagina que lo recogemos) y siguiéramos calentando, pasaría de 100 °C.' }];
+  const sim = { E: 0, t: 0, P: 0.5, run: false, fast: false, pts: [[0, T0]], bounds: [0], ghosts: [], hover: null, last: 0, pChanged: false };
+  const SPEED = 30;                                   // segundos simulados por segundo real (×3 si «más rápido»)
+  const g2 = $('g2');
+  function xmax2() {
+    const est = (sim.t + (EE - sim.E) / sim.P) / 60;
+    return niceUp(Math.max(est, ...sim.ghosts.map((g) => g.pts[g.pts.length - 1][0]), 5), 5);
+  }
+  function step(dt) {                                  // dt en segundos simulados; parte el paso en cada cambio de tramo
+    while (dt > 1e-9 && sim.E < EE) {
+      const next = TH.find((x) => x > sim.E + 1e-9), need = (next - sim.E) / sim.P;
+      if (need <= dt) { sim.E = next; sim.t += need; dt -= need; sim.pts.push([sim.t / 60, phase(sim.E).T]); sim.bounds.push(sim.t / 60); }
+      else { sim.E += sim.P * dt; sim.t += dt; dt = 0; sim.pts.push([sim.t / 60, phase(sim.E).T]); }
+    }
+    if (sim.E >= EE - 1e-9) { sim.run = false; finish(); }
+  }
+  function letters2() {
+    const out = [], k = phase(sim.E).k, Tm = [T0 / 2, 0, 50, 100, (100 + TEND) / 2];
+    for (let i = 0; i <= Math.min(k, 4); i++) {
+      if (sim.E === 0) break;
+      const a = sim.bounds[i], b = i + 1 < sim.bounds.length ? sim.bounds[i + 1] : sim.t / 60;
+      if (b - a < 1e-6) continue;
+      const flat = i === 1 || i === 3;
+      out.push({ t: (a + b) / 2, T: flat ? Tm[i] : (i === 0 ? phase(Math.min(sim.E, EA) / 2).T : i === 2 ? phase((EB + Math.min(sim.E, EC)) / 2).T : phase((ED + Math.min(sim.E, EE)) / 2).T),
+        txt: TRAMOS[i].L, flat, dx: i === 0 ? 16 : -16, nm: flat && b - a > 1.6 ? TRAMOS[i].nm : '' });
+    }
+    return out;
+  }
+  // la curva actual es la serie 0 (la que lee el ratón); las guardadas se dibujan debajo
+  const plot2 = () => {
+    const o = { W: 700, H: 380, xmax: xmax2(), ymin: -30, ymax: 140, ystep: 20, letters: letters2(), hover: sim.hover,
+      series: [{ pts: sim.pts, cls: 'cur' }] };
+    const ghosts = sim.ghosts.map((g) => ({ pts: g.pts, cls: 'ghost', label: g.label }));
+    plot(g2, o);
+    if (ghosts.length) {                               // dibuja las curvas guardadas debajo de la actual
+      const tmp = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const o2 = Object.assign({}, o, { series: ghosts, letters: [], hover: null });
+      const holder = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      plot(holder, o2);
+      holder.querySelectorAll('path.ghost, text.gtx').forEach((n) => tmp.appendChild(n));
+      const firstCur = g2.querySelector('path.cur');
+      g2.insertBefore(tmp, firstCur || null);
+    }
+  };
+  hoverable(g2, 700, xmax2, (t) => { sim.hover = t; if (!sim.run) paint2(); });
+  const POWNAME = { 0.25: 'fuego suave', 0.5: 'fuego medio', 1: 'fuego fuerte' };
+
+  /* escena: vaso, hornillo y termómetro */
+  const scene = $('scene');
+  function drawScene(now) {
+    const ph = phase(sim.E), on = sim.run, bottom = 280, top = 110, x0 = 50, x1 = 180, full = 120;
+    const lh = ph.fl * full * 0.95;                    // altura del agua líquida
+    let s = '';
+    // hornillo
+    s += `<rect x="20" y="292" width="190" height="36" rx="8" fill="#3A4232"/><rect x="36" y="284" width="158" height="10" rx="4" fill="${on ? (sim.P >= 1 ? '#F05A28' : sim.P >= .5 ? '#E7743A' : '#D0904E') : '#6B7462'}"/>`;
+    if (on) for (let i = 0; i < (sim.P >= 1 ? 7 : sim.P >= .5 ? 5 : 3); i++) { const fx = 54 + i * (122 / Math.max(1, (sim.P >= 1 ? 6 : sim.P >= .5 ? 4 : 2))); const fl = 6 + 3 * Math.sin(now / 90 + i);
+      s += `<path d="M${fx - 5} 285 Q${fx} ${285 - fl - 6} ${fx + 5} 285 Z" fill="#F6A33B" opacity=".9"/>`; }
+    s += `<circle cx="194" cy="310" r="8" fill="#6B7462" stroke="#1F2A17"/><line x1="194" y1="310" x2="${194 + 6 * Math.cos(-2.4 + sim.P * 2)}" y2="${310 + 6 * Math.sin(-2.4 + sim.P * 2)}" stroke="#fff" stroke-width="2"/>`;
+    // contenido
+    s += `<defs><clipPath id="glass"><rect x="${x0 + 2}" y="${top}" width="${x1 - x0 - 4}" height="${bottom - top - 2}"/></clipPath></defs><g clip-path="url(#glass)">`;
+    if (ph.k === 4) for (let i = 0; i < 16; i++) { const px = x0 + 12 + ((i * 53 + now / 8 * (1 + i % 3)) % (x1 - x0 - 24)), py = top + 10 + ((i * 37 + now / 11 * (1 + i % 2)) % (bottom - top - 20)); s += `<circle cx="${px}" cy="${py}" r="3" fill="#9BBBE8"/>`; }
+    if (lh > 0.5) s += `<rect x="${x0}" y="${bottom - lh}" width="${x1 - x0}" height="${lh}" fill="#CFE2FA"/><line x1="${x0}" y1="${bottom - lh}" x2="${x1}" y2="${bottom - lh}" stroke="#3B7DD8" stroke-width="2"/>`;
+    if (ph.k === 3 && lh > 6) for (let i = 0; i < 9; i++) { const f = ((now / 1000) * (sim.fast ? 1.6 : 1) + i * .37) % 1, by = bottom - 4 - f * (lh - 6), bx = x0 + 14 + (i * 41) % (x1 - x0 - 28);
+      s += `<circle cx="${bx + 3 * Math.sin(now / 200 + i)}" cy="${by}" r="${2.5 + f * 3}" fill="#fff" stroke="#3B7DD8" stroke-width="1.3"/>`; }
+    if (ph.fs > 0) {                                  // cubitos: el hielo flota
+      const n = Math.max(1, Math.ceil(ph.fs * 6)), size = 16 + 14 * Math.sqrt(ph.fs), surf = bottom - lh;
+      for (let i = 0; i < n; i++) { const cx = x0 + 18 + (i % 3) * 38 + (i > 2 ? 16 : 0), y = lh > size ? surf - size * .15 + (i > 2 ? size * .25 : 0) : bottom - size - (i > 2 ? size * .85 : 0);
+        s += `<rect x="${cx}" y="${y}" width="${size}" height="${size}" rx="${3 + (1 - ph.fs) * 6}" fill="#EAF4FF" stroke="#7FA7D9" stroke-width="2" opacity=".95"/>`; }
+    }
+    s += '</g>';
+    s += `<path d="M${x0} ${top - 6} V${bottom} H${x1} V${top - 6}" fill="none" stroke="#1F3A0B" stroke-width="3"/>`;
+    if (ph.k === 4) s += `<rect x="${x0 - 6}" y="${top - 14}" width="${x1 - x0 + 12}" height="9" rx="4" fill="#7B8670"/><text x="${(x0 + x1) / 2}" y="${top - 22}" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="12" fill="#4E5A45">vapor (no se ve)</text>`;
+    if (ph.k === 3) {                           // la nube de gotitas aparece algo más arriba, no pegada al agua
+      s += `<g opacity=".95">${[[90, 46, 16], [112, 38, 19], [136, 48, 15], [104, 58, 13], [126, 60, 12]].map(([x, y, r]) => `<circle cx="${x + 2 * Math.sin(now / 500 + x)}" cy="${y}" r="${r}" fill="#fff" stroke="#C9D1BC" stroke-width="1.3"/>`).join('')}</g>`;
+      s += `<text x="115" y="20" text-anchor="middle" font-family="Nunito" font-weight="800" font-size="12" fill="#4E5A45">gotitas, no vapor</text>`;
+    }
+    // termómetro
+    const Ty = (T) => 262 - (T + 30) / 170 * 200;
+    s += `<rect x="222" y="52" width="16" height="222" rx="8" fill="#fff" stroke="#1F3A0B" stroke-width="2"/><circle cx="230" cy="278" r="12" fill="#C8432F" stroke="#1F3A0B" stroke-width="2"/>`;
+    s += `<rect x="226" y="${Ty(ph.T)}" width="8" height="${276 - Ty(ph.T)}" fill="#C8432F"/>`;
+    [0, 100].forEach((T) => { s += `<line x1="238" y1="${Ty(T)}" x2="246" y2="${Ty(T)}" stroke="#1F3A0B" stroke-width="2"/><text x="250" y="${Ty(T) + 4}" text-anchor="start" font-family="Nunito" font-weight="800" font-size="12" fill="#1F3A0B">${T} °C</text>`; });
+    scene.innerHTML = s;
+  }
+
+  /* lupa: partículas */
+  const cv = $('lupa'), cx = cv.getContext('2d'), NP = 40;
+  const slotP = (i) => ({ x: 20 + (i % 8) * 16, y: 136 - Math.floor(i / 8) * 16 });
+  const parts = Array.from({ length: NP }, (_, i) => { const p = slotP(i); return { x: p.x, y: p.y, vx: 0, vy: 0 }; });
+  function drawLupa() {
+    const ph = phase(sim.E), ns = Math.round(NP * ph.fs), nl = Math.round(NP * ph.fl), v = .4 + (ph.T + 20) / 45;
+    const liqTop = 146 - Math.ceil((ns + nl) / 8) * 16 - 10;
+    cx.clearRect(0, 0, 150, 150);
+    parts.forEach((p, i) => {
+      let dx = 0, dy = 0;
+      if (i < ns) {
+        const s = slotP(i); p.x += (s.x - p.x) * .2; p.y += (s.y - p.y) * .2; p.vx = 0; p.vy = 0;
+        const A = motion ? .6 + (ph.T + 20) * .09 : 0; dx = (Math.random() - .5) * 2 * A; dy = (Math.random() - .5) * 2 * A;
+      } else if (i < ns + nl) {
+        if (motion) { p.vx += (Math.random() - .5) * .7 * v; p.vy += (Math.random() - .5) * .7 * v; }
+        p.vx *= .88; p.vy *= .88; if (p.y < liqTop) p.vy += .6;
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 8) { p.x = 8; p.vx = Math.abs(p.vx); } if (p.x > 142) { p.x = 142; p.vx = -Math.abs(p.vx); }
+        if (p.y > 142) { p.y = 142; p.vy = -Math.abs(p.vy); }
+      } else {
+        const sp = Math.hypot(p.vx, p.vy), want = 2.2 * v + 1;
+        if (sp < .5) { const a = Math.random() * 6.283; p.vx = Math.cos(a) * want; p.vy = Math.sin(a) * want; } else { p.vx *= want / sp; p.vy *= want / sp; }
+        if (motion) { p.x += p.vx; p.y += p.vy; }
+        if (p.x < 7 || p.x > 143) { p.vx = -p.vx; p.x = Math.min(143, Math.max(7, p.x)); }
+        if (p.y < 7 || p.y > 143) { p.vy = -p.vy; p.y = Math.min(143, Math.max(7, p.y)); }
+      }
+      cx.beginPath(); cx.arc(p.x + dx, p.y + dy, 5.5, 0, 6.283); cx.fillStyle = '#3B7DD8'; cx.fill(); cx.lineWidth = 1.2; cx.strokeStyle = '#1F3A0B'; cx.stroke();
+    });
+  }
+
+  function inGlass(ph) {
+    const pc = (x) => Math.round(x * 100) + ' %';
+    if (ph.k === 0) return 'hielo';
+    if (ph.k === 1) return `hielo ${pc(ph.fs)} · agua ${pc(ph.fl)}`;
+    if (ph.k === 2) return 'agua líquida';
+    if (ph.k === 3) return `agua ${pc(ph.fl)} · ya es vapor ${pc(ph.fg)}`;
+    return 'vapor';
+  }
+  function paint2(now = performance.now()) {
+    plot2(); drawScene(now); drawLupa();
+    const ph = phase(sim.E);
+    $('rT').textContent = num(sim.t / 60, 1) + ' min';
+    $('rC').textContent = num(ph.T, Math.abs(ph.T - Math.round(ph.T)) < .05 ? 0 : 1) + ' °C';
+    $('rIn').textContent = inGlass(ph);
+    $('rE').textContent = num(sim.E, 0) + ' kJ';
+    if (sim.E === 0) { $('nowH').textContent = 'Preparado'; $('nowP').textContent = 'El hielo está a −20 °C. Elige el fuego y enciende el hornillo. Antes de empezar, apuesta: ¿qué crees que hará la temperatura al llegar a 0 °C?'; }
+    else if (sim.E >= EE - 1e-9) { /* lo escribe finish() */ }
+    else { $('nowH').textContent = TRAMOS[ph.k].h + (sim.run ? '' : ' (en pausa)'); $('nowP').textContent = TRAMOS[ph.k].p; }
+    const going = sim.E > 0 && sim.E < EE;
+    $('wA').classList.toggle('on', going && [0, 2, 4].includes(ph.k));
+    $('wS').classList.toggle('on', going && [1, 3].includes(ph.k));
+  }
+  function finish() {
+    const b = sim.bounds, tf = b[2] - b[1], te = b[4] - b[3];
+    $('nowH').textContent = 'Experimento terminado';
+    $('nowP').innerHTML = `Fundir los 200 g de hielo ha costado ${num(M * LF)} kJ y ha durado ${num(tf, 1)} min. Hervir toda el agua ha costado ${num(M * LV)} kJ y ha durado ${num(te, 1)} min` +
+      (sim.pChanged ? '.' : `: ${num(te / tf, 1)} veces más.`) + ' Prueba otro fuego con «Guardar la curva y repetir»: ¿cambian las temperaturas de las mesetas?';
+    $('run').textContent = 'Terminado'; $('run').disabled = true;
+    $('keep').disabled = false;
+    paint2();
+  }
+  function loop(now) {
+    if (sim.run) {
+      const dt = Math.min(.1, (now - sim.last) / 1000); sim.last = now;
+      step(dt * SPEED * (sim.fast ? 3 : 1));
+    }
+    if (sim.run || motion) { paint2(now); }
+    requestAnimationFrame(loop);
+  }
+  $('run').onclick = () => {
+    if (sim.E >= EE) return;
+    sim.run = !sim.run; sim.last = performance.now();
+    $('run').textContent = sim.run ? 'Pausa' : 'Seguir';
+    $('keep').disabled = sim.E === 0 && !sim.run;
+    paint2();
+  };
+  $('powSeg').querySelectorAll('button').forEach((b) => b.onclick = () => {
+    const p = +b.dataset.p; if (p === sim.P) return;
+    if (sim.E > 0 && sim.E < EE) sim.pChanged = true;
+    sim.P = p; $('powSeg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); paint2();
+  });
+  $('fast').onclick = () => { sim.fast = !sim.fast; $('fast').setAttribute('aria-pressed', String(sim.fast)); $('fast').textContent = sim.fast ? 'Velocidad normal' : 'Más rápido ×3'; };
+  function resetRun() {
+    Object.assign(sim, { E: 0, t: 0, run: false, pts: [[0, T0]], bounds: [0], pChanged: false });
+    $('run').disabled = false; $('run').textContent = 'Encender el hornillo'; $('keep').disabled = true;
+    parts.forEach((p, i) => { const s = slotP(i); p.x = s.x; p.y = s.y; p.vx = p.vy = 0; });
+    paint2();
+  }
+  $('keep').onclick = () => {
+    if (sim.pts.length > 1) { sim.ghosts.push({ pts: sim.pts.slice(), label: sim.pChanged ? 'curva guardada' : POWNAME[sim.P] }); if (sim.ghosts.length > 2) sim.ghosts.shift(); }
+    resetRun();
+  };
+  $('reset2').onclick = () => { sim.ghosts = []; resetRun(); };
+  resetRun();
+  requestAnimationFrame((t) => { sim.last = t; loop(t); });
+
+  // preguntas sobre el experimento
+  const qs2 = $('qs2');
+  mcq(qs2, { q: '¿Qué meseta dura más?', opts: ['La de 0 °C (fusión)', 'La de 100 °C (ebullición)', 'Duran lo mismo'], ok: 1,
+    good: 'Fundir 1 kg de hielo cuesta 334 kJ; convertir 1 kg de agua hirviendo en vapor, 2260 kJ: casi 7 veces más. Separar del todo las partículas cuesta mucho.',
+    bad: 'Termina el experimento y compara el largo de las dos partes planas.' });
+  mcq(qs2, { q: 'Con el fuego fuerte, ¿a qué temperatura hierve el agua?', opts: ['A más de 100 °C', 'A 100 °C', 'A menos de 100 °C'], ok: 1,
+    good: 'Más fuego hace que llegue antes y que hierva más deprisa, pero la meseta sigue a 100 °C (a nivel del mar). Compara dos curvas con fuegos distintos.',
+    bad: 'Haz el experimento con fuego fuerte y mira a qué altura queda la meseta de arriba.' });
+  mcq(qs2, { q: 'En plena meseta de 0 °C, ¿qué hay en el vaso?', opts: ['Solo hielo', 'Solo agua', 'Hielo y agua a la vez'], ok: 2,
+    good: 'Mientras dura la fusión conviven las dos fases. La temperatura no sube de 0 °C hasta que se funde el último trocito.',
+    bad: 'Pausa el experimento en la meseta de 0 °C y mira el vaso y la lupa.' });
+
+  /* ---------- 3. lee la gráfica ---------- */
+  // calores específicos (kJ/kg·°C) y latentes (kJ/kg) aproximados; las duraciones salen de ellos con un fuego constante
+  const SUBS = {
+    agua: { n: 'Agua', el: 'el agua', mp: 0, bp: 100, cs: 2.1, Lf: 334, cl: 4.18, Lv: 2260, cg: 2.0 },
+    etanol: { n: 'Alcohol etílico', el: 'el alcohol etílico', mp: -114, bp: 78, cs: 1.0, Lf: 108, cl: 2.44, Lv: 841, cg: 1.42 },
+    mercurio: { n: 'Mercurio', el: 'el mercurio', mp: -39, bp: 357, cs: 0.14, Lf: 11.4, cl: 0.14, Lv: 295, cg: 0.10 },
+    estano: { n: 'Estaño', el: 'el estaño', mp: 232, bp: 2602, cs: 0.23, Lf: 59, cl: 0.24, Lv: 2500, cg: 0.2 },
+    plomo: { n: 'Plomo', el: 'el plomo', mp: 327, bp: 1749, cs: 0.13, Lf: 23, cl: 0.15, Lv: 858, cg: 0.1 } };
+  const KIND = { s: 'Sólido', l: 'Líquido', g: 'Gas', sl: 'Sólido y líquido a la vez', lg: 'Líquido y gas a la vez' };
+  const STATES = ['s', 'l', 'g', 'sl', 'lg'];
+  function curve(sub, Ta, Tb, TM) {
+    const up = Tb > Ta, ph = (T) => T < sub.mp ? 's' : T < sub.bp ? 'l' : 'g', c = { s: sub.cs, l: sub.cl, g: sub.cg };
+    const marks = [sub.mp, sub.bp].filter((m) => up ? m > Ta && m < Tb : m < Ta && m > Tb);
+    if (!up) marks.reverse();
+    const segs = []; let E = 0, T = Ta;
+    const pts = [[0, Ta]];
+    marks.forEach((m) => {
+      const k = ph((T + m) / 2); E += c[k] * Math.abs(m - T); segs.push({ k, E0: pts[pts.length - 1][0], E1: E, T0: T, T1: m }); pts.push([E, m]);
+      const E0 = E; E += m === sub.mp ? sub.Lf : sub.Lv; segs.push({ k: m === sub.mp ? 'sl' : 'lg', E0, E1: E, T0: m, T1: m, flat: true }); pts.push([E, m]); T = m;
+    });
+    const k = ph((T + Tb) / 2), E0 = E; E += c[k] * Math.abs(Tb - T); segs.push({ k, E0, E1: E, T0: T, T1: Tb }); pts.push([E, Tb]);
+    const f = TM / E;
+    return { pts: pts.map(([e, t]) => [e * f, t]), segs: segs.map((s) => Object.assign(s, { t0: s.E0 * f, t1: s.E1 * f })), TM };
+  }
+  function cera() {                                      // una mezcla: se ablanda poco a poco entre unos 48 y 66 °C
+    const pts = [], f = 20 / 383; let E = 0;
+    for (let T = 20; T <= 90; T += 1) {
+      pts.push([E * f, T]);
+      const per = T < 48 ? 2.1 : T < 66 ? 2.5 + 210 / 18 * Math.sin(Math.PI * (T - 47.5) / 18) * Math.PI / 2 : 2.9;
+      E += per;
+    }
+    const k = 20 / pts[pts.length - 1][0];
+    return { pts: pts.map(([t, T]) => [t * k, T]), segs: [], TM: 20 };
+  }
+  const subOpts = (keys) => keys.map((k) => SUBS[k].n);
+  const ITEMS = [
+    { title: 'Calentamos hielo', sub: 'agua', Ta: -20, Tb: 120, TM: 30, ask: 'state', seg: 2 },
+    { title: 'Calentamos alcohol sólido', sub: 'etanol', Ta: -130, Tb: 100, TM: 30, ask: 'T', which: 'bp', vals: [-114, 0, 78, 100],
+      q: '¿Cuál es el punto de ebullición del alcohol etílico?' },
+    { title: 'Calentamos mercurio sólido', sub: 'mercurio', Ta: -60, Tb: 60, TM: 10, ask: 'T', which: 'mp', vals: [-39, 0, 39, 357],
+      q: '¿A qué temperatura funde el mercurio?' },
+    { title: 'Calentamos estaño', sub: 'estano', Ta: 150, Tb: 300, TM: 15, ask: 'state', seg: 1 },
+    { title: 'Una sustancia misteriosa', sub: 'plomo', Ta: 250, Tb: 400, TM: 15, ask: 'who', cand: ['agua', 'estano', 'plomo', 'mercurio'],
+      q: 'Calentamos un metal sólido. Mira la tabla: ¿qué sustancia es?' },
+    { title: 'Enfriamos agua', sub: 'agua', Ta: 40, Tb: -20, TM: 20, ask: 'change', cool: true,
+      q: 'Metemos agua en el congelador. ¿Qué cambio de estado ocurre en la meseta?', opts: ['Fusión', 'Solidificación', 'Condensación', 'Ebullición'], ok: 1,
+      good: 'Al enfriarse, el agua pasa de líquido a sólido a 0 °C: es la solidificación. Funde y solidifica a la misma temperatura. Durante la meseta, el agua cede energía al congelador sin bajar de temperatura.',
+      bad: 'Mira de qué estado parte (40 °C: el agua es líquida) y a qué estado llega (−20 °C).' },
+    { title: 'Enfriamos un gas', sub: 'etanol', Ta: 100, Tb: 40, TM: 20, ask: 'who', cool: true, cand: ['agua', 'etanol', 'mercurio', 'estano'],
+      q: 'Un gas se enfría y se condensa. Mira la tabla: ¿qué sustancia es?' },
+    { title: 'Calentamos cera de vela', mix: true, ask: 'pure',
+      q: 'En esta gráfica no hay ninguna meseta: la cera se ablanda poco a poco. ¿Qué nos dice eso?',
+      opts: ['Que la cera no es una sustancia pura, sino una mezcla', 'Que el hornillo estaba apagado', 'Que la cera no cambia de estado'], ok: 0,
+      good: 'Solo las sustancias puras cambian de estado a una temperatura fija. La cera es una mezcla de varias sustancias: cada una se funde a su temperatura y la cera se va ablandando entre unos 48 y 66 °C. Fíjate: en esa zona la curva sube más despacio, pero no se queda plana.',
+      bad: (i) => i === 1 ? 'Si el hornillo estuviera apagado, la temperatura no subiría de 20 a 90 °C.' : 'Sí cambia: a 20 °C es sólida y a 90 °C es líquida. Lo raro es que no tenga meseta.' },
+    { title: 'Calentamos agua', sub: 'agua', Ta: 20, Tb: 110, TM: 30, ask: 'why', bandSeg: 1,
+      q: 'Seguimos calentando, pero en la zona marcada la temperatura no sube. ¿Por qué?',
+      opts: ['Porque la energía se usa en separar las partículas', 'Porque el hornillo se ha apagado', 'Porque las partículas se hacen más grandes', 'Porque el termómetro ya no mide más'], ok: 0,
+      good: 'Es la ebullición. La energía sigue llegando, pero se gasta en separar del todo las partículas para que pasen a gas, no en agitarlas más. Hasta que no se evapora toda el agua, la temperatura no sube de 100 °C.',
+      bad: (i) => i === 1 ? 'El hornillo sigue encendido: después de la meseta la temperatura vuelve a subir.' : i === 2 ? 'Las partículas nunca se hacen más grandes: lo que cambia es cuánto se mueven y cuánto se separan.' : 'Después de la meseta, el termómetro marca 110 °C: sí mide más.' },
+    { title: 'Calentamos mercurio líquido', sub: 'mercurio', Ta: 20, Tb: 400, TM: 20, ask: 'T', which: 'bp', vals: [39, 100, 357, 400],
+      q: '¿Cuál es el punto de ebullición del mercurio?' },
+    { title: 'Enfriamos estaño fundido', sub: 'estano', Ta: 300, Tb: 150, TM: 15, ask: 'state', seg: 2, cool: true }];
+  ITEMS.forEach((it) => { it.c = it.mix ? cera() : curve(SUBS[it.sub], it.Ta, it.Tb, it.TM); });
+  function build(it) {                                    // pregunta concreta de cada gráfica
+    const s = it.mix ? null : SUBS[it.sub];
+    if (it.ask === 'state') {
+      const g = it.c.segs[it.seg]; let t = Math.round((g.t0 + g.t1) / 2);
+      if (t < g.t0 + .25 * (g.t1 - g.t0) || t > g.t1 - .25 * (g.t1 - g.t0)) t = Math.round((g.t0 + g.t1)) / 2;
+      const opts = STATES.slice();
+      const okI = opts.indexOf(g.k), T = interp(it.c.pts, t);
+      return { marker: t, q: `¿En qué estado está ${s.el} a los ${num(t)} minutos?`, opts: opts.map((k) => KIND[k]), ok: okI,
+        good: g.flat ? `A los ${num(t)} min la curva está en una meseta, a ${num(T)} °C: está cambiando de estado, así que hay ${g.k === 'sl' ? 'sólido y líquido' : 'líquido y gas'} a la vez.`
+          : `A los ${num(t)} min la curva va ${it.cool ? 'bajando' : 'subiendo'} y está a unos ${num(T)} °C. ${cap(s.el)} funde a ${num(s.mp)} °C y hierve a ${num(s.bp)} °C, así que a esa temperatura es ${KIND[g.k].toLowerCase()}.`,
+        bad: (i) => (STATES[i] === 'sl' || STATES[i] === 'lg') && !g.flat ? 'Las dos fases a la vez solo conviven en una meseta. A esa hora, ¿la curva está plana?'
+          : `Sube desde la marca de los ${num(t)} min hasta la curva y lee la temperatura. Luego compárala con su punto de fusión (${num(s.mp)} °C) y de ebullición (${num(s.bp)} °C).` };
+    }
+    if (it.ask === 'T') {
+      const right = s[it.which], other = it.which === 'bp' ? s.mp : s.bp;
+      return { q: it.q, opts: it.vals.map((v) => num(v) + ' °C'), ok: it.vals.indexOf(right),
+        good: `La meseta ${it.which === 'bp' ? 'de arriba' : ''} está a ${num(right)} °C. Mientras ${it.which === 'bp' ? 'hierve' : 'funde'}, la temperatura no cambia: por eso la meseta es plana.`,
+        bad: (i) => it.vals[i] === other ? `Esa es la otra meseta: a ${num(other)} °C ${it.which === 'bp' ? 'funde' : 'hierve'}.` : it.vals[i] === 100 || it.vals[i] === 0 ? 'Ese es el número del agua. Cada sustancia tiene el suyo: lee la altura de la meseta en el eje vertical.' : 'Busca la parte plana de la curva y lee a qué temperatura está en el eje vertical. Puedes pasar el ratón por encima.' };
+    }
+    if (it.ask === 'who') {
+      const flat = it.c.segs.find((g) => g.flat), T = flat.T0;
+      return { q: it.q, opts: subOpts(it.cand), ok: it.cand.indexOf(it.sub),
+        good: `La meseta está a ${num(T)} °C. En la tabla, ${s.el} ${flat.k === 'sl' ? 'funde' : 'hierve'} a ${num(T)} °C. ${it.cool ? (flat.k === 'lg' ? 'Al enfriarse, condensa a la misma temperatura a la que hierve.' : 'Al enfriarse, solidifica a la misma temperatura a la que funde.') : ''}`,
+        bad: (i) => { const o = SUBS[it.cand[i]]; return `${cap(o.el)} funde a ${num(o.mp)} °C y hierve a ${num(o.bp)} °C. ¿A qué temperatura está la meseta de esta gráfica?`; } };
+    }
+    const order = shuffle(it.opts.map((_, i) => i));           // el orden de las opciones cambia cada vez
+    return { q: it.q, opts: order.map((i) => it.opts[i]), ok: order.indexOf(it.ok), good: it.good, bad: typeof it.bad === 'function' ? (j) => it.bad(order[j]) : it.bad };
+  }
+  saved.q = saved.q || {};
+  let qi = 0, hover3 = null, cur = null;
+  const g3 = $('g3');
+  const range3 = (it) => { const Ts = it.c.pts.map((p) => p[1]), lo = Math.min(...Ts), hi = Math.max(...Ts), st = niceStep(hi - lo + 20, 9);
+    return { ymin: Math.floor((lo - st / 2) / st) * st, ymax: Math.ceil((hi + st / 2) / st) * st, st }; };
+  function paint3() {
+    const it = ITEMS[qi], r = range3(it), band = it.bandSeg != null ? [it.c.segs[it.bandSeg].t0, it.c.segs[it.bandSeg].t1] : null;
+    plot(g3, { W: 700, H: 360, xmax: niceUp(it.c.TM, 5), ymin: r.ymin, ymax: r.ymax, ystep: r.st, band,
+      series: [{ pts: it.c.pts, cls: it.cool ? 'cool' : 'cur' }], hover: hover3, marker: cur && cur.marker != null ? { t: cur.marker, label: num(cur.marker) + ' min' } : null });
+  }
+  hoverable(g3, 700, () => niceUp(ITEMS[qi].c.TM, 5), (t) => { hover3 = t; paint3(); });
+  function show3() {
+    const it = ITEMS[qi]; cur = build(it); hover3 = null;
+    $('qTitle').textContent = it.title + (it.cool ? ' (gráfica de enfriamiento)' : '');
+    $('qNum').textContent = `Gráfica ${qi + 1} de ${ITEMS.length}`;
+    $('qText').textContent = cur.q;
+    const box = $('qOpts'); box.innerHTML = ''; $('qFb').innerHTML = '';
+    let tries = 0;
+    cur.opts.forEach((o, i) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = o;
+      b.onclick = () => {
+        tries++;
+        if (i === cur.ok) {
+          b.classList.add('ok'); box.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+          $('qFb').innerHTML = `<div class="fb good"><b class="okt">${tries === 1 ? '¡Bien leído!' : '¡Eso es!'}</b> ${cur.good}</div>`;
+          if (!(qi in saved.q)) { saved.q[qi] = tries === 1; save(); score3(); }
+        } else {
+          b.classList.add('ko'); b.disabled = true;
+          $('qFb').innerHTML = `<div class="fb bad"><b class="kot">Todavía no.</b> ${typeof cur.bad === 'function' ? cur.bad(i) : cur.bad}</div>`;
+        }
+      };
+      box.appendChild(b);
+    });
+    $('qPrev').disabled = qi === 0;
+    $('qNext').textContent = qi === ITEMS.length - 1 ? 'Volver a la primera →' : 'Siguiente gráfica →';
+    paint3(); score3();
+  }
+  function score3() {
+    const v = Object.values(saved.q);
+    $('sOk').textContent = v.filter(Boolean).length; $('sTot').textContent = v.length;
+    $('sDots').innerHTML = ITEMS.map((_, i) => `<i class="${i in saved.q ? (saved.q[i] ? 'y' : 'n') : ''}${i === qi ? ' c' : ''}"></i>`).join('');
+  }
+  $('qPrev').onclick = () => { if (qi > 0) { qi--; show3(); } };
+  $('qNext').onclick = () => { qi = (qi + 1) % ITEMS.length; show3(); };
+  $('sReset').onclick = () => { saved.q = {}; save(); qi = 0; show3(); };
+  show3();
+
+  /* ---------- 4. evaporación o ebullición ---------- */
+  const SITS = [
+    ['La ropa tendida se seca en el patio.', 0, 'Se seca sin hervir, poco a poco y por la superficie.'],
+    ['El agua de la pasta hace burbujas grandes en el cazo.', 1, 'Burbujas de vapor que salen de dentro del líquido, a 100 °C.'],
+    ['Un charco desaparece en un día de 20 °C.', 0, 'A 20 °C el agua no hierve, pero las partículas más rápidas de la superficie escapan.'],
+    ['El sudor se seca y te refresca la piel.', 0, 'Al evaporarse se lleva energía de tu piel: por eso refresca.'],
+    ['La leche sube y se sale del cazo al hervir.', 1, 'Hierve: las burbujas se forman en todo el líquido.'],
+    ['La ropa se seca antes en un día de viento.', 0, 'El viento se lleva las partículas de vapor de encima de la ropa y la evaporación va más deprisa.']];
+  const sits = $('sits');
+  SITS.forEach(([txt, ans, why]) => {
+    const d = document.createElement('div'); d.className = 'sit';
+    d.innerHTML = `<p>${txt}</p><div class="row"><button class="b small ghost" type="button" data-v="0">Evaporación</button><button class="b small ghost" type="button" data-v="1">Ebullición</button></div><p class="why3"></p>`;
+    d.querySelectorAll('button').forEach((b) => b.onclick = () => {
+      const ok = +b.dataset.v === ans;
+      d.classList.remove('ok', 'ko'); d.classList.add(ok ? 'ok' : 'ko');
+      d.querySelector('.why3').innerHTML = ok ? `<b class="okt">Sí.</b> ${why}` : `<b class="kot">Piénsalo:</b> ${ans ? '¿hay burbujas que salen de dentro del líquido?' : '¿está hirviendo, o se va secando poco a poco por la superficie?'}`;
+      if (ok) d.querySelectorAll('button').forEach((x) => { x.disabled = true; });
+    });
+    sits.appendChild(d);
+  });
+  const trap = $('trapQ');
+  mcq(trap, { q: '¿Dónde está el vapor de agua (el gas)?', opts: ['En la zona B, la nube blanca', 'En la zona A, justo encima del agua, donde no se ve nada'], ok: 1,
+    good: 'El vapor de agua es un gas transparente: no se ve. Está en la zona A, justo al salir del cazo.',
+    bad: 'Es la respuesta que casi todos damos primero. Pero el vapor de agua, como el aire, es transparente. Mira la zona donde no se ve nada.' });
+  mcq(trap, { q: 'Entonces, ¿qué es la nube blanca?', opts: ['Vapor de agua', 'Gotitas de agua líquida', 'Humo, como el de un fuego', 'Aire caliente'], ok: 1,
+    good: 'Al subir, el vapor se encuentra con el aire más frío y se condensa en gotitas diminutas de agua líquida. Esas gotitas sí se ven, como las de una nube o la niebla. Un poco más arriba se vuelven a evaporar y desaparecen.',
+    bad: (i) => i === 0 ? 'Acabamos de ver que el vapor es invisible. Lo blanco tiene que ser otra cosa: ¿qué le pasa al vapor cuando se enfría?' : i === 2 ? 'El humo sale al quemar algo, y aquí solo hay agua.' : 'El aire caliente es transparente, como el vapor. Piensa qué le pasa al vapor al enfriarse.' });
+})();
+</script>
+</body>
+</html>
