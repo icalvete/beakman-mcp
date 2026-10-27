@@ -3,6 +3,7 @@
 # Cada recurso lleva, por idioma: título, temas, descripción, objetivo (para qué sirve) y método (cómo lo hace).
 # Un recurso nuevo: su carpeta en lab/<id>/ (código) y su página en site/<idioma>/<asignatura>/<curso>/<id>/,
 # más una entrada aquí. Los textos van por idioma; un recurso sin un idioma no sale en ese idioma.
+# unidad: el tema al que pertenece; agrupa los recursos en la página de la asignatura («Para todo el curso» va al final).
 # tipo (opcional): resumen. Lleva su pastilla y sale el primero de su curso, porque es lo primero que se lee de un tema.
 
 idiomas: [es]          # idiomas publicados; el primero es el de por defecto
@@ -41,6 +42,7 @@ recursos:
     es:
       titulo: El Tema 1 contado como una historia
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         El tema entero en una lectura: del fin de Roma al reino nazarí de Granada, apartado por apartado, contado
         como una cadena de qué provocó qué.
@@ -59,6 +61,7 @@ recursos:
     es:
       titulo: "Ponte a prueba: el inicio de la Edad Media"
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Repaso para el examen: las 12 preguntas del tema, conceptos, ordenar los hechos, causas y cuadros
         para completar, con las respuestas de Beakman y un simulacro de examen para hacer con él en Claude.
@@ -77,6 +80,7 @@ recursos:
     es:
       titulo: Cronomapa de la Edad Media
       temas: Toda la Edad Media
+      unidad: Para todo el curso
       descripcion: >-
         Mueve la barra del 476 al 1492 y mira qué reinos, ciudades y batallas coincidieron en el tiempo.
         Cada acontecimiento cuenta qué cambió, al poco y a la larga.
@@ -96,6 +100,7 @@ recursos:
     es:
       titulo: Los mapas de al-Ándalus
       temas: Tema 1 · Al-Ándalus
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Casi 800 años en seis mapas: la conquista, el emirato, el califato, los taifas, almorávides y almohades,
         y el reino nazarí de Granada.
@@ -113,6 +118,7 @@ recursos:
     es:
       titulo: ¿Qué dicen las palabras?
       temas: Tema 1 · El legado de al-Ándalus
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Un juego con las palabras que el español heredó del árabe: descubre cuáles vienen de al-Ándalus y
         cuáles solo lo parecen, clasifícalas por ámbitos y averigua por qué tantas empiezan por «al».
@@ -131,6 +137,7 @@ recursos:
     es:
       titulo: Me pongo en su mentalidad
       temas: Tema 1 · Del fin de Roma al Califato de Córdoba
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Seis personas del inicio de la Edad Media: un artesano que huye al campo, una comerciante de
         Constantinopla, un monje copista, una vecina de Toledo en el 711, un mercader del zoco de Córdoba y
@@ -150,6 +157,7 @@ recursos:
     es:
       titulo: La mezquita y la alquería por dentro
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Dos dibujos para pulsar: las partes de una mezquita (minarete, patio, fuente, sala de oraciones, quibla,
         mihrab y mimbar) y las de una alquería de regadío (rueda hidráulica, noria, acequias, alberca, huertos…).
@@ -169,6 +177,7 @@ recursos:
     es:
       titulo: Mayrit, el Madrid de al-Ándalus
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Un plano para pulsar de la fortaleza andalusí que dio origen a Madrid, con una capa que superpone el Madrid
         de hoy, una línea de tiempo y un paseo por lo que queda.
@@ -187,6 +196,7 @@ recursos:
     es:
       titulo: ¿Quién soy?
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Trece personajes del inicio de la Edad Media te hablan en primera persona: de Rómulo Augústulo a Almanzor.
         Adivina quién es con el menor número de pistas.
@@ -205,6 +215,7 @@ recursos:
     es:
       titulo: Vocabulario del Tema 1
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Las 47 palabras clave del tema en tarjetas que giran: de Mare Nostrum y basileus a taifa, alquería y Mayrit,
         con su definición y un ejemplo.
@@ -223,6 +234,7 @@ recursos:
     es:
       titulo: El Tema 1 en tres carriles
       temas: Tema 1 · La huella andalusí
+      unidad: Tema 1 · La huella andalusí
       descripcion: >-
         Una línea del tiempo del 400 al 1500 con tres carriles en paralelo: Imperio bizantino, Europa germánica y
         carolingia, y el islam y al-Ándalus. Cabe en un folio para imprimir.
@@ -240,7 +252,8 @@ recursos:
     imagen: resumen-actividad-cientifica.jpg
     es:
       titulo: La actividad científica, paso a paso
-      temas: Física y Química · La actividad científica
+      temas: Física y Química · Tema 1 · La actividad científica
+      unidad: Tema 1 · La actividad científica
       descripcion: >-
         La unidad entera en una lectura: el método científico, las magnitudes, el Sistema Internacional, múltiplos y
         submúltiplos, el factor de conversión, medir bien y el laboratorio.
@@ -258,7 +271,8 @@ recursos:
     solo_pc: true
     es:
       titulo: ¿Qué es una magnitud?
-      temas: Física y Química · La actividad científica
+      temas: Física y Química · Tema 1 · La actividad científica
+      unidad: Tema 1 · La actividad científica
       descripcion: >-
         Clasifica qué se puede medir y qué no, mira a escala por qué «5» no dice nada y «5 m» sí, empareja cada
         magnitud con su unidad, su símbolo y su instrumento, y construye las magnitudes derivadas con bloques.
@@ -278,7 +292,8 @@ recursos:
     solo_pc: true
     es:
       titulo: La escalera de las unidades
-      temas: Física y Química · La actividad científica
+      temas: Física y Química · Tema 1 · La actividad científica
+      unidad: Tema 1 · La actividad científica
       descripcion: >-
         Sube y baja la escalera de km a mm (y de las unidades de masa y de capacidad), mira cómo se mueve la coma en
         cada escalón y aprende el truco del factor de conversión, con las unidades tachándose ante tus ojos.
@@ -296,7 +311,8 @@ recursos:
     solo_pc: true
     es:
       titulo: Mide como en el laboratorio
-      temas: Física y Química · La actividad científica
+      temas: Física y Química · Tema 1 · La actividad científica
+      unidad: Tema 1 · La actividad científica
       descripcion: >-
         Lee una regla, una probeta, un termómetro, una balanza y un cronómetro, compara la precisión de dos
         instrumentos, mide varias veces y haz la media, y caza los errores típicos al medir.

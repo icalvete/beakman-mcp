@@ -112,6 +112,20 @@ def summary_card(t, r, s, lang, up, prefix):
 """
 
 
+GENERAL = "Para todo el curso"
+
+
+def por_unidad(recursos, tarjeta, lang) -> str:
+    """Los recursos de un curso agrupados por su unidad (catalog.yml), en el orden del catálogo; «Para todo el
+    curso» al final. Cada grupo con su título."""
+    grupos: dict[str, list] = {}
+    for r in recursos:
+        grupos.setdefault(r[lang].get("unidad") or GENERAL, []).append(r)
+    orden = [u for u in grupos if u != GENERAL] + ([GENERAL] if GENERAL in grupos else [])
+    return "\n".join(f'<h4 class="unit">{e(u)}</h4>\n<div class="resources">\n{"".join(tarjeta(r) for r in grupos[u])}</div>'
+                     for u in orden)
+
+
 def build():
     cat = load("catalog.yml")
     langs = cat["idiomas"]
@@ -170,10 +184,10 @@ def build():
             courses = []
             for c in cat["cursos"]:
                 rc = [r for r in mine if r["curso"] == c and not is_summary(r)]
-                inner = (f'<div class="resources">\n{"".join(resource_card(t, r, s, lang, "../../", "") for r in rc)}</div>' if rc
+                inner = (por_unidad(rc, lambda r: resource_card(t, r, s, lang, "../../", ""), lang) if rc
                          else f'<p class="empty">{e(t["sin_recursos"].format(curso=t["cursos"][c]))}</p>')
                 courses.append(f'<h3 class="course">{e(t["cursos"][c])}</h3>\n{inner}')
-            parts.append(f'<section class="all-resources"><h2>{e(t["recursos"])}</h2>\n{chr(10).join(courses)}</section>')
+            parts.append(f'<section class="all-resources" style="--subj: {s["color"]}"><h2>{e(t["recursos"])}</h2>\n{chr(10).join(courses)}</section>')
             body = f"""<p class="crumb"><a href="../">← {e(t["volver"])}</a></p>
 <div class="subject-head"><div class="polaroid"><img src="../../media/{s["foto"]}" alt=""></div>
   <div><h1>{e(st["nombre"])}</h1><p>{e(st["lema"])}</p></div></div>
