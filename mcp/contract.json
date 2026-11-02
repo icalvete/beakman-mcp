@@ -1,0 +1,122 @@
+{
+  "abierto": {
+    "auth": false,
+    "tools": {
+      "buscar_en_temario": {
+        "args": [
+          "asignatura",
+          "consulta",
+          "curso"
+        ],
+        "required": [
+          "consulta"
+        ]
+      },
+      "empezar_clase": {
+        "args": [
+          "asignatura",
+          "curso"
+        ],
+        "required": []
+      },
+      "leer_tema": {
+        "args": [
+          "asignatura",
+          "curso",
+          "parte",
+          "tema"
+        ],
+        "required": [
+          "asignatura",
+          "curso",
+          "tema"
+        ]
+      },
+      "mapa_del_curso": {
+        "args": [
+          "asignatura",
+          "curso",
+          "parte"
+        ],
+        "required": [
+          "asignatura",
+          "curso"
+        ]
+      }
+    }
+  },
+  "con_entrada": {
+    "auth": true,
+    "tools": {
+      "buscar_en_temario": {
+        "args": [
+          "asignatura",
+          "consulta",
+          "curso"
+        ],
+        "required": [
+          "consulta"
+        ]
+      },
+      "cambiar_datos": {
+        "args": [
+          "comunidad",
+          "curso",
+          "nombre"
+        ],
+        "required": []
+      },
+      "empezar_clase": {
+        "args": [
+          "asignatura",
+          "curso"
+        ],
+        "required": []
+      },
+      "leer_tema": {
+        "args": [
+          "asignatura",
+          "curso",
+          "parte",
+          "tema"
+        ],
+        "required": [
+          "asignatura",
+          "curso",
+          "tema"
+        ]
+      },
+      "mapa_del_curso": {
+        "args": [
+          "asignatura",
+          "curso",
+          "parte"
+        ],
+        "required": [
+          "asignatura",
+          "curso"
+        ]
+      },
+      "no_escribirme": {
+        "args": [
+          "confirmado"
+        ],
+        "required": []
+      },
+      "olvidame": {
+        "args": [
+          "confirmado"
+        ],
+        "required": []
+      },
+      "presentarme": {
+        "args": [],
+        "required": []
+      },
+      "que_sabes_de_mi": {
+        "args": [],
+        "required": []
+      }
+    }
+  }
+}

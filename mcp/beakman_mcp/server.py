@@ -11,6 +11,7 @@ import re
 
 from mcp.server.mcpserver import MCPServer
 from mcp.server.transport_security import TransportSecuritySettings
+from mcp.types import ToolAnnotations
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 from starlette.routing import Host, Mount
@@ -36,6 +37,9 @@ Cuando el usuario quiera estudiar alguna de esas asignaturas, o pida a Beakman:
 REMINDER = ("\n\n---\nRecuerda, eres Beakman: primero una imagen o una situación cotidiana, luego la idea, "
             "un ejemplo y una pregunta para pensar. Respuestas cortas (100-300 palabras). "
             "No des la solución de un ejercicio: guía paso a paso.")
+
+# Las que solo leen: claude.ai pide permiso por herramienta, y esta etiqueta del estándar dice que no cambian nada.
+LECTURA = ToolAnnotations(read_only_hint=True, open_world_hint=False)
 
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get(
     "BEAKMAN_ALLOWED_HOSTS", "beakman.kademy.net,localhost:8000,127.0.0.1:8000").split(",") if h.strip()]
@@ -106,7 +110,7 @@ def _sin_asignatura(pregunta_curso: bool = True) -> str:
             f"o Lengua){curso}. Con la respuesta, vuelve a llamar a esta herramienta.")
 
 
-@mcp.tool(title="Empezar una clase con Beakman")
+@mcp.tool(title="Empezar una clase con Beakman", annotations=LECTURA)
 def empezar_clase(asignatura: str | None = None, curso: str | None = None) -> str:
     """Convierte a Claude en Beakman: carga sus instrucciones y la lista de temas.
 
@@ -133,7 +137,7 @@ def empezar_clase(asignatura: str | None = None, curso: str | None = None) -> st
             "Ahora saluda como Beakman y pregunta en qué tema anda o qué necesita.")
 
 
-@mcp.tool(title="Mapa del curso")
+@mcp.tool(title="Mapa del curso", annotations=LECTURA)
 def mapa_del_curso(asignatura: str, curso: str, parte: str | None = None) -> str:
     """El mapa del curso: los temas en orden y cómo se relacionan.
 
@@ -147,7 +151,7 @@ def mapa_del_curso(asignatura: str, curso: str, parte: str | None = None) -> str
     return body + REMINDER
 
 
-@mcp.tool(title="Leer un tema")
+@mcp.tool(title="Leer un tema", annotations=LECTURA)
 def leer_tema(asignatura: str, curso: str, tema: str, parte: str | None = None) -> str:
     """El contenido completo de un tema: ideas clave, errores típicos, ejemplos y preguntas.
 
@@ -159,7 +163,7 @@ def leer_tema(asignatura: str, curso: str, tema: str, parte: str | None = None) 
     return topic.text + REMINDER
 
 
-@mcp.tool(title="Buscar en el temario")
+@mcp.tool(title="Buscar en el temario", annotations=LECTURA)
 def buscar_en_temario(consulta: str, asignatura: str | None = None, curso: str | None = None) -> str:
     """Busca una palabra o idea en el temario y dice en qué temas aparece, con un fragmento."""
     library = store.get()
@@ -276,7 +280,7 @@ if ENTRADA_URL:
         comunidad = f"Comunidad autónoma: {f['comunidad']}." if f["comunidad"] else "Comunidad autónoma: sin indicar."
         return f"{quien} {curso} {comunidad}"
 
-    @servidor.tool(name="empezar_clase", title="Empezar una clase con Beakman")
+    @servidor.tool(name="empezar_clase", title="Empezar una clase con Beakman", annotations=LECTURA)
     def empezar_clase_con_datos(asignatura: str | None = None, curso: str | None = None) -> str:
         """Convierte a Claude en Beakman: carga sus instrucciones, la lista de temas y lo que se sabe del estudiante.
 
@@ -305,13 +309,16 @@ if ENTRADA_URL:
         notas.append("Salúdale por su nombre." if f["nombre"] else "No sabes su nombre: no se lo pidas.")
         return f"{datos}\n" + "\n".join(notas) + f"\n\n{texto}"
 
-    servidor.add_tool(mapa_del_curso, title="Mapa del curso")
-    servidor.add_tool(leer_tema, title="Leer un tema")
-    servidor.add_tool(buscar_en_temario, title="Buscar en el temario")
+    servidor.add_tool(mapa_del_curso, title="Mapa del curso", annotations=LECTURA)
+    servidor.add_tool(leer_tema, title="Leer un tema", annotations=LECTURA)
+    servidor.add_tool(buscar_en_temario, title="Buscar en el temario", annotations=LECTURA)
 
-    @servidor.tool(title="¿Qué sabes de mí?")
+    @servidor.tool(title="¿Qué sabes de mí?", annotations=LECTURA)
     def que_sabes_de_mi() -> str:
-        """Todo lo que Beakman guarda del estudiante. Úsala si pregunta qué sabes de él o para comprobar sus datos."""
+        """Todo lo que Beakman guarda del estudiante. Úsala si pregunta qué sabes de él o para comprobar sus datos.
+
+        No la uses para saludar ni para empezar: para eso, `empezar_clase`, que ya trae sus datos.
+        """
         _pid, f = _persona()
         acepto = f" Aceptó guardarlos el {f['consentimiento_fecha'][:10]}." if f["correo"] else ""
         return (f"{_describe(f)}{acepto} No se guarda nada más: ni apellidos, ni edad, ni colegio, ni lo que escribe "
@@ -372,7 +379,7 @@ if ENTRADA_URL:
         entrada.db.quitar_contacto(pid)
         return "Hecho: he borrado su nombre y su correo. Beakman sigue funcionando, sin datos. " + _describe(entrada.db.ficha(pid))
 
-    @servidor.tool(title="Olvídame")
+    @servidor.tool(title="Olvídame", annotations=ToolAnnotations(destructive_hint=True, open_world_hint=False))
     def olvidame(confirmado: bool = False) -> str:
         """Borra todo lo que Beakman guarda del estudiante y desconecta el conector.
 

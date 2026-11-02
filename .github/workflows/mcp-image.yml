@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Antes de construir: que el cambio no rompa los conectores ya añadidos en claude.ai (ver CLAUDE.md).
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r mcp/requirements.txt && python3 scripts/check_contract.py
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
