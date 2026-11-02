@@ -98,13 +98,28 @@ def _find_topic(parts: list[Part], tema: str) -> Topic:
 
 # ---- herramientas ---------------------------------------------------------
 
-@mcp.tool(title="Empezar una clase con Beakman")
-def empezar_clase(asignatura: str, curso: str) -> str:
-    """Carga las instrucciones de Beakman para una asignatura y curso, y la lista de temas.
+def _sin_asignatura(pregunta_curso: bool = True) -> str:
+    """Lo que devuelve empezar_clase sin asignatura: Beakman ya habla, y pregunta qué toca."""
+    curso = " y en qué curso está (1º o 2º de la ESO)" if pregunta_curso else ""
+    return (f"INSTRUCCIONES DE BEAKMAN\n\n{store.get().base}\n\n"
+            "Ahora saluda como Beakman y pregunta qué asignatura quiere estudiar (Historia, Matemáticas, Ciencias "
+            f"o Lengua){curso}. Con la respuesta, vuelve a llamar a esta herramienta.")
 
-    Llámala antes de explicar nada. asignatura: Historia, Matemáticas, Ciencias o Lengua.
-    curso: "1º ESO" o "2º ESO".
+
+@mcp.tool(title="Empezar una clase con Beakman")
+def empezar_clase(asignatura: str | None = None, curso: str | None = None) -> str:
+    """Convierte a Claude en Beakman: carga sus instrucciones y la lista de temas.
+
+    Úsala en cuanto el usuario salude a Beakman, hable con él o quiera estudiar Historia, Matemáticas, Ciencias
+    o Lengua de 1º o 2º de la ESO, antes de responder nada. Si aún no sabe la asignatura o el curso, llámala
+    igual sin ellos. asignatura: Historia, Matemáticas, Ciencias o Lengua. curso: "1º ESO" o "2º ESO".
     """
+    if not asignatura:
+        return _sin_asignatura()
+    if not curso:
+        return (_sin_asignatura().rsplit("\n\n", 1)[0] +
+                f"\n\nQuiere estudiar {asignatura}. Saluda como Beakman y pregunta en qué curso está (1º o 2º de la "
+                "ESO). Con la respuesta, vuelve a llamar a esta herramienta con la asignatura y el curso.")
     library = store.get()
     subject = library.subject(asignatura)
     key, parts = _course(subject, curso)
@@ -262,14 +277,19 @@ if ENTRADA_URL:
         return f"{quien} {curso} {comunidad}"
 
     @servidor.tool(name="empezar_clase", title="Empezar una clase con Beakman")
-    def empezar_clase_con_datos(asignatura: str, curso: str | None = None) -> str:
-        """Carga las instrucciones de Beakman para una asignatura, la lista de temas y lo que se sabe del estudiante.
+    def empezar_clase_con_datos(asignatura: str | None = None, curso: str | None = None) -> str:
+        """Convierte a Claude en Beakman: carga sus instrucciones, la lista de temas y lo que se sabe del estudiante.
 
-        Llámala antes de explicar nada. asignatura: Historia, Matemáticas, Ciencias o Lengua.
+        Úsala en cuanto el usuario salude a Beakman, hable con él o quiera estudiar Historia, Matemáticas, Ciencias
+        o Lengua, antes de responder nada. Si aún no sabe la asignatura, llámala igual sin ella.
+        asignatura: Historia, Matemáticas, Ciencias o Lengua.
         curso: déjalo vacío para usar el guardado; si no hay ninguno guardado, pregúntalo y pásalo.
         """
         pid, f = _persona()
         datos = f"DATOS DEL ESTUDIANTE: {_describe(f)}"
+        if not asignatura:
+            saludo = "Salúdale por su nombre." if f["nombre"] else "No sabes su nombre: no se lo pidas."
+            return f"{datos}\n{saludo}\n\n{_sin_asignatura(pregunta_curso=not f['curso'])}"
         if not curso and not f["curso"]:
             return (f"{datos}\nNo sé su curso: pregúntaselo (1º o 2º de la ESO), guárdalo con `cambiar_datos` y vuelve "
                     "a llamar a esta herramienta.")

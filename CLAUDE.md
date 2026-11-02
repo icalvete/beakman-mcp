@@ -14,6 +14,8 @@ Cuatro tutores Beakman (Historia, Matemáticas, Ciencias, Lengua) para 1º y 2º
 - El Action sube con `rclone copy`, que sobrescribe manteniendo el ID (comprobado el 2026-10-18). No usar `sync` ni nada que borre y vuelva a crear.
 - El remote `beakman` usa `scope=drive.file`: solo ve lo que crea su client_id. Si cambia el client_id, los ficheros viejos se quedan huérfanos y hay que volver a enlazarlos en los Gems.
 
+- **El contrato de `/mcp` no se rompe.** claude.ai guarda cómo era el conector al añadirlo: si pedía entrar o no, y las herramientas. Cuando `/mcp` pasó a pedir entrada (oct-2026), los conectores viejos se quedaron rotos y no se podían borrar. Por eso: la autenticación de `/mcp` no cambia; las herramientas no cambian de nombre ni se quitan; un argumento nuevo siempre es opcional. Lo que Beakman hace va en lo que devuelve la herramienta (se lee en cada llamada), no en su descripción. Un cambio que rompa esto va en una URL nueva (`/mcp/v2`), y la vieja sigue respondiendo.
+
 ## Contenido
 - **Beakman no está loco.** Nunca describirlo como "loco", "chiflado" ni nada parecido, en ningún texto (instrucciones, temas, web, README). Es un científico curioso, entusiasta y apasionado por explicar. Lo pidió el usuario el 2026-10-18.
 - Lo común a todas las asignaturas va en `beakman/base.md`; lo propio, en `<asignatura>/asignatura.md`. Nada se repite en los dos sitios.
