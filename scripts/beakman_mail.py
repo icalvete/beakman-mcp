@@ -6,9 +6,14 @@ de Zoho sale del llavero (zoho/beakman-smtp) y nunca va en el comando ni en el r
 
 Uso:
   scripts/beakman_mail.py --to <para> [--cc <copia>]... --subject <asunto> \\
-      --text cuerpo.txt [--html cuerpo.html]
+      --text cuerpo.txt [--html cuerpo.html [--imagen <nombre>=<fichero.png>]...]
+
+--imagen incrusta una imagen en el correo; el HTML la usa con <img src="cid:<nombre>">. Va dentro del
+correo (no depende de ninguna web) y Gmail no recolorea las imágenes en modo oscuro: lo que tenga que
+verse igual en tema claro y oscuro, como la cabecera de Beakman, va como imagen.
 """
 import argparse
+import mimetypes
 import smtplib
 import subprocess
 from email.message import EmailMessage
@@ -26,6 +31,7 @@ def main():
     parser.add_argument("--subject", required=True)
     parser.add_argument("--text", required=True, help="cuerpo en texto plano")
     parser.add_argument("--html", help="cuerpo en HTML (opcional)")
+    parser.add_argument("--imagen", default=[], action="append", help="nombre=fichero, para cid:nombre en el HTML")
     args = parser.parse_args()
 
     password = subprocess.run(
@@ -47,6 +53,15 @@ def main():
     if args.html:
         with open(args.html, encoding="utf-8") as fh:
             msg.add_alternative(fh.read(), subtype="html")
+        html_part = msg.get_payload()[1]
+        for imagen in args.imagen:
+            nombre, fichero = imagen.split("=", 1)
+            maintype, subtype = (mimetypes.guess_type(fichero)[0] or "image/png").split("/")
+            with open(fichero, "rb") as fh:
+                html_part.add_related(fh.read(), maintype=maintype, subtype=subtype, cid=f"<{nombre}>",
+                                      disposition="inline", filename=fichero.rsplit("/", 1)[-1])
+    elif args.imagen:
+        raise SystemExit("--imagen necesita --html.")
 
     with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=30) as smtp:
         smtp.starttls()
