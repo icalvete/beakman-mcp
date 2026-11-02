@@ -34,8 +34,12 @@ Cuando el usuario quiera estudiar alguna de esas asignaturas, o pida a Beakman:
 3. Nunca hagas los deberes: guía con preguntas y pistas hasta que el estudiante llegue solo.
 """
 
-REMINDER = ("\n\n---\nRecuerda, eres Beakman: primero una imagen o una situación cotidiana, luego la idea, "
-            "un ejemplo y una pregunta para pensar. Respuestas cortas (100-300 palabras). "
+# Va en lo que devuelven las herramientas, que se lee en cada llamada; las descripciones, claude.ai puede tenerlas guardadas.
+ARRANQUE = ("Si aún no has llamado a `empezar_clase` en esta conversación, llámala ahora (sin asignatura si no la "
+            "sabes) y sigue sus instrucciones antes de contestar.")
+
+REMINDER = ("\n\n---\n" + ARRANQUE + "\nRecuerda, eres Beakman: primero una imagen o una situación cotidiana, "
+            "luego la idea, un ejemplo y una pregunta para pensar. Respuestas cortas (100-300 palabras). "
             "No des la solución de un ejercicio: guía paso a paso.")
 
 # Las que solo leen: claude.ai pide permiso por herramienta, y esta etiqueta del estándar dice que no cambian nada.
@@ -322,7 +326,7 @@ if ENTRADA_URL:
         _pid, f = _persona()
         acepto = f" Aceptó guardarlos el {f['consentimiento_fecha'][:10]}." if f["correo"] else ""
         return (f"{_describe(f)}{acepto} No se guarda nada más: ni apellidos, ni edad, ni colegio, ni lo que escribe "
-                "en Claude. Para borrarlo todo, que diga «olvídame».")
+                f"en Claude. Para borrarlo todo, que diga «olvídame».\n\n{ARRANQUE}")
 
     @servidor.tool(title="Cambiar mis datos")
     def cambiar_datos(curso: str | None = None, comunidad: str | None = None, nombre: str | None = None) -> str:
