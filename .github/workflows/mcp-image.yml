@@ -6,7 +6,7 @@ name: Imagen del servidor MCP
 on:
   push:
     branches: [main]
-    paths: ["mcp/**", "docs/**", "lab/site/**", ".github/workflows/mcp-image.yml"]
+    paths: ["mcp/**", "docs/**", "lab/site/**", "scripts/check_contract.py", "scripts/test_conector.py", ".github/workflows/mcp-image.yml"]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +23,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r mcp/requirements.txt && python3 scripts/check_contract.py
+      # Y que las herramientas hagan lo que deben, en la versión abierta y en la de entrada (datos inventados).
+      - run: python3 scripts/test_conector.py
+        env:
+          LOG_LEVEL: WARNING
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
