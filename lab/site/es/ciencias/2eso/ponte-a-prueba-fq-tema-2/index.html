@@ -587,13 +587,16 @@
       pts = pts.map(([t, v]) => [T - t, v]).reverse();
       seg = seg.slice().reverse();
     }
-    const X0 = 60, X1 = 540, Y0 = 300, Y1 = 30, tmax = t5;
+    const X0 = 78, X1 = 540, Y0 = 300, Y1 = 30, tmax = t5;
     const sx = (t) => X0 + (t / tmax) * (X1 - X0), sy = (v) => Y0 - ((v - lo) / (hi - lo)) * (Y0 - Y1);
     const span = hi - lo, step = [10, 20, 25, 50, 100].find((s) => span / s <= 8) || 100;
     let grid = "";
-    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) grid += `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#EEF2E4"/><text x="${X0 - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="11" fill="#4E5A45">${v}</text>`;
+    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+      const clash = [tf, te].some((w) => Math.abs(sy(v) - sy(w)) < 13);
+      grid += `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#EEF2E4"/>` + (clash ? "" : `<text x="${X0 - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="11" fill="#4E5A45">${v}</text>`);
+    }
     for (let t = 0; t <= tmax; t += 2) grid += `<line y1="${Y0}" y2="${Y1}" x1="${sx(t)}" x2="${sx(t)}" stroke="#EEF2E4"/><text x="${sx(t)}" y="${Y0 + 16}" text-anchor="middle" font-size="11" fill="#4E5A45">${t}</text>`;
-    const guides = [tf, te].map((v) => `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#B23B2E" stroke-dasharray="4 4" stroke-width="1"/><text x="${X0 + 4}" y="${sy(v) - 4}" font-size="12" font-weight="700" fill="#B23B2E">${v} °C</text>`).join("");
+    const guides = [tf, te].map((v) => `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#B23B2E" stroke-dasharray="4 4" stroke-width="1"/><text x="${X0 - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="12" font-weight="700" fill="#B23B2E">${v} °C</text>`).join("");
     const path = pts.map((p, i) => `${i ? "L" : "M"}${sx(p[0])} ${sy(p[1])}`).join(" ");
     const labels = "ABCDE".split("").map((L, i) => {
       const [a, b] = [pts[i], pts[i + 1]];
@@ -602,7 +605,7 @@
     $("#gpic").innerHTML = `<svg viewBox="0 0 560 340" role="img" aria-label="Gráfica de temperatura frente a tiempo">
       ${grid}<line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}" stroke="#1F3A0B" stroke-width="2"/><line x1="${X0}" y1="${Y0}" x2="${X0}" y2="${Y1}" stroke="#1F3A0B" stroke-width="2"/>
       <text x="${(X0 + X1) / 2}" y="334" text-anchor="middle" font-size="12" fill="#1F3A0B">tiempo (min)</text>
-      <text x="16" y="${(Y0 + Y1) / 2}" transform="rotate(-90 16 ${(Y0 + Y1) / 2})" text-anchor="middle" font-size="12" fill="#1F3A0B">temperatura (°C)</text>
+      <text x="13" y="${(Y0 + Y1) / 2}" transform="rotate(-90 13 ${(Y0 + Y1) / 2})" text-anchor="middle" font-size="12" fill="#1F3A0B">temperatura (°C)</text>
       ${guides}<path d="${path}" fill="none" stroke="#2B6CB0" stroke-width="3.5" stroke-linejoin="round"/>${labels}</svg>`;
     const g = $("#gask"); g.innerHTML = "";
     const cnt = (r) => { r ? gs.ok++ : gs.ko++; gs.draw(); };
