@@ -330,6 +330,26 @@ recursos:
         Ocho apartados cortos, cada uno con la idea que hay que guardar y el recurso del lab para practicarlo, y al
         final las 5 claves del examen.
 
+  - id: ponte-a-prueba-fq-tema-2
+    asignatura: ciencias
+    curso: 2eso
+    imagen: ponte-a-prueba-fq-tema-2.jpg
+    solo_pc: true
+    es:
+      titulo: "Ponte a prueba: propiedades y estados de la materia"
+      unidad: Tema 2 · Propiedades de la materia
+      descripcion: >-
+        Repaso para el examen: las 12 preguntas del tema, conceptos, problemas de densidad que cambian cada vez,
+        situaciones para explicar con partículas, gráficas de calentamiento y enfriamiento para leer y un simulacro
+        de examen en papel o con Beakman en Claude.
+      objetivo: >-
+        Llegar al examen sabiendo hacerlo, no solo habiéndolo leído: calcular una densidad y pasarla a kg/m³, explicar
+        con la teoría cinético-molecular y leer cualquier gráfica de cambios de estado.
+      metodo: >-
+        Práctica de recuperación: primero contestas tú y luego compruebas. Los problemas y las gráficas son distintos
+        cada vez y, si fallas, te dice cuál es el error típico (dividir al revés, olvidar restar en la probeta…).
+        Marcas cada pregunta como sabida, a medias o no sabida y vuelves solo a las que fallan.
+
   - id: flota-o-se-hunde
     asignatura: ciencias
     curso: 2eso

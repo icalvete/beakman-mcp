@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponte a prueba: propiedades y estados de la materia · El laboratorio de Beakman</title>
+<meta name="description" content="Repaso para el examen del Tema 2 de Física y Química de 2º ESO: las 12 preguntas del tema, conceptos, problemas de densidad, explicar con partículas, leer gráficas de calentamiento y un simulacro de examen.">
+<link rel="icon" href="../../../../media/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../../../media/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../../../media/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<link rel="stylesheet" href="../../../../lab.css">
+<link rel="stylesheet" href="../../../../recursos.css">
+<style>
+.score { display: flex; flex-wrap: wrap; gap: 10px; margin: 6px 0 4px; }
+.score span { background: #fff; border: 2px solid var(--line); border-radius: 999px; padding: 4px 12px; font-weight: 800; }
+.q { border-top: 1.5px dashed var(--line); padding-top: 16px; margin-top: 16px; display: grid; gap: 10px; }
+.q:first-of-type { border-top: 0; margin-top: 4px; padding-top: 4px; }
+.q h3 { font-size: 1.15rem; }
+.q.hide { display: none; }
+.model[hidden], .why[hidden] { display: none; }
+.model ul { margin: 4px 0 0; padding-left: 1.2em; }
+.model li + li { margin-top: 3px; }
+.ask { display: grid; gap: 8px; padding: 12px 0; border-top: 1.5px dashed var(--line); }
+.ask:first-child { border-top: 0; padding-top: 4px; }
+.ask > p { font-weight: 700; }
+.ask .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.ask .chip.off { cursor: default; }
+.ask .why { font-size: .95rem; }
+/* 3 · Calcula */
+.lab3 { display: grid; grid-template-columns: 400px 1fr; gap: 22px; align-items: start; }
+.lab3 svg { width: 100%; height: auto; background: #fff; border: 2px solid var(--line); border-radius: 14px; }
+.step { display: grid; gap: 8px; padding: 10px 0; border-top: 1.5px dashed var(--line); }
+.step:first-child { border-top: 0; padding-top: 0; }
+.step label { font-weight: 700; }
+.num { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.num input { width: 130px; font: 700 1.05rem/1 var(--body); padding: 7px 10px; border: 2px solid var(--line); border-radius: 10px; }
+.num input:focus { outline: none; border-color: var(--ink); }
+.dtable { border-collapse: collapse; font-size: .9rem; margin-top: 4px; }
+.dtable td, .dtable th { border: 1.5px solid var(--line); padding: 3px 9px; text-align: left; background: #fff; }
+.dtable th { background: var(--lime-soft); }
+/* 4 · Partículas */
+.boxes { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+.boxes svg { width: 220px; height: 220px; background: #fff; border: 2px solid var(--ink); border-radius: 12px; }
+/* 5 · Gráficas */
+.graph { display: grid; grid-template-columns: 560px 1fr; gap: 22px; align-items: start; }
+.graph svg { width: 100%; height: auto; background: #fff; border: 2px solid var(--line); border-radius: 14px; }
+/* 6 · Simulacro */
+.copybox { background: #fff; border: 2px dashed var(--line); border-radius: 12px; padding: 12px 14px; font-size: .95rem; }
+.paper ol { padding-left: 1.3em; display: grid; gap: 10px; }
+.paper .model { margin-top: 6px; }
+@media (max-width: 980px) { .lab3, .graph { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header class="wrap rtop">
+  <a class="brand" href="../../../"><span class="face"><img src="../../../../media/beakman.jpg" alt="" width="52" height="52"></span>
+    <span><b>El laboratorio de Beakman</b><small>Ciencias · 2º ESO</small></span></a>
+  <span class="crumb"><a href="../../">← Ciencias</a></span>
+</header>
+<main class="wrap">
+  <p class="note phone-note">Esta página está pensada para un ordenador: en el móvil se ve pequeña.</p>
+  <div class="rhead">
+    <h1>Ponte a prueba: <em>propiedades y estados de la materia</em></h1>
+    <p class="lead">Aquí no se relee: se recuerda y se calcula. Intenta cada cosa sin mirar, equivócate tranquila y luego comprueba. Lo que te cuesta sacar de la cabeza es lo que se queda.</p>
+    <p class="meta"><span class="tag">Física y Química de 2º ESO · Tema 2: propiedades de la materia y estados de agregación</span></p>
+  </div>
+
+  <nav class="tabs noprint" aria-label="Partes">
+    <a href="#preguntas">1 · Las 12 preguntas</a>
+    <a href="#conceptos">2 · Conceptos</a>
+    <a href="#calcula">3 · Calcula la densidad</a>
+    <a href="#particulas">4 · Explícalo con partículas</a>
+    <a href="#graficas">5 · Lee la gráfica</a>
+    <a href="#simulacro">6 · Simulacro</a>
+  </nav>
+
+  <section class="block" id="preguntas">
+    <h2>1 · Las 12 preguntas del tema</h2>
+    <p class="hint">Escribe tu respuesta (o dila en voz alta), luego abre la de Beakman y marca cómo te ha salido: <b>✓</b> la sé, <b>~</b> más o menos, <b>✗</b> no me sale. Se guarda en este ordenador. Si tu libro lo cuenta de otra forma, quédate con lo que diga tu libro.</p>
+    <div class="score" id="qscore"></div>
+    <div class="row noprint" style="margin-bottom:6px">
+      <button class="b ghost small" id="onlyweak" type="button">Ver solo las ~ y las ✗</button>
+      <button class="b ghost small" id="showall" type="button">Ver todas</button>
+    </div>
+    <div id="qlist"></div>
+  </section>
+
+  <section class="block" id="conceptos">
+    <h2>2 · Conceptos: ¿cómo se llama?</h2>
+    <p class="hint">Lee la definición y elige la palabra. Si fallas, te cuento la diferencia: casi siempre es un despiste entre dos palabras parecidas.</p>
+    <div class="score" id="cscore"></div>
+    <div id="clist"></div>
+    <div class="row noprint" style="margin-top:14px"><button class="b ghost small" id="creset" type="button">Empezar otra vez</button></div>
+  </section>
+
+  <section class="block" id="calcula">
+    <h2>3 · Calcula la densidad</h2>
+    <p class="hint">Un problema distinto cada vez. Mira el dibujo, saca los datos y calcula paso a paso. Escribe los decimales con coma o con punto, como quieras. Si te equivocas, te digo dónde suele estar el fallo.</p>
+    <div class="score" id="dscore"></div>
+    <div class="lab3">
+      <div id="dpic"></div>
+      <div id="dsteps"></div>
+    </div>
+    <div class="row noprint" style="margin-top:12px"><button class="b" id="dnew" type="button">Otro problema</button></div>
+    <details style="margin-top:12px"><summary><b>Tabla de densidades</b> (para reconocer la sustancia)</summary>
+      <table class="dtable" id="dtab"></table></details>
+  </section>
+
+  <section class="block" id="particulas">
+    <h2>4 · Explícalo con partículas</h2>
+    <p class="hint">En el examen no basta con decir qué pasa: hay que explicarlo con la teoría cinético-molecular. Primero, reconoce el estado por el dibujo de sus partículas. Después, elige la explicación buena de cada situación.</p>
+    <div class="score" id="pscore"></div>
+    <h3 style="margin:6px 0 8px">¿Sólido, líquido o gas?</h3>
+    <div class="boxes"><div id="pbox"></div><div id="pask" style="flex:1;min-width:260px"></div></div>
+    <div class="row noprint" style="margin:10px 0 18px"><button class="b ghost small" id="pnew" type="button">Otra caja</button></div>
+    <h3 style="margin-bottom:4px">¿Por qué pasa?</h3>
+    <div id="slist"></div>
+  </section>
+
+  <section class="block" id="graficas">
+    <h2>5 · Lee la gráfica</h2>
+    <p class="hint">Una gráfica distinta cada vez: de calentamiento o de enfriamiento, de una sustancia de la tabla. Contesta las cinco preguntas y pide otra. Truco: busca primero las mesetas.</p>
+    <div class="score" id="gscore"></div>
+    <div class="graph">
+      <div><div id="gpic"></div>
+        <table class="dtable" id="gtab" style="margin-top:10px"></table></div>
+      <div id="gask"></div>
+    </div>
+    <div class="row noprint" style="margin-top:12px"><button class="b" id="gnew" type="button">Otra gráfica</button></div>
+  </section>
+
+  <section class="block" id="simulacro">
+    <h2>6 · Simulacro de examen</h2>
+    <p class="hint">Para cuando ya hayas hecho lo de arriba. Dos formas: en papel, con reloj (30 minutos), o con Beakman en Claude.</p>
+    <h3 style="margin:6px 0 8px">En papel</h3>
+    <div class="paper soft">
+      <ol id="paper"></ol>
+      <div class="row noprint" style="margin-top:12px">
+        <button class="b ghost small" id="paperSol" type="button">Ver las soluciones</button>
+        <button class="b ghost small" id="paperPrint" type="button">Imprimir el examen</button>
+      </div>
+    </div>
+    <h3 style="margin:18px 0 8px">Con Beakman en Claude</h3>
+    <p>Con el conector de Beakman y con tu madre o tu padre al lado (Claude es para mayores de 18). Copia esto y pégalo en un chat nuevo, con el conector de Beakman activo:</p>
+    <div class="copybox" id="prompt" style="margin-top:8px">Quiero estudiar ciencias con Beakman. Estoy en 2º de la ESO, en la Comunidad de Madrid, y tengo examen de Física y Química del Tema 2: propiedades de la materia y estados de agregación (masa, volumen y densidad, flotar, sólidos, líquidos y gases, la teoría cinético-molecular, los cambios de estado y la gráfica de calentamiento). Ponme un examen de 6 preguntas como los de clase: 1 de propiedades generales y específicas, 2 problemas de densidad (uno con cambio de g/cm³ a kg/m³), 1 de explicar algo de la vida diaria con la teoría cinético-molecular, 1 de cambios de estado y 1 de interpretar una gráfica de calentamiento que me describas con números. Hazme las preguntas de una en una y no me des la respuesta hasta que lo intente. Al final, corrígeme, dime qué tengo que repasar y ponme una nota del 1 al 10.</div>
+    <div class="row noprint" style="margin-top:10px"><button class="b" id="copy" type="button">Copiar para Beakman</button><span id="copied" class="okt"></span></div>
+    <p style="margin-top:14px">¿Te falta algo de base? Vuelve al <a href="../resumen-propiedades-materia/">resumen del tema</a> o practica con <a href="../flota-o-se-hunde/">¿Flota o se hunde?</a>, <a href="../particulas-en-movimiento/">Las partículas en movimiento</a> y <a href="../cambios-de-estado/">Los cambios de estado</a>.</p>
+  </section>
+</main>
+<footer><div class="wrap"><span>Un homenaje a «El mundo de Beakman». Gratis, sin anuncios y con el código abierto.</span>
+  <a href="https://github.com/icalvete/beakman-mcp">Código en GitHub</a></div></footer>
+
+<script>
+(() => {
+  const KEY = "lab:ponte-a-prueba-fq-tema-2";
+  const store = { get(d) { try { return JSON.parse(localStorage.getItem(KEY)) || d; } catch (e) { return d; } },
+                  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} } };
+  const state = Object.assign({ marks: {}, answers: {} }, store.get({}));
+  const save = () => store.set(state);
+  const $ = (s, r = document) => r.querySelector(s);
+  const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+  const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const pick = (a) => a[Math.floor(Math.random() * a.length)];
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+  const fmt = (x, d = 1) => (Math.round(x * 10 ** d) / 10 ** d).toLocaleString("es-ES", { maximumFractionDigits: d });
+  const parse = (s) => { const v = parseFloat(String(s).replace(/\s/g, "").replace(",", ".")); return isNaN(v) ? null : v; };
+  // «2.700» puede ser dos mil setecientos (punto de miles): se acepta si así cuadra.
+  const parseAlt = (s) => { const t = String(s).replace(/\s/g, ""); return /^\d{1,3}(\.\d{3})+$/.test(t) ? parseFloat(t.replace(/\./g, "")) : null; };
+  const near = (v, x, tol) => v != null && Math.abs(v - x) <= tol;
+  const counter = (id) => {
+    const c = { ok: 0, ko: 0, draw() { $(id).innerHTML = `<span>✓ ${c.ok}</span><span>✗ ${c.ko}</span>`; } };
+    c.draw(); return c;
+  };
+
+  // Pregunta de opciones: chips; al pulsar, corrige y explica.
+  function ask(parent, { q, opts, ok, why, whyKo, onAnswer }) {
+    const box = el("div", "ask");
+    if (q) box.appendChild(el("p", null, q));
+    const row = el("div", "opts");
+    const w = el("p", "why"); w.hidden = true;
+    let done = false;
+    shuffle(opts).forEach((o) => {
+      const c = el("span", "chip", o);
+      c.tabIndex = 0; c.setAttribute("role", "button");
+      const go = () => {
+        if (done) return; done = true;
+        const right = o === ok;
+        c.classList.add(right ? "ok" : "ko");
+        if (!right) [...row.children].forEach((x) => { if (x.innerHTML === ok) x.classList.add("ok"); });
+        [...row.children].forEach((x) => x.classList.add("off"));
+        const extra = !right && whyKo && whyKo[o] ? whyKo[o] + " " : "";
+        w.innerHTML = (right ? '<span class="okt">¡Eso es!</span> ' : '<span class="kot">No.</span> ') + extra + (why || "");
+        w.hidden = false;
+        if (onAnswer) onAnswer(right);
+      };
+      c.addEventListener("click", go);
+      c.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+      row.appendChild(c);
+    });
+    box.append(row, w);
+    parent.appendChild(box);
+    return box;
+  }
+
+  // ---------- 1. Las 12 preguntas
+  const Q = [
+    { t: "¿Qué es la materia y qué propiedades tiene?", a: [
+      "Materia es todo lo que tiene <b>masa</b> y ocupa un <b>volumen</b>, aunque no se vea, como el aire.",
+      "<b>Propiedades generales</b>: las tiene toda la materia y no sirven para distinguir sustancias. Por ejemplo, la masa y el volumen.",
+      "<b>Propiedades específicas</b> (o características): sirven para identificar una sustancia. Por ejemplo, la densidad, la temperatura de fusión y la de ebullición, la dureza, el color o el olor."] },
+    { t: "¿Qué son la masa y el volumen y cómo se miden?", a: [
+      "La <b>masa</b> es la cantidad de materia. Se mide con la <b>balanza</b>. Unidad del SI: el <b>kilogramo (kg)</b>.",
+      "El <b>volumen</b> es el espacio que ocupa. Unidad del SI: el <b>metro cúbico (m³)</b>. También el litro (L) y el mililitro (mL).",
+      "Equivalencias: <b>1 mL = 1 cm³</b> y <b>1 L = 1 dm³</b>.",
+      "El de un líquido, con la <b>probeta</b>, leyendo el <b>menisco</b> (en el agua, su parte de abajo) con los ojos a su altura. El de un sólido regular, con sus medidas (largo × ancho × alto)."] },
+    { t: "¿Cómo se mide el volumen de un sólido irregular?", a: [
+      "Se pone agua en una probeta y se anota el volumen (V₁).",
+      "Se mete el sólido y se anota el nuevo volumen (V₂).",
+      "El volumen del sólido es lo que ha subido el agua: <b>V = V₂ − V₁</b>.",
+      "Ejemplo: de 40 mL a 70 mL → la piedra ocupa 30 mL = 30 cm³."] },
+    { t: "¿Qué es la densidad y cómo se calcula?", a: [
+      "Es la masa que hay en cada unidad de volumen: lo «apretada» que está la materia.",
+      "<b>d = m / V</b>. Unidades: <b>g/cm³</b> o <b>kg/m³</b> (la del SI). <b>1 g/cm³ = 1000 kg/m³</b>.",
+      "Es una propiedad <b>específica</b>: sirve para reconocer una sustancia. Si partes un objeto, su densidad no cambia (la mitad de masa en la mitad de volumen).",
+      "Ejemplo: 81 g en 30 cm³ → d = 81 / 30 = 2,7 g/cm³ = 2700 kg/m³ (aluminio)."] },
+    { t: "¿Por qué unos objetos flotan y otros se hunden?", a: [
+      "Un objeto <b>flota</b> si es <b>menos denso</b> que el líquido y se <b>hunde</b> si es más denso.",
+      "El tamaño y el peso no deciden: un tronco enorme flota y una moneda se hunde.",
+      "Un barco de acero flota porque lleva mucho aire dentro: la densidad del barco entero es menor que la del agua.",
+      "Un huevo se hunde en agua dulce y flota en agua con mucha sal, que es más densa."] },
+    { t: "¿Cómo son los estados de agregación: sólido, líquido y gas?", a: [
+      "<b>Sólido</b>: forma fija y volumen fijo. Prácticamente no se comprime.",
+      "<b>Líquido</b>: forma del recipiente y volumen fijo. Casi no se comprime. Puede fluir.",
+      "<b>Gas</b>: forma y volumen del recipiente (lo ocupa todo). Se comprime mucho. Puede fluir.",
+      "Líquidos y gases se llaman <b>fluidos</b>. Una misma sustancia puede estar en los tres estados (hielo, agua, vapor)."] },
+    { t: "¿Qué dice la teoría cinético-molecular?", a: [
+      "La materia está formada por <b>partículas</b> muy pequeñas.",
+      "Las partículas están en <b>movimiento continuo</b>.",
+      "Entre las partículas hay <b>espacio vacío</b>.",
+      "Cuanta más <b>temperatura</b>, más <b>rápido</b> se mueven.",
+      "Las partículas no cambian de tamaño ni se paran."] },
+    { t: "¿Cómo explica la teoría los tres estados?", a: [
+      "<b>Sólido</b>: partículas muy juntas y ordenadas, unidas con fuerza; solo <b>vibran</b> en su sitio. Por eso tiene forma fija y no se comprime.",
+      "<b>Líquido</b>: partículas juntas pero desordenadas, que se <b>deslizan</b> unas sobre otras. Por eso fluye y casi no se comprime.",
+      "<b>Gas</b>: partículas muy <b>separadas</b>, que se mueven rápido en todas direcciones y apenas se atraen. Por eso ocupa todo el recipiente y se comprime."] },
+    { t: "¿Qué es la presión de un gas y de qué depende?", a: [
+      "Se debe a los <b>choques</b> de las partículas del gas contra las paredes del recipiente.",
+      "Sube si hay <b>menos volumen</b> (las partículas chocan más a menudo), si se <b>calienta</b> (van más rápido y chocan más y más fuerte) o si se meten <b>más partículas</b>.",
+      "Ejemplo: al inflar la rueda de la bici metemos más partículas: más choques, más presión."] },
+    { t: "¿Cuáles son los cambios de estado?", a: [
+      "<b>Fusión</b> (sólido → líquido) y su contrario, <b>solidificación</b>.",
+      "<b>Vaporización</b> (líquido → gas) y su contrario, <b>condensación</b>.",
+      "<b>Sublimación</b> (sólido → gas) y su contrario, <b>sublimación inversa</b> (o regresiva, o deposición).",
+      "Fusión, vaporización y sublimación <b>absorben</b> energía; solidificación, condensación y sublimación inversa la <b>ceden</b>."] },
+    { t: "¿En qué se diferencian la evaporación y la ebullición?", a: [
+      "Las dos son vaporización (líquido → gas).",
+      "<b>Evaporación</b>: lenta, solo en la <b>superficie</b> y a <b>cualquier temperatura</b>. La ropa tendida se seca.",
+      "<b>Ebullición</b>: en <b>todo el líquido</b>, con burbujas, a una <b>temperatura fija</b> (el agua pura, 100 °C a nivel del mar)."] },
+    { t: "¿Qué nos dice una gráfica de calentamiento?", a: [
+      "Es la temperatura frente al tiempo mientras se calienta una sustancia.",
+      "Los tramos que suben: un solo estado. Los tramos <b>planos (mesetas)</b>: cambio de estado, con dos estados a la vez.",
+      "En las mesetas la temperatura <b>no sube</b> aunque se siga calentando: la energía se usa en <b>separar las partículas</b>.",
+      "La temperatura de cada meseta es la de <b>fusión</b> (la primera) y la de <b>ebullición</b> (la segunda). Son propiedades específicas: dicen qué sustancia es.",
+      "La de <b>enfriamiento</b> es igual pero al revés: primero gas y al final sólido, con las mesetas a las mismas temperaturas."] },
+  ];
+  const qlist = $("#qlist");
+  const MARKS = [["2", "✓"], ["1", "~"], ["0", "✗"]];
+  function qScore() {
+    const v = Object.values(state.marks);
+    $("#qscore").innerHTML = `<span>✓ ${v.filter((x) => x === "2").length}</span><span>~ ${v.filter((x) => x === "1").length}</span><span>✗ ${v.filter((x) => x === "0").length}</span><span>sin marcar ${Q.length - v.length}</span>`;
+  }
+  Q.forEach((q, i) => {
+    const box = el("div", "q");
+    box.dataset.i = i;
+    box.appendChild(el("h3", null, `${i + 1}. ${q.t}`));
+    const ta = el("textarea", "answer");
+    ta.placeholder = "Escribe aquí lo que recuerdes, sin mirar…";
+    ta.value = state.answers[i] || "";
+    ta.addEventListener("input", () => { state.answers[i] = ta.value; save(); });
+    box.appendChild(ta);
+    const row = el("div", "row");
+    const show = el("button", "b ghost small", "Ver la respuesta de Beakman");
+    show.type = "button";
+    const mark = el("div", "mark");
+    mark.setAttribute("role", "group");
+    mark.setAttribute("aria-label", "¿Cómo te ha salido?");
+    MARKS.forEach(([v, s]) => {
+      const b = el("button", null, s);
+      b.type = "button"; b.dataset.v = v;
+      b.setAttribute("aria-pressed", state.marks[i] === v ? "true" : "false");
+      b.addEventListener("click", () => {
+        state.marks[i] = v; save(); qScore();
+        mark.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      });
+      mark.appendChild(b);
+    });
+    row.append(show, el("span", null, "¿Cómo te ha salido?"), mark);
+    box.appendChild(row);
+    const model = el("div", "model");
+    model.hidden = true;
+    model.innerHTML = "<b>Lo que no debería faltar:</b><ul>" + q.a.map((x) => `<li>${x}</li>`).join("") + "</ul>";
+    show.addEventListener("click", () => { model.hidden = !model.hidden; show.textContent = model.hidden ? "Ver la respuesta de Beakman" : "Ocultar la respuesta"; });
+    box.appendChild(model);
+    qlist.appendChild(box);
+  });
+  qScore();
+  $("#onlyweak").addEventListener("click", () => {
+    qlist.querySelectorAll(".q").forEach((b) => b.classList.toggle("hide", state.marks[b.dataset.i] === "2" || state.marks[b.dataset.i] === undefined));
+  });
+  $("#showall").addEventListener("click", () => qlist.querySelectorAll(".q").forEach((b) => b.classList.remove("hide")));
+
+  // ---------- 2. Conceptos
+  const C = [
+    ["Todo lo que tiene masa y ocupa un lugar en el espacio.", "Materia", ["Energía", "Densidad", "Volumen"], "Materia es todo lo que tiene masa y volumen, también el aire. La energía no es materia."],
+    ["Propiedad que tiene toda la materia y que no sirve para saber qué sustancia es.", "Propiedad general", ["Propiedad específica", "Densidad", "Temperatura de fusión"], "Las generales son la masa y el volumen. Las específicas (densidad, temperaturas de fusión y ebullición…) identifican la sustancia."],
+    ["Propiedad que sirve para identificar una sustancia, como la densidad o la temperatura de ebullición.", "Propiedad específica", ["Propiedad general", "Masa", "Volumen"], "Saber que algo tiene 50 g no dice qué es; saber que su densidad es 19,3 g/cm³, sí: es oro."],
+    ["Masa que hay en cada unidad de volumen de una sustancia.", "Densidad", ["Masa", "Presión", "Volumen"], "Densidad = masa / volumen. La masa sola es la cantidad de materia; la presión es otra cosa: los choques de un gas."],
+    ["Curva que forma la superficie de un líquido dentro de la probeta.", "Menisco", ["Meseta", "Nivel del mar", "Escala"], "En el agua se lee por la parte de abajo del menisco, con los ojos a su altura. La meseta es el tramo plano de una gráfica."],
+    ["Nombre que reciben juntos los líquidos y los gases, porque pueden fluir.", "Fluidos", ["Sólidos", "Mezclas", "Partículas"], "Líquidos y gases fluyen y toman la forma del recipiente: son fluidos."],
+    ["Teoría que explica cómo es la materia por dentro: partículas en movimiento con espacio vacío entre ellas.", "Teoría cinético-molecular", ["Método científico", "Teoría atómica de Dalton", "Ley de la densidad"], "«Cinético» viene de movimiento: la teoría cinético-molecular dice que las partículas no paran de moverse."],
+    ["Choques de las partículas de un gas contra las paredes del recipiente.", "Presión", ["Densidad", "Temperatura", "Volumen"], "La presión se debe a los choques. La temperatura mide lo rápido que se mueven las partículas."],
+    ["Paso de sólido a líquido.", "Fusión", ["Solidificación", "Sublimación", "Condensación"], "Fusión: sólido → líquido. Solidificación es lo contrario."],
+    ["Paso de gas a líquido, como las gotas en el espejo del baño.", "Condensación", ["Vaporización", "Solidificación", "Sublimación inversa"], "Condensación: gas → líquido. La sublimación inversa es de gas a sólido (la escarcha)."],
+    ["Paso directo de sólido a gas, sin pasar por líquido.", "Sublimación", ["Vaporización", "Evaporación", "Fusión"], "Sublimación: sólido → gas, como el hielo seco. Vaporización es de líquido a gas."],
+    ["Vaporización lenta, solo en la superficie y a cualquier temperatura.", "Evaporación", ["Ebullición", "Condensación", "Fusión"], "La evaporación es lenta y en la superficie (la ropa tendida). La ebullición es en todo el líquido, con burbujas y a temperatura fija."],
+    ["Vaporización en todo el líquido, con burbujas, a una temperatura fija.", "Ebullición", ["Evaporación", "Sublimación", "Condensación"], "Ebullición: burbujas en todo el líquido, a su temperatura de ebullición (100 °C el agua pura)."],
+    ["Tramo horizontal de una gráfica de calentamiento, en el que la temperatura no cambia.", "Meseta", ["Menisco", "Pendiente", "Pico"], "En la meseta la sustancia está cambiando de estado: dos estados a la vez y la temperatura quieta."],
+  ];
+  const cs = counter("#cscore");
+  function drawConcepts() {
+    const list = $("#clist"); list.innerHTML = ""; cs.ok = 0; cs.ko = 0; cs.draw();
+    shuffle(C).forEach(([def, ok, bad, why]) => ask(list, { q: def, opts: [ok, ...bad], ok, why, onAnswer: (r) => { r ? cs.ok++ : cs.ko++; cs.draw(); } }));
+  }
+  drawConcepts();
+  $("#creset").addEventListener("click", drawConcepts);
+
+  // ---------- 3. Calcula la densidad
+  const MAT = [["vidrio", 2.5], ["aluminio", 2.7], ["hierro", 7.9], ["cobre", 8.9], ["plomo", 11.3]];
+  const LIQ = [["aceite", 0.92], ["agua", 1.0], ["agua de mar", 1.03], ["mercurio", 13.6]];
+  $("#dtab").innerHTML = "<tr><th>Sólido</th><th>g/cm³</th><th>Líquido</th><th>g/cm³</th></tr>" +
+    MAT.map((m, i) => `<tr><td>${m[0]}</td><td>${fmt(m[1], 2)}</td><td>${LIQ[i] ? LIQ[i][0] : ""}</td><td>${LIQ[i] ? fmt(LIQ[i][1], 2) : ""}</td></tr>`).join("");
+  const ds = counter("#dscore");
+
+  function svgBalance(m, label) {
+    return `<g transform="translate(20,40)">
+      <rect x="0" y="120" width="140" height="34" rx="6" fill="#DCE6C6" stroke="#1F3A0B" stroke-width="2"/>
+      <rect x="30" y="128" width="80" height="20" rx="3" fill="#1F3A0B"/>
+      <text x="70" y="143" text-anchor="middle" font-family="monospace" font-size="15" fill="#A6D41E">${fmt(m, 1)} g</text>
+      <rect x="20" y="110" width="100" height="10" rx="3" fill="#A9B3A0" stroke="#1F3A0B" stroke-width="2"/>
+      ${label}
+      <text x="70" y="178" text-anchor="middle" font-size="13" fill="#4E5A45">balanza</text></g>`;
+  }
+  function svgCylinder(x, v, solid, title) {
+    // probeta de 100 mL: 0 mL en y=250, 100 mL en y=50
+    const y = (ml) => 250 - ml * 2;
+    let ticks = "";
+    for (let ml = 0; ml <= 100; ml += 5) {
+      const big = ml % 10 === 0;
+      ticks += `<line x1="${x}" x2="${x + (big ? 14 : 8)}" y1="${y(ml)}" y2="${y(ml)}" stroke="#1F3A0B" stroke-width="1.3"/>`;
+      if (big && ml > 0) ticks += `<text x="${x + 17}" y="${y(ml) + 4}" font-size="10" fill="#4E5A45">${ml}</text>`;
+    }
+    const lv = y(v);
+    return `<g>
+      <rect x="${x}" y="${lv}" width="54" height="${250 - lv}" fill="#9fd3f5" opacity=".75"/>
+      <path d="M${x} ${lv - 1} Q ${x + 27} ${lv + 7} ${x + 54} ${lv - 1}" fill="none" stroke="#2B6CB0" stroke-width="2"/>
+      ${solid ? `<path d="M${x + 14} 246 l8 -20 l18 -4 l6 18 l-10 8 z" fill="#8a8f96" stroke="#1F3A0B" stroke-width="1.5"/>` : ""}
+      <rect x="${x}" y="40" width="54" height="212" rx="4" fill="none" stroke="#1F3A0B" stroke-width="2.5"/>
+      ${ticks}
+      <line x1="${x + 56}" x2="${x + 70}" y1="${lv + 3}" y2="${lv + 3}" stroke="#B23B2E" stroke-width="1.5"/>
+      <text x="${x + 72}" y="${lv + 7}" font-size="12" font-weight="700" fill="#B23B2E">${v} mL</text>
+      <text x="${x + 27}" y="272" text-anchor="middle" font-size="13" fill="#4E5A45">${title}</text></g>`;
+  }
+
+  function newDensity() {
+    const kind = pick(["probeta", "probeta", "cubo", "masa"]);
+    const [name, d] = pick(MAT);
+    const pic = $("#dpic"), steps = $("#dsteps");
+    steps.innerHTML = "";
+    let m, V, story, svg;
+    if (kind === "probeta") {
+      const v1 = pick([30, 40, 50]); V = rnd(10, 35); m = Math.round(d * V * 10) / 10;
+      svg = `<svg viewBox="0 0 400 290" role="img" aria-label="Balanza y dos probetas">
+        ${svgBalance(m, '<path d="M50 110 l12 -22 l26 -6 l10 22 l-14 6 z" fill="#8a8f96" stroke="#1F3A0B" stroke-width="1.5"/>')}
+        ${svgCylinder(160, v1, false, "antes")}${svgCylinder(280, v1 + V, true, "después")}</svg>`;
+      story = `Pesas un trozo de un material desconocido en la balanza. Luego lo metes en una probeta con agua. Saca los datos del dibujo.`;
+      pic.innerHTML = svg;
+      steps.appendChild(el("p", null, story));
+      numStep(steps, "1. ¿Qué volumen tiene el trozo? (en cm³)", V, 0.01, (v) => {
+        if (near(v, v1 + V, 0.01)) return "Ese es el nivel con el trozo dentro. El volumen del trozo es lo que <b>sube</b> el agua: V₂ − V₁.";
+        if (near(v, v1, 0.01)) return "Ese es el agua que había antes. Resta: después − antes.";
+        return "Mira cuánto sube el agua: nivel después − nivel antes. Y recuerda: 1 mL = 1 cm³.";
+      }, `V = ${v1 + V} − ${v1} = <b>${V} mL = ${V} cm³</b>.`, () => afterV(v1));
+    } else if (kind === "cubo") {
+      const l = pick([2, 3, 4, 5]); V = l ** 3; m = Math.round(d * V * 10) / 10;
+      svg = `<svg viewBox="0 0 400 290" role="img" aria-label="Balanza con un cubo">
+        ${svgBalance(m, `<rect x="45" y="${110 - 12 * l}" width="${12 * l}" height="${12 * l}" fill="#8a8f96" stroke="#1F3A0B" stroke-width="1.5"/>`)}
+        <g transform="translate(230,70)"><rect x="0" y="30" width="80" height="80" fill="#c5cad0" stroke="#1F3A0B" stroke-width="2"/>
+        <path d="M0 30 l25 -25 h80 l-25 25 z M80 30 l25 -25 v80 l-25 25 z" fill="#a7adb4" stroke="#1F3A0B" stroke-width="2"/>
+        <text x="40" y="130" text-anchor="middle" font-size="14" font-weight="700" fill="#B23B2E">${l} cm</text>
+        <text x="40" y="160" text-anchor="middle" font-size="13" fill="#4E5A45">cubo de ${l} cm de lado</text></g></svg>`;
+      pic.innerHTML = svg;
+      steps.appendChild(el("p", null, `Tienes un cubo macizo de un material desconocido. Mide ${l} cm de lado y la balanza marca ${fmt(m, 1)} g.`));
+      numStep(steps, "1. ¿Qué volumen tiene el cubo? (en cm³)", V, 0.01, (v) => {
+        if (near(v, l * 3, 0.01) || near(v, l * l, 0.01)) return `El volumen de un cubo es lado × lado × lado: ${l} × ${l} × ${l}.`;
+        return `Volumen del cubo = lado³ = ${l} × ${l} × ${l}.`;
+      }, `V = ${l} × ${l} × ${l} = <b>${V} cm³</b>.`, () => afterV(null));
+    } else {
+      V = pick([10, 20, 30, 40, 50]); m = Math.round(d * V * 10) / 10;
+      pic.innerHTML = `<svg viewBox="0 0 400 290" role="img" aria-label="Bloque de metal"><g transform="translate(125,70)">
+        <rect x="0" y="40" width="120" height="70" fill="#c5cad0" stroke="#1F3A0B" stroke-width="2"/>
+        <path d="M0 40 l30 -30 h120 l-30 30 z M120 40 l30 -30 v70 l-30 30 z" fill="#a7adb4" stroke="#1F3A0B" stroke-width="2"/>
+        <text x="60" y="140" text-anchor="middle" font-size="15" font-weight="700" fill="#1F3A0B">${name}</text>
+        <text x="60" y="162" text-anchor="middle" font-size="13" fill="#4E5A45">d = ${fmt(d, 1)} g/cm³ · V = ${V} cm³</text></g></svg>`;
+      steps.appendChild(el("p", null, `Un bloque de <b>${name}</b> (densidad ${fmt(d, 1)} g/cm³) ocupa ${V} cm³. Ahora al revés: sabes la densidad y buscas la masa.`));
+      numStep(steps, "¿Qué masa tiene? (en g)", d * V, 0.051, (v) => {
+        if (near(v, d / V, 0.01) || near(v, V / d, 0.05)) return "Despeja bien: si d = m / V, entonces <b>m = d × V</b>.";
+        return "De d = m / V se despeja m = d × V.";
+      }, `m = d × V = ${fmt(d, 1)} × ${V} = <b>${fmt(d * V, 1)} g</b>.`, () => {});
+      return;
+    }
+
+    function afterV(v1) {
+      const exact = m / V;
+      numStep(steps, "2. ¿Cuál es su densidad? (en g/cm³, con un decimal)", exact, 0.06, (v) => {
+        if (near(v, V / m, 0.02)) return "Has dividido al revés: es <b>masa entre volumen</b>, d = m / V.";
+        if (v1 != null && near(v, m / (v1 + V), 0.06)) return "Has usado el nivel final de la probeta. El volumen del trozo es solo lo que sube el agua.";
+        if (near(v, m * V, 1)) return "Has multiplicado: la densidad es masa <b>entre</b> volumen.";
+        return "Densidad = masa / volumen, con la masa en g y el volumen en cm³.";
+      }, `d = m / V = ${fmt(m, 1)} g / ${V} cm³ = <b>${fmt(exact, 1)} g/cm³</b>.`, () => {
+        numStep(steps, "3. Pásala a kg/m³ (la unidad del SI)", exact * 1000, Math.max(exact * 1000 * 0.012, 6), (v) => {
+          if (near(v, exact, 0.1)) return "Falta el cambio: <b>1 g/cm³ = 1000 kg/m³</b>, así que se multiplica por 1000.";
+          if (near(v, exact / 1000, 0.01)) return "Al revés: de g/cm³ a kg/m³ se <b>multiplica</b> por 1000, no se divide.";
+          return "1 g/cm³ = 1000 kg/m³: multiplica por 1000.";
+        }, `${fmt(exact, 1)} g/cm³ × 1000 = <b>${fmt(exact * 1000, 0)} kg/m³</b>. (¿Por qué × 1000? 1 m³ = 1 000 000 cm³ y 1 kg = 1000 g; por eso 1 g/cm³ = 1000 kg/m³.)`, () => {
+          const opts = MAT.map((x) => x[0]);
+          ask(steps, { q: "4. Mira la tabla de densidades (abajo). ¿Qué material es?", opts, ok: name,
+            why: `Su densidad, ${fmt(exact, 1)} g/cm³, es la del ${name} (${fmt(d, 1)} g/cm³). La densidad es una propiedad específica: sirve para reconocer la sustancia.`,
+            onAnswer: (r) => {
+              r ? ds.ok++ : ds.ko++; ds.draw();
+              const [ln, ld] = pick(LIQ);
+              const floats = d < ld;
+              ask(steps, { q: `5. Si lo echas en <b>${ln}</b> (${fmt(ld, 2)} g/cm³), ¿flota o se hunde?`, opts: ["Flota", "Se hunde"], ok: floats ? "Flota" : "Se hunde",
+                why: floats ? `Flota: ${fmt(d, 1)} g/cm³ es menos que ${fmt(ld, 2)} g/cm³. ¡Un sólido flotando! En mercurio flotan el hierro y hasta el plomo.`
+                            : `Se hunde: ${fmt(d, 1)} g/cm³ es más que ${fmt(ld, 2)} g/cm³. Lo que cuenta es la densidad, no el tamaño.`,
+                onAnswer: (r2) => { r2 ? ds.ok++ : ds.ko++; ds.draw(); } });
+            } });
+        });
+      });
+    }
+  }
+  // Paso numérico: comprobar, pista según el error, y al acertar (o tras 2 fallos) se ve la solución y sigue.
+  function numStep(parent, label, answer, tol, hint, sol, next) {
+    const box = el("div", "step");
+    const id = "n" + Math.random().toString(36).slice(2, 8);
+    box.innerHTML = `<label for="${id}">${label}</label>`;
+    const row = el("div", "num");
+    const inp = el("input"); inp.id = id; inp.inputMode = "decimal"; inp.autocomplete = "off";
+    const btn = el("button", "b small", "Comprobar"); btn.type = "button";
+    const out = el("p", "why");
+    row.append(inp, btn); box.append(row, out); parent.appendChild(box);
+    let tries = 0, done = false;
+    const check = () => {
+      if (done) return;
+      let v = parse(inp.value);
+      const alt = parseAlt(inp.value);
+      if (alt != null && !near(v, answer, tol) && near(alt, answer, tol)) v = alt;
+      if (v == null) { out.innerHTML = "Escribe un número."; return; }
+      if (near(v, answer, tol)) {
+        done = true; inp.classList.add("ok"); inp.disabled = true; btn.disabled = true;
+        out.innerHTML = `<span class="okt">¡Bien!</span> ${sol}`; if (tries === 0) { ds.ok++; ds.draw(); } next();
+      } else {
+        tries++; inp.classList.add("ko"); setTimeout(() => inp.classList.remove("ko"), 600);
+        if (tries === 1) { ds.ko++; ds.draw(); }
+        if (tries >= 2) { done = true; inp.disabled = true; btn.disabled = true; out.innerHTML = `<span class="kot">Así se hace:</span> ${sol}`; next(); }
+        else out.innerHTML = `<span class="kot">Todavía no.</span> ${hint(v)} Prueba otra vez.`;
+      }
+    };
+    btn.addEventListener("click", check);
+    inp.addEventListener("keydown", (e) => { if (e.key === "Enter") check(); });
+  }
+  newDensity();
+  $("#dnew").addEventListener("click", newDensity);
+
+  // ---------- 4. Partículas
+  const ps = counter("#pscore");
+  function particleBox(kind) {
+    const W = 220; let dots = [];
+    if (kind === "sólido") {
+      for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) dots.push([45 + c * 26 + (Math.random() - .5) * 3, 95 + r * 22 + (Math.random() - .5) * 3]);
+      dots = dots.filter((p) => p[1] < 210);
+    } else if (kind === "líquido") {
+      let tries = 0;
+      while (dots.length < 30 && tries < 5000) {
+        tries++;
+        const p = [18 + Math.random() * 184, 100 + Math.random() * 104];
+        if (dots.every((q) => (q[0] - p[0]) ** 2 + (q[1] - p[1]) ** 2 > 22 ** 2)) dots.push(p);
+      }
+    } else {
+      let tries = 0;
+      while (dots.length < 9 && tries < 5000) {
+        tries++;
+        const p = [20 + Math.random() * 180, 20 + Math.random() * 180];
+        if (dots.every((q) => (q[0] - p[0]) ** 2 + (q[1] - p[1]) ** 2 > 50 ** 2)) dots.push(p);
+      }
+    }
+    const arrows = kind === "gas" ? dots.map(([x, y]) => { const a = Math.random() * Math.PI * 2; return `<line x1="${x}" y1="${y}" x2="${x + Math.cos(a) * 26}" y2="${y + Math.sin(a) * 26}" stroke="#7FA80F" stroke-width="2" marker-end="url(#ar)"/>`; }).join("") : "";
+    const liquidTop = kind === "líquido" ? `<rect x="2" y="88" width="216" height="130" fill="#e7f4fc"/>` : "";
+    return `<svg viewBox="0 0 ${W} ${W}" role="img" aria-label="Caja con partículas"><defs><marker id="ar" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6 z" fill="#7FA80F"/></marker></defs>
+      ${liquidTop}${arrows}${dots.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="9" fill="#74C0FC" stroke="#1F3A0B" stroke-width="1.5"/>`).join("")}</svg>`;
+  }
+  const PEXPL = {
+    "sólido": "Sólido: partículas muy juntas y en filas ordenadas. Solo vibran en su sitio.",
+    "líquido": "Líquido: partículas juntas pero desordenadas, que se deslizan. Ocupan el fondo del recipiente y tienen volumen fijo.",
+    "gas": "Gas: pocas partículas muy separadas, moviéndose rápido en todas direcciones (las flechas) y ocupando todo el recipiente.",
+  };
+  function newBox() {
+    const kind = pick(["sólido", "líquido", "gas"]);
+    $("#pbox").innerHTML = particleBox(kind);
+    const a = $("#pask"); a.innerHTML = "";
+    ask(a, { q: "¿Qué estado de agregación representa este dibujo?", opts: ["sólido", "líquido", "gas"], ok: kind, why: PEXPL[kind], onAnswer: (r) => { r ? ps.ok++ : ps.ko++; ps.draw(); } });
+  }
+  newBox();
+  $("#pnew").addEventListener("click", newBox);
+
+  const S = [
+    ["Abres un frasco de colonia en un rincón y al rato se huele en toda la habitación.",
+      "Las partículas de colonia pasan a gas y, como se mueven sin parar en todas direcciones, se mezclan con las del aire y llegan a todas partes.",
+      ["Las partículas de colonia se hacen cada vez más grandes, hasta que ocupan toda la habitación y llegan a tu nariz.", "El aire de la habitación está quieto, y es la colonia la que lo va empujando poco a poco hacia los lados."],
+      "Las partículas nunca cambian de tamaño: lo que hacen es moverse. Eso se llama difusión."],
+    ["Tapas la punta de dos jeringuillas, una con aire y otra con agua, y empujas el émbolo. La de aire se comprime; la de agua, casi nada.",
+      "En el gas hay mucho espacio vacío entre partículas y se pueden acercar; en el líquido ya están juntas.",
+      ["Al apretar, las partículas del aire se encogen y caben en menos sitio; las del agua son más duras y no se encogen.", "El agua pesa mucho más que el aire, y por eso el émbolo no tiene fuerza para moverla."],
+      "Las partículas no se encogen: se acercan. Por eso los gases se comprimen y los líquidos casi no."],
+    ["Un globo hinchado que dejas al sol se hincha un poco más.",
+      "Al calentarse, las partículas del gas se mueven más rápido, chocan más y con más fuerza contra la goma y la empujan hacia fuera.",
+      ["Al calentarse, cada partícula de aire del globo se hace un poco más grande, y entre todas lo hinchan.", "El calor del sol hace que entre más aire en el globo a través de la goma."],
+      "Más temperatura = más rapidez = más choques. El número de partículas y su tamaño no cambian."],
+    ["Una gota de colorante se reparte mucho más rápido en agua caliente que en agua fría.",
+      "En el agua caliente las partículas se mueven más rápido y mezclan antes el colorante.",
+      ["En el agua caliente las partículas de agua son más grandes y empujan el colorante con más fuerza.", "El colorante pesa menos en agua caliente, así que flota y se reparte por arriba."],
+      "La temperatura mide lo rápido que se mueven las partículas."],
+    ["Las vías del tren se ponen con pequeñas separaciones entre los raíles.",
+      "Con el calor del verano, las partículas del metal vibran más, se separan un poco y el raíl se alarga (dilatación). La separación deja sitio.",
+      ["Para que el agua de la lluvia se escurra entre los raíles y no se oxiden.", "Porque en verano las partículas del metal crecen un poco y el raíl necesita sitio para ellas."],
+      "Dilatación: el sólido ocupa algo más porque sus partículas vibran más y se separan, no porque crezcan."],
+    ["Sacas un vaso de agua muy fría de la nevera y por fuera se llena de gotitas.",
+      "El vapor de agua del aire se enfría al tocar el vaso y se condensa: pasa de gas a líquido.",
+      ["El agua fría del vaso atraviesa poco a poco el cristal y sale en forma de gotitas por fuera.", "El frío del vaso convierte en agua parte del aire que lo rodea: el oxígeno y el nitrógeno."],
+      "Es condensación del vapor que hay en el aire. El agua no atraviesa el vidrio."],
+    ["Un charco se seca en un día de 20 °C, sin llegar nunca a hervir.",
+      "Es evaporación: las partículas más rápidas de la superficie escapan al aire, y eso pasa a cualquier temperatura.",
+      ["Al sol, el agua del charco hierve aunque el aire esté a 20 °C, y por eso desaparece.", "El viento empuja el agua del charco hasta la alcantarilla, sin que llegue a pasar a gas."],
+      "La evaporación es lenta, en la superficie y a cualquier temperatura. La ebullición es a temperatura fija y con burbujas."],
+    ["Al inflar la rueda de la bici, cada vez cuesta más meter aire y la rueda se pone dura.",
+      "Metemos más partículas en el mismo sitio: hay más choques contra las paredes, y por eso hay más presión.",
+      ["Las partículas de aire se pegan a la goma de la rueda y la vuelven más rígida.", "Al apretarlo tanto, el aire se convierte en líquido dentro de la rueda, que ya no se comprime."],
+      "La presión se debe a los choques de las partículas contra las paredes. Más partículas, más choques."],
+    ["Una piedra mantiene su forma, pero el agua toma la forma del vaso.",
+      "En el sólido las partículas están unidas con fuerza y solo vibran; en el líquido están juntas pero pueden deslizarse unas sobre otras.",
+      ["Las partículas de la piedra están quietas del todo; las del agua se mueven y por eso cambia de forma.", "Las partículas del agua son blandas y se deforman para adaptarse a la forma del vaso."],
+      "En un sólido las partículas no están quietas: vibran en su sitio. Y ninguna partícula se deforma."],
+    ["En la olla hirviendo sale «humo» blanco.",
+      "El vapor de agua es invisible; lo blanco son gotitas diminutas de agua líquida que se han condensado al enfriarse en el aire.",
+      ["Es vapor de agua: el agua, al hervir, se convierte en un gas de color blanco.", "Es humo: al calentarla tanto, una parte del agua se quema y sale por arriba."],
+      "El vapor de agua no se ve. Lo que ves ya se ha condensado: es agua líquida en gotas muy pequeñas."],
+  ];
+  shuffle(S).forEach(([sit, ok, bad, why]) => ask($("#slist"), { q: sit, opts: [ok, ...bad], ok, why, onAnswer: (r) => { r ? ps.ok++ : ps.ko++; ps.draw(); } }));
+
+  // ---------- 5. Gráficas
+  const SUB = [["agua", 0, 100], ["etanol (alcohol)", -114, 78], ["acetona", -95, 56], ["ácido acético (el ácido del vinagre)", 17, 118], ["naftalina", 80, 218], ["mercurio", -39, 357]];
+  $("#gtab").innerHTML = "<tr><th>Sustancia</th><th>Fusión (°C)</th><th>Ebullición (°C)</th></tr>" + SUB.map((s) => `<tr><td>${s[0]}</td><td>${s[1]}</td><td>${s[2]}</td></tr>`).join("");
+  const gs = counter("#gscore");
+  const STATES = ["sólido", "líquido", "gas", "sólido y líquido", "líquido y gas"];
+  function newGraph() {
+    const [name, tf, te] = pick(SUB);
+    const heat = Math.random() < 0.5;
+    const lo = tf - rnd(20, 40), hi = te + rnd(20, 40);
+    // tiempos (min): subida, fusión 3, subida, ebullición 7, subida
+    const t1 = 2, t2 = 5, t3 = 5 + Math.max(2, Math.round((te - tf) / (hi - lo) * 8)), t4 = t3 + 7, t5 = t4 + 2;
+    let pts = [[0, lo], [t1, tf], [t2, tf], [t3, te], [t4, te], [t5, hi]];
+    let seg = ["sólido", "sólido y líquido", "líquido", "líquido y gas", "gas"];
+    if (!heat) {
+      const T = t5;
+      pts = pts.map(([t, v]) => [T - t, v]).reverse();
+      seg = seg.slice().reverse();
+    }
+    const X0 = 60, X1 = 540, Y0 = 300, Y1 = 30, tmax = t5;
+    const sx = (t) => X0 + (t / tmax) * (X1 - X0), sy = (v) => Y0 - ((v - lo) / (hi - lo)) * (Y0 - Y1);
+    const span = hi - lo, step = [10, 20, 25, 50, 100].find((s) => span / s <= 8) || 100;
+    let grid = "";
+    for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) grid += `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#EEF2E4"/><text x="${X0 - 6}" y="${sy(v) + 4}" text-anchor="end" font-size="11" fill="#4E5A45">${v}</text>`;
+    for (let t = 0; t <= tmax; t += 2) grid += `<line y1="${Y0}" y2="${Y1}" x1="${sx(t)}" x2="${sx(t)}" stroke="#EEF2E4"/><text x="${sx(t)}" y="${Y0 + 16}" text-anchor="middle" font-size="11" fill="#4E5A45">${t}</text>`;
+    const guides = [tf, te].map((v) => `<line x1="${X0}" x2="${X1}" y1="${sy(v)}" y2="${sy(v)}" stroke="#B23B2E" stroke-dasharray="4 4" stroke-width="1"/><text x="${X0 + 4}" y="${sy(v) - 4}" font-size="12" font-weight="700" fill="#B23B2E">${v} °C</text>`).join("");
+    const path = pts.map((p, i) => `${i ? "L" : "M"}${sx(p[0])} ${sy(p[1])}`).join(" ");
+    const labels = "ABCDE".split("").map((L, i) => {
+      const [a, b] = [pts[i], pts[i + 1]];
+      return `<circle cx="${(sx(a[0]) + sx(b[0])) / 2}" cy="${(sy(a[1]) + sy(b[1])) / 2 - 16}" r="11" fill="#A6D41E" stroke="#1F3A0B" stroke-width="1.5"/><text x="${(sx(a[0]) + sx(b[0])) / 2}" y="${(sy(a[1]) + sy(b[1])) / 2 - 12}" text-anchor="middle" font-size="12" font-weight="800" fill="#1F3A0B">${L}</text>`;
+    }).join("");
+    $("#gpic").innerHTML = `<svg viewBox="0 0 560 340" role="img" aria-label="Gráfica de temperatura frente a tiempo">
+      ${grid}<line x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}" stroke="#1F3A0B" stroke-width="2"/><line x1="${X0}" y1="${Y0}" x2="${X0}" y2="${Y1}" stroke="#1F3A0B" stroke-width="2"/>
+      <text x="${(X0 + X1) / 2}" y="334" text-anchor="middle" font-size="12" fill="#1F3A0B">tiempo (min)</text>
+      <text x="16" y="${(Y0 + Y1) / 2}" transform="rotate(-90 16 ${(Y0 + Y1) / 2})" text-anchor="middle" font-size="12" fill="#1F3A0B">temperatura (°C)</text>
+      ${guides}<path d="${path}" fill="none" stroke="#2B6CB0" stroke-width="3.5" stroke-linejoin="round"/>${labels}</svg>`;
+    const g = $("#gask"); g.innerHTML = "";
+    const cnt = (r) => { r ? gs.ok++ : gs.ko++; gs.draw(); };
+    ask(g, { q: "1. ¿Es una gráfica de calentamiento o de enfriamiento?", opts: ["calentamiento", "enfriamiento"], ok: heat ? "calentamiento" : "enfriamiento",
+      why: heat ? "La temperatura sube con el tiempo: se está calentando. Empieza en sólido y acaba en gas." : "La temperatura baja con el tiempo: se está enfriando. Empieza en gas y acaba en sólido.", onAnswer: cnt });
+    ask(g, { q: "2. Mira las mesetas y la tabla. ¿Qué sustancia es?", opts: SUB.map((s) => s[0]), ok: name,
+      why: `Las mesetas están a ${tf} °C y ${te} °C: la fusión y la ebullición del ${name}. Son propiedades específicas.`, onAnswer: cnt });
+    const i = rnd(0, 4), L = "ABCDE"[i];
+    ask(g, { q: `3. ¿Qué hay en el tramo ${L}?`, opts: STATES, ok: seg[i],
+      why: seg[i].includes(" y ") ? `${L} es una meseta: está cambiando de estado y conviven ${seg[i]}.` : `${L} es un tramo inclinado: un solo estado, ${seg[i]}.`, onAnswer: cnt });
+    const flat = "BD"[rnd(0, 1)];
+    const fi = "ABCDE".indexOf(flat);
+    const what = { "sólido y líquido": heat ? "fundiéndose" : "solidificándose", "líquido y gas": heat ? "hirviendo" : "condensándose" }[seg[fi]];
+    const okWhy = heat ? "Está cambiando de estado: el calor se usa en separar las partículas, no en que vayan más rápido."
+                       : "Está cambiando de estado: las partículas se juntan y ceden energía, así que la temperatura no baja hasta que termina.";
+    ask(g, { q: `4. En el tramo ${flat} se sigue ${heat ? "calentando" : "enfriando"}, pero la temperatura no cambia. ¿Por qué?`,
+      opts: [okWhy, "Porque se ha apagado el fuego (o la nevera) un rato.", "Porque las partículas se paran.", heat ? "Porque las partículas se hacen más grandes." : "Porque las partículas se hacen más pequeñas."],
+      ok: okWhy, why: `En ${flat} la sustancia está ${what}. Mientras dura el cambio de estado, la temperatura se queda quieta.`, onAnswer: cnt });
+    ask(g, { q: "5. ¿Cuál es su temperatura de ebullición?", opts: [...new Set([`${tf} °C`, `${te} °C`, `${lo} °C`, `${hi} °C`])], ok: `${te} °C`,
+      why: heat ? `La ebullición es la segunda meseta al calentar, la más alta: ${te} °C.`
+                : `Al enfriar, la primera meseta (la más alta) es la condensación, y está a la misma temperatura que la ebullición: ${te} °C.`, onAnswer: cnt });
+  }
+  newGraph();
+  $("#gnew").addEventListener("click", newGraph);
+
+  // ---------- 6. Simulacro en papel
+  const P = [
+    ["¿Qué diferencia hay entre una propiedad general y una específica de la materia? Pon dos ejemplos de cada una.",
+      "Las generales las tiene toda la materia y no sirven para identificarla: masa y volumen. Las específicas sirven para identificar una sustancia: densidad, temperatura de fusión, temperatura de ebullición, dureza, color…"],
+    ["Una pieza de 89 g se mete en una probeta con 50 mL de agua y el nivel sube hasta 60 mL. Calcula su densidad en g/cm³ y en kg/m³. ¿Flotará en agua?",
+      "V = 60 − 50 = 10 mL = 10 cm³. d = 89 g / 10 cm³ = 8,9 g/cm³ = 8900 kg/m³ (es cobre). Se hunde en agua, porque 8,9 g/cm³ es más que 1 g/cm³."],
+    ["Un bloque de hierro (d = 7,9 g/cm³) ocupa 20 cm³. ¿Qué masa tiene?",
+      "m = d × V = 7,9 × 20 = 158 g."],
+    ["Explica con la teoría cinético-molecular por qué los gases se pueden comprimir y los líquidos casi no.",
+      "En los gases las partículas están muy separadas, con mucho espacio vacío entre ellas, y al apretar se acercan. En los líquidos las partículas ya están muy juntas y no tienen sitio para acercarse más."],
+    ["Escribe el nombre de los seis cambios de estado, indicando de qué estado a qué estado va cada uno. ¿Cuáles necesitan absorber energía? Explica además en qué se diferencian la evaporación y la ebullición.",
+      "Fusión (s→l), solidificación (l→s), vaporización (l→g), condensación (g→l), sublimación (s→g) y sublimación inversa (g→s). Absorben energía: fusión, vaporización y sublimación. Evaporación: lenta, solo en la superficie, a cualquier temperatura. Ebullición: en todo el líquido, con burbujas, a una temperatura fija."],
+    ["Se calienta una sustancia desde −10 °C. Su gráfica tiene una meseta a 17 °C y otra a 118 °C. a) ¿Qué sustancia es (usa la tabla del apartado 5)? b) ¿En qué estado está a 50 °C? c) ¿Por qué la temperatura no sube en las mesetas?",
+      "a) Ácido acético (fusión 17 °C, ebullición 118 °C). b) Líquido: está entre las dos mesetas. c) Porque está cambiando de estado: la energía se usa en separar las partículas y no en aumentar su velocidad."],
+  ];
+  $("#paper").innerHTML = P.map(([q, s]) => `<li>${q}<div class="model" hidden><b>Solución:</b> ${s}</div></li>`).join("");
+  $("#paperSol").addEventListener("click", (e) => {
+    const ms = document.querySelectorAll("#paper .model"); const show = ms[0].hidden;
+    ms.forEach((m) => { m.hidden = !show; }); e.target.textContent = show ? "Ocultar las soluciones" : "Ver las soluciones";
+  });
+  $("#paperPrint").addEventListener("click", () => window.print());
+
+  $("#copy").addEventListener("click", async () => {
+    const t = $("#prompt").textContent.trim();
+    try { await navigator.clipboard.writeText(t); $("#copied").textContent = "Copiado. Pégalo en Claude."; }
+    catch (e) {
+      const r = document.createRange(); r.selectNodeContents($("#prompt"));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      $("#copied").textContent = "Selecciónalo y cópialo con Ctrl+C.";
+    }
+  });
+})();
+</script>
+</body>
+</html>
