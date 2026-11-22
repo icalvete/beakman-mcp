@@ -193,6 +193,13 @@ class Almacen:
         self.q("INSERT INTO contadores VALUES (?, ?, 1) ON CONFLICT(dia, clave) DO UPDATE SET n = n + 1",
                datetime.now(timezone.utc).date().isoformat(), clave)
 
+    def totales(self, dias: int) -> dict[str, int]:
+        """Suma por clave de los últimos `dias` días (UTC), hoy incluido."""
+        from datetime import timedelta
+        desde = (datetime.now(timezone.utc).date() - timedelta(days=dias - 1)).isoformat()
+        return {r["clave"]: r["n"] for r in
+                self.q("SELECT clave, SUM(n) AS n FROM contadores WHERE dia >= ? GROUP BY clave", desde)}
+
     def cifras(self, semanas: int = 12) -> dict:
         """Totales por semana ISO de las últimas `semanas`, y las entradas que existen ahora."""
         from datetime import date
@@ -682,7 +689,7 @@ class Entrada:
         vista = request.query_params.get("v", "cifras")
         cuerpo = (self._vista_entradas(request.query_params.get("q", ""), ses["csrf"],
                                        request.query_params.get("ok", ""))
-                  if vista == "entradas" else self._vista_cifras())
+                  if vista == "entradas" else self._vista_cifras(request.query_params.get("p", "7")))
         return _html("Administración", _admin_menu(vista, ses["csrf"]) + cuerpo)
 
     async def admin_pedir(self, request: Request) -> Response:
@@ -749,30 +756,118 @@ class Entrada:
             return RedirectResponse("/admin?v=entradas&ok=borrada", status_code=303)
         return RedirectResponse("/admin?v=entradas&ok=error", status_code=303)
 
-    def _vista_cifras(self) -> str:
-        """Cuánto se usa Beakman: contadores por semana, sin nada de nadie."""
+    def _vista_cifras(self, periodo: str = "7") -> str:
+        """Cuánto se usa Beakman, por partes y con los nombres que ve el estudiante. Sin nada de nadie."""
+        from . import metricas
+        dias = {"7": 7, "28": 28, "84": 84}.get(periodo, 7)
+        nombre_periodo = {7: "los últimos 7 días", 28: "las últimas 4 semanas", 84: "las últimas 12 semanas"}[dias]
+        t = self.db.totales(dias)
         c = self.db.cifras()
-        cols = [("entrada_con_datos", "Con datos"), ("entrada_sin_datos", "Sin datos"), ("clases", "Clases"),
-                ("presentado", "Correo"), ("sin_correo", "Sin correo"), ("borrado", "Borran")]
-        filas = ""
+        cat = metricas.catalogo
+        suma = lambda pre: sum(n for k, n in t.items() if k.startswith(pre))  # noqa: E731
+        lab, web, clases = suma("visita:lab:"), suma("visita:web:"), suma("clase:")
+        secciones = sum(n for k, n in t.items() if k.startswith("prueba:") and not k.endswith(":" + metricas.COMPLETA))
+        completas = sum(n for k, n in t.items() if k.startswith("prueba:") and k.endswith(":" + metricas.COMPLETA))
+        e = html.escape
+
+        def tabla(cab: list[str], filas: list[list], vacio: str = "Nada todavía.") -> str:
+            th = "".join(f"<th>{x}</th>" for x in cab)
+            tr = "".join("<tr>" + "".join(f"<td>{x}</td>" for x in f) + "</tr>" for f in filas)
+            return (f'<div style="overflow-x:auto"><table class="cifras nombres"><tr>{th}</tr>'
+                    f'{tr or f"<tr><td colspan={len(cab)}>{vacio}</td></tr>"}</table></div>')
+
+        def donde(ruta: str) -> str:
+            partes = ruta.strip("/").split("/")
+            if len(partes) >= 3:
+                return f"{partes[1].capitalize()} · {CURSOS.get(partes[2], partes[2])}"
+            return ""
+
+        # Laboratorio: cada recurso, también los que nadie ha abierto; las portadas, juntas.
+        recursos, portadas = [], 0
+        for ruta, titulo in cat.titulos["lab"].items():
+            n = t.get(f"visita:lab:{ruta}", 0)
+            if len(ruta.strip("/").split("/")) >= 4:
+                recursos.append((n, titulo, donde(ruta)))
+            else:
+                portadas += n
+        otras_lab = lab - portadas - sum(n for n, *_ in recursos)  # páginas que ya no están
+        recursos.sort(key=lambda x: (-x[0], x[1]))
+        filas_lab = [[e(ti), e(d), f"<b>{n}</b>" if n else "0"] for n, ti, d in recursos]
+        filas_lab.append(["<i>Portadas y páginas de asignatura</i>", "", str(portadas)])
+        if otras_lab:
+            filas_lab.append(["<i>Páginas que ya no están</i>", "", str(otras_lab)])
+
+        # Ponte a prueba: cada sección, cuántas veces se empezó.
+        pruebas = ""
+        for ruta, secs in sorted(cat.pruebas.items()):
+            filas = [[e(titulo), str(t.get(f"prueba:{ruta}:{i}", 0))] for i, titulo in secs]
+            filas.append(["<b>Las 12 preguntas, todas marcadas</b>",
+                          f"<b>{t.get(f'prueba:{ruta}:{metricas.COMPLETA}', 0)}</b>"])
+            pruebas += (f"<h3 style='margin:14px 0 6px'>{e(cat.titulos['lab'].get(ruta, ruta))} "
+                        f"<span class='hint'>({e(donde(ruta))} · {t.get(f'visita:lab:{ruta}', 0)} visitas)</span></h3>"
+                        + tabla(["Sección", "Veces empezada"], filas))
+
+        filas_web = sorted(([e(ti), str(t.get(f"visita:web:{r}", 0))] for r, ti in cat.titulos["web"].items()),
+                           key=lambda f: -int(f[1]))
+        asign = sorted(((k[6:], n) for k, n in t.items() if k.startswith("clase:")), key=lambda x: -x[1])
+        herr = sorted(((metricas.HERRAMIENTAS.get(k[12:], k[12:]), n) for k, n in t.items()
+                       if k.startswith("herramienta:")), key=lambda x: -x[1])
+        ent = [("entrada_con_datos", "Entradas nuevas con nombre y correo"), ("entrada_sin_datos", "Entradas nuevas sin datos"),
+               ("presentado", "Se presentan o cambian de correo"), ("mis_datos_enlace", "Piden el enlace a «Mis datos»"),
+               ("sin_correo", "Borran su nombre y su correo"), ("borrado", "Lo borran todo")]
+
+        # Semana a semana, lo gordo de cada parte.
+        filas_sem = []
         for semana, v in c["semanas"].items():
-            v = dict(v, clases=sum(n for k, n in v.items() if k.startswith("clase:")))
-            filas += f"<tr><td>{semana[5:]} · {semana[:4]}</td>" + "".join(f"<td>{v.get(k, 0)}</td>" for k, _ in cols) + "</tr>"
-        asign = {}
-        for v in c["semanas"].values():
-            for k, n in v.items():
-                if k.startswith("clase:"):
-                    asign[k[6:]] = asign.get(k[6:], 0) + n
-        por_asig = " · ".join(f"{html.escape(k)}: {n}" for k, n in sorted(asign.items(), key=lambda x: -x[1])) or "—"
-        cab = "".join(f"<th>{t}</th>" for _, t in cols)
+            g = lambda pre: sum(n for k, n in v.items() if k.startswith(pre))  # noqa: E731
+            filas_sem.append([f"{semana[5:]} · {semana[:4]}", g("visita:lab:"), g("visita:web:"),
+                              sum(n for k, n in v.items() if k.startswith("prueba:") and not k.endswith(":completa")),
+                              g("clase:"), v.get("entrada_con_datos", 0) + v.get("entrada_sin_datos", 0)])
+
+        def enlace(p: str, txt: str) -> str:
+            estilo = "font-weight:800;text-decoration-thickness:3px" if p == str(dias) else ""
+            return f'<a href="/admin?v=cifras&p={p}" style="{estilo}">{txt}</a>'
+
         return f"""<h1>Cifras</h1>
-<p class="lead">Ahora mismo hay <b>{c['entradas']['con_datos']}</b> entradas con datos y <b>{c['entradas']['sin_datos']}</b>
-sin datos. Debajo, lo que ha pasado cada semana.</p>
-<div class="card" style="overflow-x:auto"><table class="cifras"><tr><th>Semana</th>{cab}</tr>{filas or
-'<tr><td colspan="7">Aún no hay nada que contar.</td></tr>'}</table></div>
-<p class="hint" style="margin-top:12px"><b>Con datos / Sin datos:</b> entradas nuevas. <b>Correo:</b> se presentan o
-cambian de correo. <b>Sin correo:</b> borran nombre y correo. <b>Borran:</b> lo borran todo.<br>
-Clases por asignatura, en estas semanas: {por_asig}.</p>"""
+<p class="hint" style="margin-bottom:10px">Ver: {enlace("7", "7 días")} · {enlace("28", "4 semanas")} · {enlace("84", "12 semanas")}</p>
+<p class="lead">En {nombre_periodo} se han abierto <b>{lab}</b> páginas del laboratorio y <b>{web}</b> de la web, se han
+empezado <b>{secciones}</b> secciones de los «Ponte a prueba» (<b>{completas}</b> veces con las 12 preguntas todas marcadas) y
+ha habido <b>{clases}</b> clases con Beakman en Claude. Entradas ahora mismo: <b>{c['entradas']['con_datos']}</b> con nombre y
+correo y <b>{c['entradas']['sin_datos']}</b> sin datos.</p>
+
+<div class="card" style="margin-bottom:14px"><h2>Laboratorio</h2>
+<p class="hint" style="margin-bottom:8px">Cuántas veces se ha abierto cada recurso de lab.beakman.kademy.net. Si una
+persona lo abre tres veces, cuenta tres.</p>
+{tabla(["Recurso", "Asignatura", "Visitas"], filas_lab)}</div>
+
+<div class="card" style="margin-bottom:14px"><h2>Ponte a prueba</h2>
+<p class="hint">Una sección cuenta como empezada la primera vez que se toca algo en ella (un botón, una respuesta) en
+cada visita. «Todas marcadas»: en esa visita se marcó la última de las 12 preguntas (✓, ~ o ✗). No se guarda qué se
+contestó.</p>
+{pruebas or '<p>No hay ningún «Ponte a prueba» publicado.</p>'}</div>
+
+<div class="card" style="margin-bottom:14px"><h2>Beakman en Claude</h2>
+<p class="hint" style="margin-bottom:8px">Una clase es cada vez que Claude llama a «Empezar una clase» con una
+asignatura. Las herramientas son lo que Claude ha usado del conector, incluidas las clases.</p>
+{tabla(["Asignatura", "Clases"], [[e(a), str(n)] for a, n in asign], "Ninguna clase.")}
+<div style="height:10px"></div>
+{tabla(["Herramienta", "Veces"], [[e(h), str(n)] for h, n in herr], "Ninguna llamada.")}</div>
+
+<div class="card" style="margin-bottom:14px"><h2>Web</h2>
+<p class="hint" style="margin-bottom:8px">Las páginas de beakman.kademy.net. La copia de icalvete.github.io no se cuenta.</p>
+{tabla(["Página", "Visitas"], filas_web)}</div>
+
+<div class="card" style="margin-bottom:14px"><h2>Entradas</h2>
+<p class="hint" style="margin-bottom:8px">Quien conecta Beakman a Claude crea una entrada, con o sin nombre y correo.</p>
+{tabla(["Qué", "Veces"], [[x, str(t.get(k, 0))] for k, x in ent])}</div>
+
+<div class="card"><h2>Semana a semana</h2>
+<p class="hint" style="margin-bottom:8px">Las últimas 12 semanas. Las visitas y los «Ponte a prueba» se cuentan desde finales de noviembre de 2026; antes, solo lo de Claude.</p>
+{tabla(["Semana", "Laboratorio", "Web", "Secciones empezadas", "Clases", "Entradas nuevas"], filas_sem)}</div>
+
+<p class="hint" style="margin-top:12px"><b>Cómo se cuenta.</b> Solo se suma 1 por día y cosa: ni quién, ni desde dónde,
+ni cookies. Las visitas tuyas y las de las pruebas también cuentan. Los robots que se presentan como tales no cuentan.
+Los días van en hora UTC.</p>"""
 
     def _entradas_sin_datos(self) -> str:
         """Las entradas sin datos: no tienen nada personal, solo cuándo se crearon, el curso y la comunidad elegidos y
@@ -926,6 +1021,7 @@ h2 { font: 600 1.2rem/1.2 "Fredoka", sans-serif; color: var(--ink); margin: 6px 
 .cifras { border-collapse: collapse; width: 100%; font-size: .84rem; }
 .cifras th, .cifras td { white-space: nowrap; padding: 5px 5px; border-bottom: 1px solid var(--line); text-align: right; }
 .cifras th:first-child, .cifras td:first-child { text-align: left; }
+.cifras.nombres td:first-child { white-space: normal; }
 .errores { background: #FBE5E1; border: 1.5px solid #E7A89F; border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; color: #7A2A20; }
 .errores p { margin: 0; }
 .note { background: var(--note); border: 1.5px solid var(--note-line); border-radius: 12px; padding: 12px 14px; font-size: .92rem; margin-top: 18px; }

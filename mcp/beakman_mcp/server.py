@@ -14,9 +14,10 @@ from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
 from starlette.requests import Request
 from starlette.responses import JSONResponse
-from starlette.routing import Host, Mount
+from starlette.routing import Host, Mount, Route, Router
 from starlette.staticfiles import StaticFiles
 
+from . import metricas
 from .content import COURSES, Library, Part, Store, Subject, Topic, course_key, normalize
 
 logging.basicConfig(level=os.environ.get("LOG_LEVEL", "INFO"))
@@ -219,14 +220,20 @@ app = mcp.streamable_http_app(
 # todas las rutas son del laboratorio. En la imagen está en /app/lab; en local, BEAKMAN_LAB_DIR=$PWD/lab/site.
 LAB_DIR = os.environ.get("BEAKMAN_LAB_DIR", "/app/lab")
 LAB_HOST = os.environ.get("BEAKMAN_LAB_HOST", "lab.beakman.kademy.net")
+# Cada página que se sirve suma una visita (ver metricas.py); /_cuenta recibe los avisos de los «Ponte a prueba».
 if os.path.isdir(LAB_DIR):
-    app.router.routes.insert(0, Host(LAB_HOST, app=StaticFiles(directory=LAB_DIR, html=True), name="lab"))
+    lab_app = Router(routes=[
+        Route("/_cuenta", metricas.cuenta, methods=["POST"]),
+        Mount("/", app=metricas.ContarVisitas(StaticFiles(directory=LAB_DIR, html=True), "lab")),
+    ])
+    app.router.routes.insert(0, Host(LAB_HOST, app=lab_app, name="lab"))
 
 # La web de los tutores (docs/) en el resto de rutas. Va la última, así que /mcp y /up siguen yendo al
 # servidor MCP. En la imagen está en /app/site; en local, BEAKMAN_SITE_DIR=$PWD/docs.
 SITE_DIR = os.environ.get("BEAKMAN_SITE_DIR", "/app/site")
 if os.path.isdir(SITE_DIR):
     app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
+metricas.cargar(LAB_DIR, SITE_DIR)
 
 
 # ---- la entrada con OAuth ---------------------------------------------------------
@@ -246,6 +253,7 @@ if ENTRADA_URL:
     from .entrada import CURSOS, Entrada, _comunidad_valida, _curso_valido, curso_escolar
 
     entrada = Entrada(ENTRADA_URL, os.environ.get("BEAKMAN_DB", "/data/beakman.sqlite"))
+    metricas.configurar(entrada.db.contar)
     servidor = MCPServer(
         name="beakman",
         title="Mi mundo de Beakman",
@@ -396,6 +404,16 @@ if ENTRADA_URL:
         return ("Hecho: lo he borrado todo y he desconectado el conector. Si quiere volver, que lo conecte otra vez en "
                 "Ajustes → Conectores.")
 
+    # Cada llamada a una herramienta suma `herramienta:<nombre>`; solo las que existen, para no guardar nombres raros.
+    _call_tool = servidor.call_tool
+
+    async def _call_tool_contado(name, arguments, context=None):
+        if servidor._tool_manager.get_tool(name) is not None:
+            metricas.contar(f"herramienta:{name}")
+        return await _call_tool(name, arguments, context)
+
+    servidor.call_tool = _call_tool_contado
+
     ENTRADA_HOST = urlparse(ENTRADA_URL).netloc
     servidor.custom_route("/up", methods=["GET"])(up)
     servidor.custom_route("/entrada", methods=["GET"])(entrada.pagina)
@@ -422,7 +440,8 @@ if ENTRADA_URL:
     )
     if ENTRADA_HOST in ALLOWED_HOSTS and os.path.isdir(SITE_DIR):
         # Es el nombre del conector: la web de los tutores sigue en el resto de rutas.
-        entrada_app.router.routes.append(Mount("/", app=StaticFiles(directory=SITE_DIR, html=True), name="site"))
+        entrada_app.router.routes.append(Mount("/", app=metricas.ContarVisitas(
+            StaticFiles(directory=SITE_DIR, html=True), "web"), name="site"))
     # Delante de todo salvo el laboratorio, que tiene su propio nombre.
     app.router.routes.insert(1 if os.path.isdir(LAB_DIR) else 0,
                              Host(ENTRADA_HOST.split(":")[0], app=entrada_app, name="entrada"))
