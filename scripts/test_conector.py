@@ -114,12 +114,62 @@ async def pruebas(abierto: str, con_entrada: str, con_datos: str, sin_datos: str
     check("olvidame confirmado: su token ya no vale (401)", r.status_code == 401, str(r.status_code))
 
 
+NAVEGADOR = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"}
+PRUEBA_FQ = "/es/ciencias/2eso/ponte-a-prueba-fq-tema-2/"
+
+
+def contadores(db: str) -> dict[str, int]:
+    import sqlite3
+    with sqlite3.connect(db) as c:
+        return {k: n for k, n in c.execute("SELECT clave, SUM(n) FROM contadores GROUP BY clave")}
+
+
+def pruebas_metricas(base: str, db: str) -> None:
+    print("Cifras de uso")
+    lab = {**NAVEGADOR, "Host": "lab.beakman.kademy.net"}
+    get = lambda ruta, h=lab: httpx2.get(base + ruta, headers=h, timeout=10)  # noqa: E731
+    post = lambda q: httpx2.post(f"{base}/_cuenta?{q}", headers=lab, timeout=10)  # noqa: E731
+    antes = contadores(db)
+    get(PRUEBA_FQ); get(PRUEBA_FQ + "index.html"); get("/lab.css"); get("/no-existe/")
+    get(PRUEBA_FQ, {"User-Agent": "Googlebot/2.1", "Host": "lab.beakman.kademy.net"})
+    get("/empieza.html", NAVEGADOR); get("/site.css", NAVEGADOR)
+    r_ok, r_mal, r_otra = post(f"p={PRUEBA_FQ}&k=calcula"), post(f"p={PRUEBA_FQ}&k=inventada"), post("p=/es/&k=calcula")
+    post(f"p={PRUEBA_FQ}&k=completa")
+    d = {k: n - antes.get(k, 0) for k, n in contadores(db).items() if n != antes.get(k, 0)}
+    check("una página del lab suma una visita por petición (con o sin index.html)", d.get(f"visita:lab:{PRUEBA_FQ}") == 2, str(d))
+    check("el CSS, un 404 y un robot no cuentan", not any(".css" in k or "no-existe" in k for k in d), str(d))
+    check("una página de la web suma", d.get("visita:web:/empieza.html") == 1, str(d))
+    check("un «Ponte a prueba» cuenta la sección y las 12 completas",
+          r_ok.status_code == 204 and d.get(f"prueba:{PRUEBA_FQ}:calcula") == 1
+          and d.get(f"prueba:{PRUEBA_FQ}:completa") == 1, str(d))
+    check("una sección o una página que no existen se rechazan (400) y no cuentan",
+          r_mal.status_code == 400 and r_otra.status_code == 400 and not any("inventada" in k for k in d), str(d))
+    check("cuenta.js se sirve y las dos pruebas lo cargan", get("/cuenta.js").status_code == 200
+          and "cuenta.js" in get(PRUEBA_FQ).text and "cuenta.js" in get("/es/historia/2eso/ponte-a-prueba-tema-1/").text)
+
+
+def pruebas_cifras(entrada, db: str) -> None:
+    from beakman_mcp import metricas
+    metricas.cargar(os.path.join(REPO, "lab", "site"), os.path.join(REPO, "docs"))
+    t = contadores(db)
+    check("el conector cuenta las llamadas por herramienta",
+          t.get("herramienta:empezar_clase", 0) >= 3 and t.get("herramienta:que_sabes_de_mi") == 1, str(t))
+    texto = entrada._vista_cifras("7")
+    check("Cifras: frase de resumen y bloques",
+          "se han abierto" in texto and all(b in texto for b in ("Laboratorio", "Ponte a prueba", "Beakman en Claude",
+                                                                    "Web", "Entradas", "Semana a semana")), texto[:300])
+    check("Cifras: los recursos y las secciones salen con su título",
+          "Ponte a prueba: propiedades y estados de la materia" in texto and "3 · Calcula la densidad" in texto
+          and "Empezar una clase" in texto, texto[:300])
+
+
 def main() -> int:
     tmp = tempfile.mkdtemp()
     db, puerto = os.path.join(tmp, "pruebas.sqlite"), puerto_libre()
     entrada_url = f"http://127.0.0.1:{puerto}"
     env = {**os.environ, "BEAKMAN_REPO_DIR": REPO, "BEAKMAN_ENTRADA_URL": entrada_url, "BEAKMAN_DB": db,
-           "BEAKMAN_ALLOWED_HOSTS": f"localhost:{puerto}", "BEAKMAN_SITE_DIR": tmp, "BEAKMAN_LAB_DIR": tmp}
+           "BEAKMAN_ALLOWED_HOSTS": f"localhost:{puerto},127.0.0.1:{puerto}",
+           "BEAKMAN_SITE_DIR": os.path.join(REPO, "docs"), "BEAKMAN_LAB_DIR": os.path.join(REPO, "lab", "site")}
     for var in ("BEAKMAN_ADMIN_HASH", "BEAKMAN_ADMIN_CORREOS"):
         env.pop(var, None)
 
@@ -144,6 +194,8 @@ def main() -> int:
             print("El servidor no arranca.")
             return 1
         asyncio.run(pruebas(f"http://localhost:{puerto}/mcp", f"{entrada_url}/mcp", tok_datos, tok_sin))
+        pruebas_metricas(entrada_url, db)
+        pruebas_cifras(entrada, db)
     finally:
         srv.terminate()
         srv.wait(timeout=10)

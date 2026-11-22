@@ -22,6 +22,13 @@ Se publica en https://lab.beakman.kademy.net.
 
 Al subir a `main`, el Action construye la imagen; se despliega con un tag de kademy.
 
+## Cifras de uso
+El servidor cuenta cada página que sirve (una visita por página y día, sin cookies, IP ni nada de quién) y las
+enseña en `/admin` → Cifras con el `<title>` de la página (lo de antes de « · »). Un «Ponte a prueba» además carga
+`site/cuenta.js` (`<script src="../../../../cuenta.js" defer></script>` antes de `</body>`): cuenta cada sección
+(`<section class="block" id="…">` con su `<h2>`) que se empieza y las 12 preguntas completas (`#qscore` con «sin
+marcar 0»). Su carpeta tiene que empezar por `ponte-a-prueba`. Ver `mcp/beakman_mcp/metricas.py`.
+
 ## Otro idioma
 1. `i18n/<idioma>.yml` con las mismas claves que `es.yml`.
 2. En `catalog.yml`, los textos de cada asignatura y recurso en ese idioma, y el idioma en `idiomas`.
